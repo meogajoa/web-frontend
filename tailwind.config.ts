@@ -1,4 +1,5 @@
 import type { Config } from 'tailwindcss';
+import plugin from 'tailwindcss/plugin';
 
 export default {
   content: [
@@ -7,9 +8,20 @@ export default {
     './src/stories/**/*.{js,ts,jsx,tsx,mdx}',
   ],
   theme: {
-    extend: {
-      colors: {},
+    fontFamily: {
+      normal: ['var(--font-normal)', 'sans-serif'],
     },
   },
-  plugins: [],
+  plugins: [
+    plugin(function ({ addUtilities }) {
+      addUtilities({
+        '.h-screen': {
+          height: ['100vh /* fallback for Opera, IE and etc. */', '100dvh'],
+        },
+        '.w-screen': {
+          width: ['100vw /* fallback for Opera, IE and etc. */', '100dvw'],
+        },
+      });
+    }),
+  ],
 } satisfies Config;
