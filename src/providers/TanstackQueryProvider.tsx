@@ -22,12 +22,17 @@ function getQueryClient() {
   if (isServer) {
     return makeQueryClient();
   } else {
-    if (!browserQueryClient) browserQueryClient = makeQueryClient();
+    if (!browserQueryClient) {
+      browserQueryClient = makeQueryClient();
+    }
+
     return browserQueryClient;
   }
 }
 
-const TanstackQueryProvider: React.FC<React.PropsWithChildren> = ({ children }) => {
+const TanstackQueryProvider: React.FC<React.PropsWithChildren> = ({
+  children,
+}) => {
   const queryClient = getQueryClient();
 
   return (

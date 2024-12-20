@@ -10,7 +10,7 @@ const eslintConfig = [
   ...compat.extends(
     'next/core-web-vitals',
     'next/typescript',
-    'plugin:storybook/recommended'
+    'plugin:storybook/recommended',
   ),
   eslintPluginPrettierRecommended,
   eslintConfigPrettier,
@@ -31,6 +31,7 @@ const eslintConfig = [
       'react/no-unknown-property': 'off',
       '@next/next/no-img-element': 'off',
     },
+    ignores: ['!.storybook', '**/.yarn', '**/dist', '**/.next'],
   },
 ];
 

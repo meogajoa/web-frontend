@@ -2,7 +2,7 @@ declare namespace React {
   interface AsyncFunctionComponent<P = {}> {
     (
       props: P,
-      context?: unknown
+      context?: unknown,
     ): Promise<ReactElement<unknown, unknown> | null>;
     propTypes?: WeakValidationMap<P> | undefined;
     contextTypes?: ValidationMap<unknown> | undefined;
