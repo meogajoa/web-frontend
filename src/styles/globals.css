@@ -3,7 +3,7 @@
 @tailwind utilities;
 
 @layer base {
-  :root {
-    @apply font-normal antialiased;
+  body {
+    @apply font-brand antialiased;
   }
 }

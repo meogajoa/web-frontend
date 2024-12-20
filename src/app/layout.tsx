@@ -1,8 +1,9 @@
 import type { Metadata } from 'next';
 import '~/styles/globals.css';
 import localFont from 'next/font/local';
+import TanstackQueryProvider from '~/providers/TanstackQueryProvider';
 
-const normal = localFont({
+const brand = localFont({
   src: '../assets/fonts/PretendardVariable.woff2',
   variable: '--font-brand',
   weight: '100 900',
@@ -20,7 +21,9 @@ type RootLayoutProps = Readonly<{
 const RootLayout: React.FC<RootLayoutProps> = ({ children }) => {
   return (
     <html lang="en">
-      <body className={normal.variable}>{children}</body>
+      <body className={brand.variable}>
+        <TanstackQueryProvider>{children}</TanstackQueryProvider>
+      </body>
     </html>
   );
 };

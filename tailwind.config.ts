@@ -9,7 +9,7 @@ export default {
   ],
   theme: {
     fontFamily: {
-      normal: ['var(--font-normal)', 'sans-serif'],
+      brand: ['var(--font-brand)', 'sans-serif'],
     },
   },
   plugins: [
