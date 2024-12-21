@@ -1,11 +1,13 @@
-name: Playwright Tests
+name: Eslint Linting
 
 on:
-  workflow_run:
-    workflows:
-      - ESLint Linting
-    types:
-      - completed
+  push:
+    branches:
+      - develop
+  pull_request:
+    branches:
+      - develop
+  workflow_dispatch:
 
 jobs:
   eslint:
