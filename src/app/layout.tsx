@@ -1,7 +1,7 @@
 import type { Metadata } from 'next';
-import '~/styles/globals.css';
 import localFont from 'next/font/local';
 import TanstackQueryProvider from '~/providers/TanstackQueryProvider';
+import '~/styles/globals.css';
 
 const brand = localFont({
   src: '../assets/fonts/PretendardVariable.woff2',
