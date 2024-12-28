@@ -1,8 +1,7 @@
-import { NextIntlClientProvider } from 'next-intl';
-import { getMessages, setRequestLocale } from 'next-intl/server';
-import { notFound } from 'next/navigation';
+import { setRequestLocale } from 'next-intl/server';
 import React from 'react';
-import { Language, routing } from '~/i18n/routing';
+import { routing } from '~/i18n/routing';
+import IntlProvider from '~/providers/IntlProvider';
 
 export const generateStaticParams = async () => {
   return routing.locales.map((locale) => ({ locale }));
@@ -21,18 +20,9 @@ const LocaleLayout: React.AFC<LocaleLayoutProps> = async ({
   children,
 }) => {
   const { locale } = await params;
-  if (!routing.locales.includes(locale as Language)) {
-    notFound();
-  }
-
   setRequestLocale(locale);
-  const messages = await getMessages();
 
-  return (
-    <NextIntlClientProvider messages={messages}>
-      {children}
-    </NextIntlClientProvider>
-  );
+  return <IntlProvider locale={locale}>{children}</IntlProvider>;
 };
 
 export default LocaleLayout;

@@ -1,6 +1,6 @@
 import type { Metadata } from 'next';
 import localFont from 'next/font/local';
-import TanstackQueryProvider from '~/providers/TanstackQueryProvider';
+import RootProvider from '~/providers/RootProvider';
 import '~/styles/globals.css';
 
 const brand = localFont({
@@ -20,7 +20,7 @@ const RootLayout: React.FC<RootLayoutProps> = ({ children }) => {
   return (
     <html lang="en">
       <body className={brand.variable}>
-        <TanstackQueryProvider>{children}</TanstackQueryProvider>
+        <RootProvider>{children}</RootProvider>
       </body>
     </html>
   );
