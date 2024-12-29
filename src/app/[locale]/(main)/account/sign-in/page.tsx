@@ -7,22 +7,24 @@ import { serializeToUrlEncoded } from '~/utils/misc';
 
 type SignUpForm = {
   email: string;
-  nickname: string;
   password: string;
-  passwordConfirmation?: string;
 };
 
 export const signUpMutationFn = async (data: SignUpForm): Promise<any> => {
-  const { passwordConfirmation, ...filtered } = data;
-
-  await server.post('/auth/sign-up', serializeToUrlEncoded(filtered), {
-    headers: {
-      'Content-Type': 'application/x-www-form-urlencoded',
+  const response = await server.post(
+    '/auth/sign-in',
+    serializeToUrlEncoded(data),
+    {
+      headers: {
+        'Content-Type': 'application/x-www-form-urlencoded',
+      },
     },
-  });
+  );
+
+  localStorage.setItem('sessionId', response.data.sessionId);
 };
 
-const SignUpPage = () => {
+const SignInPage = () => {
   const { register, handleSubmit } = useForm<SignUpForm>();
 
   const mutate = useMutation({
@@ -56,24 +58,6 @@ const SignUpPage = () => {
         />
       </div>
 
-      <div>
-        <label htmlFor="passwordConfirmation">Password Confirmation</label>
-        <input
-          className="border"
-          type="password"
-          {...register('passwordConfirmation', { required: true })}
-        />
-      </div>
-
-      <div>
-        <label htmlFor="nickname">Nickname</label>
-        <input
-          className="border"
-          type="text"
-          {...register('nickname', { required: true })}
-        />
-      </div>
-
       <button className="border p-3" type="submit">
         Sign Up
       </button>
@@ -81,4 +65,4 @@ const SignUpPage = () => {
   );
 };
 
-export default SignUpPage;
+export default SignInPage;
