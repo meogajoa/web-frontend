@@ -3,7 +3,7 @@
 import { useMutation } from '@tanstack/react-query';
 import { useLocale } from 'next-intl';
 import { SubmitHandler, useForm } from 'react-hook-form';
-import { redirect } from '~/i18n/routing';
+import { redirect, useRouter } from '~/i18n/routing';
 import { server } from '~/utils/axios';
 import { serializeToUrlEncoded } from '~/utils/misc';
 
@@ -29,6 +29,7 @@ export const signUpMutationFn = async (data: SignUpForm): Promise<any> => {
 const SignInPage = () => {
   const { register, handleSubmit } = useForm<SignUpForm>();
   const locale = useLocale();
+  const router = useRouter();
 
   const mutate = useMutation({
     mutationFn: signUpMutationFn,
@@ -36,7 +37,7 @@ const SignInPage = () => {
 
   const onSubmit: SubmitHandler<SignUpForm> = (data) => {
     mutate.mutate(data);
-    redirect({ locale, href: '/lobby' });
+    redirect({ locale, href: '/' });
   };
 
   return (
@@ -63,7 +64,14 @@ const SignInPage = () => {
       </div>
 
       <button className="border p-3" type="submit">
-        Sign Up
+        Sign In
+      </button>
+
+      <button
+        className="border p-3"
+        onClick={() => router.push('/account/sign-up')}
+      >
+        Go to Sign Up page
       </button>
     </form>
   );
