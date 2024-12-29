@@ -1,12 +1,20 @@
-import { setRequestLocale } from 'next-intl/server';
-import { LocaleLayoutProps } from '~/app/[locale]/layout';
+'use client';
 
-type MainLayoutProps = LocaleLayoutProps;
+import { useLocale } from 'next-intl';
+import { redirect } from 'next/navigation';
+import React from 'react';
+import { useSessionId } from '~/hooks/account';
+import { buildLocalizedPath } from '~/utils/misc';
 
-const MainLayout: React.AFC<MainLayoutProps> = async ({ params, children }) => {
-  const { locale } = await params;
+type MainLayoutProps = Readonly<React.PropsWithChildren>;
 
-  setRequestLocale(locale);
+const MainLayout: React.FC<MainLayoutProps> = ({ children }) => {
+  const sessionId = useSessionId();
+  const locale = useLocale();
+
+  if (sessionId === null) {
+    redirect(buildLocalizedPath(locale, '/account/sign-in'));
+  }
 
   return <div>{children}</div>;
 };
