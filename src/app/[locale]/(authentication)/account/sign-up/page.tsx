@@ -1,7 +1,9 @@
 'use client';
 
 import { useMutation } from '@tanstack/react-query';
+import { useLocale } from 'next-intl';
 import { SubmitHandler, useForm } from 'react-hook-form';
+import { redirect } from '~/i18n/routing';
 import { server } from '~/utils/axios';
 import { serializeToUrlEncoded } from '~/utils/misc';
 
@@ -24,6 +26,7 @@ export const signUpMutationFn = async (data: SignUpForm): Promise<any> => {
 
 const SignUpPage = () => {
   const { register, handleSubmit } = useForm<SignUpForm>();
+  const locale = useLocale();
 
   const mutate = useMutation({
     mutationFn: signUpMutationFn,
@@ -31,6 +34,7 @@ const SignUpPage = () => {
 
   const onSubmit: SubmitHandler<SignUpForm> = (data) => {
     mutate.mutate(data);
+    redirect({ locale, href: '/account/sign-in' });
   };
 
   return (
