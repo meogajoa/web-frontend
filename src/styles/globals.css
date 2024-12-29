@@ -3,6 +3,12 @@
 @tailwind utilities;
 
 @layer base {
+  :root,
+  html,
+  body {
+    @apply h-full;
+  }
+
   body {
     @apply font-brand antialiased;
   }
