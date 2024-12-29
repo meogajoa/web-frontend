@@ -12,7 +12,7 @@ type SignUpForm = {
   password: string;
 };
 
-export const signUpMutationFn = async (data: SignUpForm): Promise<any> => {
+const signInMutationFn = async (data: SignUpForm): Promise<any> => {
   const response = await server.post(
     '/auth/sign-in',
     serializeToUrlEncoded(data),
@@ -32,7 +32,7 @@ const SignInPage = () => {
   const router = useRouter();
 
   const mutate = useMutation({
-    mutationFn: signUpMutationFn,
+    mutationFn: signInMutationFn,
   });
 
   const onSubmit: SubmitHandler<SignUpForm> = (data) => {

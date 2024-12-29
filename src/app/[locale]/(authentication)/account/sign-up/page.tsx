@@ -14,7 +14,7 @@ type SignUpForm = {
   passwordConfirmation?: string;
 };
 
-export const signUpMutationFn = async (data: SignUpForm): Promise<any> => {
+const signUpMutationFn = async (data: SignUpForm): Promise<any> => {
   const { passwordConfirmation, ...filtered } = data;
 
   await server.post('/auth/sign-up', serializeToUrlEncoded(filtered), {
