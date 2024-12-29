@@ -1,4 +1,5 @@
 import React from 'react';
+import { AccountStatus } from '~/types/account';
 
 export const useSessionId = () => {
   return React.useSyncExternalStore(
@@ -17,4 +18,15 @@ export const useSessionId = () => {
     () => localStorage.getItem('sessionId'),
     () => '',
   );
+};
+
+export const useAccount = () => {
+  const sessionId = useSessionId();
+  const accountStatus: AccountStatus =
+    sessionId === null ? AccountStatus.SignedOut : AccountStatus.SignedIn;
+
+  return {
+    sessionId,
+    accountStatus,
+  };
 };
