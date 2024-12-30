@@ -3,7 +3,8 @@ import { getMessages } from 'next-intl/server';
 import { notFound } from 'next/navigation';
 import React from 'react';
 import { Locale } from '~/app/[locale]/layout';
-import { Language, routing } from '~/i18n/routing';
+import { routing } from '~/i18n/routing';
+import { Language } from '~/types/misc';
 
 type Props = Readonly<React.PropsWithChildren<Locale>>;
 

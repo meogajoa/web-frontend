@@ -1,14 +1,6 @@
 import { createNavigation } from 'next-intl/navigation';
 import { defineRouting } from 'next-intl/routing';
-
-export enum Language {
-  En = 'en',
-  Kr = 'kr',
-  Jp = 'jp',
-  Es = 'es',
-  ZhCn = 'zh-CN',
-  ZhTw = 'zh-TW',
-}
+import { Language } from '~/types/misc';
 
 export const routing = defineRouting({
   locales: Object.values(Language),

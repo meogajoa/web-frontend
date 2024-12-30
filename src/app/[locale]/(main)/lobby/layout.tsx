@@ -1,6 +1,6 @@
 import React from 'react';
 
-type LobbyLayoutProps = React.PropsWithChildren;
+type LobbyLayoutProps = Readonly<React.PropsWithChildren>;
 
 const LobbyLayout: React.FC<LobbyLayoutProps> = ({ children }) => {
   return (
