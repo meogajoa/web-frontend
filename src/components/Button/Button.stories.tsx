@@ -10,6 +10,11 @@ const meta: Meta<typeof Button> = {
       description: '버튼 텍스트',
       control: 'text',
     },
+    variant: {
+      description: '버튼 스타일',
+      control: 'select',
+      options: ['primary'],
+    },
     size: {
       description: '버튼 크기',
       control: 'select',
@@ -22,6 +27,9 @@ const meta: Meta<typeof Button> = {
   },
   args: {
     children: 'Button',
+    variant: 'primary',
+    size: 'md',
+    disabled: false,
     onClick: fn(),
   },
   decorators: [
@@ -42,13 +50,15 @@ export const PrimaryLarge: Story = {
     children: '계속하기',
     variant: 'primary',
     size: 'lg',
+    rounded: 'md',
   },
 };
 
 export const PrimaryMedium: Story = {
   args: {
-    children: '계속하기',
+    children: '중복확인',
     variant: 'primary',
     size: 'md',
+    rounded: 'md',
   },
 };
