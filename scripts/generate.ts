@@ -10,7 +10,7 @@ const ${name}: React.FC<Props> = ({ className }) => {
   return <div className={cn('', className)}></div>;
 };
 
-export default ${name}
+export default ${name};
 `;
 
 const createStoryTemplate = (name: string) => `
@@ -20,7 +20,6 @@ import ${name} from '~/components/${name}';
 const meta: Meta<typeof ${name}> = {
   title: 'Example/${name}',
   component: ${name},
-  tags: ['autodocs'],
 };
 
 export default meta;
