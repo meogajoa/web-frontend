@@ -11,9 +11,11 @@ export default {
       brand: ['var(--font-brand)', 'sans-serif'],
     },
     fontSize: {
-      sm: ['0.75rem', { fontWeight: 400, lineHeight: '0.875rem' }], // 12px
-      base: ['1.125rem', { fontWeight: 400, lineHeight: '1.313rem' }], // 18px
-      lg: ['1.25rem', { fontWeight: 400, lineHeight: '1.438rem' }], // 20px
+      sm: ['0.75rem', { lineHeight: '0.875rem' }], // 12px
+      base: ['0.875rem', { lineHeight: '1rem' }], // 14px
+      lg: ['1rem', { lineHeight: '1.188rem' }], // 16px
+      xl: ['1.125rem', { lineHeight: '1.313rem' }], // 18px
+      '2xl': ['1.25rem', { lineHeight: '1.438rem' }], // 20px
     },
     extend: {
       colors: {

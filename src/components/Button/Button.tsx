@@ -18,8 +18,8 @@ const ButtonVariant = cva(
         md: 'rounded-lg',
       },
       size: {
-        lg: 'h-12 px-4 py-2.5 text-base',
-        md: 'h-11 w-fit p-2.5 [font-size:_0.75rem]',
+        lg: 'h-12 px-4 py-2.5 text-xl',
+        md: 'h-11 w-fit p-2.5 text-base',
       },
     },
     defaultVariants: {
