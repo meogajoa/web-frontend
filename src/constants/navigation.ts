@@ -6,17 +6,20 @@ const MENUS = [
   {
     label: 'store',
     icon: CartFillIcon,
+    href: '/store',
   },
   {
     label: 'home',
     icon: HomeFillIcon,
+    href: '/home',
   },
   {
     label: 'profile',
     icon: PersonFillIcon,
+    href: '/profile',
   },
 ] as const;
 
-type MenusType = (typeof MENUS)[number];
+type MenuType = (typeof MENUS)[number];
 
-export { MENUS, type MenusType };
+export { MENUS, type MenuType };
