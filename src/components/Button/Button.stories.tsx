@@ -5,6 +5,7 @@ import { Button } from '~/components/Button';
 const meta: Meta<typeof Button> = {
   title: 'Atoms/Button',
   component: Button,
+  tags: ['autodocs'],
   argTypes: {
     children: {
       description: '버튼 텍스트',

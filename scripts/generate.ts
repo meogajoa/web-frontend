@@ -20,6 +20,7 @@ import ${name} from '~/components/${name}';
 const meta: Meta<typeof ${name}> = {
   title: 'Example/${name}',
   component: ${name},
+  tags: ['autodocs'],
 };
 
 export default meta;
