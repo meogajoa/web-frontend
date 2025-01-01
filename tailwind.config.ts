@@ -11,6 +11,28 @@ export default {
     fontFamily: {
       brand: ['var(--font-brand)', 'sans-serif'],
     },
+    fontSize: {
+      sm: ['0.75rem', { fontWeight: 400, lineHeight: '0.895rem' }],
+      base: ['1.125rem', { fontWeight: 400, lineHeight: '1.343rem' }],
+      lg: ['1.25rem', { fontWeight: 400, lineHeight: '1.492rem' }],
+      'lg-semibold': ['1.25rem', { fontWeight: 600, lineHeight: '1.492rem' }],
+    },
+    colors: {
+      gray: {
+        1: '#E3E3E4',
+        2: '#B8B8B8',
+        3: '#88888A',
+        4: '#6B6C6F',
+        5: '#47484A',
+        6: '#1C1C1D',
+      },
+      red: {
+        DEFAULT: '#F24822',
+      },
+      sub: {
+        DEFAULT: '#5F657B',
+      },
+    },
     extend: {
       spacing: {
         4.5: '1.125rem',
