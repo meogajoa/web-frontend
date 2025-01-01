@@ -5,35 +5,33 @@ export default {
   content: [
     './src/components/**/*.{js,ts,jsx,tsx,mdx}',
     './src/app/**/*.{js,ts,jsx,tsx,mdx}',
-    './src/stories/**/*.{js,ts,jsx,tsx,mdx}',
   ],
   theme: {
     fontFamily: {
       brand: ['var(--font-brand)', 'sans-serif'],
     },
     fontSize: {
-      sm: ['0.75rem', { fontWeight: 400, lineHeight: '0.895rem' }],
-      base: ['1.125rem', { fontWeight: 400, lineHeight: '1.343rem' }],
-      lg: ['1.25rem', { fontWeight: 400, lineHeight: '1.492rem' }],
-      'lg-semibold': ['1.25rem', { fontWeight: 600, lineHeight: '1.492rem' }],
-    },
-    colors: {
-      gray: {
-        1: '#E3E3E4',
-        2: '#B8B8B8',
-        3: '#88888A',
-        4: '#6B6C6F',
-        5: '#47484A',
-        6: '#1C1C1D',
-      },
-      red: {
-        DEFAULT: '#F24822',
-      },
-      sub: {
-        DEFAULT: '#5F657B',
-      },
+      sm: ['0.75rem', { fontWeight: 400, lineHeight: '0.875rem' }], // 12px
+      base: ['1.125rem', { fontWeight: 400, lineHeight: '1.313rem' }], // 18px
+      lg: ['1.25rem', { fontWeight: 400, lineHeight: '1.438rem' }], // 20px
     },
     extend: {
+      colors: {
+        gray: {
+          1: '#1C1C1D',
+          2: '#47484A',
+          3: '#6B6C6F',
+          4: '#88888A',
+          5: '#B8B8B8',
+          6: '#E3E3E4',
+        },
+        red: {
+          DEFAULT: '#F24822',
+        },
+        sub: {
+          DEFAULT: '#5F657B',
+        },
+      },
       spacing: {
         4.5: '1.125rem',
         5.5: '1.375rem',
