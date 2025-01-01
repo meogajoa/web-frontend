@@ -50,6 +50,7 @@ jobs:
           name: playwright-report
           path: playwright-report/
           retention-days: 30
+
   storybook:
     name: Storybook Build and Deploy
     runs-on: ubuntu-latest
