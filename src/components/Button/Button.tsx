@@ -13,7 +13,7 @@ const ButtonVariant = cva(
     variants: {
       variant: {
         primary: 'bg-red',
-        s차econdary: 'bg-sub',
+        secondary: 'bg-sub',
       },
       rounded: {
         full: 'rounded-full',
