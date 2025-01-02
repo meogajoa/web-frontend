@@ -52,6 +52,7 @@ export const PrimaryLarge: Story = {
     variant: 'primary',
     size: 'lg',
     rounded: 'md',
+    className: 'w-full',
   },
 };
 
@@ -61,5 +62,35 @@ export const PrimaryMedium: Story = {
     variant: 'primary',
     size: 'md',
     rounded: 'md',
+  },
+};
+
+export const SecondaryLarge: Story = {
+  args: {
+    children: '계속하기',
+    variant: 'secondary',
+    size: 'lg',
+    rounded: 'md',
+    className: 'w-full',
+  },
+};
+
+export const DropDown: Story = {
+  args: {
+    children: '카테고리',
+    variant: 'primary',
+    size: 'md',
+    rounded: 'full',
+    icon: 'chevron-down',
+  },
+};
+
+export const Plus: Story = {
+  args: {
+    children: '방 생성',
+    variant: 'primary',
+    size: 'lg',
+    rounded: 'full',
+    icon: 'plus',
   },
 };
