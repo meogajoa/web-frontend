@@ -1,40 +1,27 @@
 'use client';
 
+import { debounce } from 'lodash-es';
 import React from 'react';
 import { HashLoader } from 'react-spinners';
 import { useAccount } from '~/hooks/account';
+import { useDotsString } from '~/hooks/loading';
 import { useRouter } from '~/i18n/routing';
 import { AccountStatus } from '~/types/account';
-import { Optional } from '~/types/misc';
 import { A_SECOND } from '~/utils/constants';
 
 const RootPage: React.FC = () => {
-  const [dots, setDots] = React.useState('');
   const router = useRouter();
   const { accountStatus } = useAccount();
-  const [redirectTimeout, setRedirectTimeout] =
-    React.useState<Optional<NodeJS.Timeout>>();
+  const dots = useDotsString(3);
 
   React.useEffect(() => {
-    const interval = setInterval(() => {
-      setDots((dots) => (dots.length >= 3 ? '' : dots + '.'));
-    }, 500);
-
-    return () => clearInterval(interval);
-  }, []);
-
-  React.useEffect(() => {
-    clearTimeout(redirectTimeout);
-
-    setRedirectTimeout(
-      setTimeout(() => {
-        if (accountStatus === AccountStatus.SignedOut) {
-          router.push('/account/sign-in');
-        } else {
-          router.push('/lobby');
-        }
-      }, 3 * A_SECOND),
-    );
+    debounce(() => {
+      if (accountStatus === AccountStatus.SignedIn) {
+        router.push('/lobby');
+      } else if (accountStatus === AccountStatus.SignedOut) {
+        router.push('/account/sign-in');
+      }
+    }, 3 * A_SECOND)();
   }, [accountStatus]);
 
   return (

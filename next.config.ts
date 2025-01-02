@@ -5,6 +5,7 @@ import { CONFIGS } from '~/utils/config';
 const withNextIntl = createNextIntlPlugin();
 
 const nextConfig: NextConfig = {
+  reactStrictMode: false,
   rewrites,
   env: {
     API_URL: CONFIGS.API_URL,
