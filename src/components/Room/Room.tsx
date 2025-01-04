@@ -1,3 +1,4 @@
+import { Button } from '@headlessui/react';
 import React from 'react';
 import LockIcon from '~/svgs/LockIcon';
 import { cn } from '~/utils/classname';
@@ -19,9 +20,9 @@ const Room: React.FC<Props> = ({
   className,
 }) => {
   return (
-    <div
+    <Button
       className={cn(
-        'flex h-14 items-center rounded-[0.625rem] bg-gray-6 p-4',
+        'flex h-14 items-center rounded-[0.625rem] bg-gray-6 p-4 transition-all data-[hover]:ring data-[hover]:ring-gray-5',
         className,
       )}
     >
@@ -36,7 +37,7 @@ const Room: React.FC<Props> = ({
       <p className="ml-2 text-2xl">
         {current}/{total}
       </p>
-    </div>
+    </Button>
   );
 };
 
