@@ -3,6 +3,7 @@
 import { useLocale } from 'next-intl';
 
 import React from 'react';
+import { BottomNavigationContent } from '~/components/BottomNavigation';
 import { useAccount } from '~/hooks/account';
 import { redirect } from '~/i18n/routing';
 import { AccountStatus } from '~/types/account';
@@ -17,7 +18,12 @@ const MainLayout: React.FC<MainLayoutProps> = ({ children }) => {
     redirect({ locale, href: '/account/sign-in' });
   }
 
-  return <div>{children}</div>;
+  return (
+    <div>
+      {children}
+      <BottomNavigationContent />
+    </div>
+  );
 };
 
 export default MainLayout;
