@@ -2,7 +2,7 @@ import { Meta, StoryObj } from '@storybook/react';
 import Room from '~/components/Room';
 
 const meta: Meta<typeof Room> = {
-  title: 'Atoms/Room',
+  title: 'Molecules/Room',
   component: Room,
   tags: ['autodocs'],
   argTypes: {
