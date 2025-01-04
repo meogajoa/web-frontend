@@ -17,6 +17,7 @@ export default {
       lg: ['1rem', { lineHeight: '1.188rem' }], // 16px
       xl: ['1.125rem', { lineHeight: '1.313rem' }], // 18px
       '2xl': ['1.25rem', { lineHeight: '1.438rem' }], // 20px
+      '3xl': ['1.5rem', { lineHeight: '1.75rem' }], // 24px
     },
     extend: {
       colors: {
