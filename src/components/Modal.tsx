@@ -26,7 +26,7 @@ const Modal: React.FC<React.PropsWithChildren<ModalProps>> = ({
 }) => {
   return (
     <Dialog
-      className="fixed inset-0 z-50 size-full"
+      className="fixed inset-0 z-50 flex size-full items-center justify-center"
       transition
       open={visible}
       onClose={onClose}
