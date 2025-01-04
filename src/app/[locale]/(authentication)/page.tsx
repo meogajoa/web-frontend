@@ -17,7 +17,7 @@ const RootPage: React.FC = () => {
   React.useEffect(() => {
     debounce(() => {
       if (accountStatus === AccountStatus.SignedIn) {
-        router.push('/lobby');
+        router.push('/home');
       } else if (accountStatus === AccountStatus.SignedOut) {
         router.push('/account/sign-in');
       }
