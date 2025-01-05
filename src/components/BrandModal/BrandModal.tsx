@@ -8,7 +8,7 @@ import { Button as BrandButton } from '~/components/Button';
 import { cn } from '~/utils/classname';
 import Modal, { ModalProps } from '../Modal';
 
-type BrandModalProps = React.PropsWithChildren<ModalProps>;
+export type BrandModalProps = ModalProps & React.ComponentPropsWithRef<'form'>;
 
 const BrandModal: React.FC<BrandModalProps> = ({
   className,

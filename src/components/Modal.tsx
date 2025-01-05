@@ -44,7 +44,7 @@ const Modal: React.FC<React.PropsWithChildren<ModalProps>> = ({
       )}
 
       <DialogPanel
-        as="aside"
+        as="form"
         className={cn(
           'relative flex size-full overflow-y-auto duration-300 ease-in-out data-[closed]:opacity-0',
           verticalAlignment === 'top' && 'items-start',
@@ -55,7 +55,6 @@ const Modal: React.FC<React.PropsWithChildren<ModalProps>> = ({
           horizontalAlignment === 'right' && 'ml-auto',
           className,
         )}
-        onClick={onClose}
         transition
       >
         {children}
