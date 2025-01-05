@@ -4,7 +4,7 @@ import React from 'react';
 import { StompSessionProvider } from 'react-stomp-hooks';
 import TanstackQueryProvider from '~/providers/TanstackQueryProvider';
 
-type RootProviderProps = Readonly<React.PropsWithChildren>;
+type RootProviderProps = React.PropsWithChildren;
 
 const RootProvider: React.FC<RootProviderProps> = ({ children }) => {
   return (

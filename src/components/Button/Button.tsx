@@ -48,11 +48,9 @@ const BUTTON_ICONS: Readonly<
   PLUS: PlusIcon,
 };
 
-type ButtonProps = Readonly<
-  Omit<HeadlessButtonProps, 'children'> &
-    VariantProps<typeof ButtonVariant> &
-    React.PropsWithChildren
->;
+type ButtonProps = Omit<HeadlessButtonProps, 'children'> &
+  VariantProps<typeof ButtonVariant> &
+  React.PropsWithChildren;
 
 const Button: React.FC<ButtonProps> = ({
   className,

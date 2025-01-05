@@ -3,7 +3,7 @@ import React from 'react';
 import LockIcon from '~/svgs/LockIcon';
 import { cn } from '~/utils/classname';
 
-type Props = Readonly<React.ComponentProps<'div'>> & {
+type Props = React.ComponentProps<'div'> & {
   total?: number;
   current: number;
   title: string;

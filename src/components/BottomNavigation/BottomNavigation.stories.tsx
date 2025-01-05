@@ -2,17 +2,21 @@ import { Meta, StoryObj } from '@storybook/react';
 import React from 'react';
 import BottomNavigation from '~/components/BottomNavigation/BottomNavigation';
 import { MENUS } from '~/constants/navigation';
-import { RemovePadding } from '../RemovePadding';
+import { FullScreen, RemovePadding } from '~/utils/storybook';
 
 const meta: Meta<typeof BottomNavigation> = {
   title: 'Molecules/BottomNavigation',
   component: BottomNavigation,
   decorators: [
     (Story) => (
-      <div className="flex h-screen flex-col justify-end">
-        <Story />
+      <>
         <RemovePadding />
-      </div>
+        <FullScreen />
+
+        <div className="flex h-full flex-col justify-end">
+          <Story />
+        </div>
+      </>
     ),
   ],
 };
@@ -26,7 +30,7 @@ export const Default: Story = {
     const [mockPath, setMockPath] = React.useState('/home');
 
     return (
-      <BottomNavigation>
+      <BottomNavigation className="shadow-top">
         {MENUS.map(({ label, icon, href }) => (
           <BottomNavigation.Item
             key={label}

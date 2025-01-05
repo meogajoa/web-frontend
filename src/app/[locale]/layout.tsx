@@ -9,11 +9,9 @@ export const generateStaticParams = async () => {
 
 export type Locale = { locale: string };
 
-export type LocaleLayoutProps = Readonly<
-  React.PropsWithChildren<{
-    params: Promise<Locale>;
-  }>
->;
+export type LocaleLayoutProps = React.PropsWithChildren<{
+  params: Promise<Locale>;
+}>;
 
 const LocaleLayout: React.AFC<LocaleLayoutProps> = async ({
   params,

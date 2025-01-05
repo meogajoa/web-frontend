@@ -40,7 +40,7 @@ const TanstackQueryProvider: React.FC<React.PropsWithChildren> = ({
   return (
     <QueryClientProvider client={queryClient}>
       <ReactQueryStreamedHydration>{children}</ReactQueryStreamedHydration>
-      <ReactQueryDevtools initialIsOpen />
+      <ReactQueryDevtools buttonPosition="top-left" />
     </QueryClientProvider>
   );
 };

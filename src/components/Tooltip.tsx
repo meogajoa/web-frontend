@@ -1,12 +1,10 @@
 import React, { useId } from 'react';
 import { Tooltip as ReactTooltip } from 'react-tooltip';
 
-type Props = Readonly<
-  Omit<React.ComponentPropsWithRef<typeof ReactTooltip>, 'id'> & {
-    contents?: React.ReactNode | React.FC;
-    clickToOpen?: boolean;
-  }
->;
+type Props = Omit<React.ComponentPropsWithRef<typeof ReactTooltip>, 'id'> & {
+  contents?: React.ReactNode | React.FC;
+  clickToOpen?: boolean;
+};
 
 const Tooltip: React.FC<React.PropsWithChildren<Props>> = ({
   className,

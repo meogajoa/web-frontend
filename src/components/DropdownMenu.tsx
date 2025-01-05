@@ -1,7 +1,7 @@
 import React from 'react';
 import { cn } from '~/utils/classname';
 
-type Props = Readonly<React.ComponentProps<'div'>>;
+type Props = React.ComponentProps<'div'>;
 
 const DropdownMenu: React.FC<Props> = ({ className, ...props }) => {
   return (
