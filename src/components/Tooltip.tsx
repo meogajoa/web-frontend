@@ -1,6 +1,5 @@
 import React, { useId } from 'react';
 import { Tooltip as ReactTooltip } from 'react-tooltip';
-import { cn } from '~/utils/classname';
 
 type Props = Readonly<
   Omit<React.ComponentPropsWithRef<typeof ReactTooltip>, 'id'> & {
@@ -26,10 +25,11 @@ const Tooltip: React.FC<React.PropsWithChildren<Props>> = ({
 
       <ReactTooltip
         id={id}
-        className={cn('', className)}
-        classNameArrow={cn('', classNameArrow)}
+        className={className}
+        classNameArrow={classNameArrow}
         place={place}
-        disableStyleInjection={true}
+        opacity={100}
+        disableStyleInjection
         openEvents={clickToOpen ? { click: true } : undefined}
         {...props}
       >
