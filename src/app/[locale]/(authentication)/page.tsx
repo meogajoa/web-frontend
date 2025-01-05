@@ -13,21 +13,20 @@ const RootPage: React.FC = () => {
   const router = useRouter();
   const { accountStatus } = useAccount();
   const dots = useDotsString(3);
-
   const redirect = React.useMemo(
     () =>
-      debounce(() => {
-        if (accountStatus === AccountStatus.SignedIn) {
-          router.push('/home');
-        } else if (accountStatus === AccountStatus.SignedOut) {
-          router.push('/account/sign-in');
+      debounce((accStatus: AccountStatus) => {
+        if (accStatus === AccountStatus.SignedIn) {
+          router.replace('/home');
+        } else {
+          router.replace('/account/sign-in');
         }
       }, 3 * A_SECOND),
-    [accountStatus],
+    [],
   );
 
   React.useEffect(() => {
-    redirect();
+    redirect(accountStatus);
   }, [accountStatus]);
 
   return (
