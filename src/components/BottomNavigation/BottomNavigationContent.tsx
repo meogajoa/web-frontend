@@ -14,7 +14,10 @@ const BottomNavigationContent: React.FC<Props> = ({ className, ...props }) => {
       <div aria-hidden className="h-[4.5rem]" />
 
       <BottomNavigation
-        className={cn('bottom-0-dynamic fixed z-10 w-full', className)}
+        className={cn(
+          'shadow-top bottom-0-dynamic fixed z-10 w-full',
+          className,
+        )}
         {...props}
       >
         {MENUS.map(({ label, icon, href }) => (

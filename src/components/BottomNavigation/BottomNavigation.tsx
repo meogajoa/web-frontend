@@ -11,13 +11,7 @@ const BottomNavigation: React.FC<BottomNavigationProps> = ({
   ...props
 }) => {
   return (
-    <nav
-      className={cn(
-        'flex bg-white pb-3.5 pt-3 [box-shadow:_0px_4px_8px_0px_rgba(207,210,216,0.7)]',
-        className,
-      )}
-      {...props}
-    >
+    <nav className={cn('flex bg-white pb-3.5 pt-3', className)} {...props}>
       <div className="mx-auto flex w-full max-w-xl justify-around">
         {children}
       </div>
