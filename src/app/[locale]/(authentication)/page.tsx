@@ -1,6 +1,7 @@
 'use client';
 
 import { debounce } from 'lodash-es';
+import { useTranslations } from 'next-intl';
 import React from 'react';
 import { HashLoader } from 'react-spinners';
 import { useAccount } from '~/hooks/account';
@@ -13,6 +14,7 @@ const RootPage: React.FC = () => {
   const router = useRouter();
   const { accountStatus } = useAccount();
   const dots = useDotsString(3);
+  const messages = useTranslations('rootRoute');
   const redirect = React.useMemo(
     () =>
       debounce((accStatus: AccountStatus) => {
@@ -33,7 +35,7 @@ const RootPage: React.FC = () => {
     <div className="flex h-screen flex-col items-center justify-center gap-y-4 font-semibold">
       <HashLoader />
       <div className="relative">
-        <span>Loading</span>
+        <span>{messages('loading')}</span>
         <span className="absolute">{dots}</span>
       </div>
     </div>

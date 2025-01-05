@@ -2,6 +2,7 @@
 
 import { Button as HeadlessuiButton } from '@headlessui/react';
 import { ArrowPathIcon } from '@heroicons/react/24/outline';
+import { useTranslations } from 'next-intl';
 import React from 'react';
 import { Button } from '~/components/Button';
 import DropdownMenu from '~/components/DropdownMenu';
@@ -10,6 +11,7 @@ import Tooltip from '~/components/Tooltip';
 import { cn } from '~/utils/classname';
 
 const HomePage = () => {
+  const messages = useTranslations('homeRoute');
   const [isRotating, setIsRotating] = React.useState(false);
 
   return (
@@ -19,7 +21,7 @@ const HomePage = () => {
 
       <header className="fixed inset-0 z-10 h-fit bg-white">
         <div className="flex h-[5.5rem] items-center justify-between px-4">
-          <h1 className="text-3xl font-semibold">게임 이름(추후 협의 필요)</h1>
+          <h1 className="text-3xl font-semibold">{messages('header.title')}</h1>
           <HeadlessuiButton
             as={ArrowPathIcon}
             className={cn(
@@ -32,7 +34,7 @@ const HomePage = () => {
           />
         </div>
 
-        <div className="shadow-bottom flex gap-x-4 p-4">
+        <div className="flex gap-x-4 p-4 shadow-bottom">
           <Tooltip
             contents={<DropdownMenuList />}
             clickable
@@ -41,7 +43,7 @@ const HomePage = () => {
             place="bottom-start"
           >
             <Button size="sm" rounded="full" icon="chevron-down">
-              카테고리
+              {messages('header.categoryButton')}
             </Button>
           </Tooltip>
 
@@ -53,7 +55,7 @@ const HomePage = () => {
             place="bottom-start"
           >
             <Button size="sm" rounded="full" icon="chevron-down">
-              방 공개
+              {messages('header.roomVisibilityButton')}
             </Button>
           </Tooltip>
         </div>
@@ -64,8 +66,8 @@ const HomePage = () => {
           <li key={index} className="list-none">
             <Room
               className="w-full"
-              title="방 제목 1"
-              description="미니게임 전용"
+              title={messages('exampleRoom.title')}
+              description={messages('exampleRoom.description')}
               current={1}
               isPrivate
             />
@@ -80,7 +82,7 @@ const HomePage = () => {
         icon="plus"
         className="fixed bottom-[5.5rem] right-4 z-50 drop-shadow-2xl data-[hover]:opacity-100"
       >
-        방 생성
+        {messages('createRoomButton')}
       </Button>
     </>
   );
