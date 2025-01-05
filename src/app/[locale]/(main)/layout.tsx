@@ -8,7 +8,7 @@ import { useAccount } from '~/hooks/account';
 import { redirect } from '~/i18n/routing';
 import { AccountStatus } from '~/types/account';
 
-type MainLayoutProps = Readonly<React.PropsWithChildren>;
+type MainLayoutProps = React.PropsWithChildren;
 
 const MainLayout: React.FC<MainLayoutProps> = ({ children }) => {
   const { accountStatus } = useAccount();

@@ -6,7 +6,7 @@ import { Locale } from '~/app/[locale]/layout';
 import { routing } from '~/i18n/routing';
 import { Language } from '~/types/misc';
 
-type Props = Readonly<React.PropsWithChildren<Locale>>;
+type Props = React.PropsWithChildren<Locale>;
 
 const IntlProvider: React.FC<Props> = async ({ locale, children }) => {
   if (!routing.locales.includes(locale as Language)) {

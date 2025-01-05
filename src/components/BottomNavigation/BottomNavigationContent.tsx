@@ -4,7 +4,7 @@ import { MENUS, MenuType } from '~/constants/navigation';
 import { usePathname, useRouter } from '~/i18n/routing';
 import { cn } from '~/utils/classname';
 
-type Props = Readonly<React.ComponentProps<typeof BottomNavigation>>;
+type Props = React.ComponentProps<typeof BottomNavigation>;
 
 const BottomNavigationContent: React.FC<Props> = ({ className, ...props }) => {
   const pathname = usePathname();

@@ -8,7 +8,7 @@ import { Button as BrandButton } from '~/components/Button';
 import { cn } from '~/utils/classname';
 import Modal, { ModalProps } from '../Modal';
 
-type BrandModalProps = Readonly<React.PropsWithChildren<ModalProps>>;
+type BrandModalProps = React.PropsWithChildren<ModalProps>;
 
 const BrandModal: React.FC<BrandModalProps> = ({
   className,
@@ -25,7 +25,7 @@ const BrandModal: React.FC<BrandModalProps> = ({
   );
 };
 
-type HeadeProps = Readonly<React.ComponentProps<'div'>>;
+type HeadeProps = React.ComponentProps<'div'>;
 
 const Header: React.FC<HeadeProps> = ({ className, ...props }) => {
   return (
@@ -39,11 +39,9 @@ const Header: React.FC<HeadeProps> = ({ className, ...props }) => {
   );
 };
 
-type TitleProps = Readonly<
-  Omit<React.ComponentProps<'h1'>, 'children'> & {
-    label: string;
-  }
->;
+type TitleProps = Omit<React.ComponentProps<'h1'>, 'children'> & {
+  label: string;
+};
 
 const Title: React.FC<TitleProps> = ({ label, className, ...props }) => {
   return (
@@ -53,11 +51,9 @@ const Title: React.FC<TitleProps> = ({ label, className, ...props }) => {
   );
 };
 
-type CloseButtonProps = Readonly<
-  HeadlessButtonProps & {
-    position?: 'right' | 'left';
-  }
->;
+type CloseButtonProps = HeadlessButtonProps & {
+  position?: 'right' | 'left';
+};
 
 const CloseButton: React.FC<CloseButtonProps> = ({
   position = 'right',
@@ -77,13 +73,13 @@ const CloseButton: React.FC<CloseButtonProps> = ({
   );
 };
 
-type BodyProps = Readonly<React.ComponentProps<'div'>>;
+type BodyProps = React.ComponentProps<'div'>;
 
 const Body: React.FC<BodyProps> = ({ className, ...props }) => {
   return <div className={cn('p-4', className)} {...props} />;
 };
 
-type ButtonGroup = Readonly<React.ComponentProps<'div'>>;
+type ButtonGroup = React.ComponentProps<'div'>;
 
 const ButtonGroup: React.FC<ButtonGroup> = ({ className, ...props }) => {
   return (
@@ -94,11 +90,9 @@ const ButtonGroup: React.FC<ButtonGroup> = ({ className, ...props }) => {
   );
 };
 
-type ButtonProps = Readonly<
-  React.ComponentProps<typeof BrandButton> & {
-    kind: 'yes' | 'no';
-  }
->;
+type ButtonProps = React.ComponentProps<typeof BrandButton> & {
+  kind: 'yes' | 'no';
+};
 
 const Button: React.FC<ButtonProps> = ({ kind, ...props }) => {
   return (

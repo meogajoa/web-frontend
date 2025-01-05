@@ -3,7 +3,7 @@ import React from 'react';
 import { type MenuType } from '~/constants/navigation';
 import { cn } from '~/utils/classname';
 
-type BottomNavigationProps = Readonly<React.ComponentProps<'nav'>>;
+type BottomNavigationProps = React.ComponentProps<'nav'>;
 
 const BottomNavigation: React.FC<BottomNavigationProps> = ({
   className,
@@ -19,12 +19,10 @@ const BottomNavigation: React.FC<BottomNavigationProps> = ({
   );
 };
 
-type ItemProps = Readonly<
-  Omit<MenuType, 'href'> &
-    ButtonProps & {
-      isActive: boolean;
-    }
->;
+type ItemProps = Omit<MenuType, 'href'> &
+  ButtonProps & {
+    isActive: boolean;
+  };
 
 const Item: React.FC<ItemProps> = ({
   label,
