@@ -4,7 +4,7 @@ const createComponentTemplate = (name: string) => `
 import React from 'react';
 import { cn } from '~/utils/classname';
 
-type Props = Readonly<React.ComponentProps<'div'>>;
+type Props = React.ComponentProps<'div'>;
 
 const ${name}: React.FC<Props> = ({ className }) => {
   return <div className={cn('', className)}></div>;
