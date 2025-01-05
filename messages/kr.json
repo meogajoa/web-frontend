@@ -18,5 +18,12 @@
     "store": "상점",
     "home": "홈",
     "profile": "마이"
+  },
+  "createRoomModal": {
+    "title": "방 생성",
+    "roomNameLabel": "방 제목",
+    "roomPasswordLabel": "비밀번호",
+    "cancelButton": "취소",
+    "createButton": "방 만들기"
   }
 }

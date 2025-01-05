@@ -18,5 +18,12 @@
     "store": "Tienda",
     "home": "Inicio",
     "profile": "Perfil"
+  },
+  "createRoomModal": {
+    "title": "Crear sala",
+    "roomNameLabel": "Nombre de la sala",
+    "roomPasswordLabel": "Contraseña",
+    "cancelButton": "Cancelar",
+    "createButton": "Crear sala"
   }
 }

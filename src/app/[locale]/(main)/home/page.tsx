@@ -4,6 +4,7 @@ import { Button as HeadlessuiButton } from '@headlessui/react';
 import { ArrowPathIcon } from '@heroicons/react/24/outline';
 import { useTranslations } from 'next-intl';
 import React from 'react';
+import CreateRoomModal from '~/components/BrandModal/CreateRoomModal';
 import { Button } from '~/components/Button';
 import DropdownMenu from '~/components/DropdownMenu';
 import { Room } from '~/components/Room';
@@ -13,6 +14,8 @@ import { cn } from '~/utils/classname';
 const HomePage = () => {
   const messages = useTranslations('homeRoute');
   const [isRotating, setIsRotating] = React.useState(false);
+  const [isCreateRoomModalVisible, setIsCreateRoomModalVisible] =
+    React.useState(false);
 
   return (
     <>
@@ -76,6 +79,7 @@ const HomePage = () => {
       </nav>
 
       <Button
+        onClick={setIsCreateRoomModalVisible.bind(null, true)}
         variant="primary"
         rounded="full"
         size="lg"
@@ -84,6 +88,10 @@ const HomePage = () => {
       >
         {messages('createRoomButton')}
       </Button>
+      <CreateRoomModal
+        onClose={setIsCreateRoomModalVisible.bind(null, false)}
+        visible={isCreateRoomModalVisible}
+      />
     </>
   );
 };

@@ -6,13 +6,12 @@ import { cn } from '~/utils/classname';
 
 export type ModalProps = {
   overlayClassName?: React.ComponentProps<'div'>['className'];
-  className?: React.ComponentProps<'div'>['className'];
   visible: boolean;
   onClose: () => void;
   hasBackdropBlur?: boolean;
   verticalAlignment?: 'top' | 'center' | 'bottom';
   horizontalAlignment?: 'left' | 'center' | 'right';
-};
+} & React.ComponentProps<'form'>;
 
 const Modal: React.FC<React.PropsWithChildren<ModalProps>> = ({
   overlayClassName,
@@ -22,6 +21,7 @@ const Modal: React.FC<React.PropsWithChildren<ModalProps>> = ({
   hasBackdropBlur,
   verticalAlignment = 'center',
   horizontalAlignment = 'center',
+  onSubmit,
   children,
 }) => {
   return (
@@ -56,6 +56,7 @@ const Modal: React.FC<React.PropsWithChildren<ModalProps>> = ({
           className,
         )}
         transition
+        onSubmit={onSubmit}
       >
         {children}
       </DialogPanel>
