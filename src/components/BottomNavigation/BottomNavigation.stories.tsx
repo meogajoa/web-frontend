@@ -30,7 +30,7 @@ export const Default: Story = {
     const [mockPath, setMockPath] = React.useState('/home');
 
     return (
-      <BottomNavigation>
+      <BottomNavigation className="shadow-top">
         {MENUS.map(({ label, icon, href }) => (
           <BottomNavigation.Item
             key={label}
