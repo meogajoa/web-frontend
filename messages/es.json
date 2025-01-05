@@ -1,6 +1,22 @@
 {
-  "HomePage": {
-    "title": "헬로우 월드!",
-    "about": "소개 페이지로 이동"
+  "rootRoute": {
+    "loading": "Cargando..."
+  },
+  "homeRoute": {
+    "header": {
+      "title": "Nombre del juego (por decidir)",
+      "categoryButton": "Categoría",
+      "roomVisibilityButton": "Visibilidad de la sala"
+    },
+    "exampleRoom": {
+      "title": "Título de la sala 1",
+      "description": "Solo para mini-juegos"
+    },
+    "createRoomButton": "Crear sala"
+  },
+  "bottomNavigation": {
+    "store": "Tienda",
+    "home": "Inicio",
+    "profile": "Perfil"
   }
 }

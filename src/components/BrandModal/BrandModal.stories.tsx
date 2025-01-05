@@ -1,6 +1,6 @@
 import { Meta, StoryObj } from '@storybook/react';
 import React from 'react';
-import BrandModal from '~/components/BrandModal';
+import { BrandModal } from '~/components/BrandModal';
 import { Button } from '~/components/Button';
 
 const meta: Meta<typeof BrandModal> = {

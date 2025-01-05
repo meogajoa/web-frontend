@@ -5,7 +5,7 @@ import { isProduction } from '~/utils/misc';
 
 export const server = (() => {
   const instance = axios.create({
-    baseURL: isProduction ? CONFIGS.API_URL : '/api',
+    baseURL: isProduction ? CONFIGS.API_URL : CONFIGS.DEV_API_URL,
     headers: {
       'Content-Type': 'application/json',
     },

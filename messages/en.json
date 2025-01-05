@@ -1,6 +1,22 @@
 {
-  "HomePage": {
-    "title": "Hello world!",
-    "about": "Go to the about page"
+  "rootRoute": {
+    "loading": "Loading..."
+  },
+  "homeRoute": {
+    "header": {
+      "title": "Game Name (To Be Decided)",
+      "categoryButton": "Category",
+      "roomVisibilityButton": "Room Visibility"
+    },
+    "exampleRoom": {
+      "title": "Room Title 1",
+      "description": "Mini-game Only"
+    },
+    "createRoomButton": "Create Room"
+  },
+  "bottomNavigation": {
+    "store": "Store",
+    "home": "Home",
+    "profile": "Profile"
   }
 }

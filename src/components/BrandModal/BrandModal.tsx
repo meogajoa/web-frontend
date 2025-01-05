@@ -6,7 +6,7 @@ import { XMarkIcon } from '@heroicons/react/24/outline';
 import React from 'react';
 import { Button as BrandButton } from '~/components/Button';
 import { cn } from '~/utils/classname';
-import Modal, { ModalProps } from './Modal';
+import Modal, { ModalProps } from '../Modal';
 
 type BrandModalProps = Readonly<React.PropsWithChildren<ModalProps>>;
 

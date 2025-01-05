@@ -1,6 +1,22 @@
 {
-  "HomePage": {
-    "title": "헬로우 월드!",
-    "about": "소개 페이지로 이동"
+  "rootRoute": {
+    "loading": "載入中..."
+  },
+  "homeRoute": {
+    "header": {
+      "title": "遊戲名稱（待定）",
+      "categoryButton": "類別",
+      "roomVisibilityButton": "房間可見性"
+    },
+    "exampleRoom": {
+      "title": "房間標題 1",
+      "description": "僅限迷你遊戲"
+    },
+    "createRoomButton": "建立房間"
+  },
+  "bottomNavigation": {
+    "store": "商店",
+    "home": "首頁",
+    "profile": "個人資料"
   }
 }
