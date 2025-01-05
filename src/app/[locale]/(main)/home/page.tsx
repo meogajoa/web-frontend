@@ -17,7 +17,7 @@ const HomePage = () => {
       {/* Placeholder for the fixed header below */}
       <div aria-hidden className="h-[9.75rem]" />
 
-      <header className="fixed inset-0 h-fit bg-white">
+      <header className="fixed inset-0 z-10 h-fit bg-white">
         <div className="flex h-[5.5rem] items-center justify-between px-4">
           <h1 className="text-3xl font-semibold">게임 이름(추후 협의 필요)</h1>
           <HeadlessuiButton
@@ -72,6 +72,16 @@ const HomePage = () => {
           </li>
         ))}
       </nav>
+
+      <Button
+        variant="primary"
+        rounded="full"
+        size="lg"
+        icon="plus"
+        className="fixed bottom-[5.5rem] right-4 z-50 drop-shadow-2xl data-[hover]:opacity-100"
+      >
+        방 생성
+      </Button>
     </>
   );
 };
