@@ -13,3 +13,9 @@
     @apply font-brand antialiased;
   }
 }
+
+@layer utilities {
+  .bottom-0-dynamic {
+    bottom: env(safe-area-inset-bottom, 0);
+  }
+}

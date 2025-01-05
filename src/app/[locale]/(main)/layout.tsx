@@ -19,10 +19,10 @@ const MainLayout: React.FC<MainLayoutProps> = ({ children }) => {
   }
 
   return (
-    <div>
+    <>
       {children}
       <BottomNavigationContent />
-    </div>
+    </>
   );
 };
 

@@ -10,20 +10,24 @@ const BottomNavigationContent: React.FC<Props> = ({ className, ...props }) => {
   const router = useRouter();
 
   return (
-    <BottomNavigation
-      className={cn('fixed bottom-0 w-full', className)}
-      {...props}
-    >
-      {MENUS.map(({ label, icon, href }) => (
-        <BottomNavigation.Item
-          key={label}
-          label={label}
-          isActive={href === pathname}
-          icon={icon}
-          onClick={() => router.push(href)}
-        />
-      ))}
-    </BottomNavigation>
+    <>
+      <div aria-hidden className="h-[4.5rem]" />
+
+      <BottomNavigation
+        className={cn('bottom-0-dynamic fixed z-10 w-full', className)}
+        {...props}
+      >
+        {MENUS.map(({ label, icon, href }) => (
+          <BottomNavigation.Item
+            key={label}
+            label={label}
+            isActive={href === pathname}
+            icon={icon}
+            onClick={() => router.push(href)}
+          />
+        ))}
+      </BottomNavigation>
+    </>
   );
 };
 
