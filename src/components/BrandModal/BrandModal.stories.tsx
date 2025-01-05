@@ -4,7 +4,7 @@ import { BrandModal } from '~/components/BrandModal';
 import { Button } from '~/components/Button';
 
 const meta: Meta<typeof BrandModal> = {
-  title: 'Oranisms/BrandModal',
+  title: 'Organisms/BrandModal',
   component: BrandModal,
   tags: ['autodocs'],
   args: {
