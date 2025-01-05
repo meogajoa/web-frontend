@@ -14,46 +14,52 @@ const HomePage = () => {
 
   return (
     <>
-      <div className="flex h-[5.5rem] items-center justify-between px-4">
-        <h1 className="text-3xl font-semibold">게임 이름(추후 협의 필요)</h1>
-        <HeadlessuiButton
-          as={ArrowPathIcon}
-          className={cn(
-            'size-6 stroke-black',
-            isRotating && 'rotate-[360deg] transition-transform duration-1000',
-          )}
-          onClick={setIsRotating.bind(null, true)}
-          onTransitionEnd={setIsRotating.bind(null, false)}
-        />
-      </div>
+      {/* Placeholder for the fixed header below */}
+      <div aria-hidden className="h-[9.75rem]" />
 
-      <div className="shadow-bottom flex gap-x-4 p-4">
-        <Tooltip
-          contents={<DropdownMenuList />}
-          clickable
-          clickToOpen
-          offset={20}
-          place="bottom-start"
-        >
-          <Button size="sm" rounded="full" icon="chevron-down">
-            카테고리
-          </Button>
-        </Tooltip>
+      <header className="fixed inset-0 h-fit bg-white">
+        <div className="flex h-[5.5rem] items-center justify-between px-4">
+          <h1 className="text-3xl font-semibold">게임 이름(추후 협의 필요)</h1>
+          <HeadlessuiButton
+            as={ArrowPathIcon}
+            className={cn(
+              'size-6 stroke-black',
+              isRotating &&
+                'rotate-[360deg] transition-transform duration-1000',
+            )}
+            onClick={setIsRotating.bind(null, true)}
+            onTransitionEnd={setIsRotating.bind(null, false)}
+          />
+        </div>
 
-        <Tooltip
-          contents={<DropdownMenuList />}
-          clickable
-          clickToOpen
-          offset={20}
-          place="bottom-start"
-        >
-          <Button size="sm" rounded="full" icon="chevron-down">
-            방 공개
-          </Button>
-        </Tooltip>
-      </div>
+        <div className="shadow-bottom flex gap-x-4 p-4">
+          <Tooltip
+            contents={<DropdownMenuList />}
+            clickable
+            clickToOpen
+            offset={20}
+            place="bottom-start"
+          >
+            <Button size="sm" rounded="full" icon="chevron-down">
+              카테고리
+            </Button>
+          </Tooltip>
 
-      <nav className="mt-2.5 space-y-2.5 px-4">
+          <Tooltip
+            contents={<DropdownMenuList />}
+            clickable
+            clickToOpen
+            offset={20}
+            place="bottom-start"
+          >
+            <Button size="sm" rounded="full" icon="chevron-down">
+              방 공개
+            </Button>
+          </Tooltip>
+        </div>
+      </header>
+
+      <nav className="space-y-2.5 px-4 py-2.5">
         {Array.from({ length: 20 }).map((_, index) => (
           <li key={index} className="list-none">
             <Room
