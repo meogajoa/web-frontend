@@ -17,18 +17,18 @@ type LabelInputProps = Readonly<
 
 const LabelInputVariant = cva('w-full text-left', {
   variants: {
-    variants: {
+    variant: {
       primary: 'mb-1.5 font-normal text-gray-1',
     },
-    labelsize: {
+    labelSize: {
       lg: 'text-lg',
       md: 'text-base',
       sm: 'text-sm',
     },
   },
   defaultVariants: {
-    variants: 'primary',
-    labelsize: 'md',
+    variant: 'primary',
+    labelSize: 'md',
   },
 });
 
@@ -36,7 +36,7 @@ const LabelInput: React.FC<LabelInputProps> = ({
   label,
   type,
   size,
-  labelsize,
+  labelSize,
   rounded,
   placeholder,
   error,
@@ -44,8 +44,8 @@ const LabelInput: React.FC<LabelInputProps> = ({
   ...props
 }) => {
   return (
-    <div className={cn(`(LabelInputVariant) w-full`, className)} {...props}>
-      <label className={cn(LabelInputVariant({ labelsize }))}>{label}</label>
+    <div className={cn(`w-full`, className)} {...props}>
+      <label className={cn(LabelInputVariant({ labelSize }))}>{label}</label>
       <Input
         type={type}
         size={size}
