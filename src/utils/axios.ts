@@ -1,10 +1,10 @@
 import axios from 'axios';
 import { CONFIGS } from '~/utils/config';
-import { isProduction } from '~/utils/misc';
+import { isProduction } from '~/utils/env';
 
 export const server = (() => {
   const instance = axios.create({
-    baseURL: isProduction ? CONFIGS.API_URL : CONFIGS.DEV_API_URL,
+    baseURL: isProduction() ? CONFIGS.API_URL : CONFIGS.DEV_API_URL,
     headers: {
       'Content-Type': 'application/json',
     },
@@ -21,10 +21,21 @@ export const server = (() => {
 
   instance.interceptors.response.use(
     (response) => response,
-    (error) => {
-      if ([401, 403].includes(error.response?.status)) {
-        localStorage.removeItem('sessionId');
-        window?.location.replace('/');
+    (error: unknown) => {
+      if (error instanceof axios.AxiosError) {
+        if (error.response) {
+          console.error('[ERROR]: Axios error', error);
+
+          if ([401, 403].includes(error.response.status)) {
+            localStorage.removeItem('sessionId');
+            window?.location.replace('/');
+          }
+        } else {
+          console.error(`[ERROR]: Network error`, error);
+          // TODO: Handle network error
+        }
+      } else {
+        console.error('[ERROR]: Unknown error', error);
       }
 
       return Promise.reject(error);
