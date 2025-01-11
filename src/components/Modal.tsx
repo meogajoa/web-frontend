@@ -4,23 +4,24 @@ import { Dialog, DialogBackdrop, DialogPanel } from '@headlessui/react';
 import React from 'react';
 import { cn } from '~/utils/classname';
 
-export type ModalProps = {
+export type ModalProps = React.ComponentProps<'form'> & {
   overlayClassName?: React.ComponentProps<'div'>['className'];
   visible: boolean;
-  onClose: () => void;
   hasBackdropBlur?: boolean;
   verticalAlignment?: 'top' | 'center' | 'bottom';
   horizontalAlignment?: 'left' | 'center' | 'right';
-} & React.ComponentProps<'form'>;
+  onClose: () => void;
+  onSubmit?: () => void;
+};
 
 const Modal: React.FC<React.PropsWithChildren<ModalProps>> = ({
-  overlayClassName,
   className,
+  overlayClassName,
   visible,
-  onClose,
   hasBackdropBlur,
   verticalAlignment = 'center',
   horizontalAlignment = 'center',
+  onClose,
   onSubmit,
   children,
 }) => {

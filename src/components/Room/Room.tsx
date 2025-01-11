@@ -3,7 +3,8 @@ import React from 'react';
 import LockIcon from '~/svgs/LockIcon';
 import { cn } from '~/utils/classname';
 
-type Props = React.ComponentProps<'div'> & {
+type Props = {
+  className?: string;
   total?: number;
   current: number;
   title: string;
@@ -12,12 +13,12 @@ type Props = React.ComponentProps<'div'> & {
 };
 
 const Room: React.FC<Props> = ({
-  title,
-  description,
-  isPrivate,
-  current,
-  total = 8,
   className,
+  total = 8,
+  current,
+  title,
+  isPrivate,
+  description,
 }) => {
   return (
     <Button

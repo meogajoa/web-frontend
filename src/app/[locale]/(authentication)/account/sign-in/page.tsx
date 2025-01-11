@@ -40,8 +40,8 @@ const SignInPage = () => {
 
   return (
     <form
-      onSubmit={handleSubmit(onSubmit)}
       className="flex flex-col items-center justify-center"
+      onSubmit={handleSubmit(onSubmit)}
     >
       <div>
         <label htmlFor="email">Email</label>

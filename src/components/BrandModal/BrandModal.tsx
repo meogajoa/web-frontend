@@ -1,14 +1,16 @@
 import {
   Button as HeadlessButton,
-  ButtonProps as HeadlessButtonProps,
+  type ButtonProps as HeadlessButtonProps,
 } from '@headlessui/react';
 import { XMarkIcon } from '@heroicons/react/24/outline';
 import React from 'react';
-import { Button as BrandButton } from '~/components/Button';
+import { Button } from '~/components/Button';
 import { cn } from '~/utils/classname';
 import Modal, { ModalProps } from '../Modal';
 
-export type BrandModalProps = ModalProps & React.ComponentPropsWithRef<'form'>;
+export type BrandModalProps = ModalProps & {
+  className?: React.ComponentProps<'div'>['className'];
+};
 
 const BrandModal: React.FC<BrandModalProps> = ({
   className,
@@ -25,83 +27,111 @@ const BrandModal: React.FC<BrandModalProps> = ({
   );
 };
 
-type HeadeProps = React.ComponentProps<'div'>;
+type HeadeProps = {
+  className?: React.ComponentProps<'div'>['className'];
+};
 
-const Header: React.FC<HeadeProps> = ({ className, ...props }) => {
+const Header: React.FC<React.PropsWithChildren<HeadeProps>> = ({
+  className,
+  children,
+}) => {
   return (
     <div
       className={cn(
         'relative flex h-16 w-full items-center justify-center bg-gray-5',
         className,
       )}
-      {...props}
-    />
+    >
+      {children}
+    </div>
   );
 };
 
-type TitleProps = Omit<React.ComponentProps<'h1'>, 'children'> & {
+type TitleProps = {
+  className?: React.ComponentProps<'h1'>['className'];
   label: string;
 };
 
-const Title: React.FC<TitleProps> = ({ label, className, ...props }) => {
-  return (
-    <h1 className={cn('text-2xl font-bold', className)} {...props}>
-      {label}
-    </h1>
-  );
+const Title: React.FC<TitleProps> = ({ className, label }) => {
+  return <h1 className={cn('text-2xl font-bold', className)}>{label}</h1>;
 };
 
 type CloseButtonProps = HeadlessButtonProps & {
+  className?: React.ComponentProps<'button'>['className'];
   position?: 'right' | 'left';
+  onClose: () => void;
 };
 
 const CloseButton: React.FC<CloseButtonProps> = ({
-  position = 'right',
   className,
+  position = 'right',
+  onClose: handleClose,
   ...props
 }) => {
   return (
     <HeadlessButton
-      as={XMarkIcon}
       className={cn(
         'absolute size-6 cursor-pointer fill-gray-1 stroke-2',
         position === 'right' ? 'right-4' : 'left-4',
         className,
       )}
+      as={XMarkIcon}
+      onClick={handleClose}
       {...props}
     />
   );
 };
 
-type BodyProps = React.ComponentProps<'div'>;
-
-const Body: React.FC<BodyProps> = ({ className, ...props }) => {
-  return <div className={cn('p-4', className)} {...props} />;
+type BodyProps = {
+  className?: React.ComponentProps<'div'>['className'];
 };
 
-type ButtonGroup = React.ComponentProps<'div'>;
+const Body: React.FC<React.PropsWithChildren<BodyProps>> = ({
+  className,
+  children,
+}) => {
+  return <div className={cn('p-4', className)}>{children}</div>;
+};
 
-const ButtonGroup: React.FC<ButtonGroup> = ({ className, ...props }) => {
+type ButtonGroup = {
+  className?: React.ComponentProps<'div'>['className'];
+};
+
+const ButtonGroup: React.FC<React.PropsWithChildren<ButtonGroup>> = ({
+  className,
+  children,
+}) => {
   return (
     <div
       className={cn('flex items-center justify-center gap-x-8 p-5', className)}
-      {...props}
-    />
+    >
+      {children}
+    </div>
   );
 };
 
-type ButtonProps = React.ComponentProps<typeof BrandButton> & {
+type ModalButtonProps = {
+  className?: React.ComponentProps<'button'>['className'];
   kind: 'yes' | 'no';
+  onClick: () => void;
 };
 
-const Button: React.FC<ButtonProps> = ({ kind, ...props }) => {
+const ModalButton: React.FC<React.PropsWithChildren<ModalButtonProps>> = ({
+  className,
+  kind,
+  onClick: handleClick,
+  children,
+}) => {
   return (
-    <BrandButton
-      variant={kind === 'yes' ? 'primary' : 'secondary'}
+    <Button
+      className={cn('', className)}
       rounded="full"
       size="lg"
-      {...props}
-    />
+      variant={kind === 'yes' ? 'primary' : 'secondary'}
+      onClick={handleClick}
+    >
+      {children}
+    </Button>
   );
 };
 
@@ -111,5 +141,5 @@ export default Object.assign(BrandModal, {
   CloseButton,
   Body,
   ButtonGroup,
-  Button,
+  Button: ModalButton,
 });

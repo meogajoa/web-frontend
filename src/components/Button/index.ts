@@ -1,3 +1,3 @@
-import Button from '~/components/Button/Button';
+import Button, { ButtonProps } from '~/components/Button/Button';
 
-export { Button };
+export { Button, type ButtonProps };

@@ -8,7 +8,7 @@ type Props = BrandModalProps;
 
 type CreateRoomForm = {
   roomName: string;
-  password: string;
+  roomPassword: string;
 };
 
 const createRoomMutationFn = async (data: CreateRoomForm): Promise<any> => {
@@ -54,7 +54,7 @@ const CreateRoomModal: React.FC<Props> = ({ onClose, visible }) => {
           <label htmlFor="roomPassword">{messages('roomPasswordLabel')}</label>
           <input
             type="password"
-            {...register('password', { required: true })}
+            {...register('roomPassword', { required: true })}
           />
         </div>
       </BrandModal.Body>
@@ -63,6 +63,7 @@ const CreateRoomModal: React.FC<Props> = ({ onClose, visible }) => {
         <BrandModal.Button kind="no" onClick={onClose}>
           {messages('cancelButton')}
         </BrandModal.Button>
+
         <BrandModal.Button kind="yes" type="submit">
           {messages('createButton')}
         </BrandModal.Button>

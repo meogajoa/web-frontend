@@ -7,7 +7,12 @@ import { cva, VariantProps } from 'class-variance-authority';
 import React from 'react';
 import { cn } from '~/utils/classname';
 
-const ButtonVariant = cva(
+const BUTTON_ICONS = {
+  'chevron-down': ChevronDownIcon,
+  plus: PlusIcon,
+} as const;
+
+const buttonVariant = cva(
   'inline-block text-center font-bold text-white transition duration-300 data-[hover]:scale-95 data-[disabled]:cursor-not-allowed data-[disabled]:bg-gray-5 data-[active]:opacity-70 data-[hover]:opacity-90 data-[focus]:outline-none',
   {
     variants: {
@@ -37,32 +42,20 @@ const ButtonVariant = cva(
   },
 );
 
-type ButtonIcon = Uppercase<
-  NonNullable<VariantProps<typeof ButtonVariant>['icon']>
->;
+export type ButtonProps = HeadlessButtonProps &
+  VariantProps<typeof buttonVariant>;
 
-const BUTTON_ICONS: Readonly<
-  Record<ButtonIcon, React.FC<React.ComponentProps<'svg'>>>
-> = {
-  'CHEVRON-DOWN': ChevronDownIcon,
-  PLUS: PlusIcon,
-};
-
-type ButtonProps = Omit<HeadlessButtonProps, 'children'> &
-  VariantProps<typeof ButtonVariant> &
-  React.PropsWithChildren;
-
-const Button: React.FC<ButtonProps> = ({
+const Button: React.FC<React.PropsWithChildren<ButtonProps>> = ({
   className,
   icon,
   children,
   ...props
 }) => {
-  const Icon = icon ? BUTTON_ICONS[icon.toUpperCase() as ButtonIcon] : null;
+  const Icon = BUTTON_ICONS[icon!];
 
   return (
     <HeadlessButton
-      className={cn(ButtonVariant({ icon, ...props }), className)}
+      className={cn(buttonVariant({ icon, ...props }), className)}
       {...props}
     >
       {children}

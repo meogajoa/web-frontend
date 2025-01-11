@@ -3,13 +3,13 @@ import React from 'react';
 import { type MenuType } from '~/constants/navigation';
 import { cn } from '~/utils/classname';
 
-type BottomNavigationProps = React.ComponentProps<'nav'>;
+type BottomNavigationProps = {
+  className?: React.ComponentProps<'footer'>['className'];
+};
 
-const BottomNavigation: React.FC<BottomNavigationProps> = ({
-  className,
-  children,
-  ...props
-}) => {
+const BottomNavigation: React.FC<
+  React.PropsWithChildren<BottomNavigationProps>
+> = ({ className, children, ...props }) => {
   return (
     <footer className={cn('flex bg-white pb-3.5 pt-3', className)} {...props}>
       <nav className="mx-auto flex w-full max-w-xl justify-around">
@@ -22,14 +22,15 @@ const BottomNavigation: React.FC<BottomNavigationProps> = ({
 type ItemProps = Omit<MenuType, 'href'> &
   ButtonProps & {
     isActive: boolean;
+    onButtonClick: () => void;
   };
 
 const Item: React.FC<ItemProps> = ({
+  className,
   label,
   icon: Icon,
   isActive,
-  className,
-  ...props
+  onButtonClick: handleClick,
 }) => {
   return (
     <Button
@@ -40,7 +41,7 @@ const Item: React.FC<ItemProps> = ({
           : 'fill-gray-6 text-gray-6 data-[hover]:fill-red/80 data-[hover]:text-red/80',
         className,
       )}
-      {...props}
+      onClick={handleClick}
     >
       <Icon className="size-6 fill-inherit transition-colors duration-300" />
       <span className="text-sm text-inherit transition-colors duration-300">
