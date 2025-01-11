@@ -1,4 +1,5 @@
 import { Meta, StoryObj } from '@storybook/react';
+import React from 'react';
 import Input from './Input';
 
 const meta: Meta<typeof Input> = {
@@ -13,10 +14,6 @@ const meta: Meta<typeof Input> = {
     },
     placeholder: {
       description: 'Input의 placeholder 텍스트',
-      control: 'text',
-    },
-    error: {
-      description: '에러 메시지',
       control: 'text',
     },
     className: {
@@ -64,6 +61,16 @@ export const TextInput: Story = {
     type: 'text',
     placeholder: 'Enter your text',
   },
+  render: () => {
+    const [value, setValue] = React.useState('');
+
+    return <Input value={value} onValueChange={handleValueChange} />;
+
+    function handleValueChange(newValue: string) {
+      console.log(newValue);
+      setValue(newValue);
+    }
+  },
 };
 
 export const PasswordInput: Story = {
@@ -84,7 +91,7 @@ export const TextareaInput: Story = {
   args: {
     type: 'textarea',
     placeholder: 'Enter your message',
-    className: 'h-32', // 텍스트 에어리어 높이 조정
+    className: 'h-32',
   },
 };
 
@@ -109,7 +116,6 @@ export const WithError: Story = {
   args: {
     type: 'text',
     placeholder: 'Input with error',
-    error: 'This field is required',
-    className: 'border-red-500', // 에러 시 빨간 테두리
+    className: 'border-red-500',
   },
 };

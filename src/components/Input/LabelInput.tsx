@@ -1,19 +1,6 @@
 import { cva, VariantProps } from 'class-variance-authority';
 import { cn } from '~/utils/classname';
-import Input from './Input';
-
-type LabelInputProps = Readonly<
-  React.ComponentProps<'div'> & // div props 상속
-    VariantProps<typeof LabelInputVariant> & {
-      label: string;
-      type?: 'text' | 'password' | 'email' | 'textarea';
-      placeholder?: string;
-      size?: 'lg' | 'md' | 'sm';
-      labelsize?: 'lg' | 'md' | 'sm';
-      rounded?: 'full' | 'md';
-      error?: string;
-    }
->;
+import Input, { InputProps } from './Input';
 
 const LabelInputVariant = cva('w-full text-left', {
   variants: {
@@ -32,27 +19,25 @@ const LabelInputVariant = cva('w-full text-left', {
   },
 });
 
+type LabelInputProps = VariantProps<typeof LabelInputVariant> &
+  InputProps & {
+    className?: React.ComponentProps<'div'>['className'];
+    label: string;
+    labelsize?: 'lg' | 'md' | 'sm';
+    error?: string;
+  };
+
 const LabelInput: React.FC<LabelInputProps> = ({
-  label,
-  type,
-  size,
-  labelSize,
-  rounded,
-  placeholder,
-  error,
   className,
+  label,
+  labelSize,
+  error,
   ...props
 }) => {
   return (
-    <div className={cn(`w-full`, className)} {...props}>
+    <div className={cn(`w-full`, className)}>
       <label className={cn(LabelInputVariant({ labelSize }))}>{label}</label>
-      <Input
-        type={type}
-        size={size}
-        rounded={rounded}
-        error={error}
-        placeholder={placeholder}
-      />
+      <Input {...props} />
       {error && <p className="mt-1.5 text-sm text-red">{error}</p>}
     </div>
   );
