@@ -1,5 +1,6 @@
 import BrandModal, {
   type BrandModalProps,
 } from '~/components/BrandModal/BrandModal';
+import CreateRoomModal from '~/components/BrandModal/CreateRoomModal';
 
-export { BrandModal, type BrandModalProps };
+export { BrandModal, CreateRoomModal, type BrandModalProps };

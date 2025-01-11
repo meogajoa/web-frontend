@@ -7,12 +7,14 @@ import {
 } from '@tanstack/react-query';
 import { ReactQueryDevtools } from '@tanstack/react-query-devtools';
 import { ReactQueryStreamedHydration } from '@tanstack/react-query-next-experimental';
+import { A_MINUTE } from '~/utils/constants';
 
 function makeQueryClient() {
   return new QueryClient({
     defaultOptions: {
       queries: {
-        staleTime: 60 * 1000,
+        staleTime: A_MINUTE,
+        gcTime: 5 * A_MINUTE,
       },
     },
   });
@@ -23,13 +25,13 @@ let browserQueryClient: QueryClient | undefined = undefined;
 function getQueryClient() {
   if (isServer) {
     return makeQueryClient();
-  } else {
-    if (!browserQueryClient) {
-      browserQueryClient = makeQueryClient();
-    }
-
-    return browserQueryClient;
   }
+
+  if (!browserQueryClient) {
+    browserQueryClient = makeQueryClient();
+  }
+
+  return browserQueryClient;
 }
 
 const TanstackQueryProvider: React.FC<React.PropsWithChildren> = ({
