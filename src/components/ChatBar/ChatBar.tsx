@@ -1,18 +1,17 @@
-import {
-  Button as HeadlessuiButton,
-  ButtonProps as HeadlessuiButtonProps,
-} from '@headlessui/react';
+import { Button as HeadlessuiButton } from '@headlessui/react';
 import { PlusCircleIcon } from '@heroicons/react/24/outline';
 import React from 'react';
-import CustomTextarea from '~/components/CustomTextarea';
+import CustomTextarea, { TextareaHandle } from '~/components/CustomTextarea';
 import MessageSendIcon from '~/svgs/MessageSendIcon';
 import { cn } from '~/utils/classname';
 
-type Props = React.ComponentProps<'form'>;
+type Props = {
+  className?: React.ComponentProps<'div'>['className'];
+};
 
 const ChatBar: React.FC<Props> = ({ className, ...props }) => {
   return (
-    <form
+    <div
       className={cn(
         'bottom-0-dynamic fixed flex w-full items-center gap-x-3 bg-white px-4 py-1 shadow-top',
         className,
@@ -22,44 +21,61 @@ const ChatBar: React.FC<Props> = ({ className, ...props }) => {
   );
 };
 
-type MenuButtonProps = HeadlessuiButtonProps;
+type MenuButtonProps = {
+  className?: React.ComponentProps<'button'>['className'];
+  onMenuClick: () => void;
+};
 
-const MenuButton: React.FC<MenuButtonProps> = ({ className, ...props }) => {
+const MenuButton: React.FC<MenuButtonProps> = ({
+  className,
+  onMenuClick: handleMenuClick,
+}) => {
   return (
     <HeadlessuiButton
-      as={PlusCircleIcon}
-      className={cn('size-6 cursor-pointer stroke-gray-1', className)}
-      {...props}
-    />
+      className={cn('size-6 cursor-pointer', className)}
+      onClick={handleMenuClick}
+    >
+      <PlusCircleIcon className="size-full stroke-gray-1" />
+    </HeadlessuiButton>
   );
 };
 
-type TextareaProps = React.ComponentPropsWithRef<typeof CustomTextarea>;
+type TextareaProps = {
+  className?: React.ComponentProps<'textarea'>['className'];
+  ref: React.RefObject<TextareaHandle>;
+};
 
-const Textarea: React.FC<TextareaProps> = ({ className, ...props }) => {
+const Textarea: React.FC<TextareaProps> = ({ className, ref }) => {
   return (
     <CustomTextarea
       className={cn(
         'scrollbar-primary rounded-lg border border-gray-6 p-2.5 text-xl text-gray-1 transition-all duration-300 placeholder:text-gray-5 focus:outline-none',
         className,
       )}
-      {...props}
+      ref={ref}
     />
   );
 };
 
-type SendButtonProps = HeadlessuiButtonProps;
+type SendButtonProps = {
+  className?: React.ComponentProps<'button'>['className'];
+  onSendClick: () => void;
+};
 
-const SendButton: React.FC<SendButtonProps> = ({ className, ...props }) => {
+const SendButton: React.FC<SendButtonProps> = ({
+  className,
+  onSendClick: handleSend,
+}) => {
   return (
     <HeadlessuiButton
-      as={MessageSendIcon}
       className={cn(
-        'size-5.5 cursor-pointer stroke-gray-1 transition-transform duration-300 hover:rotate-45',
+        'size-5.5 cursor-pointer transition-transform duration-300 hover:rotate-45',
         className,
       )}
-      {...props}
-    />
+      onClick={handleSend}
+    >
+      <MessageSendIcon className="size-full stroke-gray-1" />
+    </HeadlessuiButton>
   );
 };
 

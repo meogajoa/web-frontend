@@ -18,5 +18,12 @@
     "store": "ストア",
     "home": "ホーム",
     "profile": "プロフィール"
+  },
+  "createRoomModal": {
+    "title": "部屋を作成",
+    "roomNameLabel": "部屋の名前",
+    "roomPasswordLabel": "パスワード",
+    "cancelButton": "キャンセル",
+    "createButton": "部屋を作成"
   }
 }

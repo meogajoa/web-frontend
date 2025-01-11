@@ -6,9 +6,11 @@ import { usePathname, useRouter } from '~/i18n/routing';
 import { cn } from '~/utils/classname';
 import { CONFIGS } from '~/utils/config';
 
-type Props = React.ComponentProps<typeof BottomNavigation>;
+type Props = {
+  className?: React.ComponentProps<'footer'>['className'];
+};
 
-const BottomNavigationContent: React.FC<Props> = ({ className, ...props }) => {
+const BottomNavigationContent: React.FC<Props> = ({ className }) => {
   const pathname = usePathname();
   const router = useRouter();
   const messages = useTranslations('bottomNavigation');
@@ -23,8 +25,8 @@ const BottomNavigationContent: React.FC<Props> = ({ className, ...props }) => {
   return (
     <>
       <div
-        aria-hidden
         className={cn('h-[4.5rem] transition-all duration-300', hide && 'h-0')}
+        aria-hidden
       />
 
       <BottomNavigation
@@ -33,7 +35,6 @@ const BottomNavigationContent: React.FC<Props> = ({ className, ...props }) => {
           hide && 'translate-y-full',
           className,
         )}
-        {...props}
       >
         {MENUS.map(({ label, icon, href }) => (
           <BottomNavigation.Item
@@ -41,7 +42,7 @@ const BottomNavigationContent: React.FC<Props> = ({ className, ...props }) => {
             label={messages(label) as MenuType['label']}
             isActive={href === pathname}
             icon={icon}
-            onClick={() => router.push(href)}
+            onButtonClick={() => router.push(href)}
           />
         ))}
       </BottomNavigation>

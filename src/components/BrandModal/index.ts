@@ -1,3 +1,5 @@
-import BrandModal from '~/components/BrandModal/BrandModal';
+import BrandModal, {
+  type BrandModalProps,
+} from '~/components/BrandModal/BrandModal';
 
-export { BrandModal };
+export { BrandModal, type BrandModalProps };

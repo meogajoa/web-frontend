@@ -4,24 +4,25 @@ import { Dialog, DialogBackdrop, DialogPanel } from '@headlessui/react';
 import React from 'react';
 import { cn } from '~/utils/classname';
 
-export type ModalProps = {
+export type ModalProps = React.ComponentProps<'form'> & {
   overlayClassName?: React.ComponentProps<'div'>['className'];
-  className?: React.ComponentProps<'div'>['className'];
   visible: boolean;
-  onClose: () => void;
   hasBackdropBlur?: boolean;
   verticalAlignment?: 'top' | 'center' | 'bottom';
   horizontalAlignment?: 'left' | 'center' | 'right';
+  onClose: () => void;
+  onSubmit?: () => void;
 };
 
 const Modal: React.FC<React.PropsWithChildren<ModalProps>> = ({
-  overlayClassName,
   className,
+  overlayClassName,
   visible,
-  onClose,
   hasBackdropBlur,
   verticalAlignment = 'center',
   horizontalAlignment = 'center',
+  onClose,
+  onSubmit,
   children,
 }) => {
   return (
@@ -44,7 +45,7 @@ const Modal: React.FC<React.PropsWithChildren<ModalProps>> = ({
       )}
 
       <DialogPanel
-        as="aside"
+        as="form"
         className={cn(
           'relative flex size-full overflow-y-auto duration-300 ease-in-out data-[closed]:opacity-0',
           verticalAlignment === 'top' && 'items-start',
@@ -55,8 +56,8 @@ const Modal: React.FC<React.PropsWithChildren<ModalProps>> = ({
           horizontalAlignment === 'right' && 'ml-auto',
           className,
         )}
-        onClick={onClose}
         transition
+        onSubmit={onSubmit}
       >
         {children}
       </DialogPanel>

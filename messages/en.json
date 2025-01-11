@@ -18,5 +18,12 @@
     "store": "Store",
     "home": "Home",
     "profile": "Profile"
+  },
+  "createRoomModal": {
+    "title": "Create Room",
+    "roomNameLabel": "Room Name",
+    "roomPasswordLabel": "Password",
+    "cancelButton": "Cancel",
+    "createButton": "Create Room"
   }
 }

@@ -29,19 +29,19 @@ const SignInPage = () => {
   const { register, handleSubmit } = useForm<SignUpForm>();
   const router = useRouter();
 
-  const mutate = useMutation({
+  const { mutate } = useMutation({
     mutationFn: signInMutationFn,
   });
 
   const onSubmit: SubmitHandler<SignUpForm> = (data) => {
-    mutate.mutate(data);
+    mutate(data);
     router.push('/');
   };
 
   return (
     <form
-      onSubmit={handleSubmit(onSubmit)}
       className="flex flex-col items-center justify-center"
+      onSubmit={handleSubmit(onSubmit)}
     >
       <div>
         <label htmlFor="email">Email</label>

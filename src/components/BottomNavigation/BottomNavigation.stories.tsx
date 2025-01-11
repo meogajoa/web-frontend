@@ -37,10 +37,14 @@ export const Default: Story = {
             label={label}
             isActive={href === mockPath}
             icon={icon}
-            onClick={setMockPath.bind(null, href)}
+            onButtonClick={handleMenuClick(href)}
           />
         ))}
       </BottomNavigation>
     );
+
+    function handleMenuClick(path: string) {
+      return () => setMockPath(path);
+    }
   },
 };

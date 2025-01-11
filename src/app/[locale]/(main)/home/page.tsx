@@ -4,6 +4,7 @@ import { Button as HeadlessuiButton } from '@headlessui/react';
 import { ArrowPathIcon } from '@heroicons/react/24/outline';
 import { useTranslations } from 'next-intl';
 import React from 'react';
+import CreateRoomModal from '~/components/BrandModal/CreateRoomModal';
 import { Button } from '~/components/Button';
 import DropdownMenu from '~/components/DropdownMenu';
 import { Room } from '~/components/Room';
@@ -13,24 +14,26 @@ import { cn } from '~/utils/classname';
 const HomePage = () => {
   const messages = useTranslations('homeRoute');
   const [isRotating, setIsRotating] = React.useState(false);
+  const [isCreateRoomModalVisible, setIsCreateRoomModalVisible] =
+    React.useState(false);
 
   return (
     <>
       {/* Placeholder for the fixed header below */}
-      <div aria-hidden className="h-[9.75rem]" />
+      <div className="h-[9.75rem]" aria-hidden />
 
       <header className="fixed inset-0 z-10 h-fit bg-white">
         <div className="flex h-[5.5rem] items-center justify-between px-4">
           <h1 className="text-3xl font-semibold">{messages('header.title')}</h1>
           <HeadlessuiButton
-            as={ArrowPathIcon}
             className={cn(
               'size-6 stroke-black',
               isRotating &&
                 'rotate-[360deg] transition-transform duration-1000',
             )}
-            onClick={setIsRotating.bind(null, true)}
-            onTransitionEnd={setIsRotating.bind(null, false)}
+            as={ArrowPathIcon}
+            onClick={handleRefreshClick(true)}
+            onTransitionEnd={handleRefreshClick(false)}
           />
         </div>
 
@@ -76,16 +79,29 @@ const HomePage = () => {
       </nav>
 
       <Button
+        className="fixed bottom-[5.5rem] right-4 z-50 drop-shadow-2xl data-[hover]:opacity-100"
         variant="primary"
         rounded="full"
         size="lg"
         icon="plus"
-        className="fixed bottom-[5.5rem] right-4 z-50 drop-shadow-2xl data-[hover]:opacity-100"
+        onClick={handleCreateRoomClick(true)}
       >
         {messages('createRoomButton')}
       </Button>
+      <CreateRoomModal
+        onClose={handleCreateRoomClick(false)}
+        visible={isCreateRoomModalVisible}
+      />
     </>
   );
+
+  function handleRefreshClick(rotating: boolean) {
+    return () => setIsRotating(rotating);
+  }
+
+  function handleCreateRoomClick(modalVisible: boolean) {
+    return () => setIsCreateRoomModalVisible(modalVisible);
+  }
 };
 
 const DropdownMenuList = () => (
