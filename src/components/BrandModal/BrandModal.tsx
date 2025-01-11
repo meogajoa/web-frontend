@@ -113,12 +113,14 @@ const ButtonGroup: React.FC<React.PropsWithChildren<ButtonGroup>> = ({
 type ModalButtonProps = {
   className?: React.ComponentProps<'button'>['className'];
   kind: 'yes' | 'no';
-  onClick: () => void;
+  type?: React.ComponentProps<'button'>['type'];
+  onClick?: () => void;
 };
 
 const ModalButton: React.FC<React.PropsWithChildren<ModalButtonProps>> = ({
   className,
   kind,
+  type,
   onClick: handleClick,
   children,
 }) => {
@@ -128,6 +130,7 @@ const ModalButton: React.FC<React.PropsWithChildren<ModalButtonProps>> = ({
       rounded="full"
       size="lg"
       variant={kind === 'yes' ? 'primary' : 'secondary'}
+      type={type}
       onClick={handleClick}
     >
       {children}

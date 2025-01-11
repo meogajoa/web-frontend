@@ -4,16 +4,17 @@ import React from 'react';
 import { SubmitHandler, useForm } from 'react-hook-form';
 import { BrandModal, BrandModalProps } from '~/components/BrandModal';
 import { server } from '~/utils/axios';
-type Props = BrandModalProps;
 
 type CreateRoomForm = {
   roomName: string;
   roomPassword: string;
 };
 
-const createRoomMutationFn = async (data: CreateRoomForm): Promise<any> => {
-  return server.post('/room/create', { ...data, roomMaxUser: 8 });
+const createRoomMutationFn = async (data: CreateRoomForm): Promise<unknown> => {
+  return server.post('/room/create', { ...data });
 };
+
+type Props = BrandModalProps;
 
 const CreateRoomModal: React.FC<Props> = ({ onClose, visible }) => {
   const messages = useTranslations('createRoomModal');
@@ -42,7 +43,7 @@ const CreateRoomModal: React.FC<Props> = ({ onClose, visible }) => {
     >
       <BrandModal.Header>
         <BrandModal.Title label={messages('title')} />
-        <BrandModal.CloseButton onClick={onClose} position="right" />
+        <BrandModal.CloseButton onClose={onClose} position="right" />
       </BrandModal.Header>
 
       <BrandModal.Body>
