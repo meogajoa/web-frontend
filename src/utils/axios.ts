@@ -21,10 +21,21 @@ export const server = (() => {
 
   instance.interceptors.response.use(
     (response) => response,
-    (error) => {
-      if ([401, 403].includes(error.response?.status)) {
-        localStorage.removeItem('sessionId');
-        window?.location.replace('/');
+    (error: unknown) => {
+      if (error instanceof axios.AxiosError) {
+        if (error.response) {
+          console.error('[ERROR]: Axios error', error);
+
+          if ([401, 403].includes(error.response.status)) {
+            localStorage.removeItem('sessionId');
+            window?.location.replace('/');
+          }
+        } else {
+          console.error(`[ERROR]: Network error`, error);
+          // TODO: Handle network error
+        }
+      } else {
+        console.error('[ERROR]: Unknown error', error);
       }
 
       return Promise.reject(error);
