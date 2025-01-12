@@ -25,5 +25,4 @@ const RootLayout: React.FC<RootLayoutProps> = ({ children }) => {
     </html>
   );
 };
-
 export default RootLayout;
