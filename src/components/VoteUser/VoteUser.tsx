@@ -47,7 +47,7 @@ const VoteUser: React.FC<VoteUserProps> = ({
     >
       <ProfileImage
         className="relative"
-        as="button"
+        as="div"
         size="xl"
         color={color}
         userNumber={userNumber}
