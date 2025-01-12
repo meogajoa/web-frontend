@@ -13,7 +13,7 @@ const GameChatBar: React.FC<Props> = ({ className }) => {
   return (
     <>
       {/* Placeholder */}
-      <div className="h-[3.813rem]" aria-hidden />
+      <div className="h-[3.813rem] shrink-0" aria-hidden />
 
       <ChatBar className={cn('', className)}>
         <ChatBar.MenuButton onMenuClick={() => {}} />

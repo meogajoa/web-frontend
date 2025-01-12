@@ -9,16 +9,19 @@ import { server } from '~/utils/axios';
 import { A_MINUTE, A_SECOND } from '~/utils/constants';
 import { sleep } from '~/utils/misc';
 
-const queryRooms = async ({ pageParam }: QueryFunctionContext) => {
-  const response = server
-    .get<RoomsQuery>(`/room/pages/${pageParam}`)
-    .then((response) => response.data);
-
-  await sleep(A_SECOND);
-  return response;
-};
-
 export const useInfinteRooms = () => {
+  const queryRooms = React.useCallback(
+    async ({ pageParam }: QueryFunctionContext) => {
+      const response = server
+        .get<RoomsQuery>(`/room/pages/${pageParam}`)
+        .then((response) => response.data);
+
+      await sleep(A_SECOND);
+      return response;
+    },
+    [],
+  );
+
   return useInfiniteQuery<
     RoomsQuery,
     AxiosError,
@@ -36,3 +39,5 @@ export const useInfinteRooms = () => {
     refetchInterval: 4 * A_MINUTE,
   });
 };
+
+export const useJoinRoom = () => {};

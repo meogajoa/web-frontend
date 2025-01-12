@@ -16,16 +16,16 @@ const RoomPage: React.FC<Props> = ({ params }) => {
   console.log(id);
 
   return (
-    <>
+    <div className="flex h-full flex-col">
       <GameHeader
-        className="px-4"
+        className="shrink-0 bg-gray-3 px-4"
         isMorning={false}
         nthRound={1}
         whichChatRoom={ChatRoomKind.All}
       />
-      <GameMessages className="bg-gray-3 p-4" />
+      <GameMessages className="flex-1 bg-gray-3 p-4" />
       <GameChatBar className="bottom-0-dynamic fixed w-full" />
-    </>
+    </div>
   );
 };
 
