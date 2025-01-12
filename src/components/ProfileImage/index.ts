@@ -1,3 +1,5 @@
-import ProfileImage from '~/components/ProfileImage/ProfileImage';
+import ProfileImage, {
+  type ProfileImageProps,
+} from '~/components/ProfileImage/ProfileImage';
 
-export { ProfileImage };
+export { ProfileImage, type ProfileImageProps };

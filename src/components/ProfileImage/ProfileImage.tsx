@@ -22,22 +22,23 @@ const variants = cva('relative rounded-[0.625rem]', {
   },
 });
 
-type ProfileImageProps = VariantProps<typeof variants> & {
+export type ProfileImageProps = VariantProps<typeof variants> & {
   className?: React.ComponentProps<'button'>['className'];
   as?: React.ElementType;
   src?: string;
-  number?: number;
+  userNumber?: number;
   onProfileClick?: () => void;
 };
 
-const ProfileImage: React.FC<ProfileImageProps> = ({
+const ProfileImage: React.FC<React.PropsWithChildren<ProfileImageProps>> = ({
   className,
   size,
   color,
   as = 'button',
   src,
-  number = 0,
+  userNumber = 0,
   onProfileClick: handleProfileClick,
+  children,
   ...props
 }) => {
   const Component = as === 'button' ? HeadlessuiButton : as;
@@ -51,11 +52,13 @@ const ProfileImage: React.FC<ProfileImageProps> = ({
       onClick={handleProfileClick}
       {...props}
     >
-      {number > 0 && (
+      {userNumber > 0 && (
         <mark className="absolute right-0.5 top-0.5 flex size-6 items-center justify-center rounded-lg bg-gray-4 text-[0.625rem] font-bold text-black">
-          {number}
+          {userNumber}
         </mark>
       )}
+
+      {children}
     </Component>
   );
 };
