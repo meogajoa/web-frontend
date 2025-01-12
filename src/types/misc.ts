@@ -10,3 +10,8 @@ export enum Language {
   ZhCn = 'zh-CN',
   ZhTw = 'zh-TW',
 }
+
+export type Point = {
+  x: number | string;
+  y: number | string;
+};
