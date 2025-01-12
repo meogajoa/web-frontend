@@ -13,7 +13,7 @@ const BUTTON_ICONS = {
 } as const;
 
 const buttonVariant = cva(
-  'inline-block text-center font-bold text-white transition duration-300 data-[hover]:scale-95 data-[disabled]:cursor-not-allowed data-[disabled]:bg-gray-5 data-[active]:opacity-70 data-[hover]:opacity-90 data-[focus]:outline-none',
+  'group inline-block text-center font-bold text-white transition duration-300 data-[disabled]:cursor-not-allowed data-[disabled]:bg-gray-5 data-[active]:opacity-70 data-[hover]:opacity-90 data-[focus]:outline-none',
   {
     variants: {
       variant: {
@@ -59,7 +59,9 @@ const Button: React.FC<React.PropsWithChildren<ButtonProps>> = ({
       {...props}
     >
       {children}
-      {Icon && <Icon className="size-4.5 stroke-white stroke-2" />}
+      {Icon && (
+        <Icon className="size-4.5 stroke-white stroke-2 transition-transform duration-300 group-data-[open]:-rotate-180" />
+      )}
     </HeadlessButton>
   );
 };

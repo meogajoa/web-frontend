@@ -3,8 +3,7 @@ import { ArrowPathIcon } from '@heroicons/react/24/outline';
 import { useQueryClient } from '@tanstack/react-query';
 import { useTranslations } from 'next-intl';
 import React from 'react';
-import { Button } from '~/components/Button';
-import Tooltip from '~/components/Tooltip';
+import { DropdownExample } from '~/components/Dropdown';
 import { cn } from '~/utils/classname';
 
 const HomeHeader = () => {
@@ -33,31 +32,10 @@ const HomeHeader = () => {
         </div>
 
         <div className="flex gap-x-4 p-4 shadow-bottom">
-          <Tooltip
-            contents={<h1>Dropdown</h1>}
-            clickable
-            clickToOpen
-            openOnClick
-            offset={20}
-            place="bottom-start"
-          >
-            <Button size="sm" rounded="full" icon="chevron-down">
-              {messages('header.categoryButton')}
-            </Button>
-          </Tooltip>
-
-          <Tooltip
-            contents={<h1>Dropdown</h1>}
-            clickable
-            clickToOpen
-            openOnClick
-            offset={20}
-            place="bottom-start"
-          >
-            <Button size="sm" rounded="full" icon="chevron-down">
-              {messages('header.roomVisibilityButton')}
-            </Button>
-          </Tooltip>
+          <DropdownExample>{messages('header.categoryButton')}</DropdownExample>
+          <DropdownExample>
+            {messages('header.roomVisibilityButton')}
+          </DropdownExample>
         </div>
       </header>
     </>
