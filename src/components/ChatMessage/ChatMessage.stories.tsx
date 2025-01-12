@@ -1,0 +1,88 @@
+import { Meta, StoryObj } from '@storybook/react';
+import ExampleImage from '~/assets/images/cat.png';
+import { ChatMessage } from '~/components/ChatMessage';
+
+const meta: Meta<typeof ChatMessage> = {
+  title: 'Molecules/ChatMessage',
+  component: ChatMessage,
+  tags: ['autodocs'],
+  argTypes: {
+    position: {
+      description: '메시지 위치',
+      control: {
+        type: 'select',
+        options: ['left', 'right'],
+      },
+    },
+    username: {
+      description: '유저 이름',
+      control: {
+        type: 'text',
+      },
+    },
+    isCumulative: {
+      description: '누적 메시지 여부',
+      control: {
+        type: 'boolean',
+      },
+    },
+    color: {
+      description: '프로필 이미지 색상',
+      control: {
+        type: 'select',
+        options: ['gray', 'light-gray'],
+      },
+    },
+    src: {
+      description: '프로필 이미지 URL',
+      control: {
+        type: 'text',
+      },
+    },
+  },
+  decorators: [
+    (Story) => (
+      <div className="relative bg-gray-3 p-4">
+        <Story />
+      </div>
+    ),
+  ],
+};
+
+export default meta;
+
+type Story = StoryObj<typeof ChatMessage>;
+
+export const Other: Story = {
+  args: {
+    position: 'left',
+    username: 'John Doe',
+    message: 'Hello, world!',
+  },
+};
+
+export const ImageProfile: Story = {
+  args: {
+    position: 'left',
+    username: 'John Doe',
+    message: 'Hello, world!',
+    src: ExampleImage.src,
+  },
+};
+
+export const Self: Story = {
+  args: {
+    position: 'right',
+    username: 'Jane Doe',
+    message: 'Hello, world!',
+  },
+};
+
+export const LongMessage: Story = {
+  args: {
+    position: 'left',
+    username: 'John Doe',
+    message:
+      'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam nec purus nec elit ultricies ultricies. Nullam nec purus nec elit ultricies ultricies.',
+  },
+};
