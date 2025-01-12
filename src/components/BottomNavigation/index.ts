@@ -1,3 +1,4 @@
 import BottomNavigation from '~/components/BottomNavigation/BottomNavigation';
+import BottomNavigationContent from '~/components/BottomNavigation/BottomNavigationContent';
 
-export default BottomNavigation;
+export { BottomNavigation, BottomNavigationContent };

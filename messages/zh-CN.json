@@ -1,6 +1,29 @@
 {
-  "HomePage": {
-    "title": "헬로우 월드!",
-    "about": "소개 페이지로 이동"
+  "rootRoute": {
+    "loading": "加载中..."
+  },
+  "homeRoute": {
+    "header": {
+      "title": "游戏名称（待定）",
+      "categoryButton": "类别",
+      "roomVisibilityButton": "房间可见性"
+    },
+    "exampleRoom": {
+      "title": "房间标题 1",
+      "description": "仅限小游戏"
+    },
+    "createRoomButton": "创建房间"
+  },
+  "bottomNavigation": {
+    "store": "商店",
+    "home": "主页",
+    "profile": "个人资料"
+  },
+  "createRoomModal": {
+    "title": "创建房间",
+    "roomNameLabel": "房间名称",
+    "roomPasswordLabel": "密码",
+    "cancelButton": "取消",
+    "createButton": "创建"
   }
 }

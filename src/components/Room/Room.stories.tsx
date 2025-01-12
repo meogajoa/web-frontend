@@ -1,5 +1,5 @@
 import { Meta, StoryObj } from '@storybook/react';
-import Room from '~/components/Room';
+import { Room } from '~/components/Room';
 
 const meta: Meta<typeof Room> = {
   title: 'Molecules/Room',

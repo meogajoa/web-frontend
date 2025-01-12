@@ -1,20 +1,27 @@
 import React, { useId } from 'react';
-import { Tooltip as ReactTooltip } from 'react-tooltip';
-import { cn } from '~/utils/classname';
+import { PlacesType, Tooltip as ReactTooltip } from 'react-tooltip';
 
-type Props = Readonly<
-  Omit<React.ComponentPropsWithRef<typeof ReactTooltip>, 'id'> & {
-    contents?: React.ReactNode | React.FC;
-    clickToOpen?: boolean;
-  }
->;
+type Props = {
+  className?: React.ComponentProps<'div'>['className'];
+  arrowClassName?: React.ComponentProps<'div'>['className'];
+  contents: React.ReactNode | React.FC;
+  clickable?: boolean;
+  clickToOpen?: boolean;
+  delayHide?: number;
+  delayShow?: number;
+  noArrow?: boolean;
+  offset?: number;
+  opacity?: number;
+  openOnClick?: boolean;
+  place?: PlacesType;
+};
 
 const Tooltip: React.FC<React.PropsWithChildren<Props>> = ({
   className,
-  classNameArrow,
+  arrowClassName,
   contents: Contents,
-  place = 'bottom',
   clickToOpen,
+  place = 'right',
   children,
   ...props
 }) => {
@@ -25,11 +32,12 @@ const Tooltip: React.FC<React.PropsWithChildren<Props>> = ({
       <div data-tooltip-id={id}>{children}</div>
 
       <ReactTooltip
+        className={className}
+        classNameArrow={arrowClassName}
         id={id}
-        className={cn('', className)}
-        classNameArrow={cn('', classNameArrow)}
         place={place}
-        disableStyleInjection={true}
+        opacity={100}
+        disableStyleInjection
         openEvents={clickToOpen ? { click: true } : undefined}
         {...props}
       >

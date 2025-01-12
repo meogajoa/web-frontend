@@ -13,3 +13,51 @@
     @apply font-brand antialiased;
   }
 }
+
+@layer utilities {
+  .bottom-0-dynamic {
+    bottom: env(safe-area-inset-bottom, 0);
+  }
+
+  .scrollbar-primary {
+    scrollbar-color: theme('colors.gray.5') transparent;
+    scrollbar-width: thin;
+
+    &::-webkit-scrollbar {
+      width: thin;
+    }
+
+    &::-webkit-scrollbar-thumb {
+      background-color: theme('colors.gray.5');
+      border-radius: 0.375rem;
+    }
+
+    &::-webkit-scrollbar-track {
+      background-color: transparent;
+    }
+
+    &::-webkit-scrollbar-corner {
+      background-color: transparent;
+    }
+
+    /* set button(top and bottom of the scrollbar) */
+    &::-webkit-scrollbar-button {
+      display: none;
+    }
+
+    &::-webkit-scrollbar-thumb {
+      border-radius: 0.375rem;
+    }
+  }
+
+  /* For IE, Edge and Firefox */
+  .scrollbar-hide {
+    -ms-overflow-style: none; /* IE and Edge */
+    scrollbar-width: none; /* Firefox */
+
+    /* For Webkit-based browsers (Chrome, Safari and Opera) */
+    &::-webkit-scrollbar {
+      display: none;
+    }
+  }
+}
