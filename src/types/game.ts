@@ -1,12 +1,12 @@
 import { Username } from '~/types/user';
 
 export type Room = {
-  roomId: number;
-  roomName: string;
-  roomOwner: Username;
-  roomMaxUser: number;
-  roomCurrentUser: number;
-  roomIsPlaying: boolean;
+  id: number;
+  name: string;
+  owner: Username;
+  maxUser: number;
+  currentUser: number;
+  isPlaying: boolean;
 };
 
 export type RoomsQuery = {

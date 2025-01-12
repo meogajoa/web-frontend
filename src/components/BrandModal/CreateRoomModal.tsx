@@ -6,12 +6,12 @@ import { BrandModal, BrandModalProps } from '~/components/BrandModal';
 import { server } from '~/utils/axios';
 
 type CreateRoomForm = {
-  roomName: string;
-  roomPassword: string;
+  name: string;
+  password: string;
 };
 
 const createRoomMutationFn = async (data: CreateRoomForm): Promise<unknown> => {
-  return server.post('/room/create', { ...data });
+  return server.post('/room/create', data);
 };
 
 type Props = BrandModalProps;
@@ -48,14 +48,14 @@ const CreateRoomModal: React.FC<Props> = ({ onClose, visible }) => {
 
       <BrandModal.Body>
         <div>
-          <label htmlFor="roomName">{messages('roomNameLabel')}</label>
-          <input type="text" {...register('roomName', { required: true })} />
+          <label htmlFor="name">{messages('roomNameLabel')}</label>
+          <input type="text" {...register('name', { required: true })} />
         </div>
         <div>
-          <label htmlFor="roomPassword">{messages('roomPasswordLabel')}</label>
+          <label htmlFor="password">{messages('roomPasswordLabel')}</label>
           <input
             type="password"
-            {...register('roomPassword', { required: true })}
+            {...register('password', { required: true })}
           />
         </div>
       </BrandModal.Body>

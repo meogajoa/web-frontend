@@ -19,7 +19,7 @@ const RoomList: React.FC<Props> = ({ className }) => {
     fetchNextPage,
   } = useInfinteRooms();
 
-  const rooms = data?.pages.flatMap((rooms) => rooms);
+  const rooms = data?.pages.flatMap((page) => page?.rooms);
   const isInitialLoading = isFetching && !isFetchingNextPage;
   const isLoadingMore = isFetchingNextPage;
 
@@ -30,12 +30,12 @@ const RoomList: React.FC<Props> = ({ className }) => {
           rooms?.map((room) => (
             <Room
               className="w-full"
-              key={room.roomId}
-              title={room.roomName}
+              key={room.id}
+              title={room.name}
               description={messages('exampleRoom.description')}
               isPrivate={false}
-              total={room.roomMaxUser}
-              current={room.roomCurrentUser}
+              total={room.maxUser}
+              current={room.currentUser}
             />
           ))}
 

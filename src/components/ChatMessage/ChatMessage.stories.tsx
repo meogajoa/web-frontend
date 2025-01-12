@@ -29,7 +29,7 @@ const meta: Meta<typeof ChatMessage> = {
     color: {
       description: '프로필 이미지 색상',
       control: 'select',
-      options: ['gray', 'light-gray'],
+      options: ['lightgray', 'light-gray'],
     },
     src: {
       description: '프로필 이미지 URL',

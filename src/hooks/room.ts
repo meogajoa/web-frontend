@@ -4,7 +4,7 @@ import {
   type QueryFunctionContext,
 } from '@tanstack/react-query';
 import { AxiosError } from 'axios';
-import { RoomsQuery, type Room } from '~/types/game';
+import { type RoomsQuery } from '~/types/game';
 import { server } from '~/utils/axios';
 import { A_MINUTE, A_SECOND } from '~/utils/constants';
 import { sleep } from '~/utils/misc';
@@ -22,7 +22,7 @@ export const useInfinteRooms = () => {
   return useInfiniteQuery<
     RoomsQuery,
     AxiosError,
-    InfiniteData<Room[], number[]>,
+    InfiniteData<RoomsQuery, number[]>,
     string[],
     number
   >({
