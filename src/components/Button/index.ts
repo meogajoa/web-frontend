@@ -1,3 +1,4 @@
-import Button from '~/components/Button/Button';
+import Button, { ButtonProps } from '~/components/Button/Button';
+import CreateRoomButton from '~/components/Button/CreateRoomButton';
 
-export { Button };
+export { Button, CreateRoomButton, type ButtonProps };

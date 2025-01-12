@@ -3,41 +3,34 @@ import React from 'react';
 import { type MenuType } from '~/constants/navigation';
 import { cn } from '~/utils/classname';
 
-type BottomNavigationProps = Readonly<React.ComponentProps<'nav'>>;
+type BottomNavigationProps = {
+  className?: React.ComponentProps<'footer'>['className'];
+};
 
-const BottomNavigation: React.FC<BottomNavigationProps> = ({
-  className,
-  children,
-  ...props
-}) => {
+const BottomNavigation: React.FC<
+  React.PropsWithChildren<BottomNavigationProps>
+> = ({ className, children, ...props }) => {
   return (
-    <nav
-      className={cn(
-        'flex pb-3.5 pt-3 [box-shadow:_0px_4px_8px_0px_rgba(207,210,216,0.7)]',
-        className,
-      )}
-      {...props}
-    >
-      <div className="mx-auto flex w-full max-w-xl justify-around">
+    <footer className={cn('flex bg-white pb-3.5 pt-3', className)} {...props}>
+      <nav className="mx-auto flex w-full max-w-xl justify-around">
         {children}
-      </div>
-    </nav>
+      </nav>
+    </footer>
   );
 };
 
-type ItemProps = Readonly<
-  Omit<MenuType, 'href'> &
-    ButtonProps & {
-      isActive: boolean;
-    }
->;
+type ItemProps = Omit<MenuType, 'href'> &
+  ButtonProps & {
+    isActive: boolean;
+    onButtonClick: () => void;
+  };
 
 const Item: React.FC<ItemProps> = ({
+  className,
   label,
   icon: Icon,
   isActive,
-  className,
-  ...props
+  onButtonClick: handleClick,
 }) => {
   return (
     <Button
@@ -48,7 +41,7 @@ const Item: React.FC<ItemProps> = ({
           : 'fill-gray-6 text-gray-6 data-[hover]:fill-red/80 data-[hover]:text-red/80',
         className,
       )}
-      {...props}
+      onClick={handleClick}
     >
       <Icon className="size-6 fill-inherit transition-colors duration-300" />
       <span className="text-sm text-inherit transition-colors duration-300">

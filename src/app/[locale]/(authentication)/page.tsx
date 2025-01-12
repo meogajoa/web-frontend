@@ -1,47 +1,41 @@
 'use client';
 
+import { debounce } from 'lodash-es';
+import { useTranslations } from 'next-intl';
 import React from 'react';
 import { HashLoader } from 'react-spinners';
 import { useAccount } from '~/hooks/account';
+import { useDotsString } from '~/hooks/loading';
 import { useRouter } from '~/i18n/routing';
 import { AccountStatus } from '~/types/account';
-import { Optional } from '~/types/misc';
 import { A_SECOND } from '~/utils/constants';
 
 const RootPage: React.FC = () => {
-  const [dots, setDots] = React.useState('');
   const router = useRouter();
   const { accountStatus } = useAccount();
-  const [redirectTimeout, setRedirectTimeout] =
-    React.useState<Optional<NodeJS.Timeout>>();
-
-  React.useEffect(() => {
-    const interval = setInterval(() => {
-      setDots((dots) => (dots.length >= 3 ? '' : dots + '.'));
-    }, 500);
-
-    return () => clearInterval(interval);
-  }, []);
-
-  React.useEffect(() => {
-    clearTimeout(redirectTimeout);
-
-    setRedirectTimeout(
-      setTimeout(() => {
-        if (accountStatus === AccountStatus.SignedOut) {
-          router.push('/account/sign-in');
+  const dots = useDotsString(3);
+  const messages = useTranslations('rootRoute');
+  const redirect = React.useMemo(
+    () =>
+      debounce((accStatus: AccountStatus) => {
+        if (accStatus === AccountStatus.SignedIn) {
+          router.replace('/home');
         } else {
-          router.push('/lobby');
+          router.replace('/account/sign-in');
         }
       }, 3 * A_SECOND),
-    );
+    [],
+  );
+
+  React.useEffect(() => {
+    redirect(accountStatus);
   }, [accountStatus]);
 
   return (
     <div className="flex h-screen flex-col items-center justify-center gap-y-4 font-semibold">
       <HashLoader />
       <div className="relative">
-        <span>Loading</span>
+        <span>{messages('loading')}</span>
         <span className="absolute">{dots}</span>
       </div>
     </div>

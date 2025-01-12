@@ -1,6 +1,29 @@
 {
-  "HomePage": {
-    "title": "헬로우 월드!",
-    "about": "소개 페이지로 이동"
+  "rootRoute": {
+    "loading": "로딩 중"
+  },
+  "homeRoute": {
+    "header": {
+      "title": "게임 이름(추후 협의 필요)",
+      "categoryButton": "카테고리",
+      "roomVisibilityButton": "방 공개"
+    },
+    "exampleRoom": {
+      "title": "방 제목 1",
+      "description": "미니게임 전용"
+    },
+    "createRoomButton": "방 생성"
+  },
+  "bottomNavigation": {
+    "store": "상점",
+    "home": "홈",
+    "profile": "마이"
+  },
+  "createRoomModal": {
+    "title": "방 생성",
+    "roomNameLabel": "방 제목",
+    "roomPasswordLabel": "비밀번호",
+    "cancelButton": "취소",
+    "createButton": "방 만들기"
   }
 }

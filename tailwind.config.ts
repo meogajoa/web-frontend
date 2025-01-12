@@ -17,8 +17,13 @@ export default {
       lg: ['1rem', { lineHeight: '1.188rem' }], // 16px
       xl: ['1.125rem', { lineHeight: '1.313rem' }], // 18px
       '2xl': ['1.25rem', { lineHeight: '1.438rem' }], // 20px
+      '3xl': ['1.5rem', { lineHeight: '1.75rem' }], // 24px
     },
     extend: {
+      boxShadow: {
+        bottom: '0px 4px 5px rgba(0, 0, 0, 0.08)',
+        top: '0px -4px 5px rgba(0, 0, 0, 0.08)',
+      },
       colors: {
         gray: {
           1: '#1C1C1D',

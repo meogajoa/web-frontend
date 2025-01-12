@@ -1,21 +1,19 @@
 import axios from 'axios';
-import { redirect } from 'next/navigation';
 import { CONFIGS } from '~/utils/config';
-import { isProduction } from '~/utils/misc';
+import { isProduction } from '~/utils/env';
 
 export const server = (() => {
   const instance = axios.create({
-    baseURL: isProduction ? CONFIGS.API_URL : '/api',
+    baseURL: isProduction() ? CONFIGS.API_URL : CONFIGS.DEV_API_URL,
     headers: {
       'Content-Type': 'application/json',
     },
   });
 
   instance.interceptors.request.use((config) => {
-    const token = localStorage.getItem('sessionid');
-
+    const token = localStorage.getItem('sessionId');
     if (token) {
-      config.headers.Authorization = `Bearer ${token}`;
+      config.headers.Authorization = `${token}`;
     }
 
     return config;
@@ -23,10 +21,21 @@ export const server = (() => {
 
   instance.interceptors.response.use(
     (response) => response,
-    (error) => {
-      if (error.response?.status === 401) {
-        console.error('Unauthorized! Redirecting to login...');
-        redirect('/account/sign-in');
+    (error: unknown) => {
+      if (error instanceof axios.AxiosError) {
+        if (error.response) {
+          console.error('[ERROR]: Axios error', error);
+
+          if ([401, 403].includes(error.response.status)) {
+            localStorage.removeItem('sessionId');
+            window?.location.replace('/');
+          }
+        } else {
+          console.error(`[ERROR]: Network error`, error);
+          // TODO: Handle network error
+        }
+      } else {
+        console.error('[ERROR]: Unknown error', error);
       }
 
       return Promise.reject(error);
