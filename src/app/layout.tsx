@@ -1,4 +1,4 @@
-import type { Metadata } from 'next';
+import type { Metadata, Viewport } from 'next';
 import localFont from 'next/font/local';
 import RootProvider from '~/providers/RootProvider';
 import '~/styles/globals.css';
@@ -8,6 +8,12 @@ const brand = localFont({
   variable: '--font-brand',
   weight: '100 900',
 });
+
+export const viewport: Viewport = {
+  width: 'device-width',
+  initialScale: 1,
+  userScalable: false,
+};
 
 export const metadata: Metadata = {
   title: 'Create Next App',
