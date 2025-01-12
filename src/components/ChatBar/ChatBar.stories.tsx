@@ -1,11 +1,12 @@
 import { Meta, StoryObj } from '@storybook/react';
+import { noop } from 'lodash-es';
 import React from 'react';
 import { ChatBar } from '~/components/ChatBar';
 import { TextareaHandle } from '~/components/CustomTextarea';
 import { RemovePadding } from '~/utils/storybook';
 
 const meta: Meta<typeof ChatBar> = {
-  title: 'Organisms/ChatBar',
+  title: 'Molecules/ChatBar',
   component: ChatBar,
   decorators: [
     (Story) => (
@@ -26,10 +27,10 @@ export const Default: Story = {
     const textareaRef = React.useRef<TextareaHandle>(null);
 
     return (
-      <ChatBar>
-        <ChatBar.MenuButton />
+      <ChatBar className="bottom-0-dynamic fixed w-full">
+        <ChatBar.MenuButton onMenuClick={noop} />
         <ChatBar.Textarea ref={textareaRef} />
-        <ChatBar.SendButton />
+        <ChatBar.SendButton onSendClick={noop} />
       </ChatBar>
     );
   },

@@ -9,7 +9,7 @@ type Props = {
 };
 
 const RoomList: React.FC<Props> = ({ className }) => {
-  const messages = useTranslations('homeRoute');
+  const t = useTranslations('homeRoute');
   const {
     data,
     isSuccess,
@@ -32,7 +32,7 @@ const RoomList: React.FC<Props> = ({ className }) => {
               className="w-full"
               key={room.id}
               title={room.name}
-              description={messages('exampleRoom.description')}
+              description={t('exampleRoom.description')}
               isPrivate={false}
               total={room.maxUser}
               current={room.currentUser}

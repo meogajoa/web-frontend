@@ -9,7 +9,7 @@ type Props = {
 };
 
 const CreateRoomButton: React.FC<Props> = ({ className }) => {
-  const messages = useTranslations('homeRoute');
+  const t = useTranslations('homeRoute');
   const [isCreateRoomModalVisible, setIsCreateRoomModalVisible] =
     React.useState(false);
 
@@ -23,7 +23,7 @@ const CreateRoomButton: React.FC<Props> = ({ className }) => {
         icon="plus"
         onClick={handleCreateRoomClick(true)}
       >
-        {messages('createRoomButton')}
+        {t('createRoomButton')}
       </Button>
 
       <CreateRoomModal

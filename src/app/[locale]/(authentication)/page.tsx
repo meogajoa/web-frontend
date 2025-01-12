@@ -14,7 +14,7 @@ const RootPage: React.FC = () => {
   const router = useRouter();
   const { accountStatus } = useAccount();
   const dots = useDotsString(3);
-  const messages = useTranslations('rootRoute');
+  const t = useTranslations('rootRoute');
   const redirect = React.useMemo(
     () =>
       debounce((accStatus: AccountStatus) => {
@@ -35,7 +35,7 @@ const RootPage: React.FC = () => {
     <div className="flex h-screen flex-col items-center justify-center gap-y-4 font-semibold">
       <HashLoader />
       <div className="relative">
-        <span>{messages('loading')}</span>
+        <span>{t('loading')}</span>
         <span className="absolute">{dots}</span>
       </div>
     </div>

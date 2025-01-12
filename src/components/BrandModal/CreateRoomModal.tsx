@@ -17,7 +17,7 @@ const createRoomMutationFn = async (data: CreateRoomForm): Promise<unknown> => {
 type Props = BrandModalProps;
 
 const CreateRoomModal: React.FC<Props> = ({ onClose, visible }) => {
-  const messages = useTranslations('createRoomModal');
+  const t = useTranslations('createRoomModal');
   const { register, handleSubmit } = useForm<CreateRoomForm>();
 
   const { mutate } = useMutation({
@@ -42,17 +42,17 @@ const CreateRoomModal: React.FC<Props> = ({ onClose, visible }) => {
       onSubmit={handleSubmit(onSubmit)}
     >
       <BrandModal.Header>
-        <BrandModal.Title label={messages('title')} />
+        <BrandModal.Title label={t('title')} />
         <BrandModal.CloseButton onClose={onClose} position="right" />
       </BrandModal.Header>
 
       <BrandModal.Body>
         <div>
-          <label htmlFor="name">{messages('roomNameLabel')}</label>
+          <label htmlFor="name">{t('roomNameLabel')}</label>
           <input type="text" {...register('name', { required: true })} />
         </div>
         <div>
-          <label htmlFor="password">{messages('roomPasswordLabel')}</label>
+          <label htmlFor="password">{t('roomPasswordLabel')}</label>
           <input
             type="password"
             {...register('password', { required: true })}
@@ -62,11 +62,11 @@ const CreateRoomModal: React.FC<Props> = ({ onClose, visible }) => {
 
       <BrandModal.ButtonGroup>
         <BrandModal.Button kind="no" onClick={onClose}>
-          {messages('cancelButton')}
+          {t('cancelButton')}
         </BrandModal.Button>
 
         <BrandModal.Button kind="yes" type="submit">
-          {messages('createButton')}
+          {t('createButton')}
         </BrandModal.Button>
       </BrandModal.ButtonGroup>
     </BrandModal>

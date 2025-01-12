@@ -13,12 +13,12 @@ type Props = {
 const BottomNavigationContent: React.FC<Props> = ({ className }) => {
   const pathname = usePathname();
   const router = useRouter();
-  const messages = useTranslations('bottomNavigation');
+  const t = useTranslations('bottomNavigation');
   const [hide, setHide] = React.useState(false);
 
   React.useEffect(() => {
     setHide(
-      CONFIGS.NAV_HIDE_URLS_ARRAY.some((url) => pathname.startsWith(url)),
+      CONFIGS.NAV_HIDE_URLS.split(',').some((url) => pathname.startsWith(url)),
     );
   }, [pathname]);
 
@@ -39,7 +39,7 @@ const BottomNavigationContent: React.FC<Props> = ({ className }) => {
         {MENUS.map(({ label, icon, href }) => (
           <BottomNavigation.Item
             key={label}
-            label={messages(label) as MenuType['label']}
+            label={t(label) as MenuType['label']}
             isActive={href === pathname}
             icon={icon}
             onButtonClick={() => router.push(href)}

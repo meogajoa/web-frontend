@@ -7,7 +7,7 @@ import { DropdownExample } from '~/components/Dropdown';
 import { cn } from '~/utils/classname';
 
 const HomeHeader = () => {
-  const messages = useTranslations('homeRoute');
+  const t = useTranslations('homeRoute');
   const [isRotating, setIsRotating] = React.useState(false);
   const queryClient = useQueryClient();
 
@@ -18,7 +18,7 @@ const HomeHeader = () => {
 
       <header className="fixed inset-0 z-10 h-fit bg-white">
         <div className="flex h-[5.5rem] items-center justify-between px-4">
-          <h1 className="text-3xl font-semibold">{messages('header.title')}</h1>
+          <h1 className="text-3xl font-semibold">{t('header.title')}</h1>
           <HeadlessuiButton
             className={cn(
               'size-6 stroke-black',
@@ -32,10 +32,8 @@ const HomeHeader = () => {
         </div>
 
         <div className="flex gap-x-4 p-4 shadow-bottom">
-          <DropdownExample>{messages('header.categoryButton')}</DropdownExample>
-          <DropdownExample>
-            {messages('header.roomVisibilityButton')}
-          </DropdownExample>
+          <DropdownExample>{t('header.categoryButton')}</DropdownExample>
+          <DropdownExample>{t('header.roomVisibilityButton')}</DropdownExample>
         </div>
       </header>
     </>
