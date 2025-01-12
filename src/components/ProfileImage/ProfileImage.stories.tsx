@@ -16,11 +16,14 @@ const meta: Meta<typeof ProfileImage> = {
       control: 'select',
       options: ['gray', 'light-gray'],
     },
-    number: {
+    userNumber: {
       description: '숫자 박스 값',
-      control: 'range',
-      min: 1,
-      max: 8,
+      control: {
+        type: 'range',
+        min: 0,
+        max: 8,
+        step: 1,
+      },
     },
   },
 };
@@ -33,6 +36,7 @@ export const Default: Story = {
   args: {
     size: 'xl',
     color: 'gray',
+    userNumber: 1,
     src: 'https://flexible.img.hani.co.kr/flexible/normal/850/567/imgdb/original/2023/0111/20230111503366.jpg',
   },
 };
