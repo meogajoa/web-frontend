@@ -9,35 +9,19 @@ const meta: Meta<typeof ProfileImage> = {
     size: {
       description: '박스 크기',
       control: 'select',
-      options: ['md', 'lg'],
+      options: ['sm', 'md', 'lg', 'xl'],
     },
     color: {
       description: '배경색',
       control: 'select',
-      options: ['gray', 'black'],
-    },
-    imageSrc: {
-      description: '프로필 이미지 경로',
-      control: 'text',
-    },
-    showNumber: {
-      description: '숫자 박스 표시 여부',
-      control: 'boolean',
+      options: ['gray', 'light-gray'],
     },
     number: {
-      description: '숫자 값',
-      control: 'number',
+      description: '숫자 박스 값',
+      control: 'range',
+      min: 1,
+      max: 8,
     },
-    onClick: {
-      description: '클릭 이벤트 핸들러',
-      action: '클릭됨',
-    },
-  },
-  args: {
-    size: 'md',
-    color: 'gray',
-    showNumber: false,
-    number: 0,
   },
 };
 
@@ -47,7 +31,8 @@ type Story = StoryObj<typeof ProfileImage>;
 
 export const Default: Story = {
   args: {
-    size: 'lg',
+    size: 'xl',
     color: 'gray',
+    src: 'https://flexible.img.hani.co.kr/flexible/normal/850/567/imgdb/original/2023/0111/20230111503366.jpg',
   },
 };
