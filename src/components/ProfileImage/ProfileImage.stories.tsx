@@ -1,4 +1,5 @@
 import { Meta, StoryObj } from '@storybook/react';
+import ExampleImage from '~/assets/images/cat.png';
 import ProfileImage from '~/components/ProfileImage/ProfileImage';
 
 const meta: Meta<typeof ProfileImage> = {
@@ -37,6 +38,6 @@ export const Default: Story = {
     size: 'xl',
     color: 'gray',
     userNumber: 1,
-    src: 'https://flexible.img.hani.co.kr/flexible/normal/850/567/imgdb/original/2023/0111/20230111503366.jpg',
+    src: ExampleImage.src,
   },
 };
