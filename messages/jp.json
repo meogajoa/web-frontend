@@ -25,5 +25,11 @@
     "roomPasswordLabel": "パスワード",
     "cancelButton": "キャンセル",
     "createButton": "部屋を作成"
+  },
+  "passwordInputModal": {
+    "title": "パスワード入力",
+    "roomPasswordLabel": "ロックされた部屋です。\n暗証番号を入力してください",
+    "cancelButton": "キャンセル",
+    "complete Button": "入力済み"
   }
 }

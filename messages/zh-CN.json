@@ -25,5 +25,11 @@
     "roomPasswordLabel": "密码",
     "cancelButton": "取消",
     "createButton": "创建"
+  },
+  "passwordInputModal": {
+    "title": "输入密码",
+    "roomPasswordLabel": "此房间已锁定。\n请输入密码。",
+    "cancelButton": "取消",
+    "completeButton": "输入"
   }
 }

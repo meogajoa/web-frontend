@@ -25,5 +25,11 @@
     "roomPasswordLabel": "Password",
     "cancelButton": "Cancel",
     "createButton": "Create Room"
+  },
+  "passwordInputModal": {
+    "title": "Enter Password",
+    "roomPasswordLabel": "This room is locked.\nPlease enter the password.",
+    "cancelButton": "Cancel",
+    "completeButton": "Enter"
   }
 }

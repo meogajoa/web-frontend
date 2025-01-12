@@ -25,5 +25,11 @@
     "roomPasswordLabel": "Contraseña",
     "cancelButton": "Cancelar",
     "createButton": "Crear sala"
+  },
+  "passwordInputModal": {
+    "title": "Introducir contraseña",
+    "roomPasswordLabel": "Esta sala está bloqueada.\nIntroduce la contraseña",
+    "cancelButton": "Cancelar",
+    "completeButton": "Completado"
   }
 }

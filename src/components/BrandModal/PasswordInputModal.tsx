@@ -2,13 +2,14 @@ import { useTranslations } from 'next-intl';
 import React from 'react';
 import { useForm } from 'react-hook-form';
 import { BrandModal, BrandModalProps } from '~/components/BrandModal';
-// import Input from '../../components/Input';
+import { Input } from '~/components/Input';
 
 type Props = BrandModalProps;
 
 const PasswordInputModal: React.FC<Props> = ({ onClose, visible }) => {
   const messages = useTranslations('passwordInputModal');
-  const { register, handleSubmit } = useForm();
+  const { register, handleSubmit, watch } = useForm();
+  const roomPassword = watch('roomPassword', '');
 
   return (
     <BrandModal
@@ -25,11 +26,15 @@ const PasswordInputModal: React.FC<Props> = ({ onClose, visible }) => {
       </BrandModal.Header>
 
       <BrandModal.Body>
-        <div>
-          <label htmlFor="roomPassword">{messages('roomPasswordLabel')}</label>
-          <input
+        <div className="mb-5.5 flex flex-col items-center justify-center">
+          <label htmlFor="roomPassword" className="mb-1 mt-3">
+            {messages('roomPasswordLabel')}
+          </label>
+          <Input
             type="password"
-            {...register('roomPassword', { required: true })}
+            value={roomPassword}
+            onValueChange={(value) => console.log(value)}
+            {...register('roomPassword')}
           />
         </div>
       </BrandModal.Body>
@@ -40,7 +45,7 @@ const PasswordInputModal: React.FC<Props> = ({ onClose, visible }) => {
         </BrandModal.Button>
 
         <BrandModal.Button kind="yes" type="submit">
-          {messages('createButton')}
+          {messages('completeButton')}
         </BrandModal.Button>
       </BrandModal.ButtonGroup>
     </BrandModal>
