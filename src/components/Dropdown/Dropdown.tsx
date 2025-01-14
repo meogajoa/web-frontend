@@ -77,14 +77,16 @@ export const DropdownOptions: React.FC<
   );
 };
 
-type DropdownOptionProps = {
+type DropdownOptionProps<T> = {
   className?: React.ComponentProps<'div'>['className'];
-  value: unknown;
+  value: T;
 };
 
-const DropdownOption: React.FC<
-  React.PropsWithChildren<DropdownOptionProps>
-> = ({ className, value, children }) => {
+const DropdownOption = <T,>({
+  className,
+  value,
+  children,
+}: React.PropsWithChildren<DropdownOptionProps<T>>) => {
   return (
     <_ListboxOption
       className={cn(
