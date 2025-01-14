@@ -8,9 +8,7 @@ import { useAccount } from '~/hooks/account';
 import { redirect } from '~/i18n/routing';
 import { AccountStatus } from '~/types/account';
 
-type MainLayoutProps = React.PropsWithChildren;
-
-const MainLayout: React.FC<MainLayoutProps> = ({ children }) => {
+const MainLayout: React.FC<React.PropsWithChildren> = ({ children }) => {
   const { accountStatus } = useAccount();
   const locale = useLocale();
 

@@ -27,15 +27,16 @@ const RoomList: React.FC<Props> = ({ className }) => {
     <nav className={cn('space-y-2.5 px-4 py-2.5', className)}>
       <li className="list-none">
         {isSuccess &&
-          rooms?.map((room) => (
+          rooms?.map(({ id, name, maxUser, currentUser }) => (
             <Room
               className="w-full"
-              key={room.id}
-              title={room.name}
+              key={id}
+              id={id}
+              title={name}
               description={t('exampleRoom.description')}
+              total={maxUser}
+              current={currentUser}
               isPrivate={false}
-              total={room.maxUser}
-              current={room.currentUser}
             />
           ))}
 

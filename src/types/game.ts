@@ -1,7 +1,7 @@
 import { Username } from '~/types/user';
 
 export type Room = {
-  id: number;
+  id: string;
   name: string;
   owner: Username;
   maxUser: number;

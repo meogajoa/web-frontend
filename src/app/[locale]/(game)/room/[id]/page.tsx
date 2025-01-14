@@ -4,6 +4,7 @@ import React from 'react';
 import { GameChatBar } from '~/components/ChatBar';
 import GameHeader from '~/components/GameHeader';
 import GameMessages from '~/components/GameMessages';
+import { useJoinRoom } from '~/hooks/room';
 import '~/styles/room.css';
 import { ChatRoomKind } from '~/types/game';
 
@@ -13,7 +14,9 @@ type Props = {
 
 const RoomPage: React.FC<Props> = ({ params }) => {
   const { id } = React.use(params);
-  console.log(id);
+  const { isSuccess, isPending, isError } = useJoinRoom(id);
+
+  console.log({ isSuccess, isPending, isError });
 
   return (
     <div className="flex h-full flex-col">

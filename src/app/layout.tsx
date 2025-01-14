@@ -1,6 +1,5 @@
 import type { Metadata, Viewport } from 'next';
 import localFont from 'next/font/local';
-import RootProvider from '~/providers/RootProvider';
 import '~/styles/globals.css';
 
 const brand = localFont({
@@ -20,14 +19,10 @@ export const metadata: Metadata = {
   description: 'Meogajoa - Who is the best liar?',
 };
 
-type RootLayoutProps = React.PropsWithChildren;
-
-const RootLayout: React.FC<RootLayoutProps> = ({ children }) => {
+const RootLayout: React.FC<React.PropsWithChildren> = ({ children }) => {
   return (
     <html lang="en">
-      <body className={brand.variable}>
-        <RootProvider>{children}</RootProvider>
-      </body>
+      <body className={brand.variable}>{children}</body>
     </html>
   );
 };

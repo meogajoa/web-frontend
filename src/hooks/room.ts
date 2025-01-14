@@ -1,9 +1,11 @@
 import {
   useInfiniteQuery,
+  useMutation,
   type InfiniteData,
   type QueryFunctionContext,
 } from '@tanstack/react-query';
 import { AxiosError } from 'axios';
+import React from 'react';
 import { type RoomsQuery } from '~/types/game';
 import { server } from '~/utils/axios';
 import { A_MINUTE, A_SECOND } from '~/utils/constants';
@@ -40,4 +42,20 @@ export const useInfinteRooms = () => {
   });
 };
 
-export const useJoinRoom = () => {};
+export const useJoinRoom = (id: string) => {
+  const signIn = React.useCallback(async (_id: string) => {
+    const response = server.post('/room/join', { id: _id });
+    await sleep(A_SECOND);
+    return response;
+  }, []);
+
+  const mutation = useMutation({
+    mutationFn: signIn,
+  });
+
+  React.useEffect(() => {
+    mutation.mutate(id);
+  }, [id]);
+
+  return mutation;
+};
