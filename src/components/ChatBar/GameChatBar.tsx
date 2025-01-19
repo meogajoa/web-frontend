@@ -6,15 +6,17 @@ import { cn } from '~/utils/classname';
 
 type Props = {
   className?: React.ComponentProps<'div'>['className'];
+  renderPlaceholder?: boolean;
 };
 
-const GameChatBar: React.FC<Props> = ({ className }) => {
+const GameChatBar: React.FC<Props> = ({ className, renderPlaceholder }) => {
   const textareaRef = React.useRef<TextareaHandle>(null);
 
   return (
     <>
-      {/* Placeholder */}
-      <div className="h-[3.813rem] shrink-0" aria-hidden />
+      {renderPlaceholder && (
+        <div className="h-[3.813rem] shrink-0" aria-hidden />
+      )}
 
       <ChatBar className={cn('', className)}>
         <ChatBar.MenuButton onMenuClick={noop} />

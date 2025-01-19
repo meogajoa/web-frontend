@@ -33,7 +33,10 @@ const RoomPage: React.FC<Props> = ({ params }) => {
             whichChatRoom={ChatRoomKind.All}
           />
           <GameMessages className="flex-1 bg-gray-3 p-4" roomId={roomId} />
-          <GameChatBar className="bottom-0-dynamic fixed w-full" />
+          <GameChatBar
+            className="bottom-0-dynamic fixed w-full"
+            renderPlaceholder
+          />
         </div>
       )}
     </>

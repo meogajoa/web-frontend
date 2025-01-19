@@ -8,17 +8,21 @@ import React from 'react';
 import { DropdownExample } from '~/components/Dropdown';
 import { cn } from '~/utils/classname';
 
-const HomeHeader = () => {
+type Props = {
+  className?: React.ComponentProps<'header'>['className'];
+  renderPlaceholder?: boolean;
+};
+
+const HomeHeader: React.FC<Props> = ({ className, renderPlaceholder }) => {
   const t = useTranslations('homeRoute');
   const [isRotating, setIsRotating] = React.useState(false);
   const queryClient = useQueryClient();
 
   return (
     <>
-      {/* Placeholder for the fixed header below */}
-      <div className="h-[9.75rem]" aria-hidden />
+      {renderPlaceholder && <div className="h-[9.75rem]" aria-hidden />}
 
-      <header className="fixed inset-0 z-10 h-fit bg-white">
+      <header className={cn('h-fit bg-white', className)}>
         <div className="flex h-[5.5rem] items-center justify-between px-4">
           <h1 className="text-3xl font-semibold">{t('header.title')}</h1>
           <HeadlessuiButton

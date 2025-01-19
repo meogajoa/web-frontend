@@ -5,7 +5,7 @@ import RoomList from '~/components/RoomList';
 const HomePage = () => {
   return (
     <>
-      <HomeHeader />
+      <HomeHeader className="fixed inset-0 z-10" renderPlaceholder />
       <RoomList />
       <CreateRoomButton className="fixed bottom-24 right-4 z-20" />
     </>

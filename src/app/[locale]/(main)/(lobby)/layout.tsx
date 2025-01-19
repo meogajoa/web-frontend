@@ -13,7 +13,10 @@ const LobbyLayout: React.FC<PropsWithChildren> = ({ children }) => {
   return (
     <>
       {children}
-      <BottomNavigationContent className="bottom-0-dynamic fixed z-10" />
+      <BottomNavigationContent
+        className="bottom-0-dynamic fixed z-10"
+        renderPlaceholder
+      />
     </>
   );
 };

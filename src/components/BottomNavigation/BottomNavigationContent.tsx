@@ -7,17 +7,20 @@ import { cn } from '~/utils/classname';
 
 type Props = {
   className?: React.ComponentProps<'footer'>['className'];
+  renderPlaceholder?: boolean;
 };
 
-const BottomNavigationContent: React.FC<Props> = ({ className }) => {
+const BottomNavigationContent: React.FC<Props> = ({
+  className,
+  renderPlaceholder,
+}) => {
   const pathname = usePathname();
   const router = useRouter();
   const t = useTranslations('bottomNavigation');
 
   return (
     <>
-      {/* Spade Placeholder for BottomNavigationContent */}
-      <div className={cn('h-18')} aria-hidden />
+      {renderPlaceholder && <div className={cn('h-18')} aria-hidden />}
 
       <BottomNavigation className={cn('w-full shadow-top', className)}>
         {MENUS.map(({ label, icon, href }) => (
