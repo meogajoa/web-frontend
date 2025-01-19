@@ -21,7 +21,7 @@ const LocaleLayout: React.AFC<React.PropsWithChildren<Props>> = async ({
 
   return (
     <IntlProvider locale={locale}>
-      <RootProvider>{children}</RootProvider>;
+      <RootProvider>{children}</RootProvider>
     </IntlProvider>
   );
 };

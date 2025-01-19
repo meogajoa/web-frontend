@@ -35,10 +35,7 @@ const CreateRoomModal: React.FC<Props> = ({ onClose, visible }) => {
         </div>
         <div>
           <label htmlFor="password">{t('roomPasswordLabel')}</label>
-          <input
-            type="password"
-            {...register('password', { required: true })}
-          />
+          <input type="password" {...register('password')} />
         </div>
       </BrandModal.Body>
 
@@ -63,7 +60,7 @@ const CreateRoomModal: React.FC<Props> = ({ onClose, visible }) => {
   }
 
   function handleRedirectOnSuccess({ id }: CreateRoomResponse) {
-    router.push(`/room/${id}`);
+    router.push(`/rooms/${id}`);
   }
 };
 
