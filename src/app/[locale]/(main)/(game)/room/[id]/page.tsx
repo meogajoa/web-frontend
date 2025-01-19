@@ -6,7 +6,7 @@ import GameHeader from '~/components/GameHeader';
 import GameMessages from '~/components/GameMessages';
 import { useJoinRoomMutation } from '~/hooks/room';
 import '~/styles/room.css';
-import type { ChatRoomKind } from '~/types/chat';
+import { ChatRoomKind } from '~/types/chat';
 
 type Props = {
   params: Promise<{ id: string }>;

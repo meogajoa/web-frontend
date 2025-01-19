@@ -4,7 +4,7 @@ import { useForm } from 'react-hook-form';
 import { BrandModal, BrandModalProps } from '~/components/BrandModal';
 import { useCreateRoomMutation } from '~/hooks/room';
 import { useRouter } from '~/i18n/routing';
-import { CreateRoomForm, CreateRoomResponse } from '~/types/form';
+import type { CreateRoomForm, CreateRoomResponse } from '~/types/room';
 
 type Props = BrandModalProps;
 
