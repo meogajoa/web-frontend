@@ -23,22 +23,29 @@ export const useSessionId = () => {
   );
 };
 
-export const useAuthentication = () => {
+export const useAuthenticateMutation = ({
+  sleepSeconds = 1,
+}: {
+  sleepSeconds?: number;
+}) => {
   const sessionId = useSessionId();
 
-  const authenticate = React.useCallback(async () => {
-    const response = server.post('/auth/test');
-    await sleep(A_SECOND);
-    return response;
+  const _authenticateAsync = React.useCallback(async () => {
+    server.post<void>('/auth/test');
+    await sleep(sleepSeconds * A_SECOND);
   }, []);
 
   const mutation = useMutation({
-    mutationFn: authenticate,
+    mutationFn: _authenticateAsync,
   });
 
   React.useEffect(() => {
     mutation.mutate();
   }, [sessionId]);
 
-  return mutation;
+  return {
+    ...mutation,
+    authenticate: mutation.mutate,
+    authenticateAsync: mutation.mutateAsync,
+  };
 };

@@ -3,14 +3,16 @@
 import { useLocale, useTranslations } from 'next-intl';
 import React from 'react';
 import { HashLoader } from 'react-spinners';
-import { useAuthentication } from '~/hooks/account';
+import { useAuthenticateMutation } from '~/hooks/account';
 import { useDotsString } from '~/hooks/loading';
 import { redirect } from '~/i18n/routing';
 import StompProvider from '~/providers/StompProvider';
 
 const MainLayout: React.FC<React.PropsWithChildren> = ({ children }) => {
   const locale = useLocale();
-  const { isError, isPending, isSuccess, isIdle } = useAuthentication();
+  const { isError, isPending, isSuccess, isIdle } = useAuthenticateMutation({
+    sleepSeconds: 1,
+  });
   const t = useTranslations('rootRoute');
   const dots = useDotsString(3);
 

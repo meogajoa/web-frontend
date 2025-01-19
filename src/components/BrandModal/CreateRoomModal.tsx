@@ -1,49 +1,31 @@
-import { useMutation } from '@tanstack/react-query';
 import { useTranslations } from 'next-intl';
 import React from 'react';
-import { SubmitHandler, useForm } from 'react-hook-form';
+import { useForm } from 'react-hook-form';
 import { BrandModal, BrandModalProps } from '~/components/BrandModal';
-import { server } from '~/utils/axios';
-
-type CreateRoomForm = {
-  name: string;
-  password: string;
-};
-
-const createRoomMutationFn = async (data: CreateRoomForm): Promise<unknown> => {
-  return server.post('/room/create', data);
-};
+import { useCreateRoomMutation } from '~/hooks/room';
+import { useRouter } from '~/i18n/routing';
+import { CreateRoomForm } from '~/types/form';
 
 type Props = BrandModalProps;
 
 const CreateRoomModal: React.FC<Props> = ({ onClose, visible }) => {
   const t = useTranslations('createRoomModal');
+  const router = useRouter();
   const { register, handleSubmit } = useForm<CreateRoomForm>();
-
-  const { mutate } = useMutation({
-    mutationFn: createRoomMutationFn,
-    onSuccess: () => {
-      onClose();
-    },
-    onError: (error) => {
-      console.error(error);
-    },
+  const { createRoom } = useCreateRoomMutation({
+    onSuccess: handleRedirectOnSuccess,
   });
-
-  const onSubmit: SubmitHandler<CreateRoomForm> = (data) => {
-    mutate(data);
-  };
 
   return (
     <BrandModal
-      onClose={onClose}
+      onClose={handleClose}
       hasBackdropBlur
       visible={visible}
       onSubmit={handleSubmit(onSubmit)}
     >
       <BrandModal.Header>
         <BrandModal.Title label={t('title')} />
-        <BrandModal.CloseButton onClose={onClose} position="right" />
+        <BrandModal.CloseButton onClose={handleClose} position="right" />
       </BrandModal.Header>
 
       <BrandModal.Body>
@@ -61,7 +43,7 @@ const CreateRoomModal: React.FC<Props> = ({ onClose, visible }) => {
       </BrandModal.Body>
 
       <BrandModal.ButtonGroup>
-        <BrandModal.Button kind="no" onClick={onClose}>
+        <BrandModal.Button kind="no" onClick={handleClose}>
           {t('cancelButton')}
         </BrandModal.Button>
 
@@ -71,6 +53,18 @@ const CreateRoomModal: React.FC<Props> = ({ onClose, visible }) => {
       </BrandModal.ButtonGroup>
     </BrandModal>
   );
+
+  function onSubmit(data: CreateRoomForm): void {
+    createRoom(data);
+  }
+
+  function handleClose() {
+    onClose();
+  }
+
+  function handleRedirectOnSuccess() {
+    router.push('');
+  }
 };
 
 export default CreateRoomModal;

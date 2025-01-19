@@ -4,7 +4,7 @@ import React from 'react';
 import { GameChatBar } from '~/components/ChatBar';
 import GameHeader from '~/components/GameHeader';
 import GameMessages from '~/components/GameMessages';
-import { useJoinRoom } from '~/hooks/room';
+import { useJoinRoomMutation } from '~/hooks/room';
 import '~/styles/room.css';
 import { ChatRoomKind } from '~/types/game';
 
@@ -15,7 +15,7 @@ type Props = {
 const RoomPage: React.FC<Props> = ({ params }) => {
   const { id: _roomId } = React.use(params);
   const roomId = _roomId.trim();
-  const { isSuccess, isPending, isError } = useJoinRoom(roomId);
+  const { isSuccess, isPending, isError } = useJoinRoomMutation(roomId);
 
   console.log({ isSuccess, isPending, isError });
 

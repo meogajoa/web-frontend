@@ -1,4 +1,4 @@
-import { Username } from '~/types/user';
+import { type Username } from '~/types/account';
 
 export type Room = {
   id: string;
@@ -9,7 +9,7 @@ export type Room = {
   isPlaying: boolean;
 };
 
-export type RoomsQuery = {
+export type PaginatedRoomsResponse = {
   rooms: Room[];
   last: boolean;
 };

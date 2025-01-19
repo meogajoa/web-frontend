@@ -3,7 +3,7 @@
 import { useTranslations } from 'next-intl';
 import React from 'react';
 import Room from '~/components/Room/Room';
-import { useInfinteRooms } from '~/hooks/room';
+import { useInfiniteRooms } from '~/hooks/room';
 import { cn } from '~/utils/classname';
 
 type Props = {
@@ -19,7 +19,7 @@ const RoomList: React.FC<Props> = ({ className }) => {
     isFetching,
     hasNextPage,
     fetchNextPage,
-  } = useInfinteRooms();
+  } = useInfiniteRooms();
 
   const isInitialLoading = isFetching && !isLoadingMore;
 
