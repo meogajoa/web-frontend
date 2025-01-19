@@ -24,7 +24,7 @@ export const useInfinteRooms = () => {
     [],
   );
 
-  return useInfiniteQuery<
+  const { data, ...rest } = useInfiniteQuery<
     RoomsQuery,
     AxiosError,
     InfiniteData<RoomsQuery, number[]>,
@@ -40,6 +40,9 @@ export const useInfinteRooms = () => {
     gcTime: A_MINUTE,
     refetchInterval: 4 * A_MINUTE,
   });
+
+  const rooms = data?.pages.flatMap((page) => page?.rooms);
+  return { ...rest, rooms };
 };
 
 export const useJoinRoom = (id: string) => {

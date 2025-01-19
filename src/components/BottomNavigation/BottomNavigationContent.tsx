@@ -16,21 +16,10 @@ const BottomNavigationContent: React.FC<Props> = ({ className }) => {
 
   return (
     <>
-      <div
-        className={cn(
-          'h-[4.5rem] transition-all duration-300',
-          // hide && 'h-0'
-        )}
-        aria-hidden
-      />
+      {/* Spade Placeholder for BottomNavigationContent */}
+      <div className={cn('h-18')} aria-hidden />
 
-      <BottomNavigation
-        className={cn(
-          'bottom-0-dynamic fixed z-10 w-full shadow-top transition-transform duration-300',
-          // hide && 'translate-y-full',
-          className,
-        )}
-      >
+      <BottomNavigation className={cn('w-full shadow-top', className)}>
         {MENUS.map(({ label, icon, href }) => (
           <BottomNavigation.Item
             key={label}

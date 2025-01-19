@@ -13,22 +13,29 @@ type Props = {
 };
 
 const RoomPage: React.FC<Props> = ({ params }) => {
-  const { id } = React.use(params);
-  const { isSuccess, isPending, isError } = useJoinRoom(id);
+  const { id: _roomId } = React.use(params);
+  const roomId = _roomId.trim();
+  const { isSuccess, isPending, isError } = useJoinRoom(roomId);
 
   console.log({ isSuccess, isPending, isError });
 
   return (
-    <div className="flex h-full flex-col">
-      <GameHeader
-        className="shrink-0 bg-gray-3 px-4"
-        isMorning={false}
-        nthRound={1}
-        whichChatRoom={ChatRoomKind.All}
-      />
-      <GameMessages className="flex-1 bg-gray-3 p-4" />
-      <GameChatBar className="bottom-0-dynamic fixed w-full" />
-    </div>
+    <>
+      {isPending && <div>Loading...</div>}
+      {isError && <div>Failed to join the room</div>}
+      {isSuccess && (
+        <div className="flex h-full flex-col">
+          <GameHeader
+            className="shrink-0 bg-gray-3 px-4"
+            isMorning={false}
+            nthRound={1}
+            whichChatRoom={ChatRoomKind.All}
+          />
+          <GameMessages className="flex-1 bg-gray-3 p-4" roomId={roomId} />
+          <GameChatBar className="bottom-0-dynamic fixed w-full" />
+        </div>
+      )}
+    </>
   );
 };
 

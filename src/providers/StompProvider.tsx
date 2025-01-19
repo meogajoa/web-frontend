@@ -11,10 +11,15 @@ const StompProvider: React.FC<React.PropsWithChildren> = ({ children }) => {
       connectHeaders={{
         Authorization: sessionId || '',
       }}
+      onConnect={handleConnected}
     >
       {children}
     </StompSessionProvider>
   );
+
+  function handleConnected() {
+    console.log('Connected to WebSocket');
+  }
 };
 
 export default StompProvider;

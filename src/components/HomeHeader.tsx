@@ -1,3 +1,5 @@
+'use client';
+
 import { Button as HeadlessuiButton } from '@headlessui/react';
 import { ArrowPathIcon } from '@heroicons/react/24/outline';
 import { useQueryClient } from '@tanstack/react-query';

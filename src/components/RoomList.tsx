@@ -1,3 +1,5 @@
+'use client';
+
 import { useTranslations } from 'next-intl';
 import React from 'react';
 import Room from '~/components/Room/Room';
@@ -11,17 +13,15 @@ type Props = {
 const RoomList: React.FC<Props> = ({ className }) => {
   const t = useTranslations('homeRoute');
   const {
-    data,
+    rooms,
     isSuccess,
-    isFetchingNextPage,
+    isFetchingNextPage: isLoadingMore,
     isFetching,
     hasNextPage,
     fetchNextPage,
   } = useInfinteRooms();
 
-  const rooms = data?.pages.flatMap((page) => page?.rooms);
-  const isInitialLoading = isFetching && !isFetchingNextPage;
-  const isLoadingMore = isFetchingNextPage;
+  const isInitialLoading = isFetching && !isLoadingMore;
 
   return (
     <nav className={cn('space-y-2.5 px-4 py-2.5', className)}>
