@@ -10,7 +10,7 @@ import StompProvider from '~/providers/StompProvider';
 
 const MainLayout: React.FC<React.PropsWithChildren> = ({ children }) => {
   const locale = useLocale();
-  const { isError, isPending, isSuccess } = useAuthentication();
+  const { isError, isPending, isSuccess, isIdle } = useAuthentication();
   const t = useTranslations('rootRoute');
   const dots = useDotsString(3);
 
@@ -20,7 +20,7 @@ const MainLayout: React.FC<React.PropsWithChildren> = ({ children }) => {
 
   return (
     <>
-      {isPending && (
+      {(isPending || isIdle) && (
         <div className="flex h-screen flex-col items-center justify-center gap-y-4 font-semibold">
           <HashLoader />
           <div className="relative">

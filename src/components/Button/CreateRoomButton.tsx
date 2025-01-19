@@ -29,8 +29,8 @@ const CreateRoomButton: React.FC<Props> = ({ className }) => {
       </Button>
 
       <CreateRoomModal
-        onClose={handleCreateRoomClick(false)}
         visible={isCreateRoomModalVisible}
+        onClose={handleCreateRoomClick(false)}
       />
     </>
   );

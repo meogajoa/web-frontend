@@ -1,4 +1,6 @@
+import { debounce } from 'lodash-es';
 import React from 'react';
+import { A_SECOND } from '~/utils/constants';
 
 export const useDotsString = (maxLength: number) => {
   const [dots, setDots] = React.useState('');
@@ -8,8 +10,12 @@ export const useDotsString = (maxLength: number) => {
       setDots((dots) => (dots.length >= maxLength ? '' : dots + '.'));
     }, 500);
 
+    debounce(() => {
+      clearInterval(interval);
+    }, 30 * A_SECOND)();
+
     return () => clearInterval(interval);
-  }, [maxLength]);
+  }, []);
 
   return dots;
 };
