@@ -4,7 +4,7 @@ import { useForm } from 'react-hook-form';
 import { BrandModal, BrandModalProps } from '~/components/BrandModal';
 import { useCreateRoomMutation } from '~/hooks/room';
 import { useRouter } from '~/i18n/routing';
-import { CreateRoomForm } from '~/types/form';
+import { CreateRoomForm, CreateRoomResponse } from '~/types/form';
 
 type Props = BrandModalProps;
 
@@ -62,8 +62,8 @@ const CreateRoomModal: React.FC<Props> = ({ onClose, visible }) => {
     onClose();
   }
 
-  function handleRedirectOnSuccess() {
-    router.push('');
+  function handleRedirectOnSuccess({ id }: CreateRoomResponse) {
+    router.push(`/room/${id}`);
   }
 };
 
