@@ -7,8 +7,11 @@ import {
 } from '@tanstack/react-query';
 import { AxiosError } from 'axios';
 import React from 'react';
-import type { CreateRoomForm, CreateRoomResponse } from '~/types/form';
-import { type PaginatedRoomsResponse } from '~/types/game';
+import type {
+  CreateRoomForm,
+  CreateRoomResponse,
+  PaginatedRoomsResponse,
+} from '~/types/room';
 import { server } from '~/utils/axios';
 import { A_MINUTE, A_SECOND } from '~/utils/constants';
 import { sleep } from '~/utils/misc';

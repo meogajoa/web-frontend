@@ -4,7 +4,7 @@ import { useTranslations } from 'next-intl';
 import React from 'react';
 import CartFillIcon from '~/svgs/CartFillIcon';
 import ChatIcon from '~/svgs/ChatIcon';
-import { type ChatRoomKind } from '~/types/game';
+import type { ChatRoomKind } from '~/types/chat';
 import { cn } from '~/utils/classname';
 
 type Props = {
