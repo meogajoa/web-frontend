@@ -31,7 +31,12 @@ const GameChatBar: React.FC<Props> = ({ className }) => {
 
     const message = textareaRef.current.getValue();
     console.log(message);
-    textareaRef.current.clear();
+    textareaRef.current.blur();
+    textareaRef.current?.focus();
+
+    setTimeout(() => {
+      textareaRef.current?.clear();
+    }, 0);
   }
 
   function handleSubmitShortcut(
