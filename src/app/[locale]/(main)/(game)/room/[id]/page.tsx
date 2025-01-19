@@ -5,8 +5,9 @@ import { GameChatBar } from '~/components/ChatBar';
 import GameHeader from '~/components/GameHeader';
 import GameMessages from '~/components/GameMessages';
 import { useJoinRoomMutation } from '~/hooks/room';
-import '~/styles/room.css';
 import { ChatRoomKind } from '~/types/chat';
+
+import '~/styles/room.css';
 
 type Props = {
   params: Promise<{ id: string }>;
