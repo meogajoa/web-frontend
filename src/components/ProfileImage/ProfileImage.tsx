@@ -12,8 +12,8 @@ const variants = cva('relative rounded-[0.625rem]', {
       xl: 'size-[3.625rem]',
     },
     color: {
-      gray: 'bg-gray-5',
-      'light-gray': 'bg-gray-2',
+      gray: 'bg-gray-2',
+      'light-gray': 'bg-gray-5',
     },
   },
   defaultVariants: {

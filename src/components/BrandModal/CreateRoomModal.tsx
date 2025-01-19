@@ -1,76 +1,67 @@
-import { useMutation } from '@tanstack/react-query';
 import { useTranslations } from 'next-intl';
 import React from 'react';
-import { SubmitHandler, useForm } from 'react-hook-form';
+import { useForm } from 'react-hook-form';
 import { BrandModal, BrandModalProps } from '~/components/BrandModal';
-import { server } from '~/utils/axios';
-
-type CreateRoomForm = {
-  roomName: string;
-  roomPassword: string;
-};
-
-const createRoomMutationFn = async (data: CreateRoomForm): Promise<unknown> => {
-  return server.post('/room/create', { ...data });
-};
+import { useCreateRoomMutation } from '~/hooks/room';
+import { useRouter } from '~/i18n/routing';
+import type { CreateRoomForm, CreateRoomResponse } from '~/types/room';
 
 type Props = BrandModalProps;
 
 const CreateRoomModal: React.FC<Props> = ({ onClose, visible }) => {
-  const messages = useTranslations('createRoomModal');
+  const t = useTranslations('createRoomModal');
+  const router = useRouter();
   const { register, handleSubmit } = useForm<CreateRoomForm>();
-
-  const { mutate } = useMutation({
-    mutationFn: createRoomMutationFn,
-    onSuccess: () => {
-      onClose();
-    },
-    onError: (error) => {
-      console.error(error);
-    },
+  const { createRoom } = useCreateRoomMutation({
+    onSuccess: handleRedirectOnSuccess,
   });
-
-  const onSubmit: SubmitHandler<CreateRoomForm> = (data) => {
-    mutate(data);
-  };
 
   return (
     <BrandModal
-      onClose={onClose}
+      onClose={handleClose}
       hasBackdropBlur
       visible={visible}
       onSubmit={handleSubmit(onSubmit)}
     >
       <BrandModal.Header>
-        <BrandModal.Title label={messages('title')} />
-        <BrandModal.CloseButton onClose={onClose} position="right" />
+        <BrandModal.Title label={t('title')} />
+        <BrandModal.CloseButton onClose={handleClose} position="right" />
       </BrandModal.Header>
 
       <BrandModal.Body>
         <div>
-          <label htmlFor="roomName">{messages('roomNameLabel')}</label>
-          <input type="text" {...register('roomName', { required: true })} />
+          <label htmlFor="name">{t('roomNameLabel')}</label>
+          <input type="text" {...register('name', { required: true })} />
         </div>
         <div>
-          <label htmlFor="roomPassword">{messages('roomPasswordLabel')}</label>
-          <input
-            type="password"
-            {...register('roomPassword', { required: true })}
-          />
+          <label htmlFor="password">{t('roomPasswordLabel')}</label>
+          <input type="password" {...register('password')} />
         </div>
       </BrandModal.Body>
 
       <BrandModal.ButtonGroup>
-        <BrandModal.Button kind="no" onClick={onClose}>
-          {messages('cancelButton')}
+        <BrandModal.Button kind="no" onClick={handleClose}>
+          {t('cancelButton')}
         </BrandModal.Button>
 
         <BrandModal.Button kind="yes" type="submit">
-          {messages('createButton')}
+          {t('createButton')}
         </BrandModal.Button>
       </BrandModal.ButtonGroup>
     </BrandModal>
   );
+
+  function onSubmit(data: CreateRoomForm): void {
+    createRoom(data);
+  }
+
+  function handleClose() {
+    onClose();
+  }
+
+  function handleRedirectOnSuccess({ id }: CreateRoomResponse) {
+    router.push(`/rooms/${id}`);
+  }
 };
 
 export default CreateRoomModal;

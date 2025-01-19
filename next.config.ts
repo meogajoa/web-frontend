@@ -10,7 +10,6 @@ const nextConfig: NextConfig = {
   env: {
     API_URL: CONFIGS.API_URL,
     DEV_API_URL: CONFIGS.DEV_API_URL,
-    NAV_HIDE_URLS: CONFIGS.NAV_HIDE_URLS,
   },
 };
 

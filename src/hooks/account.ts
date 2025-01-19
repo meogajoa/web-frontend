@@ -1,5 +1,9 @@
+import { useMutation } from '@tanstack/react-query';
+import { type AxiosError, type AxiosResponse } from 'axios';
 import React from 'react';
-import { AccountStatus } from '~/types/account';
+import { server } from '~/utils/axios';
+import { A_SECOND } from '~/utils/constants';
+import { sleep } from '~/utils/misc';
 
 export const useSessionId = () => {
   return React.useSyncExternalStore(
@@ -20,13 +24,36 @@ export const useSessionId = () => {
   );
 };
 
-export const useAccount = () => {
+export const useAuthenticateMutation = ({
+  sleepSeconds = 1,
+  onError,
+}: {
+  sleepSeconds?: number;
+  onError?: (error: AxiosError<void, void>) => void;
+}) => {
   const sessionId = useSessionId();
-  const accountStatus: AccountStatus =
-    sessionId === null ? AccountStatus.SignedOut : AccountStatus.SignedIn;
+
+  const _authenticateAsync = React.useCallback(async () => {
+    const response = server.post<void>('/auth/test');
+    await sleep(sleepSeconds * A_SECOND);
+    return response;
+  }, []);
+
+  const mutation = useMutation<
+    AxiosResponse<void, void>,
+    AxiosError<void, void>
+  >({
+    mutationFn: _authenticateAsync,
+    onError,
+  });
+
+  React.useEffect(() => {
+    mutation.mutate();
+  }, [sessionId]);
 
   return {
-    sessionId,
-    accountStatus,
+    ...mutation,
+    authenticate: mutation.mutate,
+    authenticateAsync: mutation.mutateAsync,
   };
 };

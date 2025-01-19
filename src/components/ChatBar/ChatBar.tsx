@@ -9,15 +9,19 @@ type Props = {
   className?: React.ComponentProps<'div'>['className'];
 };
 
-const ChatBar: React.FC<Props> = ({ className, ...props }) => {
+const ChatBar: React.FC<React.PropsWithChildren<Props>> = ({
+  className,
+  children,
+}) => {
   return (
     <div
       className={cn(
-        'bottom-0-dynamic fixed flex w-full items-center gap-x-3 bg-white px-4 py-1 shadow-top',
+        'flex items-center gap-x-3 bg-white px-4 pb-4 pt-1 shadow-top',
         className,
       )}
-      {...props}
-    />
+    >
+      {children}
+    </div>
   );
 };
 
@@ -43,16 +47,18 @@ const MenuButton: React.FC<MenuButtonProps> = ({
 type TextareaProps = {
   className?: React.ComponentProps<'textarea'>['className'];
   ref: React.RefObject<TextareaHandle>;
+  onKeyDown?: React.ComponentProps<'textarea'>['onKeyDown'];
 };
 
-const Textarea: React.FC<TextareaProps> = ({ className, ref }) => {
+const Textarea: React.FC<TextareaProps> = ({ className, ref, onKeyDown }) => {
   return (
     <CustomTextarea
       className={cn(
-        'scrollbar-primary rounded-lg border border-gray-6 p-2.5 text-xl text-gray-1 transition-all duration-300 placeholder:text-gray-5 focus:outline-none',
+        'scrollbar-hide scrollbar-primary rounded-lg border border-gray-6 p-2.5 text-xl text-gray-1 outline-none transition-all duration-300 placeholder:text-gray-5',
         className,
       )}
       ref={ref}
+      onKeyDown={onKeyDown}
     />
   );
 };

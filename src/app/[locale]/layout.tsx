@@ -2,25 +2,28 @@ import { setRequestLocale } from 'next-intl/server';
 import React from 'react';
 import { routing } from '~/i18n/routing';
 import IntlProvider from '~/providers/IntlProvider';
+import RootProvider from '~/providers/RootProvider';
 
 export const generateStaticParams = async () => {
   return routing.locales.map((locale) => ({ locale }));
 };
 
-export type Locale = { locale: string };
+type Props = {
+  params: Promise<{ locale: string }>;
+};
 
-export type LocaleLayoutProps = React.PropsWithChildren<{
-  params: Promise<Locale>;
-}>;
-
-const LocaleLayout: React.AFC<LocaleLayoutProps> = async ({
+const LocaleLayout: React.AFC<React.PropsWithChildren<Props>> = async ({
   params,
   children,
 }) => {
   const { locale } = await params;
   setRequestLocale(locale);
 
-  return <IntlProvider locale={locale}>{children}</IntlProvider>;
+  return (
+    <IntlProvider locale={locale}>
+      <RootProvider>{children}</RootProvider>
+    </IntlProvider>
+  );
 };
 
 export default LocaleLayout;

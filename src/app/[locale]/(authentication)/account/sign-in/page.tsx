@@ -35,7 +35,7 @@ const SignInPage = () => {
 
   const onSubmit: SubmitHandler<SignUpForm> = (data) => {
     mutate(data);
-    router.push('/');
+    router.push('/home');
   };
 
   return (
@@ -67,7 +67,10 @@ const SignInPage = () => {
 
       <button
         className="border p-3"
-        onClick={() => router.push('/account/sign-up')}
+        onClick={(e) => {
+          e.preventDefault();
+          router.push('/account/sign-up');
+        }}
       >
         Go to Sign Up page
       </button>

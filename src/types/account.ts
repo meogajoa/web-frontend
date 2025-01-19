@@ -3,3 +3,5 @@ export enum AccountStatus {
   SignedIn,
   SessionExpired,
 }
+
+export type Username = string;

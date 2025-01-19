@@ -5,6 +5,7 @@ import { cn } from '~/utils/classname';
 export type TextareaHandle = {
   clear: () => void;
   focus: () => void;
+  blur: () => void;
   setValue: (value: string) => void;
   getValue: () => string;
 };
@@ -43,6 +44,13 @@ const CustomTextarea: React.FC<Props> = ({ className, ref, ...props }) => {
       }
 
       textArea.current.focus();
+    },
+    blur: () => {
+      if (!textArea.current) {
+        return;
+      }
+
+      textArea.current.blur();
     },
     setValue: (value: string) => {
       if (!textArea.current) {
