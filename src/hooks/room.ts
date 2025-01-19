@@ -7,6 +7,7 @@ import {
 } from '@tanstack/react-query';
 import { AxiosError } from 'axios';
 import React from 'react';
+import type { ChatMessage } from '~/types/chat';
 import type {
   CreateRoomForm,
   CreateRoomResponse,
@@ -52,12 +53,24 @@ export const useInfiniteRooms = () => {
 
 export const useJoinRoomMutation = (id: string) => {
   const _joinRoomAsync = React.useCallback(async (_id: string) => {
-    const response = server.post<void>('/room/join', { id: _id });
+    const data = server
+      .post<ChatMessage[]>('/room/join', { id: _id })
+      .then((response) => {
+        return response.data.map((message) => ({
+          ...message,
+          sendTime: new Date(message.sendTime),
+        }));
+      });
     await sleep(A_SECOND);
-    return response;
+    return data;
   }, []);
 
-  const mutation = useMutation({
+  const mutation = useMutation<
+    ChatMessage[],
+    AxiosError<ChatMessage[], ChatMessage[]>,
+    string,
+    void
+  >({
     mutationFn: _joinRoomAsync,
   });
 
@@ -67,6 +80,7 @@ export const useJoinRoomMutation = (id: string) => {
 
   return {
     ...mutation,
+    previousMessages: mutation.data,
     joinRoom: mutation,
     joinRoomAsync: mutation.mutateAsync,
   };

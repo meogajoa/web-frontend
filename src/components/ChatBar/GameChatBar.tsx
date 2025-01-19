@@ -1,7 +1,10 @@
 import { noop } from 'lodash-es';
+import { useParams } from 'next/navigation';
 import React from 'react';
+import { useStompClient } from 'react-stomp-hooks';
 import { ChatBar } from '~/components/ChatBar';
 import { TextareaHandle } from '~/components/CustomTextarea';
+import { useSessionId } from '~/hooks/account';
 import { cn } from '~/utils/classname';
 
 type Props = {
@@ -11,6 +14,9 @@ type Props = {
 
 const GameChatBar: React.FC<Props> = ({ className, renderPlaceholder }) => {
   const textareaRef = React.useRef<TextareaHandle>(null);
+  const stompClient = useStompClient();
+  const { id } = useParams<{ id: string }>();
+  const sessionId = useSessionId();
 
   return (
     <>
@@ -32,13 +38,27 @@ const GameChatBar: React.FC<Props> = ({ className, renderPlaceholder }) => {
     }
 
     const message = textareaRef.current.getValue();
-    console.log(message);
     textareaRef.current.blur();
     textareaRef.current?.focus();
-
     setTimeout(() => {
       textareaRef.current?.clear();
     }, 0);
+
+    if (!id) {
+      throw new Error('Room ID is not found');
+    }
+
+    if (!stompClient) {
+      throw new Error('Stomp client is not currently connected');
+    }
+
+    stompClient?.publish({
+      headers: {
+        Authorization: sessionId!,
+      },
+      destination: `/app/room/${id}`,
+      body: JSON.stringify({ type: 'CHAT', content: message }),
+    });
   }
 
   function handleSubmitShortcut(

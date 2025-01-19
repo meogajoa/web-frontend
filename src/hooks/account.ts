@@ -1,4 +1,5 @@
 import { useMutation } from '@tanstack/react-query';
+import { type AxiosError, type AxiosResponse } from 'axios';
 import React from 'react';
 import { server } from '~/utils/axios';
 import { A_SECOND } from '~/utils/constants';
@@ -25,18 +26,25 @@ export const useSessionId = () => {
 
 export const useAuthenticateMutation = ({
   sleepSeconds = 1,
+  onError,
 }: {
   sleepSeconds?: number;
+  onError?: (error: AxiosError<void, void>) => void;
 }) => {
   const sessionId = useSessionId();
 
   const _authenticateAsync = React.useCallback(async () => {
-    server.post<void>('/auth/test');
+    const response = server.post<void>('/auth/test');
     await sleep(sleepSeconds * A_SECOND);
+    return response;
   }, []);
 
-  const mutation = useMutation({
+  const mutation = useMutation<
+    AxiosResponse<void, void>,
+    AxiosError<void, void>
+  >({
     mutationFn: _authenticateAsync,
+    onError,
   });
 
   React.useEffect(() => {

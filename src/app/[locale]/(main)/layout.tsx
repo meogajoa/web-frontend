@@ -1,24 +1,21 @@
 'use client';
 
-import { useLocale, useTranslations } from 'next-intl';
+import { useTranslations } from 'next-intl';
 import React from 'react';
 import { HashLoader } from 'react-spinners';
 import { useAuthenticateMutation } from '~/hooks/account';
 import { useDotsString } from '~/hooks/loading';
-import { redirect } from '~/i18n/routing';
+import { useRouter } from '~/i18n/routing';
 import StompProvider from '~/providers/StompProvider';
 
 const MainLayout: React.FC<React.PropsWithChildren> = ({ children }) => {
-  const locale = useLocale();
-  const { isError, isPending, isSuccess, isIdle } = useAuthenticateMutation({
+  const { isPending, isSuccess, isIdle } = useAuthenticateMutation({
     sleepSeconds: 1,
+    onError: handleAuthenticateError,
   });
   const t = useTranslations('rootRoute');
   const dots = useDotsString(3);
-
-  if (isError) {
-    redirect({ locale, href: '/account/sign-in' });
-  }
+  const router = useRouter();
 
   return (
     <>
@@ -35,6 +32,10 @@ const MainLayout: React.FC<React.PropsWithChildren> = ({ children }) => {
       {isSuccess && <StompProvider>{children}</StompProvider>}
     </>
   );
+
+  function handleAuthenticateError() {
+    router.replace('/account/sign-in');
+  }
 };
 
 export default MainLayout;

@@ -1,3 +1,5 @@
+import type { Username } from '~/types/account';
+
 export enum ChatRoomKind {
   All = 'all',
   White = 'white',
@@ -11,3 +13,10 @@ export enum ChatRoomKind {
   User07 = 'user07',
   User08 = 'user08',
 }
+
+export type ChatMessage = {
+  id: string;
+  content: string;
+  sender: Username;
+  sendTime: Date;
+};
