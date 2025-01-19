@@ -51,7 +51,7 @@ export const useInfiniteRooms = () => {
   return { ...rest, rooms };
 };
 
-export const useJoinRoomMutation = (id: string) => {
+export const useJoinRoomMutation = ({ id }: { id: string }) => {
   const _joinRoomAsync = React.useCallback(async (_id: string) => {
     const data = server
       .post<ChatMessage[]>('/room/join', { id: _id })
