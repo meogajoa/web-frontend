@@ -67,7 +67,10 @@ const SignInPage = () => {
 
       <button
         className="border p-3"
-        onClick={() => router.push('/account/sign-up')}
+        onClick={(e) => {
+          e.preventDefault();
+          router.push('/account/sign-up');
+        }}
       >
         Go to Sign Up page
       </button>

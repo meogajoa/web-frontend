@@ -1,11 +1,10 @@
 'use client';
 
 import { useLocale } from 'next-intl';
-
 import React from 'react';
-import { BottomNavigationContent } from '~/components/BottomNavigation';
 import { useAccount } from '~/hooks/account';
 import { redirect } from '~/i18n/routing';
+import StompProvider from '~/providers/StompProvider';
 import { AccountStatus } from '~/types/account';
 
 const MainLayout: React.FC<React.PropsWithChildren> = ({ children }) => {
@@ -16,12 +15,7 @@ const MainLayout: React.FC<React.PropsWithChildren> = ({ children }) => {
     redirect({ locale, href: '/account/sign-in' });
   }
 
-  return (
-    <>
-      {children}
-      <BottomNavigationContent />
-    </>
-  );
+  return <StompProvider>{children}</StompProvider>;
 };
 
 export default MainLayout;
