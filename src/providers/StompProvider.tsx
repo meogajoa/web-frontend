@@ -1,9 +1,9 @@
 import React from 'react';
 import { StompSessionProvider } from 'react-stomp-hooks';
-import { useAccount } from '~/hooks/account';
+import { useSessionId } from '~/hooks/account';
 
 const StompProvider: React.FC<React.PropsWithChildren> = ({ children }) => {
-  const { sessionId } = useAccount();
+  const sessionId = useSessionId();
 
   return (
     <StompSessionProvider

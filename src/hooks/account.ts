@@ -1,5 +1,8 @@
+import { useMutation } from '@tanstack/react-query';
 import React from 'react';
-import { AccountStatus } from '~/types/account';
+import { server } from '~/utils/axios';
+import { A_SECOND } from '~/utils/constants';
+import { sleep } from '~/utils/misc';
 
 export const useSessionId = () => {
   return React.useSyncExternalStore(
@@ -20,13 +23,22 @@ export const useSessionId = () => {
   );
 };
 
-export const useAccount = () => {
+export const useAuthentication = () => {
   const sessionId = useSessionId();
-  const accountStatus: AccountStatus =
-    sessionId === null ? AccountStatus.SignedOut : AccountStatus.SignedIn;
 
-  return {
-    sessionId,
-    accountStatus,
-  };
+  const authenticate = React.useCallback(async () => {
+    const response = server.post('/auth/test');
+    await sleep(A_SECOND);
+    return response;
+  }, []);
+
+  const mutation = useMutation({
+    mutationFn: authenticate,
+  });
+
+  React.useEffect(() => {
+    mutation.mutate();
+  }, [sessionId]);
+
+  return mutation;
 };

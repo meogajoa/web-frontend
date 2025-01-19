@@ -35,7 +35,7 @@ const SignInPage = () => {
 
   const onSubmit: SubmitHandler<SignUpForm> = (data) => {
     mutate(data);
-    router.push('/');
+    router.push('/home');
   };
 
   return (
