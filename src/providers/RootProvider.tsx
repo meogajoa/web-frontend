@@ -1,6 +1,7 @@
 'use client';
 
 import React from 'react';
+import { AccountStoreProvider } from '~/providers/AccountProvider';
 import TanstackQueryProvider from '~/providers/TanstackQueryProvider';
 
 type Props = {};
@@ -8,7 +9,11 @@ type Props = {};
 const RootProvider: React.FC<React.PropsWithChildren<Props>> = ({
   children,
 }) => {
-  return <TanstackQueryProvider>{children}</TanstackQueryProvider>;
+  return (
+    <AccountStoreProvider>
+      <TanstackQueryProvider>{children}</TanstackQueryProvider>;
+    </AccountStoreProvider>
+  );
 };
 
 export default RootProvider;

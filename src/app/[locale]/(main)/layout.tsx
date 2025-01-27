@@ -5,7 +5,9 @@ import HashLoader from 'react-spinners/HashLoader';
 import { useAuthenticateMutation } from '~/hooks/account';
 import { useDotsString } from '~/hooks/loading';
 import { useRouter } from '~/i18n/routing';
+import { useAccount } from '~/providers/AccountProvider';
 import StompProvider from '~/providers/StompProvider';
+import { AuthenticateResponse } from '~/types/account';
 
 const MainLayout: React.FC<React.PropsWithChildren> = ({ children }) => {
   const { isPending, isSuccess, isIdle } = useAuthenticateMutation({
@@ -17,6 +19,7 @@ const MainLayout: React.FC<React.PropsWithChildren> = ({ children }) => {
   const t = useTranslations('rootRoute');
   const dots = useDotsString({ maxLength: 3 });
   const router = useRouter();
+  const { setMe, clearMe } = useAccount();
 
   return (
     <>
@@ -34,11 +37,13 @@ const MainLayout: React.FC<React.PropsWithChildren> = ({ children }) => {
     </>
   );
 
-  function handleAuthenticateSuccess() {
-    console.log('Authenticated');
+  function handleAuthenticateSuccess(data: AuthenticateResponse) {
+    setMe({ nickname: data.nickname });
   }
 
   function handleAuthenticateError() {
+    clearMe();
+    localStorage.removeItem('sessionId');
     router.replace('/account/sign-in');
   }
 };

@@ -1,11 +1,12 @@
 import { useMutation } from '@tanstack/react-query';
 import { type AxiosError } from 'axios';
 import React from 'react';
-import type {
-  AuthenticateResponse,
-  SignInForm,
-  SignInResponse,
-  SignUpForm,
+import {
+  authenticateResponse,
+  type AuthenticateResponse,
+  type SignInForm,
+  type SignInResponse,
+  type SignUpForm,
 } from '~/types/account';
 import { server } from '~/utils/axios';
 import { A_SECOND } from '~/utils/constants';
@@ -46,7 +47,14 @@ export const useAuthenticateMutation = ({
   const _authenticateAsync = React.useCallback(async () => {
     const data = server
       .post<AuthenticateResponse>('/auth/test')
-      .then((response) => response.data);
+      .then((response) => {
+        const parseResult = authenticateResponse.safeParse(response.data);
+        if (parseResult.error) {
+          throw new Error(parseResult.error.message);
+        }
+
+        return parseResult.data;
+      });
     await sleep(sleepSeconds * A_SECOND);
     return data;
   }, []);
