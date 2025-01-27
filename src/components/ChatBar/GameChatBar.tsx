@@ -52,11 +52,11 @@ const GameChatBar: React.FC<Props> = ({ className, renderPlaceholder }) => {
       throw new Error('Stomp client is not currently connected');
     }
 
-    stompClient?.publish({
+    stompClient.publish({
       headers: {
         Authorization: sessionId!,
       },
-      destination: `/app/room/${id}`,
+      destination: `/app/room/${id}/chat`,
       body: JSON.stringify({ type: 'CHAT', content: message }),
     });
   }

@@ -9,7 +9,7 @@ const StompProvider = React.memo(({ children }: PropsWithChildren) => {
     <StompSessionProvider
       url={'ws://localhost:8080/ws'}
       connectHeaders={{
-        Authorization: sessionId || '',
+        Authorization: sessionId,
       }}
       onConnect={handleConnected}
     >

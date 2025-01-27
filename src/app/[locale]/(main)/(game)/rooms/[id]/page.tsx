@@ -31,7 +31,7 @@ const RoomPage: React.FC<Props> = ({ params }) => {
             whichChatRoom={ChatRoomKind.All}
           />
           <GameMessages
-            className="flex-1 overflow-y-auto"
+            className="flex-1"
             roomId={roomId}
             previousMessages={previousMessages}
           />

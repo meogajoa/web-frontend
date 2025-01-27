@@ -28,7 +28,7 @@ export const useSessionId = () => {
         window.removeEventListener('storage', handleStorageChange);
       };
     },
-    () => localStorage.getItem('sessionId'),
+    () => localStorage.getItem('sessionId') || '',
     () => '',
   );
 };
