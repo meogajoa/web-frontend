@@ -10,8 +10,10 @@ import StompProvider from '~/providers/StompProvider';
 const MainLayout: React.FC<React.PropsWithChildren> = ({ children }) => {
   const { isPending, isSuccess, isIdle } = useAuthenticateMutation({
     sleepSeconds: 1,
+    onSuccess: handleAuthenticateSuccess,
     onError: handleAuthenticateError,
   });
+
   const t = useTranslations('rootRoute');
   const dots = useDotsString({ maxLength: 3 });
   const router = useRouter();
@@ -31,6 +33,10 @@ const MainLayout: React.FC<React.PropsWithChildren> = ({ children }) => {
       {isSuccess && <StompProvider>{children}</StompProvider>}
     </>
   );
+
+  function handleAuthenticateSuccess() {
+    console.log('Authenticated');
+  }
 
   function handleAuthenticateError() {
     router.replace('/account/sign-in');

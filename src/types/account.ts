@@ -23,3 +23,8 @@ export type SignUpForm = {
   password: string;
   passwordConfirmation?: string;
 };
+
+export type AuthenticateResponse = {
+  nickname: string;
+  email: string;
+};

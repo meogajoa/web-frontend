@@ -1,7 +1,12 @@
 import { useMutation } from '@tanstack/react-query';
-import { type AxiosError, type AxiosResponse } from 'axios';
+import { type AxiosError } from 'axios';
 import React from 'react';
-import type { SignInForm, SignInResponse, SignUpForm } from '~/types/account';
+import type {
+  AuthenticateResponse,
+  SignInForm,
+  SignInResponse,
+  SignUpForm,
+} from '~/types/account';
 import { server } from '~/utils/axios';
 import { A_SECOND } from '~/utils/constants';
 import { serializeToUrlEncoded, sleep } from '~/utils/misc';
@@ -27,24 +32,33 @@ export const useSessionId = () => {
 
 export const useAuthenticateMutation = ({
   sleepSeconds = 1,
+  onSuccess,
   onError,
 }: {
   sleepSeconds?: number;
-  onError?: (error: AxiosError<void, void>) => void;
+  onSuccess?: (data: AuthenticateResponse) => void;
+  onError?: (
+    error: AxiosError<AuthenticateResponse, AuthenticateResponse>,
+  ) => void;
 }) => {
   const sessionId = useSessionId();
 
   const _authenticateAsync = React.useCallback(async () => {
-    const response = server.post<void>('/auth/test');
+    const data = server
+      .post<AuthenticateResponse>('/auth/test')
+      .then((response) => response.data);
     await sleep(sleepSeconds * A_SECOND);
-    return response;
+    return data;
   }, []);
 
   const mutation = useMutation<
-    AxiosResponse<void, void>,
-    AxiosError<void, void>
+    AuthenticateResponse,
+    AxiosError<AuthenticateResponse, AuthenticateResponse>,
+    void,
+    void
   >({
     mutationFn: _authenticateAsync,
+    onSuccess,
     onError,
   });
 
