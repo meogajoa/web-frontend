@@ -16,3 +16,10 @@ export type SignInResponse = {
   email: string;
   password: string;
 };
+
+export type SignUpForm = {
+  email: string;
+  nickname: string;
+  password: string;
+  passwordConfirmation?: string;
+};

@@ -1,7 +1,7 @@
 import { useMutation } from '@tanstack/react-query';
 import { type AxiosError, type AxiosResponse } from 'axios';
 import React from 'react';
-import { SignInForm, SignInResponse } from '~/types/account';
+import type { SignInForm, SignInResponse, SignUpForm } from '~/types/account';
 import { server } from '~/utils/axios';
 import { A_SECOND } from '~/utils/constants';
 import { serializeToUrlEncoded, sleep } from '~/utils/misc';
@@ -91,5 +91,38 @@ export const useSignInMutation = ({
     ...mutation,
     signIn: mutation.mutate,
     signInAsync: mutation.mutateAsync,
+  };
+};
+
+export const useSignUpMutation = ({
+  onSuccess,
+  onError,
+}: {
+  onSuccess?: (data: void, variables: SignUpForm) => void;
+  onError?: (error: AxiosError<void, void>) => void;
+}) => {
+  const _signUpAsync = React.useCallback(
+    async (data: SignUpForm): Promise<void> => {
+      const { passwordConfirmation, ...filtered } = data;
+
+      server.post<void>('/auth/sign-up', serializeToUrlEncoded(filtered), {
+        headers: {
+          'Content-Type': 'application/x-www-form-urlencoded',
+        },
+      });
+    },
+    [],
+  );
+
+  const mutation = useMutation<void, AxiosError<void, void>, SignUpForm, void>({
+    mutationFn: _signUpAsync,
+    onSuccess,
+    onError,
+  });
+
+  return {
+    ...mutation,
+    signUp: mutation.mutate,
+    signUpAsync: mutation.mutateAsync,
   };
 };
