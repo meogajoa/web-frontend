@@ -19,7 +19,7 @@ const GameMessages: React.FC<Props> = ({
     url: `/topic/room/${roomId}`,
     previousMessages,
   });
-  console.log(previousMessages);
+
   return (
     <div className={cn('space-y-3 overflow-y-auto', className)}>
       {messages.map(({ id, content, sender }) => (

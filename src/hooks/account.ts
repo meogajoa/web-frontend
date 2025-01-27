@@ -3,6 +3,7 @@ import { type AxiosError } from 'axios';
 import React from 'react';
 import {
   authenticateResponse,
+  signInResponse,
   type AuthenticateResponse,
   type SignInForm,
   type SignInResponse,
@@ -38,9 +39,7 @@ export const useAuthenticateMutation = ({
 }: {
   sleepSeconds?: number;
   onSuccess?: (data: AuthenticateResponse) => void;
-  onError?: (
-    error: AxiosError<AuthenticateResponse, AuthenticateResponse>,
-  ) => void;
+  onError?: (error: AxiosError<AuthenticateResponse, void>) => void;
 }) => {
   const sessionId = useSessionId();
 
@@ -61,7 +60,7 @@ export const useAuthenticateMutation = ({
 
   const mutation = useMutation<
     AuthenticateResponse,
-    AxiosError<AuthenticateResponse, AuthenticateResponse>,
+    AxiosError<AuthenticateResponse, void>,
     void,
     void
   >({
@@ -86,7 +85,7 @@ export const useSignInMutation = ({
   onError,
 }: {
   onSuccess?: (data: SignInResponse, variables: SignInForm) => void;
-  onError?: (error: AxiosError<SignInResponse, SignInResponse>) => void;
+  onError?: (error: AxiosError<SignInResponse, SignInForm>) => void;
 }) => {
   const _signInAsync = React.useCallback(async (data: SignInForm) => {
     return server
@@ -95,12 +94,19 @@ export const useSignInMutation = ({
           'Content-Type': 'application/x-www-form-urlencoded',
         },
       })
-      .then((response) => response.data);
+      .then((response) => {
+        const parseResult = signInResponse.safeParse(response.data);
+        if (parseResult.error) {
+          throw new Error(parseResult.error.message);
+        }
+
+        return parseResult.data;
+      });
   }, []);
 
   const mutation = useMutation<
     SignInResponse,
-    AxiosError<SignInResponse, SignInResponse>,
+    AxiosError<SignInResponse, SignInForm>,
     SignInForm,
     void
   >({
@@ -121,7 +127,7 @@ export const useSignUpMutation = ({
   onError,
 }: {
   onSuccess?: (data: void, variables: SignUpForm) => void;
-  onError?: (error: AxiosError<void, void>) => void;
+  onError?: (error: AxiosError<void, SignUpForm>) => void;
 }) => {
   const _signUpAsync = React.useCallback(
     async (data: SignUpForm): Promise<void> => {
@@ -136,7 +142,12 @@ export const useSignUpMutation = ({
     [],
   );
 
-  const mutation = useMutation<void, AxiosError<void, void>, SignUpForm, void>({
+  const mutation = useMutation<
+    void,
+    AxiosError<void, SignUpForm>,
+    SignUpForm,
+    void
+  >({
     mutationFn: _signUpAsync,
     onSuccess,
     onError,

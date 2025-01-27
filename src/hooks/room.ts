@@ -6,11 +6,15 @@ import {
 } from '@tanstack/react-query';
 import { AxiosError } from 'axios';
 import React from 'react';
-import type { ChatMessage } from '~/types/chat';
-import type {
-  CreateRoomForm,
-  CreateRoomResponse,
-  PaginatedRoomsResponse,
+import { chatMessage } from '~/types/chat';
+import {
+  createRoomResponse,
+  JoinRoomResponse,
+  paginatedRoomsResponse,
+  type CreateRoomForm,
+  type CreateRoomResponse,
+  type JoinRoomRequest,
+  type PaginatedRoomsResponse,
 } from '~/types/room';
 import { server } from '~/utils/axios';
 import { A_MINUTE, A_SECOND } from '~/utils/constants';
@@ -19,19 +23,26 @@ import { sleep } from '~/utils/misc';
 export const useInfiniteRooms = () => {
   const _queryRoomsAsync = React.useCallback(
     async ({ pageParam }: QueryFunctionContext) => {
-      const response = server
+      const data = server
         .get<PaginatedRoomsResponse>(`/room/pages/${pageParam}`)
-        .then((response) => response.data);
+        .then((response) => {
+          const parseResult = paginatedRoomsResponse.safeParse(response.data);
+          if (parseResult.error) {
+            throw new Error(parseResult.error.message);
+          }
+
+          return parseResult.data;
+        });
 
       await sleep(A_SECOND);
-      return response;
+      return data;
     },
     [],
   );
 
   const { data, ...rest } = useInfiniteQuery<
     PaginatedRoomsResponse,
-    AxiosError<PaginatedRoomsResponse, PaginatedRoomsResponse>,
+    AxiosError<PaginatedRoomsResponse, void>,
     InfiniteData<PaginatedRoomsResponse, number[]>,
     string[],
     number
@@ -50,23 +61,31 @@ export const useInfiniteRooms = () => {
   return { ...rest, rooms };
 };
 
-export const useJoinRoomMutation = ({ id }: { id: string }) => {
+export const useJoinRoomMutation = ({ id }: JoinRoomRequest) => {
   const _joinRoomAsync = React.useCallback(async (_id: string) => {
     const data = server
-      .post<ChatMessage[]>('/room/join', { id: _id })
+      .post<JoinRoomResponse>('/room/join', { id: _id })
       .then((response) => {
-        return response.data.map((message) => ({
-          ...message,
-          sendTime: new Date(message.sendTime),
-        }));
+        return response.data.map((message) => {
+          const parseResult = chatMessage.safeParse({
+            ...message,
+            sendTime: new Date(message.sendTime),
+          });
+
+          if (parseResult.error) {
+            throw new Error(parseResult.error.message);
+          }
+
+          return parseResult.data;
+        });
       });
     await sleep(A_SECOND);
     return data;
   }, []);
 
   const mutation = useMutation<
-    ChatMessage[],
-    AxiosError<ChatMessage[], ChatMessage[]>,
+    JoinRoomResponse,
+    AxiosError<JoinRoomResponse, JoinRoomRequest>,
     string,
     void
   >({
@@ -93,12 +112,19 @@ export const useCreateRoomMutation = ({
   const _createRoomAsync = React.useCallback(async (data: CreateRoomForm) => {
     return await server
       .post<CreateRoomResponse>('/room/create', data)
-      .then((response) => response.data);
+      .then((response) => {
+        const parseResult = createRoomResponse.safeParse(response.data);
+        if (parseResult.error) {
+          throw new Error(parseResult.error.message);
+        }
+
+        return parseResult.data;
+      });
   }, []);
 
   const mutation = useMutation<
     CreateRoomResponse,
-    AxiosError<CreateRoomResponse, CreateRoomResponse>,
+    AxiosError<CreateRoomResponse, CreateRoomForm>,
     CreateRoomForm,
     void
   >({
