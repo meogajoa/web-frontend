@@ -1,5 +1,6 @@
 import { useMutation } from '@tanstack/react-query';
 import { type AxiosError } from 'axios';
+import { omit } from 'lodash-es';
 import React from 'react';
 import {
   authenticateResponse,
@@ -11,7 +12,7 @@ import {
 } from '~/types/account';
 import { server } from '~/utils/axios';
 import { A_SECOND } from '~/utils/constants';
-import { serializeToUrlEncoded, sleep } from '~/utils/misc';
+import { sleep } from '~/utils/misc';
 
 export const useSessionId = () => {
   return React.useSyncExternalStore(
@@ -89,11 +90,15 @@ export const useSignInMutation = ({
 }) => {
   const _signInAsync = React.useCallback(async (data: SignInForm) => {
     return server
-      .post<SignInResponse>('/auth/sign-in', serializeToUrlEncoded(data), {
-        headers: {
-          'Content-Type': 'application/x-www-form-urlencoded',
+      .post<SignInResponse>(
+        '/auth/sign-in',
+        new URLSearchParams(data).toString(),
+        {
+          headers: {
+            'Content-Type': 'application/x-www-form-urlencoded',
+          },
         },
-      })
+      )
       .then((response) => {
         const parseResult = signInResponse.safeParse(response.data);
         if (parseResult.error) {
@@ -131,13 +136,17 @@ export const useSignUpMutation = ({
 }) => {
   const _signUpAsync = React.useCallback(
     async (data: SignUpForm): Promise<void> => {
-      const { passwordConfirmation, ...filtered } = data;
+      const filtered = omit(data, ['passwordConfirmation']);
 
-      server.post<void>('/auth/sign-up', serializeToUrlEncoded(filtered), {
-        headers: {
-          'Content-Type': 'application/x-www-form-urlencoded',
+      server.post<void>(
+        '/auth/sign-up',
+        new URLSearchParams(filtered).toString(),
+        {
+          headers: {
+            'Content-Type': 'application/x-www-form-urlencoded',
+          },
         },
-      });
+      );
     },
     [],
   );
