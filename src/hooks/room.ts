@@ -1,7 +1,6 @@
 import {
   useInfiniteQuery,
   useMutation,
-  UseMutationOptions,
   type InfiniteData,
   type QueryFunctionContext,
 } from '@tanstack/react-query';
@@ -88,24 +87,23 @@ export const useJoinRoomMutation = ({ id }: { id: string }) => {
 
 export const useCreateRoomMutation = ({
   onSuccess,
-}: Pick<
-  UseMutationOptions<
-    CreateRoomResponse,
-    AxiosError<CreateRoomResponse, CreateRoomResponse>,
-    CreateRoomForm,
-    void
-  >,
-  'onSuccess'
->) => {
+}: {
+  onSuccess: (data: CreateRoomResponse, variables: CreateRoomForm) => void;
+}) => {
   const _createRoomAsync = React.useCallback(async (data: CreateRoomForm) => {
     return await server
       .post<CreateRoomResponse>('/room/create', data)
       .then((response) => response.data);
   }, []);
 
-  const mutation = useMutation({
+  const mutation = useMutation<
+    CreateRoomResponse,
+    AxiosError<CreateRoomResponse, CreateRoomResponse>,
+    CreateRoomForm,
+    void
+  >({
     mutationFn: _createRoomAsync,
-    onSuccess: onSuccess,
+    onSuccess,
   });
 
   return {

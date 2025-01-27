@@ -1,9 +1,10 @@
 import { useMutation } from '@tanstack/react-query';
 import { type AxiosError, type AxiosResponse } from 'axios';
 import React from 'react';
+import { SignInForm, SignInResponse } from '~/types/account';
 import { server } from '~/utils/axios';
 import { A_SECOND } from '~/utils/constants';
-import { sleep } from '~/utils/misc';
+import { serializeToUrlEncoded, sleep } from '~/utils/misc';
 
 export const useSessionId = () => {
   return React.useSyncExternalStore(
@@ -55,5 +56,40 @@ export const useAuthenticateMutation = ({
     ...mutation,
     authenticate: mutation.mutate,
     authenticateAsync: mutation.mutateAsync,
+  };
+};
+
+export const useSignInMutation = ({
+  onSuccess,
+  onError,
+}: {
+  onSuccess?: (data: SignInResponse, variables: SignInForm) => void;
+  onError?: (error: AxiosError<SignInResponse, SignInResponse>) => void;
+}) => {
+  const _signInAsync = React.useCallback(async (data: SignInForm) => {
+    return server
+      .post<SignInResponse>('/auth/sign-in', serializeToUrlEncoded(data), {
+        headers: {
+          'Content-Type': 'application/x-www-form-urlencoded',
+        },
+      })
+      .then((response) => response.data);
+  }, []);
+
+  const mutation = useMutation<
+    SignInResponse,
+    AxiosError<SignInResponse, SignInResponse>,
+    SignInForm,
+    void
+  >({
+    mutationFn: _signInAsync,
+    onSuccess,
+    onError,
+  });
+
+  return {
+    ...mutation,
+    signIn: mutation.mutate,
+    signInAsync: mutation.mutateAsync,
   };
 };
