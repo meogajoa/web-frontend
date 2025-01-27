@@ -1,10 +1,10 @@
 'use client';
 
 import { useTranslations } from 'next-intl';
-import { useRouter } from 'next/navigation';
 import HashLoader from 'react-spinners/HashLoader';
 import { useAuthenticateMutation } from '~/hooks/account';
 import { useDotsString } from '~/hooks/loading';
+import { useRouter } from '~/i18n/routing';
 import StompProvider from '~/providers/StompProvider';
 
 const MainLayout: React.FC<React.PropsWithChildren> = ({ children }) => {

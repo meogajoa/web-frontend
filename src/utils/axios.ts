@@ -25,11 +25,6 @@ export const server = (() => {
       if (error instanceof axios.AxiosError) {
         if (error.response) {
           console.error('[ERROR]: Axios error', error);
-
-          if ([401, 403].includes(error.response.status)) {
-            localStorage.removeItem('sessionId');
-            window?.location.replace('/');
-          }
         } else {
           console.error(`[ERROR]: Network error`, error);
           // TODO: Handle network error
