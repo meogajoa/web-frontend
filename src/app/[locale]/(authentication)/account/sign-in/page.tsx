@@ -1,42 +1,18 @@
 'use client';
 
-import { useMutation } from '@tanstack/react-query';
-import { SubmitHandler, useForm } from 'react-hook-form';
+import { useForm } from 'react-hook-form';
+import { useSignInMutation } from '~/hooks/account';
 import { useRouter } from '~/i18n/routing';
-import { server } from '~/utils/axios';
-import { serializeToUrlEncoded } from '~/utils/misc';
-
-type SignUpForm = {
-  email: string;
-  password: string;
-};
-
-const signInMutationFn = async (data: SignUpForm): Promise<any> => {
-  const response = await server.post(
-    '/auth/sign-in',
-    serializeToUrlEncoded(data),
-    {
-      headers: {
-        'Content-Type': 'application/x-www-form-urlencoded',
-      },
-    },
-  );
-
-  localStorage.setItem('sessionId', response.data.sessionId);
-};
+import type { SignInForm, SignInResponse } from '~/types/account';
 
 const SignInPage = () => {
-  const { register, handleSubmit } = useForm<SignUpForm>();
+  const { register, handleSubmit } = useForm<SignInForm>();
   const router = useRouter();
 
-  const { mutate } = useMutation({
-    mutationFn: signInMutationFn,
+  const { signIn } = useSignInMutation({
+    onSuccess: handleSignInSuccess,
+    onError: handleSignInError,
   });
-
-  const onSubmit: SubmitHandler<SignUpForm> = (data) => {
-    mutate(data);
-    router.push('/home');
-  };
 
   return (
     <form
@@ -76,6 +52,19 @@ const SignInPage = () => {
       </button>
     </form>
   );
+
+  function onSubmit(data: SignInForm) {
+    signIn(data);
+  }
+
+  function handleSignInSuccess(data: SignInResponse) {
+    localStorage.setItem('sessionId', data.sessionId);
+    router.push('/home');
+  }
+
+  function handleSignInError() {
+    alert('Sign in failed');
+  }
 };
 
 export default SignInPage;

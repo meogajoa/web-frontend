@@ -1,11 +1,10 @@
 'use client';
 
 import { useTranslations } from 'next-intl';
-import React from 'react';
-import { HashLoader } from 'react-spinners';
+import { useRouter } from 'next/navigation';
+import HashLoader from 'react-spinners/HashLoader';
 import { useAuthenticateMutation } from '~/hooks/account';
 import { useDotsString } from '~/hooks/loading';
-import { useRouter } from '~/i18n/routing';
 import StompProvider from '~/providers/StompProvider';
 
 const MainLayout: React.FC<React.PropsWithChildren> = ({ children }) => {
@@ -14,7 +13,7 @@ const MainLayout: React.FC<React.PropsWithChildren> = ({ children }) => {
     onError: handleAuthenticateError,
   });
   const t = useTranslations('rootRoute');
-  const dots = useDotsString(3);
+  const dots = useDotsString({ maxLength: 3 });
   const router = useRouter();
 
   return (

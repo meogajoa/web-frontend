@@ -5,3 +5,21 @@ export enum AccountStatus {
 }
 
 export type Username = string;
+
+export type SignInForm = {
+  email: string;
+  password: string;
+};
+
+export type SignInResponse = {
+  sessionId: string;
+  email: string;
+  password: string;
+};
+
+export type SignUpForm = {
+  email: string;
+  nickname: string;
+  password: string;
+  passwordConfirmation?: string;
+};

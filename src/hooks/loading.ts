@@ -2,7 +2,7 @@ import { debounce } from 'lodash-es';
 import React from 'react';
 import { A_SECOND } from '~/utils/constants';
 
-export const useDotsString = (maxLength: number) => {
+export const useDotsString = ({ maxLength = 3 }: { maxLength?: number }) => {
   const [dots, setDots] = React.useState('');
 
   React.useEffect(() => {
