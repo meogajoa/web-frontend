@@ -1,13 +1,16 @@
 'use client';
 
+import { type AxiosError } from 'axios';
 import { useForm } from 'react-hook-form';
 import { useSignInMutation } from '~/hooks/account';
 import { useRouter } from '~/i18n/routing';
+import { useAccount } from '~/providers/AccountProvider';
 import type { SignInForm, SignInResponse } from '~/types/account';
 
 const SignInPage = () => {
   const { register, handleSubmit } = useForm<SignInForm>();
   const router = useRouter();
+  const { setMe } = useAccount();
 
   const { signIn } = useSignInMutation({
     onSuccess: handleSignInSuccess,
@@ -23,7 +26,9 @@ const SignInPage = () => {
         <label htmlFor="email">Email</label>
         <input
           className="border"
+          id="email"
           type="email"
+          autoFocus
           {...register('email', { required: true })}
         />
       </div>
@@ -32,6 +37,7 @@ const SignInPage = () => {
         <label htmlFor="password">Password</label>
         <input
           className="border"
+          id="password"
           type="password"
           {...register('password', { required: true })}
         />
@@ -59,11 +65,12 @@ const SignInPage = () => {
 
   function handleSignInSuccess(data: SignInResponse) {
     localStorage.setItem('sessionId', data.sessionId);
+    setMe({ nickname: data.user.nickname });
     router.push('/home');
   }
 
-  function handleSignInError() {
-    alert('Sign in failed');
+  function handleSignInError(data: AxiosError<SignInResponse, SignInForm>) {
+    console.error(data.message);
   }
 };
 

@@ -1,7 +1,14 @@
 import { useMutation } from '@tanstack/react-query';
-import { type AxiosError, type AxiosResponse } from 'axios';
+import { type AxiosError } from 'axios';
 import React from 'react';
-import type { SignInForm, SignInResponse, SignUpForm } from '~/types/account';
+import {
+  authenticateResponse,
+  signInResponse,
+  type AuthenticateResponse,
+  type SignInForm,
+  type SignInResponse,
+  type SignUpForm,
+} from '~/types/account';
 import { server } from '~/utils/axios';
 import { A_SECOND } from '~/utils/constants';
 import { serializeToUrlEncoded, sleep } from '~/utils/misc';
@@ -27,24 +34,38 @@ export const useSessionId = () => {
 
 export const useAuthenticateMutation = ({
   sleepSeconds = 1,
+  onSuccess,
   onError,
 }: {
   sleepSeconds?: number;
-  onError?: (error: AxiosError<void, void>) => void;
+  onSuccess?: (data: AuthenticateResponse) => void;
+  onError?: (error: AxiosError<AuthenticateResponse, void>) => void;
 }) => {
   const sessionId = useSessionId();
 
   const _authenticateAsync = React.useCallback(async () => {
-    const response = server.post<void>('/auth/test');
+    const data = server
+      .post<AuthenticateResponse>('/auth/test')
+      .then((response) => {
+        const parseResult = authenticateResponse.safeParse(response.data);
+        if (parseResult.error) {
+          throw new Error(parseResult.error.message);
+        }
+
+        return parseResult.data;
+      });
     await sleep(sleepSeconds * A_SECOND);
-    return response;
+    return data;
   }, []);
 
   const mutation = useMutation<
-    AxiosResponse<void, void>,
-    AxiosError<void, void>
+    AuthenticateResponse,
+    AxiosError<AuthenticateResponse, void>,
+    void,
+    void
   >({
     mutationFn: _authenticateAsync,
+    onSuccess,
     onError,
   });
 
@@ -64,7 +85,7 @@ export const useSignInMutation = ({
   onError,
 }: {
   onSuccess?: (data: SignInResponse, variables: SignInForm) => void;
-  onError?: (error: AxiosError<SignInResponse, SignInResponse>) => void;
+  onError?: (error: AxiosError<SignInResponse, SignInForm>) => void;
 }) => {
   const _signInAsync = React.useCallback(async (data: SignInForm) => {
     return server
@@ -73,12 +94,19 @@ export const useSignInMutation = ({
           'Content-Type': 'application/x-www-form-urlencoded',
         },
       })
-      .then((response) => response.data);
+      .then((response) => {
+        const parseResult = signInResponse.safeParse(response.data);
+        if (parseResult.error) {
+          throw new Error(parseResult.error.message);
+        }
+
+        return parseResult.data;
+      });
   }, []);
 
   const mutation = useMutation<
     SignInResponse,
-    AxiosError<SignInResponse, SignInResponse>,
+    AxiosError<SignInResponse, SignInForm>,
     SignInForm,
     void
   >({
@@ -99,7 +127,7 @@ export const useSignUpMutation = ({
   onError,
 }: {
   onSuccess?: (data: void, variables: SignUpForm) => void;
-  onError?: (error: AxiosError<void, void>) => void;
+  onError?: (error: AxiosError<void, SignUpForm>) => void;
 }) => {
   const _signUpAsync = React.useCallback(
     async (data: SignUpForm): Promise<void> => {
@@ -114,7 +142,12 @@ export const useSignUpMutation = ({
     [],
   );
 
-  const mutation = useMutation<void, AxiosError<void, void>, SignUpForm, void>({
+  const mutation = useMutation<
+    void,
+    AxiosError<void, SignUpForm>,
+    SignUpForm,
+    void
+  >({
     mutationFn: _signUpAsync,
     onSuccess,
     onError,

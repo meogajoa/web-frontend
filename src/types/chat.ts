@@ -1,4 +1,5 @@
-import type { Username } from '~/types/account';
+import { z } from 'zod';
+import { username } from '~/types/account';
 
 export enum ChatRoomKind {
   All = 'all',
@@ -14,9 +15,10 @@ export enum ChatRoomKind {
   User08 = 'user08',
 }
 
-export type ChatMessage = {
-  id: string;
-  content: string;
-  sender: Username;
-  sendTime: Date;
-};
+export const chatMessage = z.object({
+  id: z.string(),
+  content: z.string(),
+  sender: username,
+  sendTime: z.date(),
+});
+export type ChatMessage = z.infer<typeof chatMessage>;

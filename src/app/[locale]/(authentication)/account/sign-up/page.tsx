@@ -1,5 +1,6 @@
 'use client';
 
+import { type AxiosError } from 'axios';
 import { useForm } from 'react-hook-form';
 import { useSignUpMutation } from '~/hooks/account';
 import { useRouter } from '~/i18n/routing';
@@ -23,7 +24,9 @@ const SignUpPage = () => {
         <label htmlFor="email">Email</label>
         <input
           className="border"
+          id="email"
           type="email"
+          autoFocus
           {...register('email', { required: true })}
         />
       </div>
@@ -32,6 +35,7 @@ const SignUpPage = () => {
         <label htmlFor="password">Password</label>
         <input
           className="border"
+          id="password"
           type="password"
           {...register('password', { required: true })}
         />
@@ -41,6 +45,7 @@ const SignUpPage = () => {
         <label htmlFor="passwordConfirmation">Password Confirmation</label>
         <input
           className="border"
+          id="passwordConfirmation"
           type="password"
           {...register('passwordConfirmation', { required: true })}
         />
@@ -50,6 +55,7 @@ const SignUpPage = () => {
         <label htmlFor="nickname">Nickname</label>
         <input
           className="border"
+          id="nickname"
           type="text"
           {...register('nickname', { required: true })}
         />
@@ -76,8 +82,8 @@ const SignUpPage = () => {
     router.push('/account/sign-in');
   }
 
-  function handleSignUpError() {
-    alert('Failed to sign up');
+  function handleSignUpError(data: AxiosError<void, SignUpForm>) {
+    console.error(data.message);
   }
 };
 

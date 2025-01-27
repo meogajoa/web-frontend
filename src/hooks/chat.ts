@@ -1,6 +1,6 @@
 import React from 'react';
 import { useSubscription } from 'react-stomp-hooks';
-import { ChatMessage } from '~/types/chat';
+import { chatMessage, ChatMessage } from '~/types/chat';
 import { useSessionId } from './account';
 
 export const useChatMessages = ({
@@ -17,12 +17,20 @@ export const useChatMessages = ({
   useSubscription(
     url,
     ({ body }) => {
-      const message = JSON.parse(body) as ChatMessage;
-      message.sendTime = new Date(message.sendTime);
+      const _message = JSON.parse(body);
+      const { error, data: message } = chatMessage.safeParse({
+        ..._message,
+        sendTime: new Date(_message.sendTime),
+      });
+
+      if (error) {
+        throw new Error(error.message);
+      }
+
       setMessages((prev) => [...prev, message]);
     },
     {
-      Authorization: sessionId!,
+      Authorization: sessionId || '',
     },
   );
 
