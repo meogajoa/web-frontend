@@ -21,7 +21,7 @@ const GameMessages: React.FC<Props> = ({
   });
 
   return (
-    <div className={cn('space-y-3 overflow-y-auto', className)}>
+    <div className={cn('space-y-3 bg-gray-3 p-4', className)}>
       {messages.map(({ id, content, sender }) => (
         <ChatMessage
           key={id}

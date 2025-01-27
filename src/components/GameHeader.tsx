@@ -25,7 +25,7 @@ const GameHeader: React.FC<Props> = ({
   return (
     <header
       className={cn(
-        'relative flex h-[5.5rem] items-center justify-between',
+        'relative flex h-[5.5rem] items-center justify-between bg-gray-3 px-4',
         className,
       )}
     >

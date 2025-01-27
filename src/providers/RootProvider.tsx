@@ -11,7 +11,7 @@ const RootProvider: React.FC<React.PropsWithChildren<Props>> = ({
 }) => {
   return (
     <AccountStoreProvider>
-      <TanstackQueryProvider>{children}</TanstackQueryProvider>;
+      <TanstackQueryProvider>{children}</TanstackQueryProvider>
     </AccountStoreProvider>
   );
 };
