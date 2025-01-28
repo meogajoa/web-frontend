@@ -2,25 +2,38 @@ import React, { PropsWithChildren } from 'react';
 import { StompSessionProvider } from 'react-stomp-hooks';
 import { useSessionId } from '~/hooks/account';
 
-const StompProvider = React.memo(({ children }: PropsWithChildren) => {
-  const sessionId = useSessionId();
+type Props = {
+  onConnect?: () => void;
+  onError?: (error: Error) => void;
+};
 
-  return (
-    <StompSessionProvider
-      url={'ws://localhost:8080/ws'}
-      connectHeaders={{
-        Authorization: sessionId,
-      }}
-      onConnect={handleConnected}
-    >
-      {children}
-    </StompSessionProvider>
-  );
+const StompProvider = React.memo(
+  ({
+    children,
+    onConnect: handleConnect,
+    onError,
+  }: PropsWithChildren<Props>) => {
+    const sessionId = useSessionId();
 
-  function handleConnected() {
-    console.log('Connected to WebSocket');
-  }
-});
+    return (
+      <StompSessionProvider
+        url={'ws://localhost:8080/ws'}
+        connectHeaders={{
+          Authorization: sessionId,
+        }}
+        onConnect={handleConnect}
+        onWebSocketError={handleError}
+      >
+        {children}
+      </StompSessionProvider>
+    );
+
+    function handleError(error: Error) {
+      console.error(error);
+      onError?.(error);
+    }
+  },
+);
 StompProvider.displayName = 'StompProvider';
 
 export default StompProvider;

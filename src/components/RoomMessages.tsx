@@ -31,7 +31,7 @@ const RoomMessages: React.FC<Props> = ({
   }, []);
 
   return (
-    <div
+    <section
       className={cn('space-y-3 overflow-y-auto bg-gray-3 p-4', className)}
       ref={containerRef}
     >
@@ -45,7 +45,7 @@ const RoomMessages: React.FC<Props> = ({
       ))}
 
       <div ref={bottomRef} aria-hidden />
-    </div>
+    </section>
   );
 
   // scroll to bottom when new message is sent

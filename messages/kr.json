@@ -1,6 +1,9 @@
 {
   "rootRoute": {
-    "loading": "로딩 중"
+    "authenticating": "로그인 중...",
+    "connectingToServer": "서버 연결 중...",
+    "authError": "재로그인 필요합니다",
+    "connectError": "서버 연결 실패..."
   },
   "homeRoute": {
     "header": {
