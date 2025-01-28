@@ -54,34 +54,44 @@ export const useInfiniteRooms = () => {
   return { ...rest, rooms };
 };
 
-export const useJoinRoomMutation = ({ id }: JoinRoomRequest) => {
-  const _joinRoomAsync = React.useCallback(async (_id: string) => {
-    const data = server
-      .post<JoinRoomResponse>('/room/join', { id: _id })
-      .then((response) => {
-        return response.data.map((message) => chatMessage.parse(message));
-      });
-    await sleep(A_SECOND);
-    return data;
-  }, []);
+export const useJoinRoomMutation = ({
+  variables: { id },
+  onError,
+}: {
+  variables: JoinRoomRequest;
+  onError?: (error: AxiosError<JoinRoomResponse, JoinRoomRequest>) => void;
+}) => {
+  const _joinRoomAsync = React.useCallback(
+    async ({ id: _id }: JoinRoomRequest) => {
+      const data = server
+        .post<JoinRoomResponse>('/room/join', { id: _id })
+        .then((response) => {
+          return response.data.map((message) => chatMessage.parse(message));
+        });
+      await sleep(A_SECOND);
+      return data;
+    },
+    [],
+  );
 
   const mutation = useMutation<
     JoinRoomResponse,
     AxiosError<JoinRoomResponse, JoinRoomRequest>,
-    string,
+    JoinRoomRequest,
     void
   >({
     mutationFn: _joinRoomAsync,
+    onError,
   });
 
   React.useEffect(() => {
-    mutation.mutate(id);
+    mutation.mutate({ id });
   }, [id]);
 
   return {
     ...mutation,
     previousMessages: mutation.data,
-    joinRoom: mutation,
+    joinRoom: mutation.mutate,
     joinRoomAsync: mutation.mutateAsync,
   };
 };

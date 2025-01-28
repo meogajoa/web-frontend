@@ -12,7 +12,7 @@ type Props = {
   renderPlaceholder?: boolean;
 };
 
-const GameChatBar: React.FC<Props> = ({ className, renderPlaceholder }) => {
+const RoomChatBar: React.FC<Props> = ({ className, renderPlaceholder }) => {
   const textareaRef = React.useRef<TextareaHandle>(null);
   const stompClient = useStompClient();
   const { id } = useParams<{ id: string }>();
@@ -74,4 +74,4 @@ const GameChatBar: React.FC<Props> = ({ className, renderPlaceholder }) => {
   }
 };
 
-export default GameChatBar;
+export default RoomChatBar;

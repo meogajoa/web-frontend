@@ -4,21 +4,21 @@ import { useTranslations } from 'next-intl';
 import React from 'react';
 import CartFillIcon from '~/svgs/CartFillIcon';
 import ChatIcon from '~/svgs/ChatIcon';
-import type { ChatRoomKind } from '~/types/chat';
+import { ChatRoomKind } from '~/types/chat';
 import { cn } from '~/utils/classname';
 
 type Props = {
-  className?: React.ComponentProps<'header'>['className'];
+  className?: React.ComponentProps<'div'>['className'];
   nthRound: number;
   isMorning: boolean;
-  whichChatRoom: ChatRoomKind;
+  chatRoomKind: ChatRoomKind;
 };
 
-const GameHeader: React.FC<Props> = ({
+const RoomHeaderPlaying: React.FC<Props> = ({
   className,
   nthRound,
   isMorning,
-  whichChatRoom,
+  chatRoomKind,
 }) => {
   const t = useTranslations('roomRoute');
 
@@ -35,7 +35,7 @@ const GameHeader: React.FC<Props> = ({
         </p>
 
         <p className="text-sm">
-          {t(`chatRoomType.${whichChatRoom}`, { username: 'jeheecheon' })}
+          {t(`chatRoomType.${chatRoomKind}`, { username: 'jeheecheon' })}
         </p>
       </div>
 
@@ -91,4 +91,4 @@ const BottomShadow: React.FC = () => (
   />
 );
 
-export default GameHeader;
+export default RoomHeaderPlaying;

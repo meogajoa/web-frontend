@@ -1,12 +1,11 @@
 'use client';
 
 import React from 'react';
-import { GameChatBar } from '~/components/ChatBar';
-import GameHeader from '~/components/GameHeader';
-import GameMessages from '~/components/GameMessages';
+import { RoomChatBar } from '~/components/ChatBar';
+import RoomHeader from '~/components/RoomHeader/RoomHeader';
+import RoomMessages from '~/components/RoomMessages';
 import { useJoinRoomMutation } from '~/hooks/room';
 import '~/styles/room.css';
-import { ChatRoomKind } from '~/types/chat';
 
 type Props = {
   params: Promise<{ id: string }>;
@@ -15,7 +14,7 @@ type Props = {
 const RoomPage: React.FC<Props> = ({ params }) => {
   const { id: roomId } = React.use(params);
   const { isSuccess, isPending, previousMessages } = useJoinRoomMutation({
-    id: roomId,
+    variables: { id: roomId },
   });
 
   return (
@@ -23,18 +22,13 @@ const RoomPage: React.FC<Props> = ({ params }) => {
       {isPending && <div>Loading...</div>}
       {isSuccess && (
         <div className="flex h-full flex-col">
-          <GameHeader
-            className="shrink-0"
-            isMorning={false}
-            nthRound={1}
-            whichChatRoom={ChatRoomKind.All}
-          />
-          <GameMessages
+          <RoomHeader className="shrink-0" />
+          <RoomMessages
             className="flex-1"
             roomId={roomId}
             previousMessages={previousMessages}
           />
-          <GameChatBar
+          <RoomChatBar
             className="bottom-0-dynamic fixed w-full"
             renderPlaceholder
           />

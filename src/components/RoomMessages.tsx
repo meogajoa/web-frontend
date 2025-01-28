@@ -11,7 +11,7 @@ type Props = {
   previousMessages?: ChatMessageType[];
 };
 
-const GameMessages: React.FC<Props> = ({
+const RoomMessages: React.FC<Props> = ({
   className,
   roomId,
   previousMessages,
@@ -71,4 +71,4 @@ const GameMessages: React.FC<Props> = ({
   }
 };
 
-export default GameMessages;
+export default RoomMessages;
