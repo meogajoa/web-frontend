@@ -16,7 +16,7 @@ const RoomHeaderWaiting: React.FC<Props> = ({ className, title }) => {
   return (
     <header
       className={cn(
-        'relative flex h-[5.5rem] items-center justify-between bg-gray-3 px-4',
+        'relative flex h-[5.5rem] items-center bg-gray-3 px-4',
         className,
       )}
     >
@@ -24,10 +24,10 @@ const RoomHeaderWaiting: React.FC<Props> = ({ className, title }) => {
         <ArrowLeftIcon className="size-6 fill-gray-1" />
       </HeadlessuiButton>
 
-      <h2>{title}</h2>
+      <h2 className="ml-2">{title}</h2>
 
       <Button
-        className="px-4"
+        className="ml-auto px-4"
         variant="primary"
         rounded="full"
         size="sm"

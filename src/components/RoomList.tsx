@@ -2,7 +2,7 @@
 
 import { useTranslations } from 'next-intl';
 import React from 'react';
-import Room from '~/components/Room/Room';
+import { RoomItem } from '~/components/RoomItem';
 import { useInfiniteRooms } from '~/hooks/room';
 import { cn } from '~/utils/classname';
 
@@ -24,11 +24,11 @@ const RoomList: React.FC<Props> = ({ className }) => {
   const isInitialLoading = isFetching && !isLoadingMore;
 
   return (
-    <nav className={cn('space-y-2.5 px-4 py-2.5', className)}>
-      <li className="list-none">
+    <div className={cn('px-4 py-2.5', className)}>
+      <nav className="space-y-2.5">
         {isSuccess &&
           rooms?.map(({ id, name, maxUser, currentUser }) => (
-            <Room
+            <RoomItem
               className="w-full"
               key={id}
               id={id}
@@ -39,18 +39,15 @@ const RoomList: React.FC<Props> = ({ className }) => {
               isPrivate={false}
             />
           ))}
+      </nav>
 
-        {isInitialLoading && <h2 className="text-center">loading rooms...</h2>}
-
-        {isLoadingMore && (
-          <h2 className="text-center">loading more rooms...</h2>
-        )}
-      </li>
+      {isInitialLoading && <h2 className="text-center">loading rooms...</h2>}
+      {isLoadingMore && <h2 className="text-center">loading more rooms...</h2>}
 
       <button className="rounded-xl bg-gray-4 p-4" onClick={handleFetchMore}>
         Test: try fetching more
       </button>
-    </nav>
+    </div>
   );
 
   function handleFetchMore() {

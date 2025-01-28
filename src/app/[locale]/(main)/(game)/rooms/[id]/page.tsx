@@ -1,9 +1,7 @@
 'use client';
 
 import React from 'react';
-import { RoomChatBar } from '~/components/ChatBar';
-import RoomHeader from '~/components/RoomHeader/RoomHeader';
-import RoomMessages from '~/components/RoomMessages';
+import Room from '~/components/Room';
 import { useJoinRoomMutation } from '~/hooks/room';
 import '~/styles/room.css';
 
@@ -20,19 +18,8 @@ const RoomPage: React.FC<Props> = ({ params }) => {
   return (
     <>
       {isPending && <div>Loading...</div>}
-      {isSuccess && (
-        <div className="flex h-full flex-col">
-          <RoomHeader className="shrink-0" />
-          <RoomMessages
-            className="flex-1"
-            roomId={roomId}
-            previousMessages={previousMessages}
-          />
-          <RoomChatBar
-            className="bottom-0-dynamic fixed w-full"
-            renderPlaceholder
-          />
-        </div>
+      {isSuccess && previousMessages && (
+        <Room previousMessages={previousMessages} />
       )}
     </>
   );

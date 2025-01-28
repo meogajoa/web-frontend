@@ -6,9 +6,12 @@ import {
 } from '@tanstack/react-query';
 import { AxiosError } from 'axios';
 import React from 'react';
-import { chatMessage } from '~/types/chat';
+import { z } from 'zod';
+import { ChatMessage, chatMessage } from '~/types/chat';
+import { Maybe } from '~/types/misc';
 import {
   createRoomResponse,
+  joinRoomResponse,
   JoinRoomResponse,
   paginatedRoomsResponse,
   type CreateRoomForm,
@@ -65,9 +68,7 @@ export const useJoinRoomMutation = ({
     async ({ id: _id }: JoinRoomRequest) => {
       const data = server
         .post<JoinRoomResponse>('/room/join', { id: _id })
-        .then((response) => {
-          return response.data.map((message) => chatMessage.parse(message));
-        });
+        .then((response) => joinRoomResponse.parse(response.data));
       await sleep(A_SECOND);
       return data;
     },
@@ -88,9 +89,13 @@ export const useJoinRoomMutation = ({
     mutation.mutate({ id });
   }, [id]);
 
+  const { data: previousMessages } = z
+    .array(chatMessage)
+    .safeParse(mutation.data);
+
   return {
     ...mutation,
-    previousMessages: mutation.data,
+    previousMessages: previousMessages as Maybe<ChatMessage[]>,
     joinRoom: mutation.mutate,
     joinRoomAsync: mutation.mutateAsync,
   };
