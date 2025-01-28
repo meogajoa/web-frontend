@@ -1,3 +1,4 @@
+import { useParams } from 'next/navigation';
 import React from 'react';
 import { ChatMessage } from '~/components/ChatMessage';
 import { useChatMessages } from '~/hooks/chat';
@@ -7,19 +8,16 @@ import { cn } from '~/utils/classname';
 
 type Props = {
   className?: React.ComponentProps<'div'>['className'];
-  roomId: string;
   previousMessages?: ChatMessageType[];
 };
 
-const RoomMessages: React.FC<Props> = ({
-  className,
-  roomId,
-  previousMessages,
-}) => {
+const RoomMessages: React.FC<Props> = ({ className, previousMessages }) => {
   const containerRef = React.useRef<HTMLDivElement>(null);
   const bottomRef = React.useRef<HTMLDivElement>(null);
+
+  const { id } = useParams<{ id: string }>();
   const messages = useChatMessages({
-    url: `/topic/room/${roomId}/chat`,
+    url: `/topic/room/${id}/chat`,
     previousMessages,
     onNewMessage: scrollToBottom,
   });
