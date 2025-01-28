@@ -7,12 +7,8 @@ type Props = {
   onError?: (error: Error) => void;
 };
 
-const StompProvider = React.memo(
-  ({
-    children,
-    onConnect: handleConnect,
-    onError,
-  }: PropsWithChildren<Props>) => {
+const StompProvider = React.memo<PropsWithChildren<Props>>(
+  ({ onConnect: handleConnect, onError, children }) => {
     const sessionId = useSessionId();
 
     return (
