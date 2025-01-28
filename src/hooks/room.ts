@@ -25,14 +25,7 @@ export const useInfiniteRooms = () => {
     async ({ pageParam }: QueryFunctionContext) => {
       const data = server
         .get<PaginatedRoomsResponse>(`/room/pages/${pageParam}`)
-        .then((response) => {
-          const parseResult = paginatedRoomsResponse.safeParse(response.data);
-          if (parseResult.error) {
-            throw new Error(parseResult.error.message);
-          }
-
-          return parseResult.data;
-        });
+        .then((response) => paginatedRoomsResponse.parse(response.data));
 
       await sleep(A_SECOND);
       return data;
@@ -66,18 +59,7 @@ export const useJoinRoomMutation = ({ id }: JoinRoomRequest) => {
     const data = server
       .post<JoinRoomResponse>('/room/join', { id: _id })
       .then((response) => {
-        return response.data.map((message) => {
-          const parseResult = chatMessage.safeParse({
-            ...message,
-            sendTime: new Date(message.sendTime),
-          });
-
-          if (parseResult.error) {
-            throw new Error(parseResult.error.message);
-          }
-
-          return parseResult.data;
-        });
+        return response.data.map((message) => chatMessage.parse(message));
       });
     await sleep(A_SECOND);
     return data;
@@ -112,14 +94,7 @@ export const useCreateRoomMutation = ({
   const _createRoomAsync = React.useCallback(async (data: CreateRoomForm) => {
     return await server
       .post<CreateRoomResponse>('/room/create', data)
-      .then((response) => {
-        const parseResult = createRoomResponse.safeParse(response.data);
-        if (parseResult.error) {
-          throw new Error(parseResult.error.message);
-        }
-
-        return parseResult.data;
-      });
+      .then((response) => createRoomResponse.parse(response.data));
   }, []);
 
   const mutation = useMutation<

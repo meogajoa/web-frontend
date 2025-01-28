@@ -1,13 +1,12 @@
 'use client';
 
 import React from 'react';
+import { GameChatBar } from '~/components/ChatBar';
 import GameHeader from '~/components/GameHeader';
 import GameMessages from '~/components/GameMessages';
 import { useJoinRoomMutation } from '~/hooks/room';
-import { ChatRoomKind } from '~/types/chat';
-
-import { GameChatBar } from '~/components/ChatBar';
 import '~/styles/room.css';
+import { ChatRoomKind } from '~/types/chat';
 
 type Props = {
   params: Promise<{ id: string }>;
@@ -31,7 +30,7 @@ const RoomPage: React.FC<Props> = ({ params }) => {
             whichChatRoom={ChatRoomKind.All}
           />
           <GameMessages
-            className="flex-1 overflow-y-auto"
+            className="flex-1"
             roomId={roomId}
             previousMessages={previousMessages}
           />
