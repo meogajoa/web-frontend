@@ -25,6 +25,9 @@ const MainLayout: React.FC<React.PropsWithChildren> = ({ children }) => {
   const router = useRouter();
   const { setMe, clearMe } = useAccount();
 
+  const handleConnect = React.useCallback(_handleConnect, []);
+  const handleConnectError = React.useCallback(_handleConnectError, []);
+
   const isAuthenticated = isSuccess;
 
   return (
@@ -60,11 +63,11 @@ const MainLayout: React.FC<React.PropsWithChildren> = ({ children }) => {
     router.replace('/account/sign-in');
   }
 
-  function handleConnect() {
+  function _handleConnect() {
     setTimeout(() => setIsConnected(true), A_SECOND);
   }
 
-  function handleConnectError() {
+  function _handleConnectError() {
     setIsConnected(false);
     toast.error(t('connectError'));
     router.replace('/account/sign-in');
