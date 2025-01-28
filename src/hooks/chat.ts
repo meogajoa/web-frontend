@@ -16,15 +16,7 @@ export const useChatMessages = ({
 
   useSubscription(url, ({ body }) => {
     const _message = JSON.parse(body);
-    const { error, data: message } = chatMessage.safeParse({
-      ..._message,
-      sendTime: new Date(_message.sendTime),
-    });
-
-    if (error) {
-      throw new Error(error.message);
-    }
-
+    const message = chatMessage.parse(_message);
     setMessages((prev) => [...prev, message]);
     setTimeout(() => onNewMessage?.(message), 0);
   });

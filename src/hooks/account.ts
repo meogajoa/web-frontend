@@ -47,14 +47,7 @@ export const useAuthenticateMutation = ({
   const _authenticateAsync = React.useCallback(async () => {
     const data = server
       .post<AuthenticateResponse>('/auth/test')
-      .then((response) => {
-        const parseResult = authenticateResponse.safeParse(response.data);
-        if (parseResult.error) {
-          throw new Error(parseResult.error.message);
-        }
-
-        return parseResult.data;
-      });
+      .then((response) => authenticateResponse.parse(response.data));
     await sleep(sleepSeconds * A_SECOND);
     return data;
   }, []);
@@ -99,14 +92,7 @@ export const useSignInMutation = ({
           },
         },
       )
-      .then((response) => {
-        const parseResult = signInResponse.safeParse(response.data);
-        if (parseResult.error) {
-          throw new Error(parseResult.error.message);
-        }
-
-        return parseResult.data;
-      });
+      .then((response) => signInResponse.parse(response.data));
   }, []);
 
   const mutation = useMutation<
