@@ -18,7 +18,7 @@ const RoomHeaderWaiting: React.FC<Props> = ({ className, title }) => {
   const router = useRouter();
   const { id } = useParams<{ id: string }>();
   const { users } = useRoomUsersSubscription({ variables: { id } });
-  const { startGame } = useStartGameMutation({
+  const { startGame, isPending } = useStartGameMutation({
     onSuccess: handleGameStartSuccess,
     onError: handleGameStartError,
   });
@@ -42,6 +42,7 @@ const RoomHeaderWaiting: React.FC<Props> = ({ className, title }) => {
         rounded="full"
         size="sm"
         disabled={users.length <= 7}
+        loading={isPending}
         onClick={handleGameStart}
       >
         게임 시작
