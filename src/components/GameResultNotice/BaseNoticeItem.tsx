@@ -1,18 +1,15 @@
-import React from 'react';
+import React, { PropsWithChildren } from 'react';
 import { cn } from '~/utils/classname';
 
 type BaseNoticeItemProps = {
-  leftContent: React.ReactNode;
-  rightContent: React.ReactNode;
   className?: string;
   variant?: 'default' | 'dark';
 };
 
-const BaseNoticeItem: React.FC<BaseNoticeItemProps> = ({
-  leftContent,
-  rightContent,
+const BaseNoticeItem: React.FC<PropsWithChildren<BaseNoticeItemProps>> = ({
   className,
   variant = 'default',
+  children,
 }) => {
   return (
     <div
@@ -22,8 +19,7 @@ const BaseNoticeItem: React.FC<BaseNoticeItemProps> = ({
         className,
       )}
     >
-      <div className="flex gap-2">{leftContent}</div>
-      <div className="text-right">{rightContent}</div>
+      {children}
     </div>
   );
 };
