@@ -5,7 +5,7 @@ import Input, { InputProps } from './Input';
 const LabelInputVariant = cva('w-full text-left', {
   variants: {
     variant: {
-      primary: 'mb-1.5 font-normal text-gray-1',
+      primary: 'text-gray-1 mb-1.5 font-normal',
     },
     labelSize: {
       lg: 'text-lg',
@@ -38,7 +38,7 @@ const LabelInput: React.FC<LabelInputProps> = ({
     <div className={cn(`w-full`, className)}>
       <label className={cn(LabelInputVariant({ labelSize }))}>{label}</label>
       <Input {...props} />
-      {error && <p className="mt-1.5 text-sm text-red">{error}</p>}
+      {error && <p className="text-red mt-1.5 text-sm">{error}</p>}
     </div>
   );
 };

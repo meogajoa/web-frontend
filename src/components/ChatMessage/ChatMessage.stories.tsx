@@ -40,7 +40,7 @@ const meta: Meta<typeof ChatMessage> = {
   },
   decorators: [
     (Story) => (
-      <div className="relative bg-gray-3 p-4">
+      <div className="bg-gray-3 relative p-4">
         <Story />
       </div>
     ),

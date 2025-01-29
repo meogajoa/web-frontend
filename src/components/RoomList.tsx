@@ -44,7 +44,7 @@ const RoomList: React.FC<Props> = ({ className }) => {
       {isInitialLoading && <h2 className="text-center">loading rooms...</h2>}
       {isLoadingMore && <h2 className="text-center">loading more rooms...</h2>}
 
-      <button className="rounded-xl bg-gray-4 p-4" onClick={handleFetchMore}>
+      <button className="bg-gray-4 rounded-xl p-4" onClick={handleFetchMore}>
         Test: try fetching more
       </button>
     </div>

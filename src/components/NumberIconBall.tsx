@@ -16,7 +16,7 @@ const NumberIconBall: React.FC<NumberIconBallProps> = ({
   return (
     <div
       className={cn(
-        'flex size-4 items-center justify-center rounded-full font-brand text-[0.5rem] font-bold text-white',
+        'font-brand flex size-4 items-center justify-center rounded-full text-[0.5rem] font-bold text-white',
         color === 'black' ? 'bg-gray-1' : 'bg-gray-5',
         className,
       )}

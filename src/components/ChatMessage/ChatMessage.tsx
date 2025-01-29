@@ -31,11 +31,11 @@ const ChatMessage = React.memo<Props>(
           />
         )}
 
-        <div className="flex flex-col gap-y-2.5 text-sm text-gray-1">
+        <div className="text-gray-1 flex flex-col gap-y-2.5 text-sm">
           {position === 'left' && !isCumulative && <p>{username}</p>}
           <div
             className={cn(
-              'max-w-[60vw] break-all rounded-[0.93rem] bg-white p-2.5',
+              'max-w-[60vw] rounded-[0.93rem] bg-white p-2.5 break-all',
               position === 'left' && 'rounded-tl-[0.15rem]',
               position === 'right' && 'rounded-br-[0.15rem]',
             )}

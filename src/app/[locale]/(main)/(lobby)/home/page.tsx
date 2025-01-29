@@ -7,7 +7,7 @@ const HomePage = () => {
     <>
       <HomeHeader className="fixed inset-0 z-10" renderPlaceholder />
       <RoomList />
-      <CreateRoomButton className="fixed bottom-24 right-4 z-20" />
+      <CreateRoomButton className="fixed right-4 bottom-24 z-20" />
     </>
   );
 };
