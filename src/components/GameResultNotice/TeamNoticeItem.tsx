@@ -1,7 +1,7 @@
 import React from 'react';
 import BaseNoticeItem from './BaseNoticeItem';
 
-type TeamNoticeItemProps = {
+export type TeamNoticeItemProps = {
   rank: number;
   teamName: string;
   numberIcons: string[];
@@ -18,7 +18,7 @@ const TeamNoticeItem: React.FC<TeamNoticeItemProps> = ({
 }) => {
   return (
     <BaseNoticeItem
-      variant="dark"
+      variant={variant || 'default'}
       leftContent={
         <div className="flex items-center">
           <div className="mr-2 pr-2">{rank}등</div>

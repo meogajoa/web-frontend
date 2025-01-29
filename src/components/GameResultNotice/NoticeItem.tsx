@@ -1,7 +1,7 @@
 import React from 'react';
 import BaseNoticeItem from './BaseNoticeItem';
 
-type NoticeItemProps = {
+export type NoticeItemProps = {
   rank: number;
   nickname: string;
   score: number;
@@ -19,12 +19,12 @@ const NoticeItem: React.FC<NoticeItemProps> = ({
   return (
     <BaseNoticeItem
       leftContent={
-        <>
-          <div className="px-2 text-center">{rank}등</div>
-          <div className="px-2">{nickname}</div>
-          <div className="px-2">{score}</div>
-          <div className="px-2">{calculation}</div>
-        </>
+        <div className="flex items-center justify-center gap-x-4 px-2">
+          <div>{rank}등</div>
+          <div>{nickname}</div>
+          <div>{score}</div>
+          <div>{calculation}</div>
+        </div>
       }
       rightContent={<div className="px-2">{prize}</div>}
     />

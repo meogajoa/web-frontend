@@ -1,7 +1,5 @@
 import { Meta, StoryObj } from '@storybook/react';
-import black from '~/assets/images/black.png';
 import vote from '~/assets/images/vote.png';
-import white from '~/assets/images/white.png';
 import GameResultNotice from './GameResultNotice';
 
 const meta: Meta<typeof GameResultNotice> = {
@@ -34,7 +32,6 @@ type ResultData =
   | {
       type: 'vote';
       data: {
-        teamIcon: string;
         nickname: string;
         voteIcon: string;
         votes: number;
@@ -79,13 +76,11 @@ export const Default: Story = {
       type: 'vote',
       data: [
         {
-          teamIcon: white.src,
           nickname: '닉네임 01',
           voteIcon: vote.src,
           votes: 2,
         },
         {
-          teamIcon: black.src,
           nickname: '닉네임 02',
           voteIcon: vote.src,
           votes: 4,

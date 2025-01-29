@@ -1,41 +1,29 @@
 import React from 'react';
 import BaseNoticeItem from './BaseNoticeItem';
-import TeamNoticeItem from './TeamNoticeItem';
-import VoteNoticeItem from './VoteNoticeItem';
+import { NoticeItemProps } from './NoticeItem';
+import TeamNoticeItem, { TeamNoticeItemProps } from './TeamNoticeItem';
+import VoteNoticeItem, { VoteNoticeItemProps } from './VoteNoticeItem';
 
 type ResultData =
   | {
       type: 'game';
-      data: {
-        rank: number;
-        nickname: string;
-        score: number;
-        calculation: string;
-        prize: string;
-      }[];
+      data: NoticeItemProps[];
     }
   | {
       type: 'vote';
-      data: {
-        teamIcon: string;
-        nickname: string;
-        voteIcon: string;
-        votes: number;
-        variant?: 'default' | 'dark';
-      }[];
+      data: VoteNoticeItemProps[];
     }
   | {
       type: 'team';
-      data: {
-        rank: number;
-        teamName: string;
-        numberIcons: string[];
-        prize: string;
-      }[];
+      data: TeamNoticeItemProps[];
     };
+
 type GameResultNoticeProps = {
   result: ResultData;
   type: string;
+  gameNotice?: Omit<NoticeItemProps, 'className'>;
+  voteNotice?: Omit<VoteNoticeItemProps, 'className'>;
+  teamNotice?: Omit<TeamNoticeItemProps, 'className'>;
 };
 
 const GameResultNotice: React.FC<GameResultNoticeProps> = ({ result }) => {
@@ -46,12 +34,12 @@ const GameResultNotice: React.FC<GameResultNoticeProps> = ({ result }) => {
           <BaseNoticeItem
             key={index}
             leftContent={
-              <>
-                <div className="px-2 text-center">{item.rank}등</div>
-                <div className="px-2">{item.nickname}</div>
-                <div className="px-2">{item.score}</div>
-                <div className="px-2">{item.calculation}</div>
-              </>
+              <div className="flex items-center justify-center gap-x-4 px-2">
+                <div>{item.rank}등</div>
+                <div>{item.nickname}</div>
+                <div>{item.score}</div>
+                <div>{item.calculation}</div>
+              </div>
             }
             rightContent={<div className="px-2">{item.prize}</div>}
           />
@@ -64,7 +52,6 @@ const GameResultNotice: React.FC<GameResultNoticeProps> = ({ result }) => {
         {result.data.map((item, index) => (
           <VoteNoticeItem
             key={index}
-            teamIcon={item.teamIcon}
             nickname={item.nickname}
             voteIcon={item.voteIcon}
             votes={item.votes}
@@ -87,8 +74,9 @@ const GameResultNotice: React.FC<GameResultNoticeProps> = ({ result }) => {
         ))}
       </div>
     );
+  } else {
+    return null;
   }
-  return null;
 };
 
 export default GameResultNotice;
