@@ -1,3 +1,4 @@
+import Image from 'next/image';
 import React from 'react';
 import BaseNoticeItem from './BaseNoticeItem';
 
@@ -26,11 +27,12 @@ const VoteNoticeItem: React.FC<VoteNoticeItemProps> = ({
           {/* 투표 아이콘을 투표 수만큼 렌더링 */}
           <div className="flex gap-1">
             {Array.from({ length: votes }).map((_, iconIndex) => (
-              <img
+              <Image
                 key={iconIndex}
                 src={voteIcon}
                 alt={`vote-icon-${iconIndex}`}
-                className="size-2.5"
+                width={10}
+                height={10}
               />
             ))}
           </div>
