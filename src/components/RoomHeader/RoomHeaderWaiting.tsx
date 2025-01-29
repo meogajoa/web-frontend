@@ -8,69 +8,73 @@ import { Button } from '~/components/Button';
 import { useStartGameMutation } from '~/hooks/game';
 import { useUsersNoticeSubscription } from '~/hooks/room';
 import { useRouter } from '~/i18n/routing';
+import { useAccount } from '~/providers/AccountProvider';
 import { cn } from '~/utils/classname';
 
 type Props = {
   className?: React.ComponentProps<'div'>['className'];
   title: string;
+  ownerUsername: string;
 };
 
-const RoomHeaderWaiting = React.memo<Props>(({ className, title }) => {
-  const router = useRouter();
-  const { id } = useParams<{ id: string }>();
-  const { users } = useUsersNoticeSubscription({ variables: { id } });
-  const { startGame, isPending, isSuccess } = useStartGameMutation({
-    onError: handleStartGameError,
-  });
+const RoomHeaderWaiting = React.memo<Props>(
+  ({ className, title, ownerUsername }) => {
+    const router = useRouter();
+    const { me } = useAccount();
+    const { id } = useParams<{ id: string }>();
+    const { users } = useUsersNoticeSubscription({ variables: { id } });
+    const { startGame, isPending, isSuccess } = useStartGameMutation({
+      onError: handleStartGameError,
+    });
 
-  const handleStartGameClick = React.useCallback(
-    debounce(_handleStartGameClick, 500, { leading: true }),
-    [users],
-  );
+    const handleStartGameClick = React.useCallback(
+      debounce(_handleStartGameClick, 500, { leading: true }),
+      [users],
+    );
 
-  return (
-    <header
-      className={cn(
-        'relative flex h-[5.5rem] items-center bg-gray-3 px-4',
-        className,
-      )}
-    >
-      <HeadlessuiButton onClick={handleBackClick}>
-        <ArrowLeftIcon className="size-6 fill-gray-1" />
-      </HeadlessuiButton>
-
-      <h2 className="ml-2">{title}</h2>
-
-      <Button
-        className="ml-auto px-4"
-        variant="primary"
-        rounded="full"
-        size="sm"
-        disabled={isSuccess || users.length <= 7}
-        loading={isPending}
-        onClick={handleStartGameClick}
+    return (
+      <header
+        className={cn('relative flex h-[5.5rem] items-center px-4', className)}
       >
-        게임 시작
-      </Button>
-    </header>
-  );
+        <HeadlessuiButton onClick={handleBackClick}>
+          <ArrowLeftIcon className="fill-gray-1 size-6" />
+        </HeadlessuiButton>
 
-  function handleBackClick() {
-    router.back();
-  }
+        <h2 className="ml-2">{title}</h2>
 
-  function _handleStartGameClick() {
-    if (users.length <= 7) {
-      return;
+        {me.nickname === ownerUsername && (
+          <Button
+            className="ml-auto px-4"
+            variant="primary"
+            rounded="full"
+            size="sm"
+            disabled={isSuccess || users.length <= 7}
+            loading={isPending}
+            onClick={handleStartGameClick}
+          >
+            게임 시작
+          </Button>
+        )}
+      </header>
+    );
+
+    function handleBackClick() {
+      router.back();
     }
 
-    startGame({ id });
-  }
+    function _handleStartGameClick() {
+      if (users.length <= 7) {
+        return;
+      }
 
-  function handleStartGameError(error: AxiosError<void>) {
-    console.error(error);
-  }
-});
+      startGame({ id });
+    }
+
+    function handleStartGameError(error: AxiosError<void>) {
+      console.error(error);
+    }
+  },
+);
 RoomHeaderWaiting.displayName = 'RoomHeaderWaiting';
 
 export default RoomHeaderWaiting;

@@ -30,7 +30,7 @@ const RoomMessages = React.memo<Props>(({ className, previousMessages }) => {
 
   return (
     <section
-      className={cn('space-y-3 overflow-y-auto bg-gray-3 p-4', className)}
+      className={cn('bg-gray-6 space-y-3 overflow-y-auto p-4', className)}
       ref={containerRef}
     >
       {messages.map(({ id, content, sender }) => (

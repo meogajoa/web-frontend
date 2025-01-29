@@ -2,7 +2,21 @@
 
 @config "../../tailwind.config.ts";
 
+@theme {
+  --color-gray-1: #1c1c1d;
+  --color-gray-2: #47484a;
+  --color-gray-3: #6b6c6f;
+  --color-gray-4: #88888a;
+  --color-gray-5: #b8b8b8;
+  --color-gray-6: #e3e3e4;
+
+  --color-red: #f24822;
+
+  --color-sub: #5f657b;
+}
+
 @layer base {
+  :root,
   html,
   body {
     @apply h-full;
