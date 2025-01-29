@@ -17,7 +17,7 @@ const BaseNoticeItem: React.FC<BaseNoticeItemProps> = ({
   return (
     <div
       className={cn(
-        'flex h-6 w-full items-center justify-between rounded bg-gray-4 px-2 py-1 font-brand text-sm text-white',
+        'flex h-6 w-full items-center justify-between rounded px-2 py-1 font-brand text-sm text-white',
         variant === 'dark' ? 'bg-gray-2' : 'bg-gray-4',
         className,
       )}

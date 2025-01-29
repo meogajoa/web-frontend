@@ -1,29 +1,25 @@
 import Image from 'next/image';
 import React from 'react';
 import { ProfileImage } from '~/components/ProfileImage';
+import { cn } from '~/utils/classname';
 import BaseNoticeItem from './BaseNoticeItem';
-
-export type VoteNoticeItemProps = {
-  nickname: string;
-  voteIcon: string;
-  votes: number;
-  variant?: 'default' | 'dark';
-};
+import { VoteNoticeItemProps } from './types';
 
 const VoteNoticeItem: React.FC<VoteNoticeItemProps> = ({
   nickname,
   voteIcon,
+  profileColor = 'gray',
   votes,
+  className,
 }) => {
   return (
     <BaseNoticeItem
       variant="dark"
-      className="h-7 w-[22.5rem]"
+      className={cn('h-7', className)}
       leftContent={
         <div className="flex items-center">
-          <ProfileImage size="sm" color="gray" />
+          <ProfileImage size="sm" color={profileColor} />
           <div className="ml-1.5 mr-2 flex items-center px-2">{nickname}</div>
-          {/* 투표 아이콘을 투표 수만큼 렌더링 */}
           <div className="flex gap-1">
             {Array.from({ length: votes }).map((_, iconIndex) => (
               <Image
@@ -37,12 +33,7 @@ const VoteNoticeItem: React.FC<VoteNoticeItemProps> = ({
           </div>
         </div>
       }
-      rightContent={
-        <div className="flex items-center gap-2">
-          {/* 총 투표 수 */}
-          <div>{votes}</div>
-        </div>
-      }
+      rightContent={<div className="flex items-center gap-2">{votes}</div>}
     />
   );
 };
