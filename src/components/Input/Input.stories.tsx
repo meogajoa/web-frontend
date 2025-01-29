@@ -98,7 +98,7 @@ export const TextareaInput: Story = {
 export const LargeRoundedInput: Story = {
   args: {
     type: 'text',
-    placeholder: 'Large and rounded',
+    placeholder: 'Large and rounded-sm',
     size: 'lg',
     rounded: 'full',
   },

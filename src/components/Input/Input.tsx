@@ -12,11 +12,11 @@ type InputProps = VariantProps<typeof InputVariant> & {
 };
 
 const InputVariant = cva(
-  'w-full text-left font-bold focus:border focus:border-red focus:outline-none',
+  'focus:border-red w-full text-left font-bold focus:border focus:outline-hidden',
   {
     variants: {
       variant: {
-        primary: 'bg-white font-normal text-gray-1',
+        primary: 'text-gray-1 bg-white font-normal',
       },
       rounded: {
         full: 'rounded-full',
