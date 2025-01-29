@@ -1,7 +1,9 @@
+'use client';
+
 import { useTranslations } from 'next-intl';
 import React from 'react';
 import Room from '~/components/Room/Room';
-import { useInfinteRooms } from '~/hooks/room';
+import { useInfiniteRooms } from '~/hooks/room';
 import { cn } from '~/utils/classname';
 
 type Props = {
@@ -9,33 +11,32 @@ type Props = {
 };
 
 const RoomList: React.FC<Props> = ({ className }) => {
-  const messages = useTranslations('homeRoute');
+  const t = useTranslations('homeRoute');
   const {
-    data,
+    rooms,
     isSuccess,
-    isFetchingNextPage,
+    isFetchingNextPage: isLoadingMore,
     isFetching,
     hasNextPage,
     fetchNextPage,
-  } = useInfinteRooms();
+  } = useInfiniteRooms();
 
-  const rooms = data?.pages.flatMap((rooms) => rooms);
-  const isInitialLoading = isFetching && !isFetchingNextPage;
-  const isLoadingMore = isFetchingNextPage;
+  const isInitialLoading = isFetching && !isLoadingMore;
 
   return (
     <nav className={cn('space-y-2.5 px-4 py-2.5', className)}>
       <li className="list-none">
         {isSuccess &&
-          rooms?.map((room) => (
+          rooms?.map(({ id, name, maxUser, currentUser }) => (
             <Room
               className="w-full"
-              key={room.roomId}
-              title={room.roomName}
-              description={messages('exampleRoom.description')}
+              key={id}
+              id={id}
+              title={name}
+              description={t('exampleRoom.description')}
+              total={maxUser}
+              current={currentUser}
               isPrivate={false}
-              total={room.roomMaxUser}
-              current={room.roomCurrentUser}
             />
           ))}
 

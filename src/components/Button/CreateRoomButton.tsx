@@ -1,3 +1,5 @@
+'use client';
+
 import { useTranslations } from 'next-intl';
 import React from 'react';
 import { CreateRoomModal } from '~/components/BrandModal';
@@ -9,7 +11,7 @@ type Props = {
 };
 
 const CreateRoomButton: React.FC<Props> = ({ className }) => {
-  const messages = useTranslations('homeRoute');
+  const t = useTranslations('homeRoute');
   const [isCreateRoomModalVisible, setIsCreateRoomModalVisible] =
     React.useState(false);
 
@@ -23,12 +25,12 @@ const CreateRoomButton: React.FC<Props> = ({ className }) => {
         icon="plus"
         onClick={handleCreateRoomClick(true)}
       >
-        {messages('createRoomButton')}
+        {t('createRoomButton')}
       </Button>
 
       <CreateRoomModal
-        onClose={handleCreateRoomClick(false)}
         visible={isCreateRoomModalVisible}
+        onClose={handleCreateRoomClick(false)}
       />
     </>
   );

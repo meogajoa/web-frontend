@@ -1,18 +1,18 @@
 'use client';
 
 import React from 'react';
-import { StompSessionProvider } from 'react-stomp-hooks';
+import { AccountStoreProvider } from '~/providers/AccountProvider';
 import TanstackQueryProvider from '~/providers/TanstackQueryProvider';
 
-type RootProviderProps = React.PropsWithChildren;
+type Props = {};
 
-const RootProvider: React.FC<RootProviderProps> = ({ children }) => {
+const RootProvider: React.FC<React.PropsWithChildren<Props>> = ({
+  children,
+}) => {
   return (
-    <TanstackQueryProvider>
-      <StompSessionProvider url={'https://stream.elite12.de/api/sock'}>
-        {children}
-      </StompSessionProvider>
-    </TanstackQueryProvider>
+    <AccountStoreProvider>
+      <TanstackQueryProvider>{children}</TanstackQueryProvider>
+    </AccountStoreProvider>
   );
 };
 

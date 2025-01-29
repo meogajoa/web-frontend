@@ -1,33 +1,54 @@
 import {
   useInfiniteQuery,
+  useMutation,
   type InfiniteData,
   type QueryFunctionContext,
 } from '@tanstack/react-query';
 import { AxiosError } from 'axios';
-import { RoomsQuery, type Room } from '~/types/game';
+import React from 'react';
+import { chatMessage } from '~/types/chat';
+import {
+  createRoomResponse,
+  JoinRoomResponse,
+  paginatedRoomsResponse,
+  type CreateRoomForm,
+  type CreateRoomResponse,
+  type JoinRoomRequest,
+  type PaginatedRoomsResponse,
+} from '~/types/room';
 import { server } from '~/utils/axios';
 import { A_MINUTE, A_SECOND } from '~/utils/constants';
 import { sleep } from '~/utils/misc';
 
-const queryRooms = async ({ pageParam }: QueryFunctionContext) => {
-  const response = server
-    .get<RoomsQuery>(`/room/pages/${pageParam}`)
-    .then((response) => response.data);
+export const useInfiniteRooms = () => {
+  const _queryRoomsAsync = React.useCallback(
+    async ({ pageParam }: QueryFunctionContext) => {
+      const data = server
+        .get<PaginatedRoomsResponse>(`/room/pages/${pageParam}`)
+        .then((response) => {
+          const parseResult = paginatedRoomsResponse.safeParse(response.data);
+          if (parseResult.error) {
+            throw new Error(parseResult.error.message);
+          }
 
-  await sleep(A_SECOND);
-  return response;
-};
+          return parseResult.data;
+        });
 
-export const useInfinteRooms = () => {
-  return useInfiniteQuery<
-    RoomsQuery,
-    AxiosError,
-    InfiniteData<Room[], number[]>,
+      await sleep(A_SECOND);
+      return data;
+    },
+    [],
+  );
+
+  const { data, ...rest } = useInfiniteQuery<
+    PaginatedRoomsResponse,
+    AxiosError<PaginatedRoomsResponse, void>,
+    InfiniteData<PaginatedRoomsResponse, number[]>,
     string[],
     number
   >({
     queryKey: ['rooms'],
-    queryFn: queryRooms,
+    queryFn: _queryRoomsAsync,
     initialPageParam: 0,
     getNextPageParam: (lastPage, _, lastPageParam) =>
       lastPage?.last ? lastPageParam + 1 : null,
@@ -35,4 +56,85 @@ export const useInfinteRooms = () => {
     gcTime: A_MINUTE,
     refetchInterval: 4 * A_MINUTE,
   });
+
+  const rooms = data?.pages.flatMap((page) => page?.rooms);
+  return { ...rest, rooms };
+};
+
+export const useJoinRoomMutation = ({ id }: JoinRoomRequest) => {
+  const _joinRoomAsync = React.useCallback(async (_id: string) => {
+    const data = server
+      .post<JoinRoomResponse>('/room/join', { id: _id })
+      .then((response) => {
+        return response.data.map((message) => {
+          const parseResult = chatMessage.safeParse({
+            ...message,
+            sendTime: new Date(message.sendTime),
+          });
+
+          if (parseResult.error) {
+            throw new Error(parseResult.error.message);
+          }
+
+          return parseResult.data;
+        });
+      });
+    await sleep(A_SECOND);
+    return data;
+  }, []);
+
+  const mutation = useMutation<
+    JoinRoomResponse,
+    AxiosError<JoinRoomResponse, JoinRoomRequest>,
+    string,
+    void
+  >({
+    mutationFn: _joinRoomAsync,
+  });
+
+  React.useEffect(() => {
+    mutation.mutate(id);
+  }, [id]);
+
+  return {
+    ...mutation,
+    previousMessages: mutation.data,
+    joinRoom: mutation,
+    joinRoomAsync: mutation.mutateAsync,
+  };
+};
+
+export const useCreateRoomMutation = ({
+  onSuccess,
+}: {
+  onSuccess: (data: CreateRoomResponse, variables: CreateRoomForm) => void;
+}) => {
+  const _createRoomAsync = React.useCallback(async (data: CreateRoomForm) => {
+    return await server
+      .post<CreateRoomResponse>('/room/create', data)
+      .then((response) => {
+        const parseResult = createRoomResponse.safeParse(response.data);
+        if (parseResult.error) {
+          throw new Error(parseResult.error.message);
+        }
+
+        return parseResult.data;
+      });
+  }, []);
+
+  const mutation = useMutation<
+    CreateRoomResponse,
+    AxiosError<CreateRoomResponse, CreateRoomForm>,
+    CreateRoomForm,
+    void
+  >({
+    mutationFn: _createRoomAsync,
+    onSuccess,
+  });
+
+  return {
+    ...mutation,
+    createRoom: mutation.mutate,
+    createRoomAsync: mutation.mutateAsync,
+  };
 };

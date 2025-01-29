@@ -1,42 +1,21 @@
 'use client';
 
-import { useMutation } from '@tanstack/react-query';
-import { SubmitHandler, useForm } from 'react-hook-form';
+import { type AxiosError } from 'axios';
+import { useForm } from 'react-hook-form';
+import { useSignInMutation } from '~/hooks/account';
 import { useRouter } from '~/i18n/routing';
-import { server } from '~/utils/axios';
-import { serializeToUrlEncoded } from '~/utils/misc';
-
-type SignUpForm = {
-  email: string;
-  password: string;
-};
-
-const signInMutationFn = async (data: SignUpForm): Promise<any> => {
-  const response = await server.post(
-    '/auth/sign-in',
-    serializeToUrlEncoded(data),
-    {
-      headers: {
-        'Content-Type': 'application/x-www-form-urlencoded',
-      },
-    },
-  );
-
-  localStorage.setItem('sessionId', response.data.sessionId);
-};
+import { useAccount } from '~/providers/AccountProvider';
+import type { SignInForm, SignInResponse } from '~/types/account';
 
 const SignInPage = () => {
-  const { register, handleSubmit } = useForm<SignUpForm>();
+  const { register, handleSubmit } = useForm<SignInForm>();
   const router = useRouter();
+  const { setMe } = useAccount();
 
-  const { mutate } = useMutation({
-    mutationFn: signInMutationFn,
+  const { signIn } = useSignInMutation({
+    onSuccess: handleSignInSuccess,
+    onError: handleSignInError,
   });
-
-  const onSubmit: SubmitHandler<SignUpForm> = (data) => {
-    mutate(data);
-    router.push('/');
-  };
 
   return (
     <form
@@ -47,7 +26,9 @@ const SignInPage = () => {
         <label htmlFor="email">Email</label>
         <input
           className="border"
+          id="email"
           type="email"
+          autoFocus
           {...register('email', { required: true })}
         />
       </div>
@@ -56,6 +37,7 @@ const SignInPage = () => {
         <label htmlFor="password">Password</label>
         <input
           className="border"
+          id="password"
           type="password"
           {...register('password', { required: true })}
         />
@@ -67,12 +49,29 @@ const SignInPage = () => {
 
       <button
         className="border p-3"
-        onClick={() => router.push('/account/sign-up')}
+        onClick={(e) => {
+          e.preventDefault();
+          router.push('/account/sign-up');
+        }}
       >
         Go to Sign Up page
       </button>
     </form>
   );
+
+  function onSubmit(data: SignInForm) {
+    signIn(data);
+  }
+
+  function handleSignInSuccess(data: SignInResponse) {
+    localStorage.setItem('sessionId', data.sessionId);
+    setMe({ nickname: data.user.nickname });
+    router.push('/home');
+  }
+
+  function handleSignInError(data: AxiosError<SignInResponse, SignInForm>) {
+    console.error(data.message);
+  }
 };
 
 export default SignInPage;

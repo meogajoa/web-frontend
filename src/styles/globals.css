@@ -10,7 +10,7 @@
   }
 
   body {
-    @apply font-brand antialiased;
+    @apply font-brand antialiased transition-colors duration-300;
   }
 }
 
@@ -20,9 +20,6 @@
   }
 
   .scrollbar-primary {
-    scrollbar-color: theme('colors.gray.5') transparent;
-    scrollbar-width: thin;
-
     &::-webkit-scrollbar {
       width: thin;
     }
@@ -40,7 +37,6 @@
       background-color: transparent;
     }
 
-    /* set button(top and bottom of the scrollbar) */
     &::-webkit-scrollbar-button {
       display: none;
     }
@@ -50,10 +46,12 @@
     }
   }
 
-  /* For IE, Edge and Firefox */
   .scrollbar-hide {
-    -ms-overflow-style: none; /* IE and Edge */
-    scrollbar-width: none; /* Firefox */
+    /* IE and Edge */
+    -ms-overflow-style: none;
+
+    /* Firefox */
+    scrollbar-width: none;
 
     /* For Webkit-based browsers (Chrome, Safari and Opera) */
     &::-webkit-scrollbar {
