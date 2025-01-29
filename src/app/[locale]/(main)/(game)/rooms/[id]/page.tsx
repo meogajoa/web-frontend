@@ -11,15 +11,20 @@ type Props = {
 
 const RoomPage: React.FC<Props> = ({ params }) => {
   const { id: roomId } = React.use(params);
-  const { isSuccess, isPending, previousMessages } = useJoinRoomMutation({
-    variables: { id: roomId },
-  });
+  const { isSuccess, isPending, previousMessages, title, ownerUsername } =
+    useJoinRoomMutation({
+      variables: { id: roomId },
+    });
 
   return (
     <>
       {isPending && <div>Loading...</div>}
-      {isSuccess && previousMessages && (
-        <Room previousMessages={previousMessages} />
+      {isSuccess && previousMessages && title && ownerUsername && (
+        <Room
+          title={title}
+          ownerUsername={ownerUsername}
+          previousMessages={previousMessages}
+        />
       )}
     </>
   );

@@ -8,9 +8,10 @@ import { cn } from '~/utils/classname';
 
 type Props = {
   className?: React.ComponentProps<'div'>['className'];
+  ownerUsername: string;
 };
 
-const RoomUserList: React.FC<Props> = ({ className }) => {
+const RoomUserList: React.FC<Props> = ({ className, ownerUsername }) => {
   const { id } = useParams<{ id: string }>();
   const [users, setUsers] = React.useState<string[]>([]);
 
@@ -28,7 +29,10 @@ const RoomUserList: React.FC<Props> = ({ className }) => {
           key={username}
         >
           <span>{username}</span>
-          <BookmarkIcon className="absolute -top-1 left-2 size-3 fill-red stroke-red" />
+
+          {ownerUsername === username && (
+            <BookmarkIcon className="absolute -top-1 left-2 size-3 fill-red stroke-red" />
+          )}
         </li>
       ))}
     </ul>

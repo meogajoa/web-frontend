@@ -7,15 +7,16 @@ import RoomHeaderWaiting from './RoomHeaderWaiting';
 
 type Props = {
   className?: React.ComponentProps<'header'>['className'];
+  title: string;
 };
 
-const RoomHeader: React.FC<Props> = ({ className }) => {
+const RoomHeader: React.FC<Props> = ({ className, title }) => {
   const gameStatus = GameStatus.Waiting;
 
   return (
     <div className={cn('', className)}>
       {gameStatus === GameStatus.Waiting ? (
-        <RoomHeaderWaiting title="title placeholder" />
+        <RoomHeaderWaiting title={title} />
       ) : (
         <RoomHeaderPlaying
           nthRound={1}
