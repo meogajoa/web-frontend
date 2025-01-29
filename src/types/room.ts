@@ -38,3 +38,12 @@ export const joinRoomResponse = z.object({
   owner: username,
 });
 export type JoinRoomResponse = z.infer<typeof joinRoomResponse>;
+
+export const systemRoomNotice = z.object({
+  type: z.union([z.literal('GAME_START'), z.literal('?')]),
+  content: z.string(),
+  sendTime: z
+    .union([z.string(), z.date()])
+    .transform((strDate) => new Date(strDate)),
+  sender: username,
+});
