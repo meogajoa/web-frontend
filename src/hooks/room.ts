@@ -6,8 +6,6 @@ import {
 } from '@tanstack/react-query';
 import { AxiosError } from 'axios';
 import React from 'react';
-import { ChatMessage } from '~/types/chat';
-import { Optional } from '~/types/misc';
 import {
   createRoomResponse,
   joinRoomResponse,
@@ -90,7 +88,9 @@ export const useJoinRoomMutation = ({
 
   return {
     ...mutation,
-    previousMessages: mutation.data as Optional<ChatMessage[]>,
+    previousMessages: mutation.data?.chatLogs,
+    title: mutation.data?.name,
+    ownerUsername: mutation.data?.owner,
     joinRoom: mutation.mutate,
     joinRoomAsync: mutation.mutateAsync,
   };
