@@ -5,6 +5,7 @@ import {
 import { ChevronDownIcon, PlusIcon } from '@heroicons/react/24/outline';
 import { cva, VariantProps } from 'class-variance-authority';
 import React from 'react';
+import { PulseLoader } from 'react-spinners';
 import { cn } from '~/utils/classname';
 
 const BUTTON_ICONS = {
@@ -43,11 +44,14 @@ const buttonVariant = cva(
 );
 
 export type ButtonProps = HeadlessButtonProps &
-  VariantProps<typeof buttonVariant>;
+  VariantProps<typeof buttonVariant> & {
+    loading?: boolean;
+  };
 
 const Button: React.FC<React.PropsWithChildren<ButtonProps>> = ({
   className,
   icon,
+  loading,
   children,
   ...props
 }) => {
@@ -58,7 +62,7 @@ const Button: React.FC<React.PropsWithChildren<ButtonProps>> = ({
       className={cn(buttonVariant({ icon, ...props }), className)}
       {...props}
     >
-      {children}
+      {loading ? <PulseLoader color="#bbbb00" size={10} /> : children}
       {Icon && (
         <Icon className="size-4.5 stroke-white stroke-2 transition-transform duration-300 group-data-[open]:-rotate-180" />
       )}

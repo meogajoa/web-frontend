@@ -1,4 +1,4 @@
 import ChatBar from '~/components/ChatBar/ChatBar';
-import GameChatBar from '~/components/ChatBar/GameChatBar';
+import RoomChatBar from '~/components/ChatBar/RoomChatBar';
 
-export { ChatBar, GameChatBar };
+export { ChatBar, RoomChatBar };

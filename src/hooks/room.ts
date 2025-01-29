@@ -6,11 +6,16 @@ import {
 } from '@tanstack/react-query';
 import { AxiosError } from 'axios';
 import React from 'react';
-import { chatMessage } from '~/types/chat';
+import { useSubscription } from 'react-stomp-hooks';
+import { z } from 'zod';
+import { username } from '~/types/account';
 import {
   createRoomResponse,
+  joinRoomResponse,
   JoinRoomResponse,
   paginatedRoomsResponse,
+  roomSystemNotice,
+  RoomSystemNoticeType,
   type CreateRoomForm,
   type CreateRoomResponse,
   type JoinRoomRequest,
@@ -54,34 +59,44 @@ export const useInfiniteRooms = () => {
   return { ...rest, rooms };
 };
 
-export const useJoinRoomMutation = ({ id }: JoinRoomRequest) => {
-  const _joinRoomAsync = React.useCallback(async (_id: string) => {
-    const data = server
-      .post<JoinRoomResponse>('/room/join', { id: _id })
-      .then((response) => {
-        return response.data.map((message) => chatMessage.parse(message));
-      });
-    await sleep(A_SECOND);
-    return data;
-  }, []);
+export const useJoinRoomMutation = ({
+  variables: { id },
+  onError,
+}: {
+  variables: JoinRoomRequest;
+  onError?: (error: AxiosError<JoinRoomResponse, JoinRoomRequest>) => void;
+}) => {
+  const _joinRoomAsync = React.useCallback(
+    async ({ id: _id }: JoinRoomRequest) => {
+      const data = server
+        .post<JoinRoomResponse>('/room/join', { id: _id })
+        .then((response) => joinRoomResponse.parse(response.data));
+      await sleep(A_SECOND);
+      return data;
+    },
+    [],
+  );
 
   const mutation = useMutation<
     JoinRoomResponse,
     AxiosError<JoinRoomResponse, JoinRoomRequest>,
-    string,
+    JoinRoomRequest,
     void
   >({
     mutationFn: _joinRoomAsync,
+    onError,
   });
 
   React.useEffect(() => {
-    mutation.mutate(id);
+    mutation.mutate({ id });
   }, [id]);
 
   return {
     ...mutation,
-    previousMessages: mutation.data,
-    joinRoom: mutation,
+    previousMessages: mutation.data?.chatLogs,
+    title: mutation.data?.name,
+    ownerUsername: mutation.data?.owner,
+    joinRoom: mutation.mutate,
     joinRoomAsync: mutation.mutateAsync,
   };
 };
@@ -112,4 +127,39 @@ export const useCreateRoomMutation = ({
     createRoom: mutation.mutate,
     createRoomAsync: mutation.mutateAsync,
   };
+};
+
+export const useUsersNoticeSubscription = ({
+  variables: { id },
+}: {
+  variables: { id: string };
+}) => {
+  const [users, setUsers] = React.useState<string[]>([]);
+
+  useSubscription(`/topic/room/${id}/notice/users`, ({ body }) => {
+    const data = JSON.parse(body);
+    const users = z.array(username).parse(data);
+    setUsers(users);
+  });
+
+  return { users };
+};
+
+export const useSystemNoticeSubscription = ({
+  variables: { id },
+  onGameStart,
+}: {
+  variables: { id: string };
+  onGameStart?: () => void;
+}) => {
+  useSubscription(`/topic/room/${id}/notice/system`, ({ body }) => {
+    const json = JSON.parse(body);
+    const notice = roomSystemNotice.parse(json);
+
+    switch (notice.type) {
+      case RoomSystemNoticeType.GameStart:
+        onGameStart?.();
+        break;
+    }
+  });
 };

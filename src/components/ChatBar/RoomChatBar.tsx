@@ -12,7 +12,7 @@ type Props = {
   renderPlaceholder?: boolean;
 };
 
-const GameChatBar: React.FC<Props> = ({ className, renderPlaceholder }) => {
+const RoomChatBar = React.memo<Props>(({ className, renderPlaceholder }) => {
   const textareaRef = React.useRef<TextareaHandle>(null);
   const stompClient = useStompClient();
   const { id } = useParams<{ id: string }>();
@@ -44,17 +44,9 @@ const GameChatBar: React.FC<Props> = ({ className, renderPlaceholder }) => {
       textareaRef.current?.clear();
     }, 0);
 
-    if (!id) {
-      throw new Error('Room ID is not found');
-    }
-
-    if (!stompClient) {
-      throw new Error('Stomp client is not currently connected');
-    }
-
-    stompClient.publish({
+    stompClient?.publish({
       headers: {
-        Authorization: sessionId!,
+        Authorization: sessionId,
       },
       destination: `/app/room/${id}/chat`,
       body: JSON.stringify({ type: 'CHAT', content: message }),
@@ -72,6 +64,7 @@ const GameChatBar: React.FC<Props> = ({ className, renderPlaceholder }) => {
       handleSend();
     }
   }
-};
+});
+RoomChatBar.displayName = 'RoomChatBar';
 
-export default GameChatBar;
+export default RoomChatBar;

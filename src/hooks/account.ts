@@ -146,6 +146,7 @@ export const useSignUpMutation = ({
     mutationFn: _signUpAsync,
     onSuccess,
     onError,
+    retry: false,
   });
 
   return {

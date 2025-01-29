@@ -1,4 +1,5 @@
 import { z } from 'zod';
+import { username } from '~/types/account';
 import { chatMessage } from '~/types/chat';
 
 export type CreateRoomForm = {
@@ -31,5 +32,18 @@ export type JoinRoomRequest = {
   id: string;
 };
 
-export const joinRoomResponse = z.array(chatMessage);
+export const joinRoomResponse = z.object({
+  chatLogs: z.array(chatMessage),
+  name: z.string(),
+  owner: username,
+});
 export type JoinRoomResponse = z.infer<typeof joinRoomResponse>;
+
+export enum RoomSystemNoticeType {
+  GameStart = 'GAME_START',
+}
+export const roomSystemNoticeType = z.nativeEnum(RoomSystemNoticeType);
+export const roomSystemNotice = z.object({
+  type: roomSystemNoticeType,
+  content: z.string(),
+});

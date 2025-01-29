@@ -19,6 +19,6 @@ export const chatMessage = z.object({
   id: z.string(),
   content: z.string(),
   sender: username,
-  sendTime: z.string().transform((date) => new Date(date)),
+  sendTime: z.union([z.string(), z.date()]).transform((date) => new Date(date)),
 });
 export type ChatMessage = z.infer<typeof chatMessage>;
