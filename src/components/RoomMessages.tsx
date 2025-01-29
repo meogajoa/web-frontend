@@ -11,7 +11,7 @@ type Props = {
   previousMessages?: ChatMessageType[];
 };
 
-const RoomMessages: React.FC<Props> = ({ className, previousMessages }) => {
+const RoomMessages = React.memo<Props>(({ className, previousMessages }) => {
   const containerRef = React.useRef<HTMLDivElement>(null);
   const bottomRef = React.useRef<HTMLDivElement>(null);
 
@@ -67,6 +67,7 @@ const RoomMessages: React.FC<Props> = ({ className, previousMessages }) => {
       0,
     );
   }
-};
+});
+RoomMessages.displayName = 'RoomMessages';
 
 export default RoomMessages;

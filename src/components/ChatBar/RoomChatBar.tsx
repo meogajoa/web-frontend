@@ -12,7 +12,7 @@ type Props = {
   renderPlaceholder?: boolean;
 };
 
-const RoomChatBar: React.FC<Props> = ({ className, renderPlaceholder }) => {
+const RoomChatBar = React.memo<Props>(({ className, renderPlaceholder }) => {
   const textareaRef = React.useRef<TextareaHandle>(null);
   const stompClient = useStompClient();
   const { id } = useParams<{ id: string }>();
@@ -64,6 +64,7 @@ const RoomChatBar: React.FC<Props> = ({ className, renderPlaceholder }) => {
       handleSend();
     }
   }
-};
+});
+RoomChatBar.displayName = 'RoomChatBar';
 
 export default RoomChatBar;

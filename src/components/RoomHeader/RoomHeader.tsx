@@ -10,7 +10,7 @@ type Props = {
   isStarted: boolean;
 };
 
-const RoomHeader: React.FC<Props> = ({ className, title, isStarted }) => {
+const RoomHeader = React.memo<Props>(({ className, title, isStarted }) => {
   return (
     <div className={cn('', className)}>
       {!isStarted ? (
@@ -24,6 +24,7 @@ const RoomHeader: React.FC<Props> = ({ className, title, isStarted }) => {
       )}
     </div>
   );
-};
+});
+RoomHeader.displayName = 'RoomHeader';
 
 export default RoomHeader;

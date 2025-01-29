@@ -9,7 +9,7 @@ type Props = {
   ownerUsername: string;
 };
 
-const RoomUserList: React.FC<Props> = ({ className, ownerUsername }) => {
+const RoomUserList = React.memo<Props>(({ className, ownerUsername }) => {
   const { id } = useParams<{ id: string }>();
   const { users } = useUsersNoticeSubscription({ variables: { id } });
 
@@ -29,6 +29,7 @@ const RoomUserList: React.FC<Props> = ({ className, ownerUsername }) => {
       ))}
     </ul>
   );
-};
+});
+RoomUserList.displayName = 'RoomUserList';
 
 export default RoomUserList;

@@ -15,7 +15,7 @@ type Props = {
   title: string;
 };
 
-const RoomHeaderWaiting: React.FC<Props> = ({ className, title }) => {
+const RoomHeaderWaiting = React.memo<Props>(({ className, title }) => {
   const router = useRouter();
   const { id } = useParams<{ id: string }>();
   const { users } = useUsersNoticeSubscription({ variables: { id } });
@@ -70,6 +70,7 @@ const RoomHeaderWaiting: React.FC<Props> = ({ className, title }) => {
   function handleStartGameError(error: AxiosError<void>) {
     console.error(error);
   }
-};
+});
+RoomHeaderWaiting.displayName = 'RoomHeaderWaiting';
 
 export default RoomHeaderWaiting;

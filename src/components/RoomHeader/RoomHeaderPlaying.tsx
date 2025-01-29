@@ -14,75 +14,73 @@ type Props = {
   chatRoomKind: ChatRoomKind;
 };
 
-const RoomHeaderPlaying: React.FC<Props> = ({
-  className,
-  nthRound,
-  isMorning,
-  chatRoomKind,
-}) => {
-  const t = useTranslations('roomRoute');
+const RoomHeaderPlaying = React.memo<Props>(
+  ({ className, nthRound, isMorning, chatRoomKind }) => {
+    const t = useTranslations('roomRoute');
 
-  return (
-    <header
-      className={cn(
-        'relative flex h-[5.5rem] items-center justify-between bg-gray-3 px-4',
-        className,
-      )}
-    >
-      <div className="z-10 flex items-center gap-x-2">
-        <p className="text-2xl font-semibold">
-          {`${nthRound}${t('header.nth')} ${isMorning ? t('header.morning') : t('header.night')}`}
-        </p>
+    return (
+      <header
+        className={cn(
+          'relative flex h-[5.5rem] items-center justify-between bg-gray-3 px-4',
+          className,
+        )}
+      >
+        <div className="z-10 flex items-center gap-x-2">
+          <p className="text-2xl font-semibold">
+            {`${nthRound}${t('header.nth')} ${isMorning ? t('header.morning') : t('header.night')}`}
+          </p>
 
-        <p className="text-sm">
-          {t(`chatRoomType.${chatRoomKind}`, { username: 'jeheecheon' })}
-        </p>
-      </div>
+          <p className="text-sm">
+            {t(`chatRoomType.${chatRoomKind}`, { username: 'jeheecheon' })}
+          </p>
+        </div>
 
-      <div className="z-10 flex items-center gap-x-6">
-        <span className="text-lg font-bold">₩10</span>
+        <div className="z-10 flex items-center gap-x-6">
+          <span className="text-lg font-bold">₩10</span>
 
-        <HeadlessuiButton>
-          <CartFillIcon className="size-6 fill-gray-1" />
-        </HeadlessuiButton>
+          <HeadlessuiButton>
+            <CartFillIcon className="size-6 fill-gray-1" />
+          </HeadlessuiButton>
 
-        <HeadlessuiButton>
-          <ChatIcon className="size-6 fill-gray-1" />
-        </HeadlessuiButton>
-      </div>
+          <HeadlessuiButton>
+            <ChatIcon className="size-6 fill-gray-1" />
+          </HeadlessuiButton>
+        </div>
 
-      <BottomShadow />
+        <BottomShadow />
 
-      <div className="absolute bottom-0 left-1/2 z-50 flex -translate-x-1/2 translate-y-1/2 gap-x-1 rounded-full bg-gray-3 p-1">
-        <HeadlessuiButton
-          className="rounded-full bg-gray-3 drop-shadow-lg"
-          onClick={handleMinusClick}
-        >
-          <MinusIcon className="size-6 fill-gray-1" />
-        </HeadlessuiButton>
+        <div className="absolute bottom-0 left-1/2 z-50 flex -translate-x-1/2 translate-y-1/2 gap-x-1 rounded-full bg-gray-3 p-1">
+          <HeadlessuiButton
+            className="rounded-full bg-gray-3 drop-shadow-lg"
+            onClick={handleMinusClick}
+          >
+            <MinusIcon className="size-6 fill-gray-1" />
+          </HeadlessuiButton>
 
-        <span className="flex h-5.5 w-16 items-center justify-center rounded-full bg-gray-1 text-sm text-white">
-          00:20
-        </span>
+          <span className="flex h-5.5 w-16 items-center justify-center rounded-full bg-gray-1 text-sm text-white">
+            00:20
+          </span>
 
-        <HeadlessuiButton
-          className={`rounded-full bg-gray-3 drop-shadow-lg`}
-          onClick={handlePlusClick}
-        >
-          <PlusIcon className="size-6 fill-gray-1" />
-        </HeadlessuiButton>
-      </div>
-    </header>
-  );
+          <HeadlessuiButton
+            className={`rounded-full bg-gray-3 drop-shadow-lg`}
+            onClick={handlePlusClick}
+          >
+            <PlusIcon className="size-6 fill-gray-1" />
+          </HeadlessuiButton>
+        </div>
+      </header>
+    );
 
-  function handleMinusClick() {
-    console.log('minus');
-  }
+    function handleMinusClick() {
+      console.log('minus');
+    }
 
-  function handlePlusClick() {
-    console.log('plus');
-  }
-};
+    function handlePlusClick() {
+      console.log('plus');
+    }
+  },
+);
+RoomHeaderPlaying.displayName = 'RoomHeaderPlaying';
 
 const BottomShadow: React.FC = () => (
   <div
