@@ -36,7 +36,7 @@ const RoomMessages: React.FC<Props> = ({ className, previousMessages }) => {
       {messages.map(({ id, content, sender }) => (
         <ChatMessage
           key={id}
-          position={'left'}
+          position={sender === me.nickname ? 'right' : 'left'}
           username={sender}
           message={content}
         />
