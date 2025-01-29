@@ -3,7 +3,6 @@
 import React from 'react';
 import Room from '~/components/Room';
 import { useJoinRoomMutation } from '~/hooks/room';
-import '~/styles/room.css';
 
 type Props = {
   params: Promise<{ id: string }>;

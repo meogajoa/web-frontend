@@ -64,7 +64,7 @@ export const DropdownOptions: React.FC<
   return (
     <_ListboxOptions
       className={cn(
-        'absolute mt-4 inline-block w-full origin-top rounded-lg bg-white px-2.5 py-4 shadow transition duration-200 ease-out [--anchor-gap:1rem] data-[closed]:scale-95 data-[closed]:opacity-0',
+        'absolute mt-4 inline-block w-full origin-top rounded-lg bg-white px-2.5 py-4 shadow-sm transition duration-200 ease-out [--anchor-gap:1rem] data-[closed]:scale-95 data-[closed]:opacity-0',
         className,
       )}
       as="div"
@@ -90,7 +90,7 @@ const DropdownOption = <T,>({
   return (
     <_ListboxOption
       className={cn(
-        'cursor-pointer border-b border-gray-6 py-2 text-sm text-black transition-colors duration-300 first:pt-0 last:border-b-0 last:pb-0 data-[focus]:bg-gray-5 data-[selected]:bg-gray-4',
+        'border-gray-6 data-[focus]:bg-gray-5 data-[selected]:bg-gray-4 cursor-pointer border-b py-2 text-sm text-black transition-colors duration-300 first:pt-0 last:border-b-0 last:pb-0',
         className,
       )}
       value={value}

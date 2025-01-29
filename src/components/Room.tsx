@@ -31,7 +31,12 @@ const Room: React.FC<Props> = ({
 
   return (
     <div className={cn('flex h-full flex-col', className)}>
-      <RoomHeader className="shrink-0" title={title} isStarted={isStarted} />
+      <RoomHeader
+        className="shrink-0"
+        title={title}
+        isStarted={isStarted}
+        ownerUsername={ownerUsername}
+      />
       {!isStarted && <RoomUserList ownerUsername={ownerUsername} />}
       <RoomMessages className="flex-1" previousMessages={previousMessages} />
       <RoomChatBar

@@ -8,23 +8,26 @@ type Props = {
   className?: React.ComponentProps<'header'>['className'];
   title: string;
   isStarted: boolean;
+  ownerUsername: string;
 };
 
-const RoomHeader = React.memo<Props>(({ className, title, isStarted }) => {
-  return (
-    <div className={cn('', className)}>
-      {!isStarted ? (
-        <RoomHeaderWaiting title={title} />
-      ) : (
-        <RoomHeaderPlaying
-          nthRound={1}
-          isMorning={false}
-          chatRoomKind={ChatRoomKind.All}
-        />
-      )}
-    </div>
-  );
-});
+const RoomHeader = React.memo<Props>(
+  ({ className, title, isStarted, ownerUsername }) => {
+    return (
+      <div className={cn('', className)}>
+        {!isStarted ? (
+          <RoomHeaderWaiting title={title} ownerUsername={ownerUsername} />
+        ) : (
+          <RoomHeaderPlaying
+            nthRound={1}
+            isMorning={false}
+            chatRoomKind={ChatRoomKind.All}
+          />
+        )}
+      </div>
+    );
+  },
+);
 RoomHeader.displayName = 'RoomHeader';
 
 export default RoomHeader;

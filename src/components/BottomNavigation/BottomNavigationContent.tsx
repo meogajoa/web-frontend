@@ -22,7 +22,7 @@ const BottomNavigationContent: React.FC<Props> = ({
     <>
       {renderPlaceholder && <div className={cn('h-18')} aria-hidden />}
 
-      <BottomNavigation className={cn('w-full shadow-top', className)}>
+      <BottomNavigation className={cn('shadow-top w-full', className)}>
         {MENUS.map(({ label, icon, href }) => (
           <BottomNavigation.Item
             key={label}

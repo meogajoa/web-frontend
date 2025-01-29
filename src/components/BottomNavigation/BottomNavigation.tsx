@@ -11,7 +11,7 @@ const BottomNavigation: React.FC<
   React.PropsWithChildren<BottomNavigationProps>
 > = ({ className, children, ...props }) => {
   return (
-    <footer className={cn('flex bg-white pb-3.5 pt-3', className)} {...props}>
+    <footer className={cn('flex bg-white pt-3 pb-3.5', className)} {...props}>
       <nav className="mx-auto flex w-full max-w-xl justify-around">
         {children}
       </nav>

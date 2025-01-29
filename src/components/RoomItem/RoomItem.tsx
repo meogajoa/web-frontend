@@ -25,7 +25,7 @@ const RoomItem: React.FC<Props> = ({
   return (
     <li
       className={cn(
-        'h-14 list-none rounded-[0.625rem] bg-gray-6 transition-all data-[hover]:ring data-[hover]:ring-gray-5',
+        'bg-gray-6 data-[hover]:ring-gray-5 h-14 list-none rounded-[0.625rem] transition-all data-[hover]:ring-3',
         className,
       )}
     >

@@ -37,7 +37,7 @@ const HomeHeader: React.FC<Props> = ({ className, renderPlaceholder }) => {
           />
         </div>
 
-        <div className="flex gap-x-4 p-4 shadow-bottom">
+        <div className="shadow-bottom flex gap-x-4 p-4">
           <DropdownExample>{t('header.categoryButton')}</DropdownExample>
           <DropdownExample>{t('header.roomVisibilityButton')}</DropdownExample>
         </div>

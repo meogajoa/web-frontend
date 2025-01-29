@@ -1,6 +1,19 @@
-@tailwind base;
-@tailwind components;
-@tailwind utilities;
+@import 'tailwindcss';
+
+@config "../../tailwind.config.ts";
+
+@theme {
+  --color-gray-1: #1c1c1d;
+  --color-gray-2: #47484a;
+  --color-gray-3: #6b6c6f;
+  --color-gray-4: #88888a;
+  --color-gray-5: #b8b8b8;
+  --color-gray-6: #e3e3e4;
+
+  --color-red: #f24822;
+
+  --color-sub: #5f657b;
+}
 
 @layer base {
   :root,
@@ -14,48 +27,46 @@
   }
 }
 
-@layer utilities {
-  .bottom-0-dynamic {
-    bottom: env(safe-area-inset-bottom, 0);
+@utility bottom-0-dynamic {
+  bottom: env(safe-area-inset-bottom, 0);
+}
+
+@utility scrollbar-primary {
+  &::-webkit-scrollbar {
+    width: thin;
   }
 
-  .scrollbar-primary {
-    &::-webkit-scrollbar {
-      width: thin;
-    }
-
-    &::-webkit-scrollbar-thumb {
-      background-color: theme('colors.gray.5');
-      border-radius: 0.375rem;
-    }
-
-    &::-webkit-scrollbar-track {
-      background-color: transparent;
-    }
-
-    &::-webkit-scrollbar-corner {
-      background-color: transparent;
-    }
-
-    &::-webkit-scrollbar-button {
-      display: none;
-    }
-
-    &::-webkit-scrollbar-thumb {
-      border-radius: 0.375rem;
-    }
+  &::-webkit-scrollbar-thumb {
+    background-color: var(--color-gray-5);
+    border-radius: 0.375rem;
   }
 
-  .scrollbar-hide {
-    /* IE and Edge */
-    -ms-overflow-style: none;
+  &::-webkit-scrollbar-track {
+    background-color: transparent;
+  }
 
-    /* Firefox */
-    scrollbar-width: none;
+  &::-webkit-scrollbar-corner {
+    background-color: transparent;
+  }
 
-    /* For Webkit-based browsers (Chrome, Safari and Opera) */
-    &::-webkit-scrollbar {
-      display: none;
-    }
+  &::-webkit-scrollbar-button {
+    display: none;
+  }
+
+  &::-webkit-scrollbar-thumb {
+    border-radius: 0.375rem;
+  }
+}
+
+@utility scrollbar-hide {
+  /* IE and Edge */
+  -ms-overflow-style: none;
+
+  /* Firefox */
+  scrollbar-width: none;
+
+  /* For Webkit-based browsers (Chrome, Safari and Opera) */
+  &::-webkit-scrollbar {
+    display: none;
   }
 }

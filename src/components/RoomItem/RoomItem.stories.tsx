@@ -1,9 +1,9 @@
 import { Meta, StoryObj } from '@storybook/react';
-import { Room } from '~/components/RoomItem';
+import { RoomItem } from '~/components/RoomItem';
 
-const meta: Meta<typeof Room> = {
+const meta: Meta<typeof RoomItem> = {
   title: 'Molecules/Room',
-  component: Room,
+  component: RoomItem,
   tags: ['autodocs'],
   argTypes: {
     title: {
@@ -48,7 +48,7 @@ const meta: Meta<typeof Room> = {
 
 export default meta;
 
-type Story = StoryObj<typeof Room>;
+type Story = StoryObj<typeof RoomItem>;
 
 export const Default: Story = {
   args: {

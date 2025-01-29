@@ -21,7 +21,7 @@ const RoomHeaderPlaying = React.memo<Props>(
     return (
       <header
         className={cn(
-          'relative flex h-[5.5rem] items-center justify-between bg-gray-3 px-4',
+          'bg-gray-3 relative flex h-[5.5rem] items-center justify-between px-4',
           className,
         )}
       >
@@ -39,33 +39,33 @@ const RoomHeaderPlaying = React.memo<Props>(
           <span className="text-lg font-bold">₩10</span>
 
           <HeadlessuiButton>
-            <CartFillIcon className="size-6 fill-gray-1" />
+            <CartFillIcon className="fill-gray-1 size-6" />
           </HeadlessuiButton>
 
           <HeadlessuiButton>
-            <ChatIcon className="size-6 fill-gray-1" />
+            <ChatIcon className="fill-gray-1 size-6" />
           </HeadlessuiButton>
         </div>
 
         <BottomShadow />
 
-        <div className="absolute bottom-0 left-1/2 z-50 flex -translate-x-1/2 translate-y-1/2 gap-x-1 rounded-full bg-gray-3 p-1">
+        <div className="bg-gray-3 absolute bottom-0 left-1/2 z-50 flex -translate-x-1/2 translate-y-1/2 gap-x-1 rounded-full p-1">
           <HeadlessuiButton
-            className="rounded-full bg-gray-3 drop-shadow-lg"
+            className="bg-gray-3 rounded-full drop-shadow-lg"
             onClick={handleMinusClick}
           >
-            <MinusIcon className="size-6 fill-gray-1" />
+            <MinusIcon className="fill-gray-1 size-6" />
           </HeadlessuiButton>
 
-          <span className="flex h-5.5 w-16 items-center justify-center rounded-full bg-gray-1 text-sm text-white">
+          <span className="bg-gray-1 flex h-5.5 w-16 items-center justify-center rounded-full text-sm text-white">
             00:20
           </span>
 
           <HeadlessuiButton
-            className={`rounded-full bg-gray-3 drop-shadow-lg`}
+            className={`bg-gray-3 rounded-full drop-shadow-lg`}
             onClick={handlePlusClick}
           >
-            <PlusIcon className="size-6 fill-gray-1" />
+            <PlusIcon className="fill-gray-1 size-6" />
           </HeadlessuiButton>
         </div>
       </header>

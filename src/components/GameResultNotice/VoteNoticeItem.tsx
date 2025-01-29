@@ -27,7 +27,7 @@ const VoteNoticeItem: React.FC<VoteNoticeItemProps> = ({
     >
       <div className="flex items-center">
         <ProfileImage size="sm" color={profileColor} />
-        <div className="ml-1.5 mr-2 flex items-center px-2">{nickname}</div>
+        <div className="mr-2 ml-1.5 flex items-center px-2">{nickname}</div>
         <div className="flex gap-1">
           {Array.from({ length: votes }).map((_, iconIndex) => (
             <Image
