@@ -1,5 +1,4 @@
 import { Meta, StoryObj } from '@storybook/react';
-import { fn } from '@storybook/test';
 import { Button } from '~/components/Button';
 
 const meta: Meta<typeof Button> = {
@@ -21,17 +20,14 @@ const meta: Meta<typeof Button> = {
       control: 'select',
       options: ['lg', 'md'],
     },
+    loading: {
+      description: '로딩 중 여부',
+      control: 'boolean',
+    },
     disabled: {
       description: '버튼 비활성화 여부',
       control: 'boolean',
     },
-  },
-  args: {
-    children: 'Button',
-    variant: 'primary',
-    size: 'md',
-    disabled: false,
-    onClick: fn(),
   },
   decorators: [
     (Story) => (
