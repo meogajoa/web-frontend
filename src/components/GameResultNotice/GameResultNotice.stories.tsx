@@ -11,8 +11,10 @@ const meta: Meta<typeof GameResultNotice> = {
       description: '결과 타입 (game | vote | team)',
       control: 'select',
       options: ['game', 'vote', 'team'],
-      defaultValue: 'game',
     },
+  },
+  args: {
+    type: 'game',
   },
 };
 
@@ -43,7 +45,7 @@ type ResultData =
       data: {
         rank: number;
         teamName: string;
-        numberIcons: string[];
+        numberIcons: { number: number; team: '흑' | '백' }[];
         prize: string;
       }[];
     };
@@ -51,7 +53,7 @@ type ResultData =
 type Story = StoryObj<typeof GameResultNotice>;
 
 export const Default: Story = {
-  render: (props) => {
+  render: ({ type = 'game' }) => {
     const gameResultData: ResultData = {
       type: 'game',
       data: [
@@ -95,9 +97,9 @@ export const Default: Story = {
           rank: 1,
           teamName: 'A',
           numberIcons: [
-            '/images/number-01.png',
-            '/icons/number-02.png',
-            '/icons/number-03.png',
+            { number: 1, team: '흑' },
+            { number: 2, team: '백' },
+            { number: 3, team: '흑' },
           ],
           prize: '₩70',
         },
@@ -105,9 +107,9 @@ export const Default: Story = {
           rank: 2,
           teamName: 'B',
           numberIcons: [
-            '/icons/number-04.png',
-            '/icons/number-05.png',
-            '/icons/number-06.png',
+            { number: 4, team: '흑' },
+            { number: 5, team: '백' },
+            { number: 6, team: '흑' },
           ],
           prize: '₩30',
         },
@@ -115,12 +117,12 @@ export const Default: Story = {
     };
 
     const result =
-      props.type === 'vote'
+      type === 'vote'
         ? voteResultData
-        : props.type === 'team'
+        : type === 'team'
           ? teamResultData
           : gameResultData;
 
-    return <GameResultNotice type={props.type} result={result} />;
+    return <GameResultNotice type={type} result={result} />;
   },
 };

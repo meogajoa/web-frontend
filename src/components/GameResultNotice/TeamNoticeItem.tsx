@@ -1,12 +1,13 @@
 import React from 'react';
+import NumberIconBall from '../NumberIconBall';
 import BaseNoticeItem from './BaseNoticeItem';
 
 export type TeamNoticeItemProps = {
   rank: number;
   teamName: string;
-  numberIcons: string[];
-  prize: string;
+  numberIcons: { number: number; team: '흑' | '백' }[]; // numberIcons 타입 수정
   variant?: 'default' | 'dark';
+  prize: string;
 };
 
 const TeamNoticeItem: React.FC<TeamNoticeItemProps> = ({
@@ -21,15 +22,14 @@ const TeamNoticeItem: React.FC<TeamNoticeItemProps> = ({
       variant={variant || 'default'}
       leftContent={
         <div className="flex items-center">
-          <div className="mr-2 pr-2">{rank}등</div>
+          <div className="mr-4 pr-2">{rank}등</div>
           <div className="mr-2 px-2">{teamName}팀</div>
           <div className="flex gap-1">
             {numberIcons.map((icon, index) => (
-              <img
+              <NumberIconBall
                 key={index}
-                src={icon}
-                alt={`number-icon-${index}`}
-                className="size-2.5"
+                number={icon.number}
+                team={icon.team}
               />
             ))}
           </div>
