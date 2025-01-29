@@ -8,8 +8,8 @@ type Props = BrandModalProps;
 
 const PasswordInputModal: React.FC<Props> = ({ onClose, visible }) => {
   const messages = useTranslations('passwordInputModal');
-  const { register, handleSubmit, watch } = useForm();
-  const roomPassword = watch('roomPassword', '');
+  const { register, handleSubmit } = useForm();
+  const [password, setPassword] = React.useState('');
 
   return (
     <BrandModal
@@ -27,13 +27,13 @@ const PasswordInputModal: React.FC<Props> = ({ onClose, visible }) => {
 
       <BrandModal.Body>
         <div className="mb-5.5 flex flex-col items-center justify-center">
-          <label htmlFor="roomPassword" className="mb-1 mt-3">
+          <label htmlFor="roomPassword" className="mb-1 mt-3 text-red">
             {messages('roomPasswordLabel')}
           </label>
           <Input
             type="password"
-            value={roomPassword}
-            onValueChange={(value) => console.log(value)}
+            value={password}
+            onValueChange={(value) => setPassword(value)}
             {...register('roomPassword')}
           />
         </div>

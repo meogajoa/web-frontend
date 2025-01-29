@@ -1,7 +1,9 @@
 import { Meta, StoryObj } from '@storybook/react';
+import { NextIntlClientProvider } from 'next-intl';
 import React from 'react';
 import { BrandModal } from '~/components/BrandModal';
 import { Button } from '~/components/Button';
+import PasswordInputModal from './PasswordInputModal';
 
 const meta: Meta<typeof BrandModal> = {
   title: 'Organisms/BrandModal',
@@ -13,6 +15,13 @@ const meta: Meta<typeof BrandModal> = {
       control: 'text',
     },
   },
+  decorators: [
+    (Story) => (
+      <NextIntlClientProvider locale="en">
+        <Story />
+      </NextIntlClientProvider>
+    ),
+  ],
 };
 
 export default meta;
@@ -58,5 +67,20 @@ export const Default: Story = {
     function handleClick(visible: boolean) {
       return () => setVisible(visible);
     }
+  },
+};
+
+export const PasswordInput: Story = {
+  render: () => {
+    const [visible, setVisible] = React.useState(false);
+    return (
+      <>
+        <button onClick={() => setVisible(true)}>모달 열기 버튼</button>
+        <PasswordInputModal
+          visible={visible}
+          onClose={() => setVisible(false)}
+        />
+      </>
+    );
   },
 };
