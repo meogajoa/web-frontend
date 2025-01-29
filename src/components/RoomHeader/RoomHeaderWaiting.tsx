@@ -1,7 +1,11 @@
 import { Button as HeadlessuiButton } from '@headlessui/react';
 import { ArrowLeftIcon } from '@heroicons/react/24/outline';
+import { AxiosError } from 'axios';
+import { useParams } from 'next/navigation';
 import React from 'react';
 import { Button } from '~/components/Button';
+import { useStartGameMutation } from '~/hooks/game';
+import { useRoomUsersSubscription } from '~/hooks/room';
 import { useRouter } from '~/i18n/routing';
 import { cn } from '~/utils/classname';
 
@@ -12,6 +16,12 @@ type Props = {
 
 const RoomHeaderWaiting: React.FC<Props> = ({ className, title }) => {
   const router = useRouter();
+  const { id } = useParams<{ id: string }>();
+  const { users } = useRoomUsersSubscription({ variables: { id } });
+  const { startGame } = useStartGameMutation({
+    onSuccess: handleGameStartSuccess,
+    onError: handleGameStartError,
+  });
 
   return (
     <header
@@ -31,6 +41,7 @@ const RoomHeaderWaiting: React.FC<Props> = ({ className, title }) => {
         variant="primary"
         rounded="full"
         size="sm"
+        disabled={users.length <= 7}
         onClick={handleGameStart}
       >
         게임 시작
@@ -43,7 +54,19 @@ const RoomHeaderWaiting: React.FC<Props> = ({ className, title }) => {
   }
 
   function handleGameStart() {
-    // TODO: Implement game start feature
+    if (users.length <= 7) {
+      return;
+    }
+
+    startGame({ id });
+  }
+
+  function handleGameStartSuccess() {
+    console.log('Game started');
+  }
+
+  function handleGameStartError(error: AxiosError<void>) {
+    console.error(error);
   }
 };
 

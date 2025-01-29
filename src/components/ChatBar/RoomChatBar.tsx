@@ -44,17 +44,9 @@ const RoomChatBar: React.FC<Props> = ({ className, renderPlaceholder }) => {
       textareaRef.current?.clear();
     }, 0);
 
-    if (!id) {
-      throw new Error('Room ID is not found');
-    }
-
-    if (!stompClient) {
-      throw new Error('Stomp client is not currently connected');
-    }
-
-    stompClient.publish({
+    stompClient?.publish({
       headers: {
-        Authorization: sessionId!,
+        Authorization: sessionId,
       },
       destination: `/app/room/${id}/chat`,
       body: JSON.stringify({ type: 'CHAT', content: message }),
