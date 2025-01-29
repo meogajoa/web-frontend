@@ -1,7 +1,7 @@
 import { useParams } from 'next/navigation';
 import React from 'react';
 import { ChatMessage } from '~/components/ChatMessage';
-import { useChatMessages } from '~/hooks/chat';
+import { useChatMessagesSubscription } from '~/hooks/chat';
 import { useAccount } from '~/providers/AccountProvider';
 import { ChatMessage as ChatMessageType } from '~/types/chat';
 import { cn } from '~/utils/classname';
@@ -16,7 +16,7 @@ const RoomMessages: React.FC<Props> = ({ className, previousMessages }) => {
   const bottomRef = React.useRef<HTMLDivElement>(null);
 
   const { id } = useParams<{ id: string }>();
-  const messages = useChatMessages({
+  const messages = useChatMessagesSubscription({
     url: `/topic/room/${id}/chat`,
     previousMessages,
     onNewMessage: scrollToBottom,

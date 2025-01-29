@@ -1,9 +1,7 @@
 import { BookmarkIcon } from '@heroicons/react/24/outline';
 import { useParams } from 'next/navigation';
 import React from 'react';
-import { useSubscription } from 'react-stomp-hooks';
-import { z } from 'zod';
-import { username } from '~/types/account';
+import { useRoomUsersSubscription } from '~/hooks/room';
 import { cn } from '~/utils/classname';
 
 type Props = {
@@ -13,13 +11,7 @@ type Props = {
 
 const RoomUserList: React.FC<Props> = ({ className, ownerUsername }) => {
   const { id } = useParams<{ id: string }>();
-  const [users, setUsers] = React.useState<string[]>([]);
-
-  useSubscription(`/topic/room/${id}/notice/users`, ({ body }) => {
-    const data = JSON.parse(body);
-    const users = z.array(username).parse(data);
-    setUsers(users);
-  });
+  const { users } = useRoomUsersSubscription({ variables: { id } });
 
   return (
     <ul className={cn('grid grid-cols-4 gap-x-2 gap-y-1 p-4', className)}>

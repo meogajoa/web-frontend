@@ -2,7 +2,7 @@ import React from 'react';
 import { useSubscription } from 'react-stomp-hooks';
 import { chatMessage, ChatMessage } from '~/types/chat';
 
-export const useChatMessages = ({
+export const useChatMessagesSubscription = ({
   url,
   previousMessages = [],
   onNewMessage,

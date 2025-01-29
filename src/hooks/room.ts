@@ -6,6 +6,9 @@ import {
 } from '@tanstack/react-query';
 import { AxiosError } from 'axios';
 import React from 'react';
+import { useSubscription } from 'react-stomp-hooks';
+import { z } from 'zod';
+import { username } from '~/types/account';
 import {
   createRoomResponse,
   joinRoomResponse,
@@ -122,4 +125,20 @@ export const useCreateRoomMutation = ({
     createRoom: mutation.mutate,
     createRoomAsync: mutation.mutateAsync,
   };
+};
+
+export const useRoomUsersSubscription = ({
+  variables: { id },
+}: {
+  variables: { id: string };
+}) => {
+  const [users, setUsers] = React.useState<string[]>([]);
+
+  useSubscription(`/topic/room/${id}/notice/users`, ({ body }) => {
+    const data = JSON.parse(body);
+    const users = z.array(username).parse(data);
+    setUsers(users);
+  });
+
+  return { users };
 };
