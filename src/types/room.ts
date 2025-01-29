@@ -39,11 +39,11 @@ export const joinRoomResponse = z.object({
 });
 export type JoinRoomResponse = z.infer<typeof joinRoomResponse>;
 
-export const systemRoomNotice = z.object({
-  type: z.union([z.literal('GAME_START'), z.literal('?')]),
+export enum RoomSystemNoticeType {
+  GameStart = 'GAME_START',
+}
+export const roomSystemNoticeType = z.nativeEnum(RoomSystemNoticeType);
+export const roomSystemNotice = z.object({
+  type: roomSystemNoticeType,
   content: z.string(),
-  sendTime: z
-    .union([z.string(), z.date()])
-    .transform((strDate) => new Date(strDate)),
-  sender: username,
 });

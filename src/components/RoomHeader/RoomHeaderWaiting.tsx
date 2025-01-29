@@ -1,11 +1,12 @@
 import { Button as HeadlessuiButton } from '@headlessui/react';
 import { ArrowLeftIcon } from '@heroicons/react/24/outline';
 import { AxiosError } from 'axios';
+import { debounce } from 'lodash-es';
 import { useParams } from 'next/navigation';
 import React from 'react';
 import { Button } from '~/components/Button';
 import { useStartGameMutation } from '~/hooks/game';
-import { useRoomUsersSubscription } from '~/hooks/room';
+import { useUsersNoticeSubscription } from '~/hooks/room';
 import { useRouter } from '~/i18n/routing';
 import { cn } from '~/utils/classname';
 
@@ -17,11 +18,15 @@ type Props = {
 const RoomHeaderWaiting: React.FC<Props> = ({ className, title }) => {
   const router = useRouter();
   const { id } = useParams<{ id: string }>();
-  const { users } = useRoomUsersSubscription({ variables: { id } });
-  const { startGame, isPending } = useStartGameMutation({
-    onSuccess: handleGameStartSuccess,
-    onError: handleGameStartError,
+  const { users } = useUsersNoticeSubscription({ variables: { id } });
+  const { startGame, isPending, isSuccess } = useStartGameMutation({
+    onError: handleStartGameError,
   });
+
+  const handleStartGameClick = React.useCallback(
+    debounce(_handleStartGameClick, 500, { leading: true }),
+    [users],
+  );
 
   return (
     <header
@@ -41,9 +46,9 @@ const RoomHeaderWaiting: React.FC<Props> = ({ className, title }) => {
         variant="primary"
         rounded="full"
         size="sm"
-        disabled={users.length <= 7}
+        disabled={isSuccess || users.length <= 7}
         loading={isPending}
-        onClick={handleGameStart}
+        onClick={handleStartGameClick}
       >
         게임 시작
       </Button>
@@ -54,7 +59,7 @@ const RoomHeaderWaiting: React.FC<Props> = ({ className, title }) => {
     router.back();
   }
 
-  function handleGameStart() {
+  function _handleStartGameClick() {
     if (users.length <= 7) {
       return;
     }
@@ -62,11 +67,7 @@ const RoomHeaderWaiting: React.FC<Props> = ({ className, title }) => {
     startGame({ id });
   }
 
-  function handleGameStartSuccess() {
-    console.log('Game started');
-  }
-
-  function handleGameStartError(error: AxiosError<void>) {
+  function handleStartGameError(error: AxiosError<void>) {
     console.error(error);
   }
 };

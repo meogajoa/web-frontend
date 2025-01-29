@@ -14,6 +14,8 @@ import {
   joinRoomResponse,
   JoinRoomResponse,
   paginatedRoomsResponse,
+  roomSystemNotice,
+  RoomSystemNoticeType,
   type CreateRoomForm,
   type CreateRoomResponse,
   type JoinRoomRequest,
@@ -127,7 +129,7 @@ export const useCreateRoomMutation = ({
   };
 };
 
-export const useRoomUsersSubscription = ({
+export const useUsersNoticeSubscription = ({
   variables: { id },
 }: {
   variables: { id: string };
@@ -141,4 +143,23 @@ export const useRoomUsersSubscription = ({
   });
 
   return { users };
+};
+
+export const useSystemNoticeSubscription = ({
+  variables: { id },
+  onGameStart,
+}: {
+  variables: { id: string };
+  onGameStart?: () => void;
+}) => {
+  useSubscription(`/topic/room/${id}/notice/system`, ({ body }) => {
+    const json = JSON.parse(body);
+    const notice = roomSystemNotice.parse(json);
+
+    switch (notice.type) {
+      case RoomSystemNoticeType.GameStart:
+        onGameStart?.();
+        break;
+    }
+  });
 };

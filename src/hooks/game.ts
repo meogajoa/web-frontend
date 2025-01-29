@@ -1,5 +1,6 @@
 import { useMutation } from '@tanstack/react-query';
 import { AxiosError } from 'axios';
+import React from 'react';
 import { type GameStartRequest } from '~/types/game';
 import { server } from '~/utils/axios';
 
@@ -12,7 +13,7 @@ export const useStartGameMutation = ({
 }) => {
   const _startGameAsync = React.useCallback(
     async ({ id }: GameStartRequest) => {
-      await server.post<void>(`/room/${id}/start`);
+      await server.post<void>(`/game/${id}/start`);
     },
     [],
   );

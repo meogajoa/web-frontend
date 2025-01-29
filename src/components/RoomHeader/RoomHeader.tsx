@@ -1,6 +1,5 @@
 import React from 'react';
 import { ChatRoomKind } from '~/types/chat';
-import { GameStatus } from '~/types/game';
 import { cn } from '~/utils/classname';
 import RoomHeaderPlaying from './RoomHeaderPlaying';
 import RoomHeaderWaiting from './RoomHeaderWaiting';
@@ -8,14 +7,13 @@ import RoomHeaderWaiting from './RoomHeaderWaiting';
 type Props = {
   className?: React.ComponentProps<'header'>['className'];
   title: string;
+  isStarted: boolean;
 };
 
-const RoomHeader: React.FC<Props> = ({ className, title }) => {
-  const gameStatus = GameStatus.Waiting;
-
+const RoomHeader: React.FC<Props> = ({ className, title, isStarted }) => {
   return (
     <div className={cn('', className)}>
-      {gameStatus === GameStatus.Waiting ? (
+      {!isStarted ? (
         <RoomHeaderWaiting title={title} />
       ) : (
         <RoomHeaderPlaying
