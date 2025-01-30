@@ -34,7 +34,10 @@ const RoomHeaderWaiting = React.memo<Props>(
 
     return (
       <header
-        className={cn('relative flex h-[5.5rem] items-center px-4', className)}
+        className={cn(
+          'relative flex h-[5.5rem] items-center bg-white px-4',
+          className,
+        )}
       >
         <HeadlessuiButton onClick={handleBackClick}>
           <ArrowLeftIcon className="fill-gray-1 size-6" />

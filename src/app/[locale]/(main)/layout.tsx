@@ -3,9 +3,8 @@
 import { useTranslations } from 'next-intl';
 import React from 'react';
 import toast from 'react-hot-toast';
-import HashLoader from 'react-spinners/HashLoader';
+import LoadingIndicator from '~/components/LoadingIndicator';
 import { useAuthenticateMutation } from '~/hooks/account';
-import { useDotsString } from '~/hooks/loading';
 import { useRouter } from '~/i18n/routing';
 import { useAccount } from '~/providers/AccountProvider';
 import StompProvider from '~/providers/StompProvider';
@@ -21,7 +20,6 @@ const MainLayout: React.FC<React.PropsWithChildren> = ({ children }) => {
 
   const [isConnected, setIsConnected] = React.useState(false);
   const t = useTranslations('rootRoute');
-  const dots = useDotsString({ maxLength: 3 });
   const router = useRouter();
   const { setMe, clearMe } = useAccount();
 
@@ -33,15 +31,12 @@ const MainLayout: React.FC<React.PropsWithChildren> = ({ children }) => {
   return (
     <>
       {(!isAuthenticated || !isConnected) && (
-        <div className="flex h-screen flex-col items-center justify-center gap-y-4 font-semibold">
-          <HashLoader />
-          <div className="relative">
-            <span>
-              {!isAuthenticated ? t('authenticating') : t('connectingToServer')}
-            </span>
-            <span className="absolute">{dots}</span>
-          </div>
-        </div>
+        <LoadingIndicator
+          className="min-h-dvh"
+          label={
+            !isAuthenticated ? t('authenticating') : t('connectingToServer')
+          }
+        />
       )}
 
       {isAuthenticated && (

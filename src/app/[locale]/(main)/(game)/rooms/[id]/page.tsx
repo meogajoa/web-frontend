@@ -1,6 +1,8 @@
 'use client';
 
+import { useTranslations } from 'next-intl';
 import React from 'react';
+import LoadingIndicator from '~/components/LoadingIndicator';
 import Room from '~/components/Room';
 import { useJoinRoomMutation } from '~/hooks/room';
 
@@ -9,6 +11,7 @@ type Props = {
 };
 
 const RoomPage: React.FC<Props> = ({ params }) => {
+  const t = useTranslations('rootRoute');
   const { id: roomId } = React.use(params);
   const { isSuccess, isPending, previousMessages, title, ownerUsername } =
     useJoinRoomMutation({
@@ -17,7 +20,9 @@ const RoomPage: React.FC<Props> = ({ params }) => {
 
   return (
     <>
-      {isPending && <div>Loading...</div>}
+      {isPending && (
+        <LoadingIndicator className="min-h-dvh" label={t('enteringRoom')} />
+      )}
       {isSuccess && previousMessages && title && ownerUsername && (
         <Room
           title={title}
@@ -25,6 +30,12 @@ const RoomPage: React.FC<Props> = ({ params }) => {
           previousMessages={previousMessages}
         />
       )}
+
+      <style>{`
+        body {
+          background-color: var(--color-gray-6);
+        }
+      `}</style>
     </>
   );
 };
