@@ -11,7 +11,7 @@ export default function middleware(request: NextRequest) {
     `^/(${Object.values(Language).join('|')})(/.*)?$`,
   );
   if (!hasCorrectLocaleRegex.test(request.nextUrl.pathname)) {
-    return NextResponse.redirect(new URL(`/${Language.En}`, request.nextUrl));
+    return NextResponse.redirect(new URL(`/${Language.Kr}`, request.nextUrl));
   }
 
   const pathname = request.nextUrl.pathname;

@@ -5,12 +5,12 @@ export type Optional<T> = T | undefined;
 export type Maybe<T> = Optional<Nullable<T>>;
 
 export enum Language {
-  En = 'en',
+  // En = 'en',
   Kr = 'kr',
-  Jp = 'jp',
-  Es = 'es',
-  ZhCn = 'zh-CN',
-  ZhTw = 'zh-TW',
+  // Jp = 'jp',
+  // Es = 'es',
+  // ZhCn = 'zh-CN',
+  // ZhTw = 'zh-TW',
 }
 
 export type Point = {
