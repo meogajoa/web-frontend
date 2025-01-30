@@ -3,7 +3,7 @@ import { getMessages } from 'next-intl/server';
 import { notFound } from 'next/navigation';
 import React from 'react';
 import { routing } from '~/i18n/routing';
-import { Language } from '~/types/misc';
+import { Locale } from '~/types/misc';
 
 type Props = {
   locale: string;
@@ -13,7 +13,7 @@ const IntlProvider: React.FC<React.PropsWithChildren<Props>> = async ({
   locale,
   children,
 }) => {
-  if (!routing.locales.includes(locale as Language)) {
+  if (!routing.locales.includes(locale as Locale)) {
     notFound();
   }
 

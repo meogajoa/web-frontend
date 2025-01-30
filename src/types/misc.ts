@@ -4,7 +4,7 @@ export type Optional<T> = T | undefined;
 
 export type Maybe<T> = Optional<Nullable<T>>;
 
-export enum Language {
+export enum Locale {
   // En = 'en',
   Kr = 'kr',
   // Jp = 'jp',
@@ -12,6 +12,7 @@ export enum Language {
   // ZhCn = 'zh-CN',
   // ZhTw = 'zh-TW',
 }
+export const DefaultLocale = Locale.Kr;
 
 export type Point = {
   x: number | string;

@@ -1,17 +1,17 @@
 import createMiddleware from 'next-intl/middleware';
 import { NextRequest, NextResponse } from 'next/server';
 import { routing } from '~/i18n/routing';
-import { Language } from '~/types/misc';
+import { DefaultLocale, Locale } from '~/types/misc';
 import { extractLocale } from '~/utils/pathname';
 
 const handleI18nRouting = createMiddleware(routing);
 
 export default function middleware(request: NextRequest) {
   const hasCorrectLocaleRegex = new RegExp(
-    `^/(${Object.values(Language).join('|')})(/.*)?$`,
+    `^/(${Object.values(Locale).join('|')})(/.*)?$`,
   );
   if (!hasCorrectLocaleRegex.test(request.nextUrl.pathname)) {
-    return NextResponse.redirect(new URL(`/${Language.Kr}`, request.nextUrl));
+    return NextResponse.redirect(new URL(`/${DefaultLocale}`, request.nextUrl));
   }
 
   const pathname = request.nextUrl.pathname;
