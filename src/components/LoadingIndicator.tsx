@@ -16,8 +16,8 @@ const LoadingIndicator = <T extends object = {}>({
   ...props
 }: Props<T>) => {
   const dots = useDotsString({ maxLength: 3 });
-  const styles = getComputedStyle(document.documentElement);
-  const brandRed = styles.getPropertyValue('--color-red');
+  const styles = window?.getComputedStyle(document.documentElement);
+  const brandRed = styles?.getPropertyValue('--color-red');
 
   return (
     <div
