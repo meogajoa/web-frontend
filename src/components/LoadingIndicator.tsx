@@ -2,6 +2,7 @@ import React from 'react';
 import { HashLoader } from 'react-spinners';
 import { useDotsString } from '~/hooks/loading';
 import { cn } from '~/utils/classname';
+import { getCssVariable } from '~/utils/misc';
 
 type Props<T> = T & {
   className?: React.ComponentProps<'div'>['className'];
@@ -16,8 +17,7 @@ const LoadingIndicator = <T extends object = {}>({
   ...props
 }: Props<T>) => {
   const dots = useDotsString({ maxLength: 3 });
-  const styles = window?.getComputedStyle(document.documentElement);
-  const brandRed = styles?.getPropertyValue('--color-red');
+  const brandRed = getCssVariable({ variableName: '--color-red' });
 
   return (
     <div
