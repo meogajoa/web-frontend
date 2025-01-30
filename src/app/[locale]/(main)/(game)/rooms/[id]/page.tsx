@@ -11,7 +11,7 @@ type Props = {
 };
 
 const RoomPage: React.FC<Props> = ({ params }) => {
-  const t = useTranslations('rootRoute');
+  const t = useTranslations('roomRoute');
   const { id: roomId } = React.use(params);
   const { isSuccess, isPending, previousMessages, title, ownerUsername } =
     useJoinRoomMutation({
