@@ -36,6 +36,7 @@ export const joinRoomResponse = z.object({
   chatLogs: z.array(chatMessage),
   name: z.string(),
   owner: username,
+  playing: z.boolean(),
 });
 export type JoinRoomResponse = z.infer<typeof joinRoomResponse>;
 

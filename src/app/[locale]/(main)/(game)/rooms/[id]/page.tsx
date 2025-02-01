@@ -13,21 +13,20 @@ type Props = {
 const RoomPage: React.FC<Props> = ({ params }) => {
   const t = useTranslations('roomRoute');
   const { id: roomId } = React.use(params);
-  const { isSuccess, isPending, previousMessages, title, ownerUsername } =
-    useJoinRoomMutation({
-      variables: { id: roomId },
-    });
+  const { isSuccess, isPending, roomInfo } = useJoinRoomMutation({
+    variables: { id: roomId },
+  });
 
   return (
     <>
       {isPending && (
         <LoadingIndicator className="min-h-dvh" label={t('enteringRoom')} />
       )}
-      {isSuccess && previousMessages && title && ownerUsername && (
+      {isSuccess && roomInfo && (
         <Room
-          title={title}
-          ownerUsername={ownerUsername}
-          previousMessages={previousMessages}
+          title={roomInfo.name}
+          ownerUsername={roomInfo.owner}
+          previousMessages={roomInfo.chatLogs}
         />
       )}
 
