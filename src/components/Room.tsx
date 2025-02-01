@@ -4,7 +4,7 @@ import { RoomChatBar } from '~/components/ChatBar';
 import RoomHeader from '~/components/RoomHeader/RoomHeader';
 import RoomMessages from '~/components/RoomMessages';
 import RoomUserList from '~/components/RoomUserList';
-import { useSystemNoticeSubscription } from '~/hooks/room';
+import { useRoomSystemNoticeSubscription } from '~/hooks/room';
 import { ChatMessage } from '~/types/chat';
 import { cn } from '~/utils/classname';
 
@@ -24,7 +24,7 @@ const Room: React.FC<Props> = ({
   const { id } = useParams<{ id: string }>();
   const [isStarted, setIsStarted] = React.useState(false);
 
-  useSystemNoticeSubscription({
+  useRoomSystemNoticeSubscription({
     variables: { id },
     onGameStart: handleGameStart,
   });
