@@ -30,7 +30,7 @@ const ChatItem: React.FC<ChatItemProps> = ({
 }) => {
   return (
     <div
-      className={cn('flex cursor-pointer items-center p-2.5', className)}
+      className={cn('flex cursor-pointer items-center py-2.5', className)}
       onClick={onClick}
     >
       <div className="flex flex-shrink-0 items-center justify-center">
