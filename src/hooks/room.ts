@@ -93,9 +93,7 @@ export const useJoinRoomMutation = ({
 
   return {
     ...mutation,
-    previousMessages: mutation.data?.chatLogs,
-    title: mutation.data?.name,
-    ownerUsername: mutation.data?.owner,
+    roomInfo: mutation.data,
     joinRoom: mutation.mutate,
     joinRoomAsync: mutation.mutateAsync,
   };
@@ -129,7 +127,7 @@ export const useCreateRoomMutation = ({
   };
 };
 
-export const useUsersNoticeSubscription = ({
+export const useRoomUsersNoticeSubscription = ({
   variables: { id },
 }: {
   variables: { id: string };
@@ -145,7 +143,7 @@ export const useUsersNoticeSubscription = ({
   return { users };
 };
 
-export const useSystemNoticeSubscription = ({
+export const useRoomSystemNoticeSubscription = ({
   variables: { id },
   onGameStart,
 }: {

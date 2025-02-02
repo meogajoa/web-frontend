@@ -1,5 +1,5 @@
 import React from 'react';
-import { Team } from '~/types/game';
+import { TeamColor } from '~/types/game';
 import { cn } from '~/utils/classname';
 import NumberIconBall from '../NumberIconBall';
 import BaseNoticeItem from './BaseNoticeItem';
@@ -7,7 +7,7 @@ import BaseNoticeItem from './BaseNoticeItem';
 export type TeamNoticeItemProps = {
   rank: number;
   teamName: string;
-  numberIcons: { number: number; team: Team }[];
+  numberIcons: { number: number; team: TeamColor }[];
   variant?: 'default' | 'dark';
   prize: number;
   className?: string;
