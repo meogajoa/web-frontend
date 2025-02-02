@@ -4,7 +4,6 @@ import React from 'react';
 import { BrandModal } from '~/components/BrandModal';
 import PasswordInputModal from '~/components/BrandModal/PasswordInputModal';
 import { Button } from '~/components/Button';
-import PasswordInputModal from './PasswordInputModal';
 
 const meta: Meta<typeof BrandModal> = {
   title: 'Organisms/BrandModal',

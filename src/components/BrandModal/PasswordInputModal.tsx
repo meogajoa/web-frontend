@@ -5,9 +5,9 @@ import { Input } from '~/components/Input';
 
 type Props = BrandModalProps;
 
-interface PasswordInputForm {
+type PasswordInputForm = {
   roomPassword: string;
-}
+};
 
 const PasswordInputModal: React.FC<Props> = ({ onClose, visible }) => {
   const { control, handleSubmit } = useForm<PasswordInputForm>({
