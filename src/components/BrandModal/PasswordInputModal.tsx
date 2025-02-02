@@ -1,51 +1,69 @@
-import { useTranslations } from 'next-intl';
 import React from 'react';
-import { useForm } from 'react-hook-form';
+import { Controller, useForm } from 'react-hook-form';
 import { BrandModal, BrandModalProps } from '~/components/BrandModal';
 import { Input } from '~/components/Input';
 
 type Props = BrandModalProps;
 
+interface PasswordInputForm {
+  roomPassword: string;
+}
+
 const PasswordInputModal: React.FC<Props> = ({ onClose, visible }) => {
-  const messages = useTranslations('passwordInputModal');
-  const { register, handleSubmit } = useForm();
-  const [password, setPassword] = React.useState('');
+  const { control, handleSubmit } = useForm<PasswordInputForm>({
+    defaultValues: { roomPassword: '' },
+  });
+
+  const onSubmit = (data: PasswordInputForm) => {
+    console.log(data);
+  };
 
   return (
     <BrandModal
       onClose={onClose}
       hasBackdropBlur
       visible={visible}
-      onSubmit={handleSubmit((data) => {
-        console.log(data);
-      })}
+      onSubmit={handleSubmit(onSubmit)}
+      className="w-[18.188rem]"
     >
-      <BrandModal.Header>
-        <BrandModal.Title label={messages('title')} />
+      <BrandModal.Header className="mb-3">
+        <BrandModal.Title label="비밀번호 입력" />
         <BrandModal.CloseButton onClose={onClose} position="right" />
       </BrandModal.Header>
 
-      <BrandModal.Body>
-        <div className="mb-5.5 flex flex-col items-center justify-center">
-          <label htmlFor="roomPassword" className="mb-1 mt-3 text-red">
-            {messages('roomPasswordLabel')}
+      <BrandModal.Body className="w-full">
+        <div className="flex flex-col items-center justify-center">
+          <label
+            htmlFor="roomPassword"
+            className="text-red font-brand mb-5 text-center text-sm leading-4.5 font-bold"
+          >
+            잠금 처리된 방입니다.
+            <br />
+            비밀번호를 입력하세요.
           </label>
-          <Input
-            type="password"
-            value={password}
-            onValueChange={(value) => setPassword(value)}
-            {...register('roomPassword')}
+          <Controller
+            control={control}
+            name="roomPassword"
+            render={({ field }) => (
+              <Input
+                type="password"
+                value={field.value}
+                onValueChange={field.onChange}
+                placeholder="비밀번호를 입력"
+                className="w-55"
+              />
+            )}
           />
         </div>
       </BrandModal.Body>
 
-      <BrandModal.ButtonGroup>
-        <BrandModal.Button kind="no" onClick={onClose}>
-          {messages('cancelButton')}
+      <BrandModal.ButtonGroup className="w-full">
+        <BrandModal.Button kind="no" className="w-full" onClick={onClose}>
+          취소
         </BrandModal.Button>
 
-        <BrandModal.Button kind="yes" type="submit">
-          {messages('completeButton')}
+        <BrandModal.Button kind="yes" className="w-full" type="submit">
+          입력 완료
         </BrandModal.Button>
       </BrandModal.ButtonGroup>
     </BrandModal>
