@@ -1,15 +1,10 @@
 import React from 'react';
+import { useInterval } from 'react-use';
+export const useDotsString = ({ maxLength = 3 }: { maxLength?: number }) => {
+  const [dotsCount, setDotsCount] = React.useState(0);
+  useInterval(() => {
+    setDotsCount((prev) => prev + 1);
+  }, 500);
 
-export const useDotsString = (maxLength: number) => {
-  const [dots, setDots] = React.useState('');
-
-  React.useEffect(() => {
-    const interval = setInterval(() => {
-      setDots((dots) => (dots.length >= maxLength ? '' : dots + '.'));
-    }, 500);
-
-    return () => clearInterval(interval);
-  }, [maxLength]);
-
-  return dots;
+  return '.'.repeat(dotsCount % (maxLength + 1));
 };

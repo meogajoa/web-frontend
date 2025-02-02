@@ -28,10 +28,8 @@ const meta: Meta<typeof ChatMessage> = {
     },
     color: {
       description: '프로필 이미지 색상',
-      control: {
-        type: 'select',
-        options: ['gray', 'light-gray'],
-      },
+      control: 'select',
+      options: ['lightgray', 'light-gray'],
     },
     src: {
       description: '프로필 이미지 URL',
@@ -42,7 +40,7 @@ const meta: Meta<typeof ChatMessage> = {
   },
   decorators: [
     (Story) => (
-      <div className="relative bg-gray-3 p-4">
+      <div className="bg-gray-3 relative p-4">
         <Story />
       </div>
     ),
@@ -57,6 +55,7 @@ export const Other: Story = {
   args: {
     position: 'left',
     username: 'John Doe',
+    color: 'light-gray',
     message: 'Hello, world!',
   },
 };
@@ -74,6 +73,7 @@ export const Self: Story = {
   args: {
     position: 'right',
     username: 'Jane Doe',
+    color: 'light-gray',
     message: 'Hello, world!',
   },
 };
@@ -82,6 +82,7 @@ export const LongMessage: Story = {
   args: {
     position: 'left',
     username: 'John Doe',
+    color: 'light-gray',
     message:
       'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam nec purus nec elit ultricies ultricies. Nullam nec purus nec elit ultricies ultricies.',
   },

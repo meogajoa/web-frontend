@@ -1,18 +1,27 @@
 'use client';
 
 import React from 'react';
-import { StompSessionProvider } from 'react-stomp-hooks';
+import { Toaster } from 'react-hot-toast';
+import { AccountStoreProvider } from '~/providers/AccountProvider';
 import TanstackQueryProvider from '~/providers/TanstackQueryProvider';
 
-type RootProviderProps = React.PropsWithChildren;
+type Props = {};
 
-const RootProvider: React.FC<RootProviderProps> = ({ children }) => {
+const RootProvider: React.FC<React.PropsWithChildren<Props>> = ({
+  children,
+}) => {
   return (
-    <TanstackQueryProvider>
-      <StompSessionProvider url={'https://stream.elite12.de/api/sock'}>
-        {children}
-      </StompSessionProvider>
-    </TanstackQueryProvider>
+    <>
+      <AccountStoreProvider>
+        <TanstackQueryProvider>{children}</TanstackQueryProvider>
+      </AccountStoreProvider>
+
+      {/**
+       * TODO: Customize the toast style
+       * https://react-hot-toast.com/docs/toast-bar
+       */}
+      <Toaster position="top-right" />
+    </>
   );
 };
 

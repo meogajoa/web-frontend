@@ -9,15 +9,19 @@ type Props = {
   className?: React.ComponentProps<'div'>['className'];
 };
 
-const ChatBar: React.FC<Props> = ({ className, ...props }) => {
+const ChatBar: React.FC<React.PropsWithChildren<Props>> = ({
+  className,
+  children,
+}) => {
   return (
     <div
       className={cn(
-        'bottom-0-dynamic fixed flex w-full items-center gap-x-3 bg-white px-4 py-1 shadow-top',
+        'shadow-top flex items-center gap-x-3 bg-white px-4 pt-1 pb-4',
         className,
       )}
-      {...props}
-    />
+    >
+      {children}
+    </div>
   );
 };
 
@@ -35,7 +39,7 @@ const MenuButton: React.FC<MenuButtonProps> = ({
       className={cn('size-6 cursor-pointer', className)}
       onClick={handleMenuClick}
     >
-      <PlusCircleIcon className="size-full stroke-gray-1" />
+      <PlusCircleIcon className="stroke-gray-1 size-full" />
     </HeadlessuiButton>
   );
 };
@@ -43,16 +47,18 @@ const MenuButton: React.FC<MenuButtonProps> = ({
 type TextareaProps = {
   className?: React.ComponentProps<'textarea'>['className'];
   ref: React.RefObject<TextareaHandle>;
+  onKeyDown?: React.ComponentProps<'textarea'>['onKeyDown'];
 };
 
-const Textarea: React.FC<TextareaProps> = ({ className, ref }) => {
+const Textarea: React.FC<TextareaProps> = ({ className, ref, onKeyDown }) => {
   return (
     <CustomTextarea
       className={cn(
-        'scrollbar-primary rounded-lg border border-gray-6 p-2.5 text-xl text-gray-1 transition-all duration-300 placeholder:text-gray-5 focus:outline-none',
+        'scrollbar-hide scrollbar-primary border-gray-6 text-gray-1 placeholder:text-gray-5 rounded-lg border p-2.5 text-xl outline-hidden transition-all duration-300',
         className,
       )}
       ref={ref}
+      onKeyDown={onKeyDown}
     />
   );
 };
@@ -74,7 +80,7 @@ const SendButton: React.FC<SendButtonProps> = ({
       )}
       onClick={handleSend}
     >
-      <MessageSendIcon className="size-full stroke-gray-1" />
+      <MessageSendIcon className="stroke-gray-1 size-full" />
     </HeadlessuiButton>
   );
 };

@@ -1,5 +1,3 @@
-'use client';
-
 import { CreateRoomButton } from '~/components/Button';
 import HomeHeader from '~/components/HomeHeader';
 import RoomList from '~/components/RoomList';
@@ -7,9 +5,9 @@ import RoomList from '~/components/RoomList';
 const HomePage = () => {
   return (
     <>
-      <HomeHeader />
+      <HomeHeader className="fixed inset-0 z-10" renderPlaceholder />
       <RoomList />
-      <CreateRoomButton className="fixed bottom-[5.5rem] right-4 z-50" />
+      <CreateRoomButton className="fixed right-4 bottom-24 z-20" />
     </>
   );
 };

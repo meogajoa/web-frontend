@@ -61,7 +61,7 @@ const Notice: React.FC<NoticeProps> = ({
         className={cn(
           NoticeVariant({ variant, type }),
           className,
-          'break-words text-center font-brand text-sm font-normal text-white',
+          'font-brand text-center text-sm font-normal break-words text-white',
         )}
         {...props}
       >

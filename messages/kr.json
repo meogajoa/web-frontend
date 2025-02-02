@@ -1,6 +1,9 @@
 {
   "rootRoute": {
-    "loading": "로딩 중"
+    "authenticating": "로그인 중",
+    "connectingToServer": "서버 연결 중",
+    "authError": "재로그인 필요합니다",
+    "connectError": "서버 연결 실패..."
   },
   "homeRoute": {
     "header": {
@@ -13,6 +16,27 @@
       "description": "미니게임 전용"
     },
     "createRoomButton": "방 생성"
+  },
+  "roomRoute": {
+    "enteringRoom": "방 입장 중",
+    "header": {
+      "nth": "번째",
+      "morning": "낮",
+      "night": "밤"
+    },
+    "chatRoomType": {
+      "all": "전체 채팅방",
+      "white": "백팀 채팅방",
+      "black": "흑팀 채팅방",
+      "user01": "{username} 01",
+      "user02": "{username} 02",
+      "user03": "{username} 03",
+      "user04": "{username} 04",
+      "user05": "{username} 05",
+      "user06": "{username} 06",
+      "user07": "{username} 07",
+      "user08": "{username} 08"
+    }
   },
   "bottomNavigation": {
     "store": "상점",

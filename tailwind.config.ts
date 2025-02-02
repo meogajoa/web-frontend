@@ -24,22 +24,6 @@ export default {
         bottom: '0px 4px 5px rgba(0, 0, 0, 0.08)',
         top: '0px -4px 5px rgba(0, 0, 0, 0.08)',
       },
-      colors: {
-        gray: {
-          1: '#1C1C1D',
-          2: '#47484A',
-          3: '#6B6C6F',
-          4: '#88888A',
-          5: '#B8B8B8',
-          6: '#E3E3E4',
-        },
-        red: {
-          DEFAULT: '#F24822',
-        },
-        sub: {
-          DEFAULT: '#5F657B',
-        },
-      },
       spacing: {
         4.5: '1.125rem',
         5.5: '1.375rem',
@@ -47,6 +31,7 @@ export default {
         7.5: '1.875rem',
         8.5: '2.125rem',
         9.5: '2.375rem',
+        18: '4.5rem',
       },
     },
   },

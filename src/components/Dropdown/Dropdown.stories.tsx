@@ -11,6 +11,13 @@ const meta: Meta<typeof Dropdown> = {
       control: 'boolean',
     },
   },
+  decorators: [
+    (Story) => (
+      <div className="pb-32">
+        <Story />
+      </div>
+    ),
+  ],
 };
 
 export default meta;

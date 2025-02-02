@@ -19,7 +19,7 @@ const BrandModal: React.FC<BrandModalProps> = ({
 }) => {
   return (
     <Modal
-      className={cn('flex size-fit max-w-lg flex-col bg-gray-6', className)}
+      className={cn('bg-gray-6 flex size-fit max-w-lg flex-col', className)}
       {...props}
     >
       {children}
@@ -38,7 +38,7 @@ const Header: React.FC<React.PropsWithChildren<HeadeProps>> = ({
   return (
     <div
       className={cn(
-        'relative flex h-16 w-full items-center justify-center bg-gray-5',
+        'bg-gray-5 relative flex h-16 w-full items-center justify-center',
         className,
       )}
     >
@@ -71,7 +71,7 @@ const CloseButton: React.FC<CloseButtonProps> = ({
   return (
     <HeadlessButton
       className={cn(
-        'absolute size-6 cursor-pointer fill-gray-1 stroke-2',
+        'fill-gray-1 absolute size-6 cursor-pointer stroke-2',
         position === 'right' ? 'right-4' : 'left-4',
         className,
       )}

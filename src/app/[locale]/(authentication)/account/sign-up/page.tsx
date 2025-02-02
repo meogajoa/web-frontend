@@ -1,40 +1,19 @@
 'use client';
 
-import { useMutation } from '@tanstack/react-query';
-import { SubmitHandler, useForm } from 'react-hook-form';
+import { type AxiosError } from 'axios';
+import { useForm } from 'react-hook-form';
+import { useSignUpMutation } from '~/hooks/account';
 import { useRouter } from '~/i18n/routing';
-import { server } from '~/utils/axios';
-import { serializeToUrlEncoded } from '~/utils/misc';
-
-type SignUpForm = {
-  email: string;
-  nickname: string;
-  password: string;
-  passwordConfirmation?: string;
-};
-
-const signUpMutationFn = async (data: SignUpForm): Promise<any> => {
-  const { passwordConfirmation, ...filtered } = data;
-
-  await server.post('/auth/sign-up', serializeToUrlEncoded(filtered), {
-    headers: {
-      'Content-Type': 'application/x-www-form-urlencoded',
-    },
-  });
-};
+import { SignUpForm } from '~/types/account';
 
 const SignUpPage = () => {
   const { register, handleSubmit } = useForm<SignUpForm>();
   const router = useRouter();
 
-  const { mutate } = useMutation({
-    mutationFn: signUpMutationFn,
+  const { signUp } = useSignUpMutation({
+    onSuccess: handleSignUpSuccess,
+    onError: handleSignUpError,
   });
-
-  const onSubmit: SubmitHandler<SignUpForm> = (data) => {
-    mutate(data);
-    router.push('/account/sign-in');
-  };
 
   return (
     <form
@@ -45,7 +24,9 @@ const SignUpPage = () => {
         <label htmlFor="email">Email</label>
         <input
           className="border"
+          id="email"
           type="email"
+          autoFocus
           {...register('email', { required: true })}
         />
       </div>
@@ -54,6 +35,7 @@ const SignUpPage = () => {
         <label htmlFor="password">Password</label>
         <input
           className="border"
+          id="password"
           type="password"
           {...register('password', { required: true })}
         />
@@ -63,6 +45,7 @@ const SignUpPage = () => {
         <label htmlFor="passwordConfirmation">Password Confirmation</label>
         <input
           className="border"
+          id="passwordConfirmation"
           type="password"
           {...register('passwordConfirmation', { required: true })}
         />
@@ -72,6 +55,7 @@ const SignUpPage = () => {
         <label htmlFor="nickname">Nickname</label>
         <input
           className="border"
+          id="nickname"
           type="text"
           {...register('nickname', { required: true })}
         />
@@ -89,6 +73,18 @@ const SignUpPage = () => {
       </button>
     </form>
   );
+
+  function onSubmit(data: SignUpForm) {
+    signUp(data);
+  }
+
+  function handleSignUpSuccess() {
+    router.push('/account/sign-in');
+  }
+
+  function handleSignUpError(data: AxiosError<void, SignUpForm>) {
+    console.error(data.message);
+  }
 };
 
 export default SignUpPage;

@@ -1,29 +1,72 @@
 'use client';
 
-import { useLocale } from 'next-intl';
-
+import { useTranslations } from 'next-intl';
 import React from 'react';
-import { BottomNavigationContent } from '~/components/BottomNavigation';
-import { useAccount } from '~/hooks/account';
-import { redirect } from '~/i18n/routing';
-import { AccountStatus } from '~/types/account';
+import toast from 'react-hot-toast';
+import LoadingIndicator from '~/components/LoadingIndicator';
+import { useAuthenticateMutation } from '~/hooks/account';
+import { useRouter } from '~/i18n/routing';
+import { useAccount } from '~/providers/AccountProvider';
+import StompProvider from '~/providers/StompProvider';
+import { AuthenticateResponse } from '~/types/account';
+import { A_SECOND } from '~/utils/constants';
 
-type MainLayoutProps = React.PropsWithChildren;
+const MainLayout: React.FC<React.PropsWithChildren> = ({ children }) => {
+  const { isSuccess } = useAuthenticateMutation({
+    sleepSeconds: 1,
+    onSuccess: handleAuthenticateSuccess,
+    onError: handleAuthenticateError,
+  });
 
-const MainLayout: React.FC<MainLayoutProps> = ({ children }) => {
-  const { accountStatus } = useAccount();
-  const locale = useLocale();
+  const [isConnected, setIsConnected] = React.useState(false);
+  const t = useTranslations('rootRoute');
+  const router = useRouter();
+  const { setMe, clearMe } = useAccount();
 
-  if (accountStatus === AccountStatus.SignedOut) {
-    redirect({ locale, href: '/account/sign-in' });
-  }
+  const handleConnect = React.useCallback(_handleConnect, []);
+  const handleConnectError = React.useCallback(_handleConnectError, []);
+
+  const isAuthenticated = isSuccess;
 
   return (
     <>
-      {children}
-      <BottomNavigationContent />
+      {(!isAuthenticated || !isConnected) && (
+        <LoadingIndicator
+          className="min-h-dvh"
+          label={
+            !isAuthenticated ? t('authenticating') : t('connectingToServer')
+          }
+        />
+      )}
+
+      {isAuthenticated && (
+        <StompProvider onConnect={handleConnect} onError={handleConnectError}>
+          {isConnected && children}
+        </StompProvider>
+      )}
     </>
   );
+
+  function handleAuthenticateSuccess(data: AuthenticateResponse) {
+    setMe({ nickname: data.nickname });
+  }
+
+  function handleAuthenticateError() {
+    clearMe();
+    localStorage.removeItem('sessionId');
+    toast.error(t('authError'));
+    router.replace('/account/sign-in');
+  }
+
+  function _handleConnect() {
+    setTimeout(() => setIsConnected(true), A_SECOND);
+  }
+
+  function _handleConnectError() {
+    setIsConnected(false);
+    toast.error(t('connectError'));
+    router.replace('/account/sign-in');
+  }
 };
 
 export default MainLayout;

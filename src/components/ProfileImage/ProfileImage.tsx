@@ -12,8 +12,8 @@ const variants = cva('relative rounded-[0.625rem]', {
       xl: 'size-[3.625rem]',
     },
     color: {
-      gray: 'bg-gray-5',
-      'light-gray': 'bg-gray-2',
+      gray: 'bg-gray-1',
+      'light-gray': 'bg-gray-5',
     },
   },
   defaultVariants: {
@@ -53,7 +53,7 @@ const ProfileImage: React.FC<React.PropsWithChildren<ProfileImageProps>> = ({
       {...props}
     >
       {userNumber > 0 && (
-        <mark className="absolute right-0.5 top-0.5 flex size-6 items-center justify-center rounded-lg bg-gray-4 text-[0.625rem] font-bold text-black">
+        <mark className="bg-gray-4 absolute top-0.5 right-0.5 flex size-6 items-center justify-center rounded-lg text-[0.625rem] font-bold text-black">
           {userNumber}
         </mark>
       )}
