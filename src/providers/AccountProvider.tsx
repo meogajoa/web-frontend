@@ -4,6 +4,7 @@ import React, { type PropsWithChildren } from 'react';
 import { useStore } from 'zustand';
 import { AccountStore, createAccountStore } from '~/stores/account';
 import type { Nullable } from '~/types/misc';
+import { assert } from '~/utils/assert';
 
 export type AccountStoreApi = ReturnType<typeof createAccountStore>;
 
@@ -29,10 +30,10 @@ export const useAccountStore = <T,>(
   selector: (store: AccountStore) => T,
 ): T => {
   const accountStoreContext = React.useContext(AccountStoreContext);
-
-  if (!accountStoreContext) {
-    throw new Error(`useAccountStore must be used within AccountStoreProvider`);
-  }
+  assert(
+    accountStoreContext,
+    'useAccountStore must be used within AccountStoreProvider',
+  );
 
   return useStore(accountStoreContext, selector);
 };

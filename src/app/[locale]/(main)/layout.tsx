@@ -21,7 +21,7 @@ const MainLayout: React.FC<React.PropsWithChildren> = ({ children }) => {
   const [isConnected, setIsConnected] = React.useState(false);
   const t = useTranslations('rootRoute');
   const router = useRouter();
-  const { setMe, clearMe } = useAccount();
+  const { setAccount, clearAccount } = useAccount();
 
   const handleConnect = React.useCallback(_handleConnect, []);
   const handleConnectError = React.useCallback(_handleConnectError, []);
@@ -48,11 +48,11 @@ const MainLayout: React.FC<React.PropsWithChildren> = ({ children }) => {
   );
 
   function handleAuthenticateSuccess(data: AuthenticateResponse) {
-    setMe({ nickname: data.nickname });
+    setAccount({ nickname: data.nickname });
   }
 
   function handleAuthenticateError() {
-    clearMe();
+    clearAccount();
     localStorage.removeItem('sessionId');
     toast.error(t('authError'));
     router.replace('/account/sign-in');

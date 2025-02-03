@@ -4,14 +4,14 @@ import { useTranslations } from 'next-intl';
 import React from 'react';
 import CartFillIcon from '~/svgs/CartFillIcon';
 import ChatIcon from '~/svgs/ChatIcon';
-import { ChatRoomKind } from '~/types/chat';
+import { ChatRoom } from '~/types/chat';
 import { cn } from '~/utils/classname';
 
 type Props = {
   className?: string;
   nthRound: number;
   isMorning: boolean;
-  chatRoomKind: ChatRoomKind;
+  chatRoomKind: ChatRoom;
 };
 
 const RoomHeaderPlaying = React.memo<Props>(

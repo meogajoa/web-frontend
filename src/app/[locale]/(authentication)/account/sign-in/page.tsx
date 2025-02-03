@@ -10,7 +10,7 @@ import type { SignInForm, SignInResponse } from '~/types/account';
 const SignInPage = () => {
   const { register, handleSubmit } = useForm<SignInForm>();
   const router = useRouter();
-  const { setMe } = useAccount();
+  const { setAccount } = useAccount();
 
   const { signIn } = useSignInMutation({
     onSuccess: handleSignInSuccess,
@@ -65,7 +65,7 @@ const SignInPage = () => {
 
   function handleSignInSuccess(data: SignInResponse) {
     localStorage.setItem('sessionId', data.sessionId);
-    setMe({ nickname: data.user.nickname });
+    setAccount({ nickname: data.user.nickname });
     router.push('/home');
   }
 

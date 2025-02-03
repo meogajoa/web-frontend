@@ -22,7 +22,7 @@ const RoomMessages = React.memo<Props>(({ className, previousMessages }) => {
     onNewMessage: scrollToBottom,
   });
 
-  const { me } = useAccount();
+  const { account } = useAccount();
 
   React.useEffect(() => {
     bottomRef.current?.scrollIntoView({ behavior: 'smooth' });
@@ -36,7 +36,7 @@ const RoomMessages = React.memo<Props>(({ className, previousMessages }) => {
       {messages.map(({ id, content, sender }) => (
         <ChatMessage
           key={id}
-          position={sender === me.nickname ? 'right' : 'left'}
+          position={sender === account.nickname ? 'right' : 'left'}
           username={sender}
           message={content}
         />
@@ -58,7 +58,7 @@ const RoomMessages = React.memo<Props>(({ className, previousMessages }) => {
     const isScrolledToBottom =
       scrollTop + clientHeight >= scrollHeight - EPSILON;
 
-    if (!isScrolledToBottom && message.sender !== me.nickname) {
+    if (!isScrolledToBottom && message.sender !== account.nickname) {
       return;
     }
 

@@ -93,9 +93,6 @@ export const useJoinRoomMutation = ({
 
   return {
     ...mutation,
-    previousMessages: mutation.data?.chatLogs,
-    title: mutation.data?.name,
-    ownerUsername: mutation.data?.owner,
     joinRoom: mutation.mutate,
     joinRoomAsync: mutation.mutateAsync,
   };

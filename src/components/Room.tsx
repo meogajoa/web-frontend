@@ -5,22 +5,13 @@ import RoomHeader from '~/components/RoomHeader/RoomHeader';
 import RoomMessages from '~/components/RoomMessages';
 import RoomUserList from '~/components/RoomUserList';
 import { useSystemNoticeSubscription } from '~/hooks/room';
-import { ChatMessage } from '~/types/chat';
 import { cn } from '~/utils/classname';
 
 type Props = {
   className?: string;
-  title: string;
-  ownerUsername: string;
-  previousMessages: ChatMessage[];
 };
 
-const Room: React.FC<Props> = ({
-  className,
-  title,
-  ownerUsername,
-  previousMessages,
-}) => {
+const Room: React.FC<Props> = ({ className }) => {
   const { id } = useParams<{ id: string }>();
   const [isStarted, setIsStarted] = React.useState(false);
 
@@ -31,14 +22,9 @@ const Room: React.FC<Props> = ({
 
   return (
     <div className={cn('flex h-full flex-col', className)}>
-      <RoomHeader
-        className="shrink-0"
-        title={title}
-        isStarted={isStarted}
-        ownerUsername={ownerUsername}
-      />
-      {!isStarted && <RoomUserList ownerUsername={ownerUsername} />}
-      <RoomMessages className="flex-1" previousMessages={previousMessages} />
+      <RoomHeader className="shrink-0" isStarted={isStarted} />
+      {!isStarted && <RoomUserList />}
+      <RoomMessages className="flex-1" />
       <RoomChatBar
         className="bottom-0-dynamic fixed w-full"
         renderPlaceholder
