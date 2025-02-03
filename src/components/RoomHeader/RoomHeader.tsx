@@ -5,7 +5,7 @@ import RoomHeaderPlaying from './RoomHeaderPlaying';
 import RoomHeaderWaiting from './RoomHeaderWaiting';
 
 type Props = {
-  className?: React.ComponentProps<'header'>['className'];
+  className?: string;
   title: string;
   isStarted: boolean;
   ownerUsername: string;

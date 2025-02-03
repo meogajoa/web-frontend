@@ -12,7 +12,7 @@ import { useAccount } from '~/providers/AccountProvider';
 import { cn } from '~/utils/classname';
 
 type Props = {
-  className?: React.ComponentProps<'div'>['className'];
+  className?: string;
   title: string;
   ownerUsername: string;
 };

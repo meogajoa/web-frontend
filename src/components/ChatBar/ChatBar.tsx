@@ -6,7 +6,7 @@ import MessageSendIcon from '~/svgs/MessageSendIcon';
 import { cn } from '~/utils/classname';
 
 type Props = {
-  className?: React.ComponentProps<'div'>['className'];
+  className?: string;
 };
 
 const ChatBar: React.FC<React.PropsWithChildren<Props>> = ({
@@ -26,7 +26,7 @@ const ChatBar: React.FC<React.PropsWithChildren<Props>> = ({
 };
 
 type MenuButtonProps = {
-  className?: React.ComponentProps<'button'>['className'];
+  className?: string;
   onMenuClick: () => void;
 };
 
@@ -45,7 +45,7 @@ const MenuButton: React.FC<MenuButtonProps> = ({
 };
 
 type TextareaProps = {
-  className?: React.ComponentProps<'textarea'>['className'];
+  className?: string;
   ref: React.RefObject<TextareaHandle>;
   onKeyDown?: React.ComponentProps<'textarea'>['onKeyDown'];
 };
@@ -64,7 +64,7 @@ const Textarea: React.FC<TextareaProps> = ({ className, ref, onKeyDown }) => {
 };
 
 type SendButtonProps = {
-  className?: React.ComponentProps<'button'>['className'];
+  className?: string;
   onSendClick: () => void;
 };
 

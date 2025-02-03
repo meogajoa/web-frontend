@@ -2,8 +2,8 @@ import React, { useId } from 'react';
 import { PlacesType, Tooltip as ReactTooltip } from 'react-tooltip';
 
 type Props = {
-  className?: React.ComponentProps<'div'>['className'];
-  arrowClassName?: React.ComponentProps<'div'>['className'];
+  className?: string;
+  arrowClassName?: string;
   contents: React.ReactNode | React.FC;
   clickable?: boolean;
   clickToOpen?: boolean;

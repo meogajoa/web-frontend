@@ -9,7 +9,7 @@ import { cn } from '~/utils/classname';
 import Modal, { ModalProps } from '../Modal';
 
 export type BrandModalProps = ModalProps & {
-  className?: React.ComponentProps<'div'>['className'];
+  className?: string;
 };
 
 const BrandModal: React.FC<BrandModalProps> = ({
@@ -28,7 +28,7 @@ const BrandModal: React.FC<BrandModalProps> = ({
 };
 
 type HeadeProps = {
-  className?: React.ComponentProps<'div'>['className'];
+  className?: string;
 };
 
 const Header: React.FC<React.PropsWithChildren<HeadeProps>> = ({
@@ -48,7 +48,7 @@ const Header: React.FC<React.PropsWithChildren<HeadeProps>> = ({
 };
 
 type TitleProps = {
-  className?: React.ComponentProps<'h1'>['className'];
+  className?: string;
   label: string;
 };
 
@@ -57,7 +57,7 @@ const Title: React.FC<TitleProps> = ({ className, label }) => {
 };
 
 type CloseButtonProps = HeadlessButtonProps & {
-  className?: React.ComponentProps<'button'>['className'];
+  className?: string;
   position?: 'right' | 'left';
   onClose: () => void;
 };
@@ -83,7 +83,7 @@ const CloseButton: React.FC<CloseButtonProps> = ({
 };
 
 type BodyProps = {
-  className?: React.ComponentProps<'div'>['className'];
+  className?: string;
 };
 
 const Body: React.FC<React.PropsWithChildren<BodyProps>> = ({
@@ -94,7 +94,7 @@ const Body: React.FC<React.PropsWithChildren<BodyProps>> = ({
 };
 
 type ButtonGroup = {
-  className?: React.ComponentProps<'div'>['className'];
+  className?: string;
 };
 
 const ButtonGroup: React.FC<React.PropsWithChildren<ButtonGroup>> = ({
@@ -111,7 +111,7 @@ const ButtonGroup: React.FC<React.PropsWithChildren<ButtonGroup>> = ({
 };
 
 type ModalButtonProps = {
-  className?: React.ComponentProps<'button'>['className'];
+  className?: string;
   kind: 'yes' | 'no';
   type?: React.ComponentProps<'button'>['type'];
   onClick?: () => void;

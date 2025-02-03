@@ -5,7 +5,7 @@ import { useUsersNoticeSubscription } from '~/hooks/room';
 import { cn } from '~/utils/classname';
 
 type Props = {
-  className?: React.ComponentProps<'div'>['className'];
+  className?: string;
   ownerUsername: string;
 };
 

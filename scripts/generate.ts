@@ -5,7 +5,7 @@ import React from 'react';
 import { cn } from '~/utils/classname';
 
 type Props = {
-  className: React.ComponentProps<'div'>['className'];
+  className: string;
 }
 
 const ${name}: React.FC<Props> = ({ className }) => {

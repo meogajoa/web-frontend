@@ -8,7 +8,7 @@ import { ChatRoomKind } from '~/types/chat';
 import { cn } from '~/utils/classname';
 
 type Props = {
-  className?: React.ComponentProps<'div'>['className'];
+  className?: string;
   nthRound: number;
   isMorning: boolean;
   chatRoomKind: ChatRoomKind;
