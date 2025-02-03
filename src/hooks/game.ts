@@ -1,7 +1,12 @@
 import { useMutation } from '@tanstack/react-query';
 import { AxiosError } from 'axios';
 import React from 'react';
-import { type GameStartRequest } from '~/types/game';
+import { useSubscription } from 'react-stomp-hooks';
+import {
+  userGameInfo,
+  UserGameInfo,
+  type GameStartRequest,
+} from '~/types/game';
 import { server } from '~/utils/axios';
 
 export const useStartGameMutation = ({
@@ -34,4 +39,18 @@ export const useStartGameMutation = ({
     startGame: mutation.mutate,
     startGameAsync: mutation.mutateAsync,
   };
+};
+
+export const useUserGameInfoSubscription = ({
+  variables: { username },
+  onMessage,
+}: {
+  variables: { username: string };
+  onMessage: (gameInfo: UserGameInfo) => void;
+}) => {
+  useSubscription(`/topic/user/${username}/gameInfo`, ({ body }) => {
+    const json = JSON.parse(body);
+    const gameInfo = userGameInfo.parse(json);
+    onMessage(gameInfo);
+  });
 };

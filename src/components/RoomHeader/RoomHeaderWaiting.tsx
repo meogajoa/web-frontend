@@ -6,7 +6,7 @@ import { useParams } from 'next/navigation';
 import React from 'react';
 import { Button } from '~/components/Button';
 import { useStartGameMutation } from '~/hooks/game';
-import { useUsersNoticeSubscription } from '~/hooks/room';
+import { useRoomUsersNoticeSubscription } from '~/hooks/room';
 import { useRouter } from '~/i18n/routing';
 import { useAccount } from '~/providers/AccountProvider';
 import { useRoom } from '~/providers/RoomProvider';
@@ -20,7 +20,7 @@ const RoomHeaderWaiting = React.memo<Props>(({ className }) => {
   const router = useRouter();
   const { account } = useAccount();
   const { id } = useParams<{ id: string }>();
-  const { users } = useUsersNoticeSubscription({ variables: { id } });
+  const { users } = useRoomUsersNoticeSubscription({ variables: { id } });
   const { startGame, isPending, isSuccess } = useStartGameMutation({
     onError: handleStartGameError,
   });

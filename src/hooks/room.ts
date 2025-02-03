@@ -126,7 +126,7 @@ export const useCreateRoomMutation = ({
   };
 };
 
-export const useUsersNoticeSubscription = ({
+export const useRoomUsersNoticeSubscription = ({
   variables: { id },
 }: {
   variables: { id: string };
@@ -142,7 +142,7 @@ export const useUsersNoticeSubscription = ({
   return { users };
 };
 
-export const useSystemNoticeSubscription = ({
+export const useRoomSystemNoticeSubscription = ({
   variables: { id },
   onGameStart,
 }: {

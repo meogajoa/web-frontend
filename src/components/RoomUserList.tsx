@@ -1,7 +1,7 @@
 import { BookmarkIcon } from '@heroicons/react/24/outline';
 import { useParams } from 'next/navigation';
 import React from 'react';
-import { useUsersNoticeSubscription } from '~/hooks/room';
+import { useRoomUsersNoticeSubscription } from '~/hooks/room';
 import { useRoom } from '~/providers/RoomProvider';
 import { cn } from '~/utils/classname';
 
@@ -11,7 +11,7 @@ type Props = {
 
 const RoomUserList = React.memo<Props>(({ className }) => {
   const { id } = useParams<{ id: string }>();
-  const { users } = useUsersNoticeSubscription({ variables: { id } });
+  const { users } = useRoomUsersNoticeSubscription({ variables: { id } });
   const { hostNickname } = useRoom();
 
   return (
