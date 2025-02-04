@@ -1,6 +1,6 @@
 import { Meta, StoryObj } from '@storybook/react';
 import stamp from 'public/images/game/icons/stamp.png';
-import { TeamColor } from '~/types/game';
+import { Team } from '~/types/game';
 import GameResultNotice from './GameResultNotice';
 import { NoticeItemProps } from './NoticeItem';
 import { TeamNoticeItemProps } from './TeamNoticeItem';
@@ -65,9 +65,9 @@ export const Default: Story = {
         rank: 1,
         teamName: 'A',
         numberIcons: [
-          { number: 1, team: TeamColor.Black },
-          { number: 2, team: TeamColor.White },
-          { number: 3, team: TeamColor.Black },
+          { number: 1, team: Team.Black },
+          { number: 2, team: Team.White },
+          { number: 3, team: Team.Black },
         ],
         prize: 70,
       },
@@ -75,9 +75,9 @@ export const Default: Story = {
         rank: 2,
         teamName: 'B',
         numberIcons: [
-          { number: 4, team: TeamColor.Black },
-          { number: 5, team: TeamColor.White },
-          { number: 6, team: TeamColor.Black },
+          { number: 4, team: Team.Black },
+          { number: 5, team: Team.White },
+          { number: 6, team: Team.Black },
         ],
         prize: 30,
       },

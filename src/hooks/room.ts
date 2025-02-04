@@ -93,7 +93,6 @@ export const useJoinRoomMutation = ({
 
   return {
     ...mutation,
-    roomInfo: mutation.data,
     joinRoom: mutation.mutate,
     joinRoomAsync: mutation.mutateAsync,
   };

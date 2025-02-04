@@ -4,7 +4,7 @@ import React from 'react';
 import { cn } from '~/utils/classname';
 
 type InputProps = VariantProps<typeof InputVariant> & {
-  className?: React.ComponentProps<'div'>['className'];
+  className?: string;
   value: string;
   onValueChange: (value: string) => void;
   type?: 'text' | 'password' | 'email' | 'textarea';

@@ -3,8 +3,8 @@ import { AxiosError } from 'axios';
 import React from 'react';
 import { useSubscription } from 'react-stomp-hooks';
 import {
-  UserGameInfo,
   userGameInfo,
+  UserGameInfo,
   type GameStartRequest,
 } from '~/types/game';
 import { server } from '~/utils/axios';

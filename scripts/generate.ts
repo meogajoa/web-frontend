@@ -1,11 +1,12 @@
 import fs from 'fs';
+import { assert } from '~/utils/assert';
 
 const createComponentTemplate = (name: string) => `
 import React from 'react';
 import { cn } from '~/utils/classname';
 
 type Props = {
-  className: React.ComponentProps<'div'>['className'];
+  className: string;
 }
 
 const ${name}: React.FC<Props> = ({ className }) => {
@@ -86,9 +87,7 @@ function generate() {
   const filePath = GENERATORS[type].filePath(name);
   const isExist = fs.existsSync(filePath);
 
-  if (isExist) {
-    throw new Error(`File already exists at ${filePath}`);
-  }
+  assert(!isExist, `File already exists at ${filePath}`);
 
   fs.writeFileSync(filePath, GENERATORS[type].template(name).trim());
 }

@@ -5,7 +5,7 @@ import { cn } from '~/utils/classname';
 import { getCssVariable } from '~/utils/misc';
 
 type Props<T> = T & {
-  className?: React.ComponentProps<'div'>['className'];
+  className?: string;
   label: React.ReactNode;
   loaderComponent?: React.ReactNode | React.FC<T>;
 };

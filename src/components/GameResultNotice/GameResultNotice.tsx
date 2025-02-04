@@ -5,7 +5,7 @@ import TeamNoticeItem, { TeamNoticeItemProps } from './TeamNoticeItem';
 import VoteNoticeItem, { VoteNoticeItemProps } from './VoteNoticeItem';
 
 export type GameResultNoticeProps = {
-  className?: React.ComponentProps<'div'>['className'];
+  className?: string;
   resultType: 'game' | 'vote' | 'team';
   noticeItemData?: NoticeItemProps[];
   voteNoticeItemData?: VoteNoticeItemProps[];

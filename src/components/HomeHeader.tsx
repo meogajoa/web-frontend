@@ -9,7 +9,7 @@ import { DropdownExample } from '~/components/Dropdown';
 import { cn } from '~/utils/classname';
 
 type Props = {
-  className?: React.ComponentProps<'header'>['className'];
+  className?: string;
   renderPlaceholder?: boolean;
 };
 

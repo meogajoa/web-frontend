@@ -1,10 +1,10 @@
 import React from 'react';
-import { TeamColor } from '~/types/game';
+import { Team } from '~/types/game';
 import { cn } from '~/utils/classname';
 
 export type NumberIconBallProps = {
   number: number;
-  color: TeamColor;
+  color: Team;
   className?: string;
 };
 

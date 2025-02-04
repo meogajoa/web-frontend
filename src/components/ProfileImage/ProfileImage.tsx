@@ -23,7 +23,7 @@ const variants = cva('relative rounded-[0.625rem]', {
 });
 
 export type ProfileImageProps = VariantProps<typeof variants> & {
-  className?: React.ComponentProps<'button'>['className'];
+  className?: string;
   as?: React.ElementType;
   src?: string;
   userNumber?: number;
