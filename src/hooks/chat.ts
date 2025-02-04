@@ -1,5 +1,5 @@
 import { useSubscription } from 'react-stomp-hooks';
-import { useRoom } from '~/providers/RoomProvider';
+import { useRoom } from '~/hooks/room';
 import { chatMessage, ChatMessage, ChatRoom } from '~/types/chat';
 
 export const useChatMessages = ({
