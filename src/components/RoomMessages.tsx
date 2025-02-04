@@ -1,24 +1,20 @@
-import { useParams } from 'next/navigation';
 import React from 'react';
 import { ChatMessage } from '~/components/ChatMessage';
-import { useChatMessagesSubscription } from '~/hooks/chat';
+import { useChatMessages } from '~/hooks/chat';
 import { useAccount } from '~/providers/AccountProvider';
-import { ChatMessage as ChatMessageType } from '~/types/chat';
+import { ChatMessage as ChatMessageType, ChatRoom } from '~/types/chat';
 import { cn } from '~/utils/classname';
 
 type Props = {
   className?: string;
-  previousMessages?: ChatMessageType[];
 };
 
-const RoomMessages = React.memo<Props>(({ className, previousMessages }) => {
-  const containerRef = React.useRef<HTMLDivElement>(null);
-  const bottomRef = React.useRef<HTMLDivElement>(null);
+const RoomMessages = React.memo<Props>(({ className }) => {
+  const containerRef = React.useRef<HTMLUListElement>(null);
+  const bottomRef = React.useRef<HTMLLIElement>(null);
 
-  const { id } = useParams<{ id: string }>();
-  const messages = useChatMessagesSubscription({
-    url: `/topic/room/${id}/chat`,
-    previousMessages,
+  const messages = useChatMessages({
+    chatRoom: ChatRoom.All,
     onNewMessage: scrollToBottom,
   });
 
@@ -29,7 +25,7 @@ const RoomMessages = React.memo<Props>(({ className, previousMessages }) => {
   }, []);
 
   return (
-    <section
+    <ul
       className={cn('bg-gray-6 space-y-3 overflow-y-auto p-4', className)}
       ref={containerRef}
     >
@@ -42,8 +38,8 @@ const RoomMessages = React.memo<Props>(({ className, previousMessages }) => {
         />
       ))}
 
-      <div ref={bottomRef} aria-hidden />
-    </section>
+      <li ref={bottomRef} aria-hidden />
+    </ul>
   );
 
   // scroll to bottom when new message is sent

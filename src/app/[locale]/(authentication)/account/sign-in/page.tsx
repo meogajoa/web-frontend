@@ -2,7 +2,7 @@
 
 import { type AxiosError } from 'axios';
 import { useForm } from 'react-hook-form';
-import { useSignInMutation } from '~/hooks/account';
+import { useSignIn } from '~/hooks/account';
 import { useRouter } from '~/i18n/routing';
 import { useAccount } from '~/providers/AccountProvider';
 import type { SignInForm, SignInResponse } from '~/types/account';
@@ -12,7 +12,7 @@ const SignInPage = () => {
   const router = useRouter();
   const { setAccount } = useAccount();
 
-  const { signIn } = useSignInMutation({
+  const { signIn } = useSignIn({
     onSuccess: handleSignInSuccess,
     onError: handleSignInError,
   });

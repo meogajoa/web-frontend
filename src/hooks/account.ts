@@ -33,7 +33,7 @@ export const useSessionId = () => {
   );
 };
 
-export const useAuthenticateMutation = ({
+export const useAuthenticate = ({
   sleepSeconds = 1,
   onSuccess,
   onError,
@@ -74,7 +74,7 @@ export const useAuthenticateMutation = ({
   };
 };
 
-export const useSignInMutation = ({
+export const useSignIn = ({
   onSuccess,
   onError,
 }: {
@@ -113,7 +113,7 @@ export const useSignInMutation = ({
   };
 };
 
-export const useSignUpMutation = ({
+export const useSignUp = ({
   onSuccess,
   onError,
 }: {

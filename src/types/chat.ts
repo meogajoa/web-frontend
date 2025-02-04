@@ -16,8 +16,6 @@ export enum ChatRoom {
   Eliminated,
 }
 
-export type ChatRoomKey = keyof typeof ChatRoom;
-
 export const chatMessage = z.object({
   id: z.string(),
   content: z.string(),

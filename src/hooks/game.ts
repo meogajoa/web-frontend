@@ -9,7 +9,7 @@ import {
 } from '~/types/game';
 import { server } from '~/utils/axios';
 
-export const useStartGameMutation = ({
+export const useStartGame = ({
   onSuccess,
   onError,
 }: {
@@ -41,7 +41,7 @@ export const useStartGameMutation = ({
   };
 };
 
-export const useUserGameInfoSubscription = ({
+export const useUserGameInfo = ({
   variables: { username },
   onMessage,
 }: {

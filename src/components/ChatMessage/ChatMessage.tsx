@@ -15,7 +15,7 @@ type Props = {
 const ChatMessage = React.memo<Props>(
   ({ className, position, username, message, isCumulative, color, src }) => {
     return (
-      <div
+      <li
         className={cn(
           'flex gap-x-1',
           position === 'right' && 'justify-end',
@@ -43,7 +43,7 @@ const ChatMessage = React.memo<Props>(
             {message}
           </div>
         </div>
-      </div>
+      </li>
     );
   },
 );

@@ -2,7 +2,7 @@
 
 import { type AxiosError } from 'axios';
 import { useForm } from 'react-hook-form';
-import { useSignUpMutation } from '~/hooks/account';
+import { useSignUp } from '~/hooks/account';
 import { useRouter } from '~/i18n/routing';
 import { SignUpForm } from '~/types/account';
 
@@ -10,7 +10,7 @@ const SignUpPage = () => {
   const { register, handleSubmit } = useForm<SignUpForm>();
   const router = useRouter();
 
-  const { signUp } = useSignUpMutation({
+  const { signUp } = useSignUp({
     onSuccess: handleSignUpSuccess,
     onError: handleSignUpError,
   });

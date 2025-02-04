@@ -2,14 +2,12 @@ import { Button as HeadlessuiButton } from '@headlessui/react';
 import { ArrowLeftIcon } from '@heroicons/react/24/outline';
 import { AxiosError } from 'axios';
 import { debounce } from 'lodash-es';
-import { useParams } from 'next/navigation';
 import React from 'react';
 import { Button } from '~/components/Button';
-import { useStartGameMutation } from '~/hooks/game';
-import { useRoomUsersNoticeSubscription } from '~/hooks/room';
+import { useStartGame } from '~/hooks/game';
+import { useRoom, useRoomUsersNotice } from '~/hooks/room';
 import { useRouter } from '~/i18n/routing';
 import { useAccount } from '~/providers/AccountProvider';
-import { useRoom } from '~/providers/RoomProvider';
 import { cn } from '~/utils/classname';
 
 type Props = {
@@ -19,9 +17,10 @@ type Props = {
 const RoomHeaderWaiting = React.memo<Props>(({ className }) => {
   const router = useRouter();
   const { account } = useAccount();
-  const { id } = useParams<{ id: string }>();
-  const { users } = useRoomUsersNoticeSubscription({ variables: { id } });
-  const { startGame, isPending, isSuccess } = useStartGameMutation({
+
+  const { id } = useRoom();
+  const { users } = useRoomUsersNotice({ variables: { id } });
+  const { startGame, isPending, isSuccess } = useStartGame({
     onError: handleStartGameError,
   });
   const { title, hostNickname } = useRoom();
