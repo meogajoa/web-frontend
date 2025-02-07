@@ -1,21 +1,19 @@
-import {
-  ArrowLeftIcon,
-  ArrowRightStartOnRectangleIcon,
-  BellIcon,
-} from '@heroicons/react/24/outline';
 import React from 'react';
+import BellIcon from '~/svgs/BellIcon';
+import LeftArrowIcon from '~/svgs/LeftArrowIcon';
+import OutIcon from '~/svgs/OutIcon';
 import { cn } from '~/utils/classname';
 import { ChatItemProps } from '../ChatListSidebar/ChatItem';
 import ChatList from '../ChatListSidebar/ChatList';
 
-export interface ChatListSidebarProps {
+export type ChatListSidebarProps = {
   chats: ChatItemProps[];
   isOpen: boolean;
   onClose: () => void;
   onExit: () => void;
   onNotification: () => void;
   className?: string;
-}
+};
 
 const ChatListSidebar: React.FC<ChatListSidebarProps> = ({
   chats,
@@ -33,25 +31,40 @@ const ChatListSidebar: React.FC<ChatListSidebarProps> = ({
         className,
       )}
     >
-      <header className="mb-6 flex items-center justify-start text-white">
-        <button onClick={onClose} aria-label="뒤로가기">
-          <ArrowLeftIcon className="mr-2 size-6" />
+      <div className="flex items-center justify-start">
+        <button
+          onClick={onClose}
+          className="mr-2 flex size-6 items-center justify-center"
+          aria-label="뒤로가기"
+        >
+          <LeftArrowIcon className="size-4" />
         </button>
-        <div className="font-base text-2xl font-semibold">채팅방 이동</div>
-      </header>
-
-      <div className="scrollbar-hide flex-1 overflow-y-auto">
-        <ChatList chats={chats} className="" />
+        <div className="font-base text-2xl font-semibold text-white">
+          채팅방 이동
+        </div>
       </div>
 
-      <footer className="mt-11.5 flex items-center justify-between text-white">
-        <button onClick={onExit} className="" aria-label="나가기">
-          <ArrowRightStartOnRectangleIcon className="size-6" />
+      <ChatList
+        chats={chats}
+        className="scrollbar-hide mt-6 flex-1 overflow-y-auto"
+      />
+
+      <div className="mt-11.5 flex items-center justify-between">
+        <button
+          onClick={onExit}
+          className="flex size-6 items-center justify-center"
+          aria-label="나가기"
+        >
+          <OutIcon className="size-5" />
         </button>
-        <button onClick={onNotification} className="" aria-label="알림">
-          <BellIcon className="size-6" />
+        <button
+          onClick={onNotification}
+          className="flex size-6 items-center justify-center"
+          aria-label="알림"
+        >
+          <BellIcon className="h-5.5 w-4.5" />
         </button>
-      </footer>
+      </div>
     </div>
   );
 };

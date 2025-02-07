@@ -1,10 +1,10 @@
 import React from 'react';
 import ChatItem, { ChatItemProps } from '../ChatListSidebar/ChatItem';
 
-export interface ChatListProps {
+export type ChatListProps = {
   chats: ChatItemProps[];
   className?: string;
-}
+};
 
 const ChatList: React.FC<ChatListProps> = ({ chats, className }) => {
   return (

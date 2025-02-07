@@ -1,11 +1,11 @@
 import React from 'react';
 
-export interface ChatTextProps {
+export type ChatTextProps = {
   text: string;
   contentText: string;
   isError?: boolean;
   spy?: string;
-}
+};
 
 const ChatText: React.FC<ChatTextProps> = ({
   text,

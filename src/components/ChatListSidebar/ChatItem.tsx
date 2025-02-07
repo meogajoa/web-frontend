@@ -1,15 +1,15 @@
-// components/molecules/ChatItem.tsx
 import React from 'react';
-import ChatImage, {
-  ChatImageProps,
-} from '~/components/ChatListSidebar/ChatImage';
 import ChatText, { ChatTextProps } from '~/components/ChatListSidebar/ChatText';
 import GroupChatImage from '~/components/ChatListSidebar/GroupChatImage';
 import NoticeIcon from '~/components/ChatListSidebar/NoticeIcon';
 import { cn } from '~/utils/classname';
+import { ProfileImage, ProfileImageProps } from '../ProfileImage';
 
-export interface ChatItemProps {
-  image?: ChatImageProps;
+const ChatImage = ProfileImage;
+ChatImage.displayName = 'ChatImage';
+
+export type ChatItemProps = ProfileImageProps & {
+  image?: ProfileImageProps;
   groupImages?: {
     src: string;
     alt?: string;
@@ -18,7 +18,7 @@ export interface ChatItemProps {
   notice?: number;
   onClick?: () => void;
   className?: string;
-}
+};
 
 const ChatItem: React.FC<ChatItemProps> = ({
   image,

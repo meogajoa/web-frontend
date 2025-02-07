@@ -4,11 +4,11 @@ import ProfileImage, {
 } from '~/components/ProfileImage/ProfileImage';
 import { cn } from '~/utils/classname';
 
-export interface GroupChatImageProps {
+export type GroupChatImageProps = {
   images: Omit<ProfileImageProps, 'userNumber'>[];
   size?: number;
   className?: string;
-}
+};
 
 const GroupChatImage: React.FC<GroupChatImageProps> = ({
   images,

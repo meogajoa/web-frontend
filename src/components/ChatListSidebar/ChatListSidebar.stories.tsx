@@ -31,7 +31,6 @@ const sampleChats: ChatItemProps[] = [
   {
     image: {
       src: img.src,
-      alt: 'User 2',
       size: 'lg',
     },
     text: {
@@ -44,7 +43,6 @@ const sampleChats: ChatItemProps[] = [
   {
     image: {
       src: img.src,
-      alt: 'User 3',
       size: 'lg',
     },
     text: {
@@ -57,7 +55,6 @@ const sampleChats: ChatItemProps[] = [
   {
     image: {
       src: img.src,
-      alt: 'User 4',
       size: 'lg',
     },
     text: {
@@ -70,7 +67,6 @@ const sampleChats: ChatItemProps[] = [
   {
     image: {
       src: img.src,
-      alt: 'User 5',
       size: 'lg',
     },
     text: {
@@ -83,7 +79,6 @@ const sampleChats: ChatItemProps[] = [
   {
     image: {
       src: img.src,
-      alt: 'User 6',
       size: 'lg',
     },
     text: {
@@ -96,7 +91,6 @@ const sampleChats: ChatItemProps[] = [
   {
     image: {
       src: img.src,
-      alt: 'User 7',
       size: 'lg',
     },
     text: {

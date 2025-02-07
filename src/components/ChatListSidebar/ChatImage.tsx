@@ -1,10 +1,10 @@
-import React from 'react';
-import ProfileImage from '~/components/ProfileImage/ProfileImage';
+// import React from 'react';
+// import ProfileImage from '~/components/ProfileImage/ProfileImage';
 
-export interface ChatImageProps {}
+// export interface ChatImageProps {}
 
-const ChatImage: React.FC<ChatImageProps> = (props) => {
-  return <ProfileImage {...props} />;
-};
+// const ChatImage: React.FC<ChatImageProps> = (props) => {
+//   return <ProfileImage {...props} />;
+// };
 
-export default ChatImage;
+// export default ChatImage;
