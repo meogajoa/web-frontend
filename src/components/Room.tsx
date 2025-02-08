@@ -3,7 +3,12 @@ import { RoomChatBar } from '~/components/ChatBar';
 import RoomHeader from '~/components/RoomHeader/RoomHeader';
 import RoomMessages from '~/components/RoomMessages';
 import RoomUserList from '~/components/RoomUserList';
-import { useRoom, useRoomSystemNotice } from '~/hooks/room';
+import { useUserGameInfo } from '~/hooks/game';
+import { useRoomSystemNotice } from '~/hooks/room';
+import { useAccount } from '~/providers/AccountProvider';
+import { useGame } from '~/providers/GameProvider';
+import { useRoom } from '~/providers/RoomProvider';
+import { UserGameInfo } from '~/types/game';
 import { cn } from '~/utils/classname';
 
 type Props = {
@@ -11,11 +16,23 @@ type Props = {
 };
 
 const Room: React.FC<Props> = ({ className }) => {
+  const [canStartGame, setCanStartGame] = React.useState(false);
+
   const { id, isPlaying, setIsPlaying } = useRoom();
+  const { account } = useAccount();
+  const { setPlayer } = useGame();
 
   useRoomSystemNotice({
     variables: { id },
     onGameStart: handleGameStart,
+  });
+
+  useUserGameInfo({
+    variables: {
+      username: account.nickname,
+    },
+    enabled: canStartGame,
+    onMessage: handleUserGameInfo,
   });
 
   return (
@@ -31,7 +48,18 @@ const Room: React.FC<Props> = ({ className }) => {
   );
 
   function handleGameStart() {
+    setCanStartGame(true);
+  }
+
+  function handleUserGameInfo(gameInfo: UserGameInfo) {
     setIsPlaying(true);
+    setPlayer({
+      team: gameInfo.teamColor,
+      number: gameInfo.number,
+      alive: true,
+      money: gameInfo.money,
+      isSpy: gameInfo.isSpy,
+    });
   }
 };
 

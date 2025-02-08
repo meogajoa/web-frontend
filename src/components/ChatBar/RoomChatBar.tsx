@@ -4,7 +4,7 @@ import { useStompClient } from 'react-stomp-hooks';
 import { ChatBar } from '~/components/ChatBar';
 import { TextareaHandle } from '~/components/CustomTextarea';
 import { useSessionId } from '~/hooks/account';
-import { useRoom } from '~/hooks/room';
+import { useRoom } from '~/providers/RoomProvider';
 import { cn } from '~/utils/classname';
 
 type Props = {

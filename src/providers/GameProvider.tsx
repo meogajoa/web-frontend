@@ -26,7 +26,7 @@ export const GameProvider: React.FC<PropsWithChildren> = ({ children }) => {
 
 export const useGameStore = <T,>(selector: (store: GameStore) => T): T => {
   const gameStoreContext = React.useContext(GameStoreContext);
-  assert(gameStoreContext, 'useGameStore must be used within GameProvider');
+  assert(gameStoreContext, 'useGameStore must be used within <GameProvider />');
 
   return useStore(gameStoreContext, selector);
 };

@@ -43,14 +43,19 @@ export const useStartGame = ({
 
 export const useUserGameInfo = ({
   variables: { username },
+  enabled,
   onMessage,
 }: {
   variables: { username: string };
+  enabled: boolean;
   onMessage: (gameInfo: UserGameInfo) => void;
 }) => {
-  useSubscription(`/topic/user/${username}/gameInfo`, ({ body }) => {
-    const json = JSON.parse(body);
-    const gameInfo = userGameInfo.parse(json);
-    onMessage(gameInfo);
-  });
+  useSubscription(
+    enabled ? `/topic/user/${username}/gameInfo` : [],
+    ({ body }) => {
+      const json = JSON.parse(body);
+      const gameInfo = userGameInfo.parse(json);
+      onMessage(gameInfo);
+    },
+  );
 };

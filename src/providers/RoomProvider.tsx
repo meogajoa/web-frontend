@@ -47,7 +47,7 @@ export const RoomProvider: React.FC<PropsWithChildren<Props>> = ({
 
 export const useRoomStore = <T,>(selector: (store: RoomStore) => T): T => {
   const roomStoreContext = React.useContext(RoomStoreContext);
-  assert(roomStoreContext, 'useRoomStore must be used within <RoomProvider/>');
+  assert(roomStoreContext, 'useRoomStore must be used within <RoomProvider />');
 
   return useStore(roomStoreContext, selector);
 };
