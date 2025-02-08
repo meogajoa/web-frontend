@@ -1,25 +1,26 @@
-import React from 'react';
 import { useSubscription } from 'react-stomp-hooks';
-import { chatMessage, ChatMessage } from '~/types/chat';
+import { useRoom } from '~/hooks/room';
+import { chatMessage, ChatMessage, ChatRoom } from '~/types/chat';
 
-export const useChatMessagesSubscription = ({
-  url,
-  previousMessages = [],
+export const useChatMessages = ({
+  chatRoom,
   onNewMessage,
 }: {
-  url: string;
-  previousMessages?: ChatMessage[];
+  chatRoom: ChatRoom;
   onNewMessage?: (message: ChatMessage) => void;
 }) => {
-  const [messages, setMessages] =
-    React.useState<ChatMessage[]>(previousMessages);
+  const { id, messagesByRoom, addMessage } = useRoom();
 
-  useSubscription(url, ({ body }) => {
+  useSubscription(getMessagesUrl(chatRoom), ({ body }) => {
     const _message = JSON.parse(body);
     const message = chatMessage.parse(_message);
-    setMessages((prev) => [...prev, message]);
+    addMessage(chatRoom, message);
     setTimeout(() => onNewMessage?.(message), 0);
   });
 
-  return messages;
+  return messagesByRoom[chatRoom];
+
+  function getMessagesUrl(chatRoom: ChatRoom) {
+    return `/topic/room/${id}/chat`;
+  }
 };

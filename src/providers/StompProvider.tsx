@@ -1,6 +1,7 @@
 import React, { PropsWithChildren } from 'react';
 import { StompSessionProvider } from 'react-stomp-hooks';
 import { useSessionId } from '~/hooks/account';
+import { CONFIGS } from '~/utils/config';
 
 type Props = {
   onConnect?: () => void;
@@ -8,26 +9,21 @@ type Props = {
 };
 
 const StompProvider = React.memo<PropsWithChildren<Props>>(
-  ({ onConnect: handleConnect, onError, children }) => {
+  ({ onConnect, onError, children }) => {
     const sessionId = useSessionId();
 
     return (
       <StompSessionProvider
-        url={'ws://localhost:8080/ws'}
+        url={CONFIGS.WS_URL}
         connectHeaders={{
           Authorization: sessionId,
         }}
-        onConnect={handleConnect}
-        onWebSocketError={handleError}
+        onConnect={onConnect}
+        onWebSocketError={onError}
       >
         {children}
       </StompSessionProvider>
     );
-
-    function handleError(error: Error) {
-      console.error(error);
-      onError?.(error);
-    }
   },
 );
 StompProvider.displayName = 'StompProvider';

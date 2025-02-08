@@ -2,7 +2,7 @@ import { useTranslations } from 'next-intl';
 import React from 'react';
 import { useForm } from 'react-hook-form';
 import { BrandModal, BrandModalProps } from '~/components/BrandModal';
-import { useCreateRoomMutation } from '~/hooks/room';
+import { useCreateRoom } from '~/hooks/room';
 import { useRouter } from '~/i18n/routing';
 import type { CreateRoomForm, CreateRoomResponse } from '~/types/room';
 
@@ -12,7 +12,7 @@ const CreateRoomModal: React.FC<Props> = ({ onClose, visible }) => {
   const t = useTranslations('createRoomModal');
   const router = useRouter();
   const { register, handleSubmit } = useForm<CreateRoomForm>();
-  const { createRoom } = useCreateRoomMutation({
+  const { createRoom } = useCreateRoom({
     onSuccess: handleRedirectOnSuccess,
   });
 

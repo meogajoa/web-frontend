@@ -1,44 +1,48 @@
 import { createStore } from 'zustand/vanilla';
-import { ChatMessage, ChatRoom, ChatRoomKey } from '~/types/chat';
+import { ChatMessage, ChatRoom } from '~/types/chat';
 
 export type RoomState = {
+  id: string;
   title: string;
   hostNickname: string;
   isPlaying: boolean;
   currentChatRoom: ChatRoom;
-  messagesByRoom: Record<ChatRoomKey, ChatMessage[]>;
+  messagesByRoom: Record<ChatRoom, ChatMessage[]>;
 };
 
 export type RoomActions = {
+  setId: (id: string) => void;
   setTitle: (title: string) => void;
   setHostNickname: (nickname: string) => void;
   setIsPlaying: (isPlaying: boolean) => void;
   setCurrentChatRoom: (chatRoom: ChatRoom) => void;
-  addMessage: (chatRoom: ChatRoomKey, message: ChatMessage) => void;
-  clearMessages: (chatRoom: ChatRoomKey) => void;
+  addMessage: (chatRoom: ChatRoom, message: ChatMessage) => void;
+  clearMessages: (chatRoom: ChatRoom) => void;
 };
 
 export type RoomStore = RoomState & RoomActions;
 
 export const defaultInitState: RoomState = {
+  id: '',
   title: '',
   hostNickname: '',
   isPlaying: false,
   currentChatRoom: ChatRoom.All,
   messagesByRoom: Object.values(ChatRoom)
-    .filter((key) => Number.isNaN(Number(key)))
+    .filter((key) => typeof ChatRoom[key as ChatRoom] === 'number')
     .reduce(
       (acc, key) => ({
         ...acc,
         [key]: [],
       }),
-      {} as Record<ChatRoomKey, ChatMessage[]>,
+      {} as Record<ChatRoom, ChatMessage[]>,
     ),
 };
 
 export const createRoomStore = (initState: RoomState = defaultInitState) => {
   return createStore<RoomStore>()((set) => ({
     ...initState,
+    setId: (id) => set({ id }),
     setTitle: (title) => set({ title }),
     setHostNickname: (hostNickname) => set({ hostNickname }),
     setIsPlaying: (isPlaying) => set({ isPlaying }),

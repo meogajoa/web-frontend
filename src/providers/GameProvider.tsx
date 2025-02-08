@@ -30,3 +30,9 @@ export const useGameStore = <T,>(selector: (store: GameStore) => T): T => {
 
   return useStore(gameStoreContext, selector);
 };
+
+export const useGame = () => {
+  const gameStore = useGameStore((store) => store);
+
+  return gameStore;
+};

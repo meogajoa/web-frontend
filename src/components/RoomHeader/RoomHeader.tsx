@@ -1,26 +1,18 @@
 import React from 'react';
-import { ChatRoom } from '~/types/chat';
+import { useRoom } from '~/hooks/room';
 import { cn } from '~/utils/classname';
 import RoomHeaderPlaying from './RoomHeaderPlaying';
 import RoomHeaderWaiting from './RoomHeaderWaiting';
-
 type Props = {
   className?: string;
-  isStarted: boolean;
 };
 
-const RoomHeader = React.memo<Props>(({ className, isStarted }) => {
+const RoomHeader = React.memo<Props>(({ className }) => {
+  const { isPlaying } = useRoom();
+
   return (
     <div className={cn('', className)}>
-      {!isStarted ? (
-        <RoomHeaderWaiting />
-      ) : (
-        <RoomHeaderPlaying
-          nthRound={1}
-          isMorning={false}
-          chatRoomKind={ChatRoom.All}
-        />
-      )}
+      {!isPlaying ? <RoomHeaderWaiting /> : <RoomHeaderPlaying />}
     </div>
   );
 });
