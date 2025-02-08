@@ -1,31 +1,36 @@
 import React from 'react';
+import { cn } from '~/utils/classname';
 
 export type ChatTextProps = {
-  text: string;
-  contentText: string;
-  isError?: boolean;
-  spy?: string;
+  className?: string;
+  title: string;
+  content: string;
+  isSpy?: boolean;
+  isAccessable?: boolean;
 };
 
 const ChatText: React.FC<ChatTextProps> = ({
-  text,
-  spy,
-  contentText,
-  isError = false,
+  className,
+  title,
+  content,
+  isSpy,
+  isAccessable = false,
 }) => {
   return (
-    <div className="font-base flex flex-col gap-2.5 text-left">
-      <div className="flex text-base">
-        <div className="font-medium text-white">
-          {text}
-          <span> </span>
-          <span className="text-red font-normal">{spy}</span>
-        </div>
+    <div
+      className={cn('space-y-2.5 text-base font-medium text-white', className)}
+    >
+      <div className="text-left">
+        <span>{title}</span>
+        {isSpy && <span className="text-red font-normal">{' (스파이)'}</span>}
       </div>
       <div
-        className={`${isError ? 'text-red' : 'text-gray-5'} text-[0.625rem]`}
+        className={cn(
+          'w-fit text-[0.625rem]',
+          isAccessable ? 'text-red' : 'text-gray-5',
+        )}
       >
-        {contentText}
+        {content}
       </div>
     </div>
   );

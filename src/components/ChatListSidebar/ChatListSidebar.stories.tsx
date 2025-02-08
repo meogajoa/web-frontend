@@ -1,8 +1,8 @@
 import { Meta, StoryObj } from '@storybook/react';
 import { useState } from 'react';
-import { ChatItemProps } from '~/components/ChatListSidebar/ChatItem';
+import img from '~/assets/images/cat.png';
 import ChatListSidebar from '~/components/ChatListSidebar/ChatListSidebar';
-import img from '../../assets/images/cat.png';
+import { Team } from '~/types/game';
 
 const meta: Meta<typeof ChatListSidebar> = {
   title: 'Organisms/ChatListSidebar',
@@ -12,95 +12,6 @@ const meta: Meta<typeof ChatListSidebar> = {
 export default meta;
 
 type Story = StoryObj<typeof ChatListSidebar>;
-
-const sampleChats: ChatItemProps[] = [
-  {
-    groupImages: [
-      { src: img.src, alt: 'User 1' },
-      { src: img.src, alt: 'User 2' },
-      { src: img.src, alt: 'User 3' },
-      { src: img.src, alt: 'User 4' },
-    ],
-    text: {
-      text: '그룹 채팅방',
-      contentText: '새 메시지가 도착했습니다.',
-      isError: false,
-    },
-    notice: 5,
-  },
-  {
-    image: {
-      src: img.src,
-      size: 'lg',
-    },
-    text: {
-      text: '닉네임 02',
-      contentText: '읽은 메시지입니다.',
-      isError: false,
-    },
-    notice: 0,
-  },
-  {
-    image: {
-      src: img.src,
-      size: 'lg',
-    },
-    text: {
-      text: '닉네임 03',
-      contentText: '읽은 메시지입니다.',
-      isError: false,
-    },
-    notice: 0,
-  },
-  {
-    image: {
-      src: img.src,
-      size: 'lg',
-    },
-    text: {
-      text: '닉네임 04',
-      contentText: '읽은 메시지입니다.',
-      isError: false,
-    },
-    notice: 0,
-  },
-  {
-    image: {
-      src: img.src,
-      size: 'lg',
-    },
-    text: {
-      text: '닉네임 05',
-      contentText: '(밤에는 대화할 수 없습니다.)',
-      isError: true,
-    },
-    notice: 0,
-  },
-  {
-    image: {
-      src: img.src,
-      size: 'lg',
-    },
-    text: {
-      text: '닉네임 06',
-      contentText: '읽은 메시지입니다.',
-      isError: false,
-    },
-    notice: 33,
-  },
-  {
-    image: {
-      src: img.src,
-      size: 'lg',
-    },
-    text: {
-      text: '닉네임 07',
-      contentText: '읽은 메시지입니다.',
-      isError: false,
-    },
-    notice: 0,
-  },
-];
 
 export const Default: Story = {
   render: () => {
@@ -116,7 +27,60 @@ export const Default: Story = {
           {isOpen ? 'Sidebar 닫기' : 'Sidebar 열기'}
         </button>
         <ChatListSidebar
-          chats={sampleChats}
+          chatRooms={[
+            {
+              type: 'personal',
+              roomData: {
+                title: '김철수',
+                content: '안녕하세요',
+              },
+              image: img.src,
+            },
+            {
+              type: 'group',
+              roomData: {
+                title: '그룹채팅방',
+                content: '안녕하세요',
+              },
+              groupImages: [img.src, Team.White, img.src, Team.Black],
+            },
+            {
+              type: 'personal',
+              roomData: {
+                title: '김철수',
+                content: '(상대팀 채팅방을 볼 수 없습니다)',
+                isSpy: true,
+                isAccessable: true,
+              },
+              image: Team.Black,
+            },
+            {
+              type: 'personal',
+              roomData: {
+                title: '김철수',
+                content: '안녕하세요',
+              },
+              notice: 3,
+              image: img.src,
+            },
+            {
+              type: 'personal',
+              roomData: {
+                title: '김철수',
+                content: '안녕하세요',
+              },
+              image: img.src,
+            },
+            {
+              type: 'personal',
+              roomData: {
+                title: '김철수',
+                content: '안녕하세요',
+              },
+              notice: 99,
+              image: img.src,
+            },
+          ]}
           isOpen={isOpen}
           onClose={() => setIsOpen(false)}
           onExit={() => alert('나가기 클릭')}

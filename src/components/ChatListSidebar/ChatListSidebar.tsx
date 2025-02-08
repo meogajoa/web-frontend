@@ -3,11 +3,10 @@ import BellIcon from '~/svgs/BellIcon';
 import LeftArrowIcon from '~/svgs/LeftArrowIcon';
 import OutIcon from '~/svgs/OutIcon';
 import { cn } from '~/utils/classname';
-import { ChatItemProps } from '../ChatListSidebar/ChatItem';
-import ChatList from '../ChatListSidebar/ChatList';
+import ChatRoom, { ChatRoomProps } from './ChatRoom';
 
 export type ChatListSidebarProps = {
-  chats: ChatItemProps[];
+  chatRooms: ChatRoomProps[];
   isOpen: boolean;
   onClose: () => void;
   onExit: () => void;
@@ -16,7 +15,7 @@ export type ChatListSidebarProps = {
 };
 
 const ChatListSidebar: React.FC<ChatListSidebarProps> = ({
-  chats,
+  chatRooms,
   isOpen,
   onClose,
   onExit,
@@ -26,7 +25,7 @@ const ChatListSidebar: React.FC<ChatListSidebarProps> = ({
   return (
     <div
       className={cn(
-        'bg-gray-1 h-full w-full transform pt-4 pr-4.5 pb-3.5 pl-4 shadow-lg transition-transform duration-300 ease-in-out',
+        'bg-gray-1 h-full w-full pt-4 pr-4.5 pb-3.5 pl-4 shadow-lg transition-transform duration-300 ease-in-out',
         isOpen ? 'translate-x-0' : '-translate-x-full',
         className,
       )}
@@ -44,10 +43,31 @@ const ChatListSidebar: React.FC<ChatListSidebarProps> = ({
         </div>
       </div>
 
-      <ChatList
-        chats={chats}
-        className="scrollbar-hide mt-6 flex-1 overflow-y-auto"
-      />
+      <div className="scrollbar-hide mt-6 flex-1 divide-y divide-white/10 overflow-y-auto">
+        {chatRooms.map((chat, index) => {
+          if (chat.type === 'group' && 'groupImages' in chat) {
+            return (
+              <ChatRoom
+                key={index}
+                type={chat.type}
+                roomData={chat.roomData}
+                groupImages={chat.groupImages as string[]}
+                notice={chat.notice}
+              />
+            );
+          } else if (chat.type === 'personal' && 'image' in chat) {
+            return (
+              <ChatRoom
+                key={index}
+                type={chat.type}
+                roomData={chat.roomData}
+                image={chat.image as string}
+                notice={chat.notice}
+              />
+            );
+          }
+        })}
+      </div>
 
       <div className="mt-11.5 flex items-center justify-between">
         <button

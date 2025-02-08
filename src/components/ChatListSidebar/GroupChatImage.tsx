@@ -1,32 +1,38 @@
 import React from 'react';
-import ProfileImage, {
-  ProfileImageProps,
-} from '~/components/ProfileImage/ProfileImage';
+import ProfileImage from '~/components/ProfileImage/ProfileImage';
+import { Team } from '~/types/game';
+import { isTeam } from '~/utils/chat';
 import { cn } from '~/utils/classname';
 
 export type GroupChatImageProps = {
-  images: Omit<ProfileImageProps, 'userNumber'>[];
-  size?: number;
   className?: string;
+  images: string[] | Team[];
 };
 
 const GroupChatImage: React.FC<GroupChatImageProps> = ({
-  images,
-  size = 46,
   className,
+  images,
 }) => {
   return (
     <div
       className={cn(
-        'grid grid-cols-2 grid-rows-2 gap-[1px] overflow-hidden',
+        'grid grid-cols-2 grid-rows-2 gap-0.5 overflow-hidden',
         className,
       )}
-      style={{ width: size, height: size }}
     >
       {images.slice(0, 4).map((img, index) => (
-        <div key={index} className="h-full w-full">
-          <ProfileImage {...img} size="sm" />
-        </div>
+        <ProfileImage
+          key={index}
+          src={isTeam(img) ? undefined : img}
+          color={
+            isTeam(img)
+              ? img === Team.Black
+                ? 'gray'
+                : 'light-gray'
+              : undefined
+          }
+          size="sm"
+        />
       ))}
     </div>
   );
