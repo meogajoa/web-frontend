@@ -37,11 +37,13 @@ const RoomPage: React.FC<Props> = ({ params }) => {
         </RoomProvider>
       )}
 
-      <style>{`
-        body {
-          background-color: var(--color-gray-6);
-        }
-      `}</style>
+      <style>
+        {`
+          body {
+            background-color: var(--color-gray-6);
+          }
+        `}
+      </style>
     </>
   );
 };

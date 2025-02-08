@@ -1,4 +1,3 @@
-import { Button as HeadlessuiButton } from '@headlessui/react';
 import { ArrowLeftIcon } from '@heroicons/react/24/outline';
 import { AxiosError } from 'axios';
 import { debounce } from 'lodash-es';
@@ -14,7 +13,7 @@ type Props = {
   className?: string;
 };
 
-const RoomHeaderWaiting = React.memo<Props>(({ className }) => {
+const RoomHeaderLobby = React.memo<Props>(({ className }) => {
   const router = useRouter();
   const { account } = useAccount();
 
@@ -37,9 +36,9 @@ const RoomHeaderWaiting = React.memo<Props>(({ className }) => {
         className,
       )}
     >
-      <HeadlessuiButton onClick={handleBackClick}>
+      <button onClick={handleBackClick}>
         <ArrowLeftIcon className="fill-gray-1 size-6" />
-      </HeadlessuiButton>
+      </button>
 
       <h2 className="ml-2">{title}</h2>
 
@@ -75,6 +74,6 @@ const RoomHeaderWaiting = React.memo<Props>(({ className }) => {
     console.error(error);
   }
 });
-RoomHeaderWaiting.displayName = 'RoomHeaderWaiting';
+RoomHeaderLobby.displayName = 'RoomHeaderLobby';
 
-export default RoomHeaderWaiting;
+export default RoomHeaderLobby;

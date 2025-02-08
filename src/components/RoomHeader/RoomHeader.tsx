@@ -1,8 +1,9 @@
 import React from 'react';
 import { useRoom } from '~/hooks/room';
 import { cn } from '~/utils/classname';
-import RoomHeaderPlaying from './RoomHeaderPlaying';
-import RoomHeaderWaiting from './RoomHeaderWaiting';
+import RoomHeaderGame from './RoomHeaderGame';
+import RoomHeaderLobby from './RoomHeaderLobby';
+
 type Props = {
   className?: string;
 };
@@ -12,7 +13,7 @@ const RoomHeader = React.memo<Props>(({ className }) => {
 
   return (
     <div className={cn('', className)}>
-      {!isPlaying ? <RoomHeaderWaiting /> : <RoomHeaderPlaying />}
+      {!isPlaying ? <RoomHeaderLobby /> : <RoomHeaderGame />}
     </div>
   );
 });

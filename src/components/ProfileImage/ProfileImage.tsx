@@ -1,4 +1,3 @@
-import { Button as HeadlessuiButton } from '@headlessui/react';
 import { cva, VariantProps } from 'class-variance-authority';
 import React from 'react';
 import { cn } from '~/utils/classname';
@@ -34,15 +33,13 @@ const ProfileImage: React.FC<React.PropsWithChildren<ProfileImageProps>> = ({
   className,
   size,
   color,
-  as = 'button',
+  as: Component = 'button',
   src,
   userNumber = 0,
   onProfileClick: handleProfileClick,
   children,
   ...props
 }) => {
-  const Component = as === 'button' ? HeadlessuiButton : as;
-
   return (
     <Component
       className={cn(variants({ size, color }), 'bg-cover bg-center', className)}
