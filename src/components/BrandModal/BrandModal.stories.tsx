@@ -1,6 +1,8 @@
 import { Meta, StoryObj } from '@storybook/react';
+import { NextIntlClientProvider } from 'next-intl';
 import React from 'react';
 import { BrandModal } from '~/components/BrandModal';
+import PasswordInputModal from '~/components/BrandModal/PasswordInputModal';
 import { Button } from '~/components/Button';
 
 const meta: Meta<typeof BrandModal> = {
@@ -13,6 +15,13 @@ const meta: Meta<typeof BrandModal> = {
       control: 'text',
     },
   },
+  decorators: [
+    (Story) => (
+      <NextIntlClientProvider locale="en">
+        <Story />
+      </NextIntlClientProvider>
+    ),
+  ],
 };
 
 export default meta;
@@ -21,42 +30,75 @@ type Story = StoryObj<typeof BrandModal>;
 
 export const Default: Story = {
   render: (props) => {
-    const [visible, setVisible] = React.useState(false);
+    const [brandModalVisible, setBrandModalVisible] = React.useState(false);
+    const [passwordModalVisible, setPasswordModalVisible] =
+      React.useState(false);
 
     return (
       <>
-        <Button onClick={handleClick(true)}>모달 열기 버튼</Button>
+        <div style={{ marginBottom: '16px' }}>
+          <Button onClick={() => setBrandModalVisible(true)}>
+            브랜드 모달 열기
+          </Button>
+          <BrandModal
+            {...props}
+            visible={brandModalVisible}
+            hasBackdropBlur
+            onClose={() => setBrandModalVisible(false)}
+          >
+            <BrandModal.Header>
+              <BrandModal.Title label="Title" />
+              <BrandModal.CloseButton
+                onClose={() => setBrandModalVisible(false)}
+                position="right"
+              />
+            </BrandModal.Header>
 
-        <BrandModal
-          {...props}
-          onClose={handleClick(false)}
-          hasBackdropBlur
-          visible={visible}
-        >
-          <BrandModal.Header>
-            <BrandModal.Title label="Title" />
-            <BrandModal.CloseButton
-              position="right"
-              onClose={handleClick(false)}
-            />
-          </BrandModal.Header>
+            <BrandModal.Body>모달 내용입니다.</BrandModal.Body>
 
-          <BrandModal.Body>모달 내용입니다.</BrandModal.Body>
+            <BrandModal.ButtonGroup>
+              <BrandModal.Button
+                kind="no"
+                onClick={() => setBrandModalVisible(false)}
+              >
+                나가기
+              </BrandModal.Button>
+              <BrandModal.Button
+                kind="yes"
+                onClick={() => setBrandModalVisible(false)}
+              >
+                남아있기
+              </BrandModal.Button>
+            </BrandModal.ButtonGroup>
+          </BrandModal>
+        </div>
 
-          <BrandModal.ButtonGroup>
-            <BrandModal.Button kind="no" onClick={handleClick(false)}>
-              나가기
-            </BrandModal.Button>
-            <BrandModal.Button kind="yes" onClick={handleClick(false)}>
-              남아있기
-            </BrandModal.Button>
-          </BrandModal.ButtonGroup>
-        </BrandModal>
+        <div>
+          <Button onClick={() => setPasswordModalVisible(true)}>
+            비밀번호 입력 모달 열기
+          </Button>
+          <PasswordInputModal
+            {...props}
+            visible={passwordModalVisible}
+            onClose={() => setPasswordModalVisible(false)}
+          />
+        </div>
       </>
     );
+  },
+};
 
-    function handleClick(visible: boolean) {
-      return () => setVisible(visible);
-    }
+export const PasswordInput: Story = {
+  render: () => {
+    const [visible, setVisible] = React.useState(false);
+    return (
+      <>
+        <button onClick={() => setVisible(true)}>모달 열기 버튼</button>
+        <PasswordInputModal
+          visible={visible}
+          onClose={() => setVisible(false)}
+        />
+      </>
+    );
   },
 };
