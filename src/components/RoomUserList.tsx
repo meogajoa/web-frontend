@@ -1,6 +1,7 @@
 import { BookmarkIcon } from '@heroicons/react/24/outline';
 import React from 'react';
-import { useRoom, useRoomUsersNotice } from '~/hooks/room';
+import { useRoomUsersNotice } from '~/hooks/room';
+import { useRoom } from '~/providers/RoomProvider';
 import { cn } from '~/utils/classname';
 
 type Props = {

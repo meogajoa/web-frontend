@@ -4,9 +4,10 @@ import { debounce } from 'lodash-es';
 import React from 'react';
 import { Button } from '~/components/Button';
 import { useStartGame } from '~/hooks/game';
-import { useRoom, useRoomUsersNotice } from '~/hooks/room';
+import { useRoomUsersNotice } from '~/hooks/room';
 import { useRouter } from '~/i18n/routing';
 import { useAccount } from '~/providers/AccountProvider';
+import { useRoom } from '~/providers/RoomProvider';
 import { cn } from '~/utils/classname';
 
 type Props = {

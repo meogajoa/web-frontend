@@ -1,8 +1,8 @@
 import { MinusIcon, PlusIcon } from '@heroicons/react/24/outline';
 import { useTranslations } from 'next-intl';
 import React from 'react';
-import { useRoom } from '~/hooks/room';
 import { useGame } from '~/providers/GameProvider';
+import { useRoom } from '~/providers/RoomProvider';
 import CartFillIcon from '~/svgs/CartFillIcon';
 import ChatIcon from '~/svgs/ChatIcon';
 import { GameTime } from '~/types/game';

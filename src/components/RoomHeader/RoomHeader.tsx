@@ -1,5 +1,5 @@
 import React from 'react';
-import { useRoom } from '~/hooks/room';
+import { useRoom } from '~/providers/RoomProvider';
 import { cn } from '~/utils/classname';
 import RoomHeaderGame from './RoomHeaderGame';
 import RoomHeaderLobby from './RoomHeaderLobby';
