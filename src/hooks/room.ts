@@ -8,6 +8,9 @@ import { AxiosError } from 'axios';
 import React from 'react';
 import { useSubscription } from 'react-stomp-hooks';
 import { z } from 'zod';
+import { useStore } from 'zustand';
+import { RoomStoreContext } from '~/providers/RoomProvider';
+import { RoomStore } from '~/stores/room';
 import { username } from '~/types/account';
 import {
   createRoomResponse,
@@ -21,9 +24,21 @@ import {
   type JoinRoomRequest,
   type PaginatedRoomsResponse,
 } from '~/types/room';
+import { assert } from '~/utils/assert';
 import { server } from '~/utils/axios';
 import { A_MINUTE, A_SECOND } from '~/utils/constants';
 import { sleep } from '~/utils/misc';
+
+export const useRoomStore = <T>(selector: (store: RoomStore) => T): T => {
+  const roomStoreContext = React.useContext(RoomStoreContext);
+  assert(roomStoreContext, 'useRoomStore must be used within roomProvider');
+
+  return useStore(roomStoreContext, selector);
+};
+
+export const useRoom = () => {
+  return useRoomStore((store) => store);
+};
 
 export const useInfiniteRooms = () => {
   const _queryRoomsAsync = React.useCallback(
@@ -59,7 +74,7 @@ export const useInfiniteRooms = () => {
   return { ...rest, rooms };
 };
 
-export const useJoinRoomMutation = ({
+export const useJoinRoom = ({
   variables: { id },
   onError,
 }: {
@@ -93,15 +108,12 @@ export const useJoinRoomMutation = ({
 
   return {
     ...mutation,
-    previousMessages: mutation.data?.chatLogs,
-    title: mutation.data?.name,
-    ownerUsername: mutation.data?.owner,
     joinRoom: mutation.mutate,
     joinRoomAsync: mutation.mutateAsync,
   };
 };
 
-export const useCreateRoomMutation = ({
+export const useCreateRoom = ({
   onSuccess,
 }: {
   onSuccess: (data: CreateRoomResponse, variables: CreateRoomForm) => void;
@@ -129,7 +141,7 @@ export const useCreateRoomMutation = ({
   };
 };
 
-export const useUsersNoticeSubscription = ({
+export const useRoomUsersNotice = ({
   variables: { id },
 }: {
   variables: { id: string };
@@ -145,7 +157,7 @@ export const useUsersNoticeSubscription = ({
   return { users };
 };
 
-export const useSystemNoticeSubscription = ({
+export const useRoomSystemNotice = ({
   variables: { id },
   onGameStart,
 }: {

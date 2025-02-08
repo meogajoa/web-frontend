@@ -6,7 +6,7 @@ import { usePathname, useRouter } from '~/i18n/routing';
 import { cn } from '~/utils/classname';
 
 type Props = {
-  className?: React.ComponentProps<'footer'>['className'];
+  className?: string;
   renderPlaceholder?: boolean;
 };
 

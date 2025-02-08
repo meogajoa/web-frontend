@@ -21,7 +21,7 @@ const LabelInputVariant = cva('w-full text-left', {
 
 type LabelInputProps = VariantProps<typeof LabelInputVariant> &
   InputProps & {
-    className?: React.ComponentProps<'div'>['className'];
+    className?: string;
     label: string;
     labelsize?: 'lg' | 'md' | 'sm';
     error?: string;

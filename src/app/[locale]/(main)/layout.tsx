@@ -4,7 +4,7 @@ import { useTranslations } from 'next-intl';
 import React from 'react';
 import toast from 'react-hot-toast';
 import LoadingIndicator from '~/components/LoadingIndicator';
-import { useAuthenticateMutation } from '~/hooks/account';
+import { useAuthenticate } from '~/hooks/account';
 import { useRouter } from '~/i18n/routing';
 import { useAccount } from '~/providers/AccountProvider';
 import StompProvider from '~/providers/StompProvider';
@@ -12,7 +12,7 @@ import { AuthenticateResponse } from '~/types/account';
 import { A_SECOND } from '~/utils/constants';
 
 const MainLayout: React.FC<React.PropsWithChildren> = ({ children }) => {
-  const { isSuccess } = useAuthenticateMutation({
+  const { isSuccess } = useAuthenticate({
     sleepSeconds: 1,
     onSuccess: handleAuthenticateSuccess,
     onError: handleAuthenticateError,
@@ -21,7 +21,7 @@ const MainLayout: React.FC<React.PropsWithChildren> = ({ children }) => {
   const [isConnected, setIsConnected] = React.useState(false);
   const t = useTranslations('rootRoute');
   const router = useRouter();
-  const { setMe, clearMe } = useAccount();
+  const { setAccount, clearAccount } = useAccount();
 
   const handleConnect = React.useCallback(_handleConnect, []);
   const handleConnectError = React.useCallback(_handleConnectError, []);
@@ -48,11 +48,11 @@ const MainLayout: React.FC<React.PropsWithChildren> = ({ children }) => {
   );
 
   function handleAuthenticateSuccess(data: AuthenticateResponse) {
-    setMe({ nickname: data.nickname });
+    setAccount({ nickname: data.nickname });
   }
 
   function handleAuthenticateError() {
-    clearMe();
+    clearAccount();
     localStorage.removeItem('sessionId');
     toast.error(t('authError'));
     router.replace('/account/sign-in');

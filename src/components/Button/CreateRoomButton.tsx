@@ -7,7 +7,7 @@ import { Button } from '~/components/Button';
 import { cn } from '~/utils/classname';
 
 type Props = {
-  className?: React.ComponentProps<'button'>['className'];
+  className?: string;
 };
 
 const CreateRoomButton: React.FC<Props> = ({ className }) => {

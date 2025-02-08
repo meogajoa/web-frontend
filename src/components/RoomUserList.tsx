@@ -1,17 +1,15 @@
 import { BookmarkIcon } from '@heroicons/react/24/outline';
-import { useParams } from 'next/navigation';
 import React from 'react';
-import { useUsersNoticeSubscription } from '~/hooks/room';
+import { useRoom, useRoomUsersNotice } from '~/hooks/room';
 import { cn } from '~/utils/classname';
 
 type Props = {
-  className?: React.ComponentProps<'div'>['className'];
-  ownerUsername: string;
+  className?: string;
 };
 
-const RoomUserList = React.memo<Props>(({ className, ownerUsername }) => {
-  const { id } = useParams<{ id: string }>();
-  const { users } = useUsersNoticeSubscription({ variables: { id } });
+const RoomUserList = React.memo<Props>(({ className }) => {
+  const { id, hostNickname } = useRoom();
+  const { users } = useRoomUsersNotice({ variables: { id } });
 
   return (
     <ul
@@ -27,7 +25,7 @@ const RoomUserList = React.memo<Props>(({ className, ownerUsername }) => {
         >
           <span>{username}</span>
 
-          {ownerUsername === username && (
+          {hostNickname === username && (
             <BookmarkIcon className="fill-red stroke-red absolute -top-1 left-2 size-3" />
           )}
         </li>

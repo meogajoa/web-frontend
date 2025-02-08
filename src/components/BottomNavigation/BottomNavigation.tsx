@@ -4,7 +4,7 @@ import { type MenuType } from '~/constants/navigation';
 import { cn } from '~/utils/classname';
 
 type BottomNavigationProps = {
-  className?: React.ComponentProps<'footer'>['className'];
+  className?: string;
 };
 
 const BottomNavigation: React.FC<

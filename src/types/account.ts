@@ -29,6 +29,6 @@ export const authenticateResponse = z.object({
 });
 export type AuthenticateResponse = z.infer<typeof authenticateResponse>;
 
-export type Me = {
+export type Account = {
   nickname: string;
 };

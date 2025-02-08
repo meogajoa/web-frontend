@@ -1,5 +1,6 @@
 import React from 'react';
 import { useInterval } from 'react-use';
+
 export const useDotsString = ({ maxLength = 3 }: { maxLength?: number }) => {
   const [dotsCount, setDotsCount] = React.useState(0);
   useInterval(() => {

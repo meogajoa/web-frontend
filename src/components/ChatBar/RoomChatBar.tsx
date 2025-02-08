@@ -1,22 +1,23 @@
 import { noop } from 'lodash-es';
-import { useParams } from 'next/navigation';
 import React from 'react';
 import { useStompClient } from 'react-stomp-hooks';
 import { ChatBar } from '~/components/ChatBar';
 import { TextareaHandle } from '~/components/CustomTextarea';
 import { useSessionId } from '~/hooks/account';
+import { useRoom } from '~/hooks/room';
 import { cn } from '~/utils/classname';
 
 type Props = {
-  className?: React.ComponentProps<'div'>['className'];
+  className?: string;
   renderPlaceholder?: boolean;
 };
 
 const RoomChatBar = React.memo<Props>(({ className, renderPlaceholder }) => {
   const textareaRef = React.useRef<TextareaHandle>(null);
   const stompClient = useStompClient();
-  const { id } = useParams<{ id: string }>();
+
   const sessionId = useSessionId();
+  const { id } = useRoom();
 
   return (
     <>

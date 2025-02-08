@@ -5,7 +5,7 @@ import React from 'react';
 import { cn } from '~/utils/classname';
 
 export type ModalProps = React.ComponentProps<'form'> & {
-  overlayClassName?: React.ComponentProps<'div'>['className'];
+  overlayClassName?: string;
   visible: boolean;
   hasBackdropBlur?: boolean;
   verticalAlignment?: 'top' | 'center' | 'bottom';

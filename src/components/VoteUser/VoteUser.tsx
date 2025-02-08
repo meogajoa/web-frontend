@@ -21,7 +21,7 @@ type VoteUserProps = Pick<
   ProfileImageProps,
   'color' | 'onProfileClick' | 'userNumber' | 'src'
 > & {
-  className?: React.ComponentProps<'div'>['className'];
+  className?: string;
   username: string;
   voteCount: number;
   hasVoted: boolean;

@@ -9,7 +9,7 @@ import { Button } from '~/components/Button';
 import { cn } from '~/utils/classname';
 
 type DropdownGroupProps<T> = {
-  className?: React.ComponentProps<'div'>['className'];
+  className?: string;
   value: T;
   onOptionClick: (value: T) => void;
   disabled?: boolean;
@@ -35,7 +35,7 @@ export const DropdownGroup = <T,>({
 };
 
 type DropdownButtonProps = {
-  className?: React.ComponentProps<'button'>['className'];
+  className?: string;
 };
 
 const DropdownButton: React.FC<
@@ -55,7 +55,7 @@ const DropdownButton: React.FC<
 };
 
 type DropdownOptions = {
-  className?: React.ComponentProps<'div'>['className'];
+  className?: string;
 };
 
 export const DropdownOptions: React.FC<
@@ -78,7 +78,7 @@ export const DropdownOptions: React.FC<
 };
 
 type DropdownOptionProps<T> = {
-  className?: React.ComponentProps<'div'>['className'];
+  className?: string;
   value: T;
 };
 

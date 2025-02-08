@@ -28,7 +28,7 @@ const myOptions: ExampleOption[] = [
 ];
 
 type Props = {
-  className?: React.ComponentProps<'button'>['className'];
+  className?: string;
 };
 
 const DropdownExample: React.FC<React.PropsWithChildren<Props>> = ({

@@ -1,49 +1,45 @@
-import { useParams } from 'next/navigation';
 import React from 'react';
 import { ChatMessage } from '~/components/ChatMessage';
-import { useChatMessagesSubscription } from '~/hooks/chat';
+import { useChatMessages } from '~/hooks/chat';
 import { useAccount } from '~/providers/AccountProvider';
-import { ChatMessage as ChatMessageType } from '~/types/chat';
+import { ChatMessage as ChatMessageType, ChatRoom } from '~/types/chat';
 import { cn } from '~/utils/classname';
 
 type Props = {
-  className?: React.ComponentProps<'div'>['className'];
-  previousMessages?: ChatMessageType[];
+  className?: string;
 };
 
-const RoomMessages = React.memo<Props>(({ className, previousMessages }) => {
-  const containerRef = React.useRef<HTMLDivElement>(null);
-  const bottomRef = React.useRef<HTMLDivElement>(null);
+const RoomMessages = React.memo<Props>(({ className }) => {
+  const containerRef = React.useRef<HTMLUListElement>(null);
+  const bottomRef = React.useRef<HTMLLIElement>(null);
 
-  const { id } = useParams<{ id: string }>();
-  const messages = useChatMessagesSubscription({
-    url: `/topic/room/${id}/chat`,
-    previousMessages,
+  const messages = useChatMessages({
+    chatRoom: ChatRoom.All,
     onNewMessage: scrollToBottom,
   });
 
-  const { me } = useAccount();
+  const { account } = useAccount();
 
   React.useEffect(() => {
     bottomRef.current?.scrollIntoView({ behavior: 'smooth' });
   }, []);
 
   return (
-    <section
+    <ul
       className={cn('bg-gray-6 space-y-3 overflow-y-auto p-4', className)}
       ref={containerRef}
     >
       {messages.map(({ id, content, sender }) => (
         <ChatMessage
           key={id}
-          position={sender === me.nickname ? 'right' : 'left'}
+          position={sender === account.nickname ? 'right' : 'left'}
           username={sender}
           message={content}
         />
       ))}
 
-      <div ref={bottomRef} aria-hidden />
-    </section>
+      <li ref={bottomRef} aria-hidden />
+    </ul>
   );
 
   // scroll to bottom when new message is sent
@@ -58,7 +54,7 @@ const RoomMessages = React.memo<Props>(({ className, previousMessages }) => {
     const isScrolledToBottom =
       scrollTop + clientHeight >= scrollHeight - EPSILON;
 
-    if (!isScrolledToBottom && message.sender !== me.nickname) {
+    if (!isScrolledToBottom && message.sender !== account.nickname) {
       return;
     }
 
