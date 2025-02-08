@@ -49,5 +49,11 @@
     "roomPasswordLabel": "비밀번호",
     "cancelButton": "취소",
     "createButton": "방 만들기"
+  },
+  "passwordInputModal": {
+    "title": "비밀번호 입력",
+    "roomPasswordLabel": "잠금 처리된 방입니다.\n비밀번호를 입력하세요.",
+    "cancelButton": "취소",
+    "completeButton": "입력 완료"
   }
 }
