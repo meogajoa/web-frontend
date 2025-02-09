@@ -30,39 +30,12 @@ const ChatRoomList: React.FC<Props> = ({
         <div className="text-2xl font-semibold text-white">채팅방 이동</div>
       </button>
 
-      <ul
-        className="scrollbar-hide flex-1 divide-y divide-white/10 overflow-y-auto"
-        onClick={onClose}
-      >
-        {rooms.map((room, index) => {
-          if (room.type === 'group' && 'groupImages' in room) {
-            return (
-              <li key={index}>
-                <ChatRoom
-                  type={room.type}
-                  title={room.title}
-                  content={room.content}
-                  groupImages={room.groupImages as string[]}
-                  notice={room.notice}
-                  onClick={room.onClick}
-                />
-              </li>
-            );
-          } else if (room.type === 'personal' && 'image' in room) {
-            return (
-              <li key={index}>
-                <ChatRoom
-                  type={room.type}
-                  title={room.title}
-                  content={room.content}
-                  image={room.image as string}
-                  notice={room.notice}
-                  onClick={room.onClick}
-                />
-              </li>
-            );
-          }
-        })}
+      <ul className="scrollbar-hide flex-1 divide-y divide-white/10 overflow-y-auto">
+        {rooms.map((room, index) => (
+          <li key={index}>
+            <ChatRoom {...room} />
+          </li>
+        ))}
       </ul>
 
       <section className="flex items-center justify-between py-4">

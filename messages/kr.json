@@ -28,8 +28,9 @@
       "lobby": "",
       "personal": "",
       "general": "전체 채팅방",
-      "black": "팀 채팅방",
-      "white": "팀 채팅방",
+      "black": "흑팀 채팅방",
+      "white": "백팀 채팅방",
+      "eliminated": "탈락자 채팅방",
       "invalid": "",
       "1": "1번 유저 채팅방",
       "2": "2번 유저 채팅방",
@@ -40,8 +41,10 @@
       "7": "7번 유저 채팅방",
       "8": "8번 유저 채팅방"
     },
-    "chatRoomList": {
-      "emptyContent": "대화를 시작해 보세요."
+    "chatRoom": {
+      "emptyContent": "대화를 시작해 보세요.",
+      "noAccessToOpponentChatRoom": "(상대팀 채팅방은 볼 수 없습니다.)",
+      "noAccessToEliminatedChatRoom": "(탈락자 채팅방은 볼 수 없습니다.)"
     },
     "chatMessage": {
       "inGameUsername": "{username}번 유저"

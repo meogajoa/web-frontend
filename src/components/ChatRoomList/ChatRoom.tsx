@@ -9,7 +9,7 @@ export type ChatRoomProps = {
   title: string;
   content: string;
   isSpy?: boolean;
-  isAccessable?: boolean;
+  hasAccess?: boolean;
   notice?: number;
   onClick?: () => void;
 } & (
@@ -28,7 +28,7 @@ const ChatRoom: React.FC<ChatRoomProps> = ({
   title,
   content,
   isSpy,
-  isAccessable = false,
+  hasAccess = true,
   notice = 0,
   onClick,
   type,
@@ -42,39 +42,41 @@ const ChatRoom: React.FC<ChatRoomProps> = ({
       )}
       onClick={onClick}
     >
-      {type === 'personal' && 'image' in props && props.image && (
-        <ProfileImage
-          as="div"
-          src={isTeam(props.image) ? undefined : props.image}
-          color={
-            isTeam(props.image)
-              ? props.image === Team.Black
-                ? 'gray'
-                : 'light-gray'
-              : undefined
-          }
-          size="lg"
-        />
-      )}
-      {type === 'group' && 'groupImages' in props && props.groupImages && (
-        <div className="grid grid-cols-2 grid-rows-2 gap-0.5 overflow-hidden">
-          {props.groupImages.slice(0, 4).map((img, index) => (
-            <ProfileImage
-              as="div"
-              key={index}
-              src={isTeam(img) ? undefined : img}
-              color={
-                isTeam(img)
-                  ? img === Team.Black
-                    ? 'gray'
-                    : 'light-gray'
-                  : undefined
-              }
-              size="sm"
-            />
-          ))}
-        </div>
-      )}
+      <div className="size-11.5">
+        {type === 'personal' && 'image' in props && props.image && (
+          <ProfileImage
+            as="div"
+            src={isTeam(props.image) ? undefined : props.image}
+            color={
+              isTeam(props.image)
+                ? props.image === Team.Black
+                  ? 'gray'
+                  : 'light-gray'
+                : undefined
+            }
+            size="lg"
+          />
+        )}
+        {type === 'group' && 'groupImages' in props && props.groupImages && (
+          <div className="grid grid-cols-2 grid-rows-2 gap-0.5 overflow-hidden">
+            {props.groupImages.slice(0, 4).map((img, index) => (
+              <ProfileImage
+                as="div"
+                key={index}
+                src={isTeam(img) ? undefined : img}
+                color={
+                  isTeam(img)
+                    ? img === Team.Black
+                      ? 'gray'
+                      : 'light-gray'
+                    : undefined
+                }
+                size="sm"
+              />
+            ))}
+          </div>
+        )}
+      </div>
 
       <div className="ml-3 flex-1 space-y-2.5 text-base font-medium text-white">
         <div className="text-left">
@@ -83,8 +85,8 @@ const ChatRoom: React.FC<ChatRoomProps> = ({
         </div>
         <div
           className={cn(
-            'w-fit text-[0.625rem]',
-            isAccessable ? 'text-red' : 'text-gray-5',
+            'text-red w-fit text-[0.625rem]',
+            hasAccess && 'text-gray-5',
           )}
         >
           {content}

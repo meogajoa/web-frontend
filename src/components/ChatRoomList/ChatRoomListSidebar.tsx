@@ -24,7 +24,8 @@ const ChatRoomListSidebar: React.FC<Props> = ({
   onClose,
 }) => {
   const t = useTranslations('roomRoute');
-  const { user, otherUsers, whiteTeamUsers, blackTeamUsers } = useGame();
+  const { user, otherUsers, whiteTeamUsers, blackTeamUsers, eliminatedUsers } =
+    useGame();
   const { messagesByRoom, setCurrentChatRoom } = useRoom();
 
   return (
@@ -52,26 +53,58 @@ const ChatRoomListSidebar: React.FC<Props> = ({
               content:
                 messagesByRoom[ChatRoom.General][
                   messagesByRoom[ChatRoom.General].length - 1
-                ]?.content || t('chatRoomList.emptyContent'),
-              onClick: () => setCurrentChatRoom(ChatRoom.General),
+                ]?.content || t('chatRoom.emptyContent'),
+              hasAccess: !user.eliminated,
+              onClick: () => {
+                onClose();
+                setCurrentChatRoom(ChatRoom.General);
+              },
             },
-            // Team Chat Room (White or Black)
+            // White Chat Room
             {
               type: 'group',
-              title: t(`chatRoomType.${user.team.toLowerCase()}`),
-              groupImages: range(
-                user.team === Team.White
-                  ? whiteTeamUsers.length
-                  : blackTeamUsers.length,
-              ).map(() => user.team),
+              title: t(`chatRoomType.white`),
+              groupImages: range(whiteTeamUsers.length)
+                .slice(0, 4)
+                .map(() => Team.White),
               content:
-                messagesByRoom[ChatRoom.General][
-                  messagesByRoom[ChatRoom.General].length - 1
-                ]?.content || t('chatRoomList.emptyContent'),
-              onClick: () =>
-                setCurrentChatRoom(
-                  user.team === Team.Black ? ChatRoom.Black : ChatRoom.White,
-                ),
+                user.team === Team.White
+                  ? messagesByRoom[ChatRoom.White][
+                      messagesByRoom[ChatRoom.White].length - 1
+                    ]?.content || t('chatRoom.emptyContent')
+                  : t('chatRoom.noAccessToOpponentChatRoom'),
+              hasAccess: user.team === Team.White && !user.eliminated,
+              onClick: () => {
+                if (user.team !== Team.White) {
+                  return;
+                }
+
+                onClose();
+                setCurrentChatRoom(ChatRoom.White);
+              },
+            },
+            // Black Chat Room
+            {
+              type: 'group',
+              title: t(`chatRoomType.black`),
+              groupImages: range(blackTeamUsers.length)
+                .slice(0, 4)
+                .map(() => Team.Black),
+              content:
+                user.team === Team.Black
+                  ? messagesByRoom[ChatRoom.Black][
+                      messagesByRoom[ChatRoom.Black].length - 1
+                    ]?.content || t('chatRoom.emptyContent')
+                  : t('chatRoom.noAccessToOpponentChatRoom'),
+              hasAccess: user.team === Team.Black && !user.eliminated,
+              onClick: () => {
+                if (user.team !== Team.Black) {
+                  return;
+                }
+
+                onClose();
+                setCurrentChatRoom(ChatRoom.Black);
+              },
             },
             // Personal Chat Room (Other Users)
             ...Object.values(UserNumber)
@@ -85,17 +118,51 @@ const ChatRoomListSidebar: React.FC<Props> = ({
               )
               .map<ChatRoomProps>((number) => {
                 const messages = messagesByRoom[number as ChatRoom];
+                const hasAccess =
+                  !user.eliminated &&
+                  user.team === otherUsers[number as UserNumber].team;
+
                 return {
                   type: 'personal',
                   title: t(`chatRoomType.${number}`),
                   content:
                     messages[messages.length - 1]?.content ||
-                    t('chatRoomList.emptyContent'),
+                    t('chatRoom.emptyContent'),
                   isSpy: otherUsers[number as UserNumber].isSpy,
                   image: otherUsers[number as UserNumber].team,
-                  onClick: () => setCurrentChatRoom(number as ChatRoom),
+                  hasAccess,
+                  onClick: () => {
+                    if (!hasAccess) {
+                      return;
+                    }
+
+                    onClose();
+                    setCurrentChatRoom(number as ChatRoom);
+                  },
                 };
               }),
+            // Eliminated User Chat Room
+            {
+              type: 'group',
+              title: t(`chatRoomType.eliminated`),
+              groupImages: eliminatedUsers.map(
+                (number) => otherUsers[number].team,
+              ),
+              content: user.eliminated
+                ? messagesByRoom[ChatRoom.Eliminated][
+                    messagesByRoom[ChatRoom.Eliminated].length - 1
+                  ]?.content || t('chatRoom.emptyContent')
+                : t('chatRoom.noAccessToEliminatedChatRoom'),
+              hasAccess: user.eliminated,
+              onClick: () => {
+                if (!user.eliminated) {
+                  return;
+                }
+
+                onClose();
+                setCurrentChatRoom(ChatRoom.Eliminated);
+              },
+            } as ChatRoomProps,
           ])}
           onExit={noop}
           onNotificationClick={noop}

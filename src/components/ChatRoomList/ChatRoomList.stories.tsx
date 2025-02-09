@@ -33,7 +33,6 @@ export const Default: Story = {
         title: '김철수',
         content: '(상대팀 채팅방을 볼 수 없습니다)',
         isSpy: true,
-        isAccessable: true,
         image: Team.Black,
       },
       {
@@ -41,6 +40,7 @@ export const Default: Story = {
         title: '김철수',
         content: '안녕하세요',
         notice: 3,
+        hasAccess: false,
         image: img.src,
       },
       {
