@@ -18,15 +18,16 @@ export const Default: Story = {
     const [isOpen, setIsOpen] = useState(true);
 
     return (
-      <div className="relative min-h-screen bg-gray-100">
-        {/* 토글 버튼 */}
+      <>
         <button
           onClick={() => setIsOpen((prev) => !prev)}
           className="m-4 rounded bg-blue-500 p-2 text-white"
         >
           {isOpen ? 'Sidebar 닫기' : 'Sidebar 열기'}
         </button>
+
         <ChatListSidebar
+          className="absolute top-0 right-0 z-40"
           chatRooms={[
             {
               type: 'personal',
@@ -84,10 +85,9 @@ export const Default: Story = {
           isOpen={isOpen}
           onClose={() => setIsOpen(false)}
           onExit={() => alert('나가기 클릭')}
-          onNotification={() => alert('알림 클릭')}
-          className="w-73"
+          onNotificationClick={() => alert('알림 클릭')}
         />
-      </div>
+      </>
     );
   },
 };

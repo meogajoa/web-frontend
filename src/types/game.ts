@@ -35,8 +35,6 @@ export enum UserNumber {
   Eight,
 }
 
-export type UserNumberKey = keyof typeof UserNumber;
-
 /**
  * Game Time
  */

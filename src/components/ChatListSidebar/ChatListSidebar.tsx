@@ -1,3 +1,4 @@
+import { Transition } from '@headlessui/react';
 import React from 'react';
 import BellIcon from '~/svgs/BellIcon';
 import LeftArrowIcon from '~/svgs/LeftArrowIcon';
@@ -6,12 +7,12 @@ import { cn } from '~/utils/classname';
 import ChatRoom, { ChatRoomProps } from './ChatRoom';
 
 export type ChatListSidebarProps = {
+  className?: string;
   chatRooms: ChatRoomProps[];
   isOpen: boolean;
   onClose: () => void;
   onExit: () => void;
-  onNotification: () => void;
-  className?: string;
+  onNotificationClick?: () => void;
 };
 
 const ChatListSidebar: React.FC<ChatListSidebarProps> = ({
@@ -19,29 +20,29 @@ const ChatListSidebar: React.FC<ChatListSidebarProps> = ({
   isOpen,
   onClose,
   onExit,
-  onNotification,
+  onNotificationClick,
   className,
 }) => {
   return (
-    <div
+    <Transition
       className={cn(
-        'bg-gray-1 h-full w-full pt-4 pr-4.5 pb-3.5 pl-4 shadow-lg transition-transform duration-300 ease-in-out',
-        isOpen ? 'translate-x-0' : '-translate-x-full',
+        'bg-gray-1 flex size-full max-w-1/3 min-w-xs flex-col p-4 shadow-lg transition-transform duration-300 ease-in-out',
         className,
       )}
+      as="div"
+      show={isOpen}
+      enterFrom="translate-x-full"
+      enterTo="translate-x-0"
+      leaveFrom="translate-x-0"
+      leaveTo="translate-x-full"
     >
-      <div className="flex items-center justify-start">
-        <button
-          onClick={onClose}
-          className="mr-2 flex size-6 items-center justify-center"
-          aria-label="뒤로가기"
-        >
-          <LeftArrowIcon className="size-4" />
-        </button>
-        <div className="font-base text-2xl font-semibold text-white">
-          채팅방 이동
-        </div>
-      </div>
+      <button
+        className="flex w-fit cursor-pointer items-center justify-start gap-x-2"
+        onClick={onClose}
+      >
+        <LeftArrowIcon className="size-4" />
+        <div className="text-2xl font-semibold text-white">채팅방 이동</div>
+      </button>
 
       <div className="scrollbar-hide mt-6 flex-1 divide-y divide-white/10 overflow-y-auto">
         {chatRooms.map((chat, index) => {
@@ -69,23 +70,18 @@ const ChatListSidebar: React.FC<ChatListSidebarProps> = ({
         })}
       </div>
 
-      <div className="mt-11.5 flex items-center justify-between">
-        <button
-          onClick={onExit}
-          className="flex size-6 items-center justify-center"
-          aria-label="나가기"
-        >
-          <OutIcon className="size-5" />
+      <section className="flex items-center justify-between">
+        <button className="size-6 cursor-pointer fill-white" onClick={onExit}>
+          <OutIcon />
         </button>
         <button
-          onClick={onNotification}
-          className="flex size-6 items-center justify-center"
-          aria-label="알림"
+          className="h-5.5 w-4.5 cursor-pointer fill-white"
+          onClick={onNotificationClick}
         >
-          <BellIcon className="h-5.5 w-4.5" />
+          <BellIcon />
         </button>
-      </div>
-    </div>
+      </section>
+    </Transition>
   );
 };
 

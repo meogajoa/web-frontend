@@ -24,7 +24,7 @@ export const defaultInitState: GameState = {
     eliminated: true,
   },
   otherUsers: Object.values(UserNumber)
-    .filter((key) => typeof UserNumber[key as UserNumber] === 'number')
+    .filter((key) => typeof key === 'number' && key >= 1 && key <= 8)
     .reduce(
       (acc, key) => ({
         ...acc,

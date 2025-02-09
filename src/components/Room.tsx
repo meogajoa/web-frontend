@@ -19,6 +19,7 @@ import {
   GameUsersNotice,
   Team,
   UserGameInfo,
+  UserNumber,
 } from '~/types/game';
 import { cn } from '~/utils/classname';
 
@@ -30,7 +31,7 @@ const Room: React.FC<Props> = ({ className }) => {
   const { id, isPlaying, setIsPlaying, setCurrentChatRoom } = useRoom();
   const [canStartGame, setCanStartGame] = React.useState(isPlaying);
   const { account } = useAccount();
-  const { user, setUser, setTime } = useGame();
+  const { user, setUser, setUserByNumber, setTime } = useGame();
 
   useRoomSystemNotice({
     variables: { id },
@@ -103,7 +104,21 @@ const Room: React.FC<Props> = ({ className }) => {
   }
 
   function handleGameUsersNotice(gameUsersNotice: GameUsersNotice) {
-    // TODO: update user list
+    Object.values(UserNumber).forEach((_number) => {
+      const number = Number(_number);
+      if (number === UserNumber.Invalid || number <= 0 || number >= 9) {
+        return;
+      }
+
+      const isBlack = gameUsersNotice.blackTeam.includes(number);
+      const isEliminated = gameUsersNotice.eliminated.includes(number);
+
+      setUserByNumber(number, {
+        eliminated: isEliminated,
+        team: isBlack ? Team.Black : Team.White,
+        number,
+      });
+    });
   }
 };
 

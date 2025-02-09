@@ -1,6 +1,8 @@
 import { MinusIcon, PlusIcon } from '@heroicons/react/24/outline';
+import { noop } from 'lodash-es';
 import { useTranslations } from 'next-intl';
 import React from 'react';
+import ChatListSidebar from '~/components/ChatListSidebar/ChatListSidebar';
 import { useGame } from '~/providers/GameProvider';
 import { useRoom } from '~/providers/RoomProvider';
 import CartFillIcon from '~/svgs/CartFillIcon';
@@ -17,6 +19,8 @@ const RoomHeaderGame = React.memo<Props>(({ className }) => {
   const { nthDay, time, user } = useGame();
   const { currentChatRoom } = useRoom();
 
+  const [sidebarVisible, setSidebarVisible] = React.useState(false);
+
   const timeLabel =
     time === GameTime.Day
       ? t('header.day')
@@ -25,36 +29,53 @@ const RoomHeaderGame = React.memo<Props>(({ className }) => {
         : 'Invalid Time';
 
   return (
-    <header
-      className={cn(
-        'border-b-gray-5/60 relative flex h-[5.5rem] items-center justify-between border-b-2 px-4',
-        user.team === Team.Black && 'border-b-gray-2/20',
-        className,
-      )}
-    >
-      <div className="z-10 flex items-center gap-x-2">
-        <p className="text-2xl font-semibold">
-          {`${nthDay}${t('header.nth')} ${timeLabel}`}
-        </p>
+    <>
+      <header
+        className={cn(
+          'border-b-gray-5/60 relative flex h-[5.5rem] items-center justify-between border-b-2 px-4',
+          user.team === Team.Black && 'border-b-gray-2/20',
+          className,
+        )}
+      >
+        <div className="z-10 flex items-center gap-x-2">
+          <p className="text-2xl font-semibold">
+            {`${nthDay}${t('header.nth')} ${timeLabel}`}
+          </p>
 
-        <p className="text-sm">{t(`chatRoomType.${currentChatRoom}`)}</p>
-      </div>
+          <p className="text-sm">{t(`chatRoomType.${currentChatRoom}`)}</p>
+        </div>
 
-      <div className="z-10 flex items-center gap-x-6">
-        <span className="text-lg font-bold">₩{user.money}</span>
+        <div className="z-10 flex items-center gap-x-6">
+          <span className="text-lg font-bold">₩{user.money}</span>
 
-        <button>
-          <CartFillIcon className="fill-gray-1 size-6" />
-        </button>
+          <button>
+            <CartFillIcon className="fill-gray-1 size-6" />
+          </button>
 
-        <button>
-          <ChatIcon className="fill-gray-1 size-6" />
-        </button>
-      </div>
+          <button onClick={handleSidebarClick(true)}>
+            <ChatIcon className="fill-gray-1 size-6" />
+          </button>
+        </div>
 
-      <Timer className="absolute bottom-0 left-1/2 z-50 -translate-x-1/2 translate-y-1/2" />
-    </header>
+        <Timer className="absolute bottom-0 left-1/2 z-30 -translate-x-1/2 translate-y-1/2" />
+      </header>
+
+      <ChatListSidebar
+        className="absolute top-0 right-0 z-40"
+        chatRooms={[]}
+        isOpen={sidebarVisible}
+        onClose={handleSidebarClick(false)}
+        onExit={noop}
+        onNotificationClick={noop}
+      />
+    </>
   );
+
+  function handleSidebarClick(visible: boolean) {
+    return () => {
+      setSidebarVisible(visible);
+    };
+  }
 });
 RoomHeaderGame.displayName = 'RoomHeaderGame';
 
