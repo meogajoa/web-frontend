@@ -8,9 +8,6 @@ import { AxiosError } from 'axios';
 import React from 'react';
 import { useSubscription } from 'react-stomp-hooks';
 import { z } from 'zod';
-import { useStore } from 'zustand';
-import { RoomStoreContext } from '~/providers/RoomProvider';
-import { RoomStore } from '~/stores/room';
 import { username } from '~/types/account';
 import {
   createRoomResponse,
@@ -24,21 +21,9 @@ import {
   type JoinRoomRequest,
   type PaginatedRoomsResponse,
 } from '~/types/room';
-import { assert } from '~/utils/assert';
 import { server } from '~/utils/axios';
 import { A_MINUTE, A_SECOND } from '~/utils/constants';
 import { sleep } from '~/utils/misc';
-
-export const useRoomStore = <T>(selector: (store: RoomStore) => T): T => {
-  const roomStoreContext = React.useContext(RoomStoreContext);
-  assert(roomStoreContext, 'useRoomStore must be used within roomProvider');
-
-  return useStore(roomStoreContext, selector);
-};
-
-export const useRoom = () => {
-  return useRoomStore((store) => store);
-};
 
 export const useInfiniteRooms = () => {
   const _queryRoomsAsync = React.useCallback(
@@ -149,9 +134,11 @@ export const useRoomUsersNotice = ({
   const [users, setUsers] = React.useState<string[]>([]);
 
   useSubscription(`/topic/room/${id}/notice/users`, ({ body }) => {
-    const data = JSON.parse(body);
-    const users = z.array(username).parse(data);
+    const jsonBody = JSON.parse(body);
+    const users = z.array(username).parse(jsonBody);
     setUsers(users);
+
+    console.debug(`/topic/room/${id}/notice/users: `, users);
   });
 
   return { users };
@@ -165,8 +152,10 @@ export const useRoomSystemNotice = ({
   onGameStart?: () => void;
 }) => {
   useSubscription(`/topic/room/${id}/notice/system`, ({ body }) => {
-    const json = JSON.parse(body);
-    const notice = roomSystemNotice.parse(json);
+    const jsonBody = JSON.parse(body);
+    const notice = roomSystemNotice.parse(jsonBody);
+
+    console.debug(`/topic/room/${id}/notice/system: `, notice);
 
     switch (notice.type) {
       case RoomSystemNoticeType.GameStart:

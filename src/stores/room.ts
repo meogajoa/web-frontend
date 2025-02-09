@@ -27,16 +27,14 @@ export const defaultInitState: RoomState = {
   title: '',
   hostNickname: '',
   isPlaying: false,
-  currentChatRoom: ChatRoom.All,
-  messagesByRoom: Object.values(ChatRoom)
-    .filter((key) => typeof ChatRoom[key as ChatRoom] === 'number')
-    .reduce(
-      (acc, key) => ({
-        ...acc,
-        [key]: [],
-      }),
-      {} as Record<ChatRoom, ChatMessage[]>,
-    ),
+  currentChatRoom: ChatRoom.Lobby,
+  messagesByRoom: Object.values(ChatRoom).reduce(
+    (acc, key) => ({
+      ...acc,
+      [key]: [],
+    }),
+    {} as Record<ChatRoom, ChatMessage[]>,
+  ),
 };
 
 export const createRoomStore = (initState: RoomState = defaultInitState) => {

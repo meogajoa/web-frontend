@@ -7,6 +7,7 @@ import Room from '~/components/Room';
 import { useJoinRoom } from '~/hooks/room';
 import { GameProvider } from '~/providers/GameProvider';
 import { RoomProvider } from '~/providers/RoomProvider';
+import { ChatRoom } from '~/types/chat';
 
 type Props = {
   params: Promise<{ id: string }>;
@@ -29,19 +30,15 @@ const RoomPage: React.FC<Props> = ({ params }) => {
           id={id}
           title={data.name}
           hostNickname={data.owner}
-          chatLogs={data.chatLogs}
+          isPlaying={data.playing}
+          lobbyChatLogs={data.chatLogs}
+          currentChatRoom={ChatRoom.Lobby}
         >
           <GameProvider>
             <Room />
           </GameProvider>
         </RoomProvider>
       )}
-
-      <style>{`
-        body {
-          background-color: var(--color-gray-6);
-        }
-      `}</style>
     </>
   );
 };

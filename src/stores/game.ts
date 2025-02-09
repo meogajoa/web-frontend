@@ -1,63 +1,69 @@
 import { createStore } from 'zustand/vanilla';
-import {
-  GameTime,
-  Player,
-  PlayerNumber,
-  PlayerNumberKey,
-  Team,
-} from '~/types/game';
+import { GameTime, Team, User, UserNumber } from '~/types/game';
 
 export type GameState = {
-  player: Player;
-  otherPlayers: Record<PlayerNumberKey, Player>;
+  user: User;
+  otherUsers: Record<UserNumber, User>;
   time: GameTime;
   nthDay: number;
+  whiteTeamUsers: UserNumber[];
+  blackTeamUsers: UserNumber[];
+  eliminatedUsers: UserNumber[];
 };
 
 export type GameActions = {
-  setPlayer: (player: Player) => void;
-  setPlayerByNumber: (playerNumber: PlayerNumber, player: Player) => void;
+  setUser: (user: User) => void;
+  setUserByNumber: (userNumber: UserNumber, user: User) => void;
   setTime: (time: GameTime) => void;
   setNthDay: (nthDay: number) => void;
+  setWhiteTeamUsers: (whiteTeamUsers: UserNumber[]) => void;
+  setBlackTeamUsers: (blackTeamUsers: UserNumber[]) => void;
+  setEliminatedUsers: (eliminatedUsers: UserNumber[]) => void;
 };
 
 export type GameStore = GameState & GameActions;
 
 export const defaultInitState: GameState = {
-  player: {
+  user: {
     team: Team.Invalid,
     number: 0,
-    alive: false,
+    eliminated: true,
   },
-  otherPlayers: Object.keys(PlayerNumber)
-    .filter((key) => Number.isNaN(Number(key)))
+  otherUsers: Object.values(UserNumber)
+    .filter((key) => typeof key === 'number' && key >= 1 && key <= 8)
     .reduce(
       (acc, key) => ({
         ...acc,
         [key]: {
           team: Team.Invalid,
           number: 0,
-          alive: false,
-        },
+          eliminated: true,
+        } as User,
       }),
-      {} as Record<PlayerNumberKey, Player>,
+      {} as Record<UserNumber, User>,
     ),
   time: GameTime.Invalid,
   nthDay: 0,
+  whiteTeamUsers: [],
+  blackTeamUsers: [],
+  eliminatedUsers: [],
 };
 
 export const createGameStore = (initState: GameState = defaultInitState) => {
   return createStore<GameStore>()((set) => ({
     ...initState,
-    setPlayer: (player) => set({ player }),
-    setPlayerByNumber: (playerNumber, player) =>
+    setUser: (user) => set({ user }),
+    setUserByNumber: (userNumber, user) =>
       set((state) => ({
-        otherPlayers: {
-          ...state.otherPlayers,
-          [playerNumber]: player,
+        otherUsers: {
+          ...state.otherUsers,
+          [userNumber]: user,
         },
       })),
     setTime: (time) => set({ time }),
     setNthDay: (nthDay) => set({ nthDay }),
+    setWhiteTeamUsers: (whiteTeamUsers) => set({ whiteTeamUsers }),
+    setBlackTeamUsers: (blackTeamUsers) => set({ blackTeamUsers }),
+    setEliminatedUsers: (eliminatedUsers) => set({ eliminatedUsers }),
   }));
 };

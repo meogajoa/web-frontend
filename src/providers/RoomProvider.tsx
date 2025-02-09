@@ -1,27 +1,33 @@
 'use client';
 
 import React, { PropsWithChildren } from 'react';
-import { createRoomStore, defaultInitState } from '~/stores/room';
-import { ChatMessage, ChatRoom } from '~/types/chat';
+import { useStore } from 'zustand';
+import {
+  createRoomStore,
+  defaultInitState,
+  RoomState,
+  RoomStore,
+} from '~/stores/room';
+import { ChatMessage } from '~/types/chat';
 import { Nullable } from '~/types/misc';
+import { assert } from '~/utils/assert';
 
 export type RoomStoreApi = ReturnType<typeof createRoomStore>;
 
 export const RoomStoreContext =
   React.createContext<Nullable<RoomStoreApi>>(null);
 
-type Props = {
-  id: string;
-  title: string;
-  hostNickname: string;
-  chatLogs: ChatMessage[];
+type Props = Omit<RoomState, 'messagesByRoom'> & {
+  lobbyChatLogs: ChatMessage[];
 };
 
 export const RoomProvider: React.FC<PropsWithChildren<Props>> = ({
   id,
   title,
   hostNickname,
-  chatLogs,
+  isPlaying,
+  currentChatRoom,
+  lobbyChatLogs,
   children,
 }) => {
   const storeRef = React.useRef<RoomStoreApi>();
@@ -31,7 +37,9 @@ export const RoomProvider: React.FC<PropsWithChildren<Props>> = ({
     initialState.id = id;
     initialState.title = title;
     initialState.hostNickname = hostNickname;
-    initialState.messagesByRoom[ChatRoom.All] = chatLogs;
+    initialState.isPlaying = isPlaying;
+    initialState.currentChatRoom = currentChatRoom;
+    initialState.messagesByRoom[currentChatRoom] = lobbyChatLogs;
 
     storeRef.current = createRoomStore(initialState);
   }
@@ -41,4 +49,15 @@ export const RoomProvider: React.FC<PropsWithChildren<Props>> = ({
       {children}
     </RoomStoreContext.Provider>
   );
+};
+
+export const useRoomStore = <T,>(selector: (store: RoomStore) => T): T => {
+  const roomStoreContext = React.useContext(RoomStoreContext);
+  assert(roomStoreContext, 'useRoomStore must be used within <RoomProvider />');
+
+  return useStore(roomStoreContext, selector);
+};
+
+export const useRoom = () => {
+  return useRoomStore((store) => store);
 };

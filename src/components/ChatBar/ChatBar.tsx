@@ -1,4 +1,3 @@
-import { Button as HeadlessuiButton } from '@headlessui/react';
 import { PlusCircleIcon } from '@heroicons/react/24/outline';
 import React from 'react';
 import CustomTextarea, { TextareaHandle } from '~/components/CustomTextarea';
@@ -35,12 +34,12 @@ const MenuButton: React.FC<MenuButtonProps> = ({
   onMenuClick: handleMenuClick,
 }) => {
   return (
-    <HeadlessuiButton
+    <button
       className={cn('size-6 cursor-pointer', className)}
       onClick={handleMenuClick}
     >
       <PlusCircleIcon className="stroke-gray-1 size-full" />
-    </HeadlessuiButton>
+    </button>
   );
 };
 
@@ -73,7 +72,7 @@ const SendButton: React.FC<SendButtonProps> = ({
   onSendClick: handleSend,
 }) => {
   return (
-    <HeadlessuiButton
+    <button
       className={cn(
         'size-5.5 cursor-pointer transition-transform duration-300 hover:rotate-45',
         className,
@@ -81,7 +80,7 @@ const SendButton: React.FC<SendButtonProps> = ({
       onClick={handleSend}
     >
       <MessageSendIcon className="stroke-gray-1 size-full" />
-    </HeadlessuiButton>
+    </button>
   );
 };
 

@@ -32,7 +32,7 @@ export const useAccountStore = <T,>(
   const accountStoreContext = React.useContext(AccountStoreContext);
   assert(
     accountStoreContext,
-    'useAccountStore must be used within AccountStoreProvider',
+    'useAccountStore must be used within <AccountStoreProvider />',
   );
 
   return useStore(accountStoreContext, selector);

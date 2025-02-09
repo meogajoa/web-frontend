@@ -4,7 +4,9 @@ import { useStompClient } from 'react-stomp-hooks';
 import { ChatBar } from '~/components/ChatBar';
 import { TextareaHandle } from '~/components/CustomTextarea';
 import { useSessionId } from '~/hooks/account';
-import { useRoom } from '~/hooks/room';
+import { useRoom } from '~/providers/RoomProvider';
+import { ChatRoom } from '~/types/chat';
+import { assert } from '~/utils/assert';
 import { cn } from '~/utils/classname';
 
 type Props = {
@@ -15,9 +17,8 @@ type Props = {
 const RoomChatBar = React.memo<Props>(({ className, renderPlaceholder }) => {
   const textareaRef = React.useRef<TextareaHandle>(null);
   const stompClient = useStompClient();
-
   const sessionId = useSessionId();
-  const { id } = useRoom();
+  const { id, currentChatRoom } = useRoom();
 
   return (
     <>
@@ -49,7 +50,7 @@ const RoomChatBar = React.memo<Props>(({ className, renderPlaceholder }) => {
       headers: {
         Authorization: sessionId,
       },
-      destination: `/app/room/${id}/chat`,
+      destination: getMessageDestination(currentChatRoom),
       body: JSON.stringify({ type: 'CHAT', content: message }),
     });
   }
@@ -63,6 +64,25 @@ const RoomChatBar = React.memo<Props>(({ className, renderPlaceholder }) => {
     ) {
       event.preventDefault();
       handleSend();
+    }
+  }
+
+  function getMessageDestination(chatRoom: ChatRoom) {
+    switch (chatRoom) {
+      case ChatRoom.Black:
+        return `/app/game/${id}/chat/black`;
+      case ChatRoom.White:
+        return `/app/game/${id}/chat/white`;
+      case ChatRoom.Eliminated:
+        return `/app/game/${id}/chat/eliminated`;
+      case ChatRoom.General:
+        return `/app/game/${id}/chat`;
+      case ChatRoom.Lobby:
+        return `/app/room/${id}/chat`;
+      default:
+        const number = Number(chatRoom);
+        assert(number >= 1 && number <= 8, `Invalid chat room: ${chatRoom}`);
+        return `/app/game/${id}/user/${chatRoom}/chat`;
     }
   }
 });
