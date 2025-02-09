@@ -31,7 +31,15 @@ const Room: React.FC<Props> = ({ className }) => {
   const { id, isPlaying, setIsPlaying, setCurrentChatRoom } = useRoom();
   const [canStartGame, setCanStartGame] = React.useState(isPlaying);
   const { account } = useAccount();
-  const { user, setUser, setUserByNumber, setTime } = useGame();
+  const {
+    user,
+    setUser,
+    setUserByNumber,
+    setTime,
+    setWhiteTeamUsers,
+    setBlackTeamUsers,
+    setEliminatedUsers,
+  } = useGame();
 
   useRoomSystemNotice({
     variables: { id },
@@ -119,6 +127,10 @@ const Room: React.FC<Props> = ({ className }) => {
         number,
       });
     });
+
+    setWhiteTeamUsers(gameUsersNotice.whiteTeam);
+    setBlackTeamUsers(gameUsersNotice.blackTeam);
+    setEliminatedUsers(gameUsersNotice.eliminated);
   }
 };
 

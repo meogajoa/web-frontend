@@ -1,8 +1,7 @@
 import { MinusIcon, PlusIcon } from '@heroicons/react/24/outline';
-import { noop } from 'lodash-es';
 import { useTranslations } from 'next-intl';
 import React from 'react';
-import ChatListSidebar from '~/components/ChatListSidebar/ChatListSidebar';
+import { ChatRoomListSidebar } from '~/components/ChatRoomList';
 import { useGame } from '~/providers/GameProvider';
 import { useRoom } from '~/providers/RoomProvider';
 import CartFillIcon from '~/svgs/CartFillIcon';
@@ -48,11 +47,11 @@ const RoomHeaderGame = React.memo<Props>(({ className }) => {
         <div className="z-10 flex items-center gap-x-6">
           <span className="text-lg font-bold">₩{user.money}</span>
 
-          <button>
+          <button className="cursor-pointer">
             <CartFillIcon className="fill-gray-1 size-6" />
           </button>
 
-          <button onClick={handleSidebarClick(true)}>
+          <button className="cursor-pointer" onClick={handleSidebarClick(true)}>
             <ChatIcon className="fill-gray-1 size-6" />
           </button>
         </div>
@@ -60,13 +59,9 @@ const RoomHeaderGame = React.memo<Props>(({ className }) => {
         <Timer className="absolute bottom-0 left-1/2 z-30 -translate-x-1/2 translate-y-1/2" />
       </header>
 
-      <ChatListSidebar
-        className="absolute top-0 right-0 z-40"
-        chatRooms={[]}
-        isOpen={sidebarVisible}
+      <ChatRoomListSidebar
+        isVisible={sidebarVisible}
         onClose={handleSidebarClick(false)}
-        onExit={noop}
-        onNotificationClick={noop}
       />
     </>
   );

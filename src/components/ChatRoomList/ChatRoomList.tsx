@@ -1,0 +1,83 @@
+import React from 'react';
+import BellIcon from '~/svgs/BellIcon';
+import LeftArrowIcon from '~/svgs/LeftArrowIcon';
+import OutIcon from '~/svgs/OutIcon';
+import { cn } from '~/utils/classname';
+import ChatRoom, { ChatRoomProps } from './ChatRoom';
+
+export type Props = {
+  className?: string;
+  rooms: ChatRoomProps[];
+  onClose: () => void;
+  onExit: () => void;
+  onNotificationClick?: () => void;
+};
+
+const ChatRoomList: React.FC<Props> = ({
+  className,
+  rooms,
+  onClose,
+  onExit,
+  onNotificationClick,
+}) => {
+  return (
+    <div className={cn('bg-gray-1 flex size-full flex-col px-4', className)}>
+      <button
+        className="flex w-fit cursor-pointer items-center justify-start gap-x-2 py-4"
+        onClick={onClose}
+      >
+        <LeftArrowIcon className="size-4" />
+        <div className="text-2xl font-semibold text-white">채팅방 이동</div>
+      </button>
+
+      <ul
+        className="scrollbar-hide flex-1 divide-y divide-white/10 overflow-y-auto"
+        onClick={onClose}
+      >
+        {rooms.map((room, index) => {
+          if (room.type === 'group' && 'groupImages' in room) {
+            return (
+              <li key={index}>
+                <ChatRoom
+                  type={room.type}
+                  title={room.title}
+                  content={room.content}
+                  groupImages={room.groupImages as string[]}
+                  notice={room.notice}
+                  onClick={room.onClick}
+                />
+              </li>
+            );
+          } else if (room.type === 'personal' && 'image' in room) {
+            return (
+              <li key={index}>
+                <ChatRoom
+                  type={room.type}
+                  title={room.title}
+                  content={room.content}
+                  image={room.image as string}
+                  notice={room.notice}
+                  onClick={room.onClick}
+                />
+              </li>
+            );
+          }
+        })}
+      </ul>
+
+      <section className="flex items-center justify-between py-4">
+        <button className="size-6 cursor-pointer fill-white" onClick={onExit}>
+          <OutIcon />
+        </button>
+        <button
+          className="h-5.5 w-4.5 cursor-pointer fill-white"
+          onClick={onNotificationClick}
+        >
+          <BellIcon />
+        </button>
+      </section>
+    </div>
+  );
+};
+
+export default ChatRoomList;

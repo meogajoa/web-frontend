@@ -5,20 +5,20 @@ import { username } from '~/types/account';
  * Chat Room Kind
  */
 export enum ChatRoom {
-  Lobby = 'Lobby',
-  User01 = 'User01',
-  User02 = 'User02',
-  User03 = 'User03',
-  User04 = 'User04',
-  User05 = 'User05',
-  User06 = 'User06',
-  User07 = 'User07',
-  User08 = 'User08',
-  Personal = 'Personal',
-  General = 'General',
-  Black = 'Black',
-  White = 'White',
-  Eliminated = 'Eliminated',
+  Lobby = 'lobby',
+  User01 = 1,
+  User02 = 2,
+  User03 = 3,
+  User04 = 4,
+  User05 = 5,
+  User06 = 6,
+  User07 = 7,
+  User08 = 8,
+  Personal = 'personal',
+  General = 'general',
+  Black = 'black',
+  White = 'white',
+  Eliminated = 'eliminated',
 }
 
 /**
