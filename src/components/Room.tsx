@@ -17,9 +17,8 @@ type Props = {
 };
 
 const Room: React.FC<Props> = ({ className }) => {
-  const [canStartGame, setCanStartGame] = React.useState(false);
-
   const { id, isPlaying, setIsPlaying, setCurrentChatRoom } = useRoom();
+  const [canStartGame, setCanStartGame] = React.useState(isPlaying);
   const { account } = useAccount();
   const { player, setPlayer } = useGame();
 

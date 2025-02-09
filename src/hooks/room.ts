@@ -137,6 +137,8 @@ export const useRoomUsersNotice = ({
     const jsonBody = JSON.parse(body);
     const users = z.array(username).parse(jsonBody);
     setUsers(users);
+
+    console.debug(`/topic/room/${id}/notice/users: `, users);
   });
 
   return { users };
