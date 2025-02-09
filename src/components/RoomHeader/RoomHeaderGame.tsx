@@ -14,7 +14,7 @@ type Props = {
 
 const RoomHeaderGame = React.memo<Props>(({ className }) => {
   const t = useTranslations('roomRoute');
-  const { nthDay, time, player } = useGame();
+  const { nthDay, time, user } = useGame();
   const { currentChatRoom } = useRoom();
 
   const timeLabel =
@@ -28,7 +28,7 @@ const RoomHeaderGame = React.memo<Props>(({ className }) => {
     <header
       className={cn(
         'border-b-gray-5/60 relative flex h-[5.5rem] items-center justify-between border-b-2 px-4',
-        player.team === Team.Black && 'border-b-gray-2/20',
+        user.team === Team.Black && 'border-b-gray-2/20',
         className,
       )}
     >
@@ -55,13 +55,13 @@ const RoomHeaderGame = React.memo<Props>(({ className }) => {
       <div
         className={cn(
           'bg-gray-6 absolute bottom-0 left-1/2 z-50 flex -translate-x-1/2 translate-y-1/2 gap-x-1 rounded-full p-1',
-          player.team === Team.Black && 'bg-gray-3',
+          user.team === Team.Black && 'bg-gray-3',
         )}
       >
         <button
           className={cn(
             'bg-gray-6 ring-gray-5/60 rounded-full ring drop-shadow-sm',
-            player.team === Team.Black && 'bg-gray-3 ring-gray-2/30',
+            user.team === Team.Black && 'bg-gray-3 ring-gray-2/30',
           )}
           onClick={handleMinusClick}
         >
@@ -75,7 +75,7 @@ const RoomHeaderGame = React.memo<Props>(({ className }) => {
         <button
           className={cn(
             'bg-gray-6 ring-gray-5/60 rounded-full ring drop-shadow-sm',
-            player.team === Team.Black && 'bg-gray-3 ring-gray-2/30',
+            user.team === Team.Black && 'bg-gray-3 ring-gray-2/30',
           )}
           onClick={handlePlusClick}
         >

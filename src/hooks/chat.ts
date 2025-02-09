@@ -24,7 +24,7 @@ export const useChatMessages = ({
 }) => {
   const { account } = useAccount();
   const { id, messagesByRoom, addMessage, isPlaying } = useRoom();
-  const { player } = useGame();
+  const { user } = useGame();
 
   useSubscription(
     compact([
@@ -44,26 +44,26 @@ export const useChatMessages = ({
   useSubscription(
     compact([
       // in-game general
-      isPlaying && !player.eliminated && `/topic/game/${id}/chat`,
+      isPlaying && !user.eliminated && `/topic/game/${id}/chat`,
 
       // in-game black
       isPlaying &&
-        !player.eliminated &&
-        (player.team === Team.Black || player.isSpy) &&
+        !user.eliminated &&
+        (user.team === Team.Black || user.isSpy) &&
         `/topic/game/${id}/chat/black`,
 
       // in-game white
       isPlaying &&
-        !player.eliminated &&
-        (player.team === Team.White || player.isSpy) &&
+        !user.eliminated &&
+        (user.team === Team.White || user.isSpy) &&
         `/topic/game/${id}/chat/white`,
 
       // in-game eliminated
-      isPlaying && player.eliminated && `/topic/game/${id}/chat/eliminated`,
+      isPlaying && user.eliminated && `/topic/game/${id}/chat/eliminated`,
 
       // in-game personal
       isPlaying &&
-        !player.eliminated &&
+        !user.eliminated &&
         `/topic/user/${account.nickname}/gameChat`,
     ]),
     ({ headers, body }) => {

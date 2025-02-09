@@ -30,7 +30,7 @@ const Room: React.FC<Props> = ({ className }) => {
   const { id, isPlaying, setIsPlaying, setCurrentChatRoom } = useRoom();
   const [canStartGame, setCanStartGame] = React.useState(isPlaying);
   const { account } = useAccount();
-  const { player, setPlayer, setTime } = useGame();
+  const { user, setUser, setTime } = useGame();
 
   useRoomSystemNotice({
     variables: { id },
@@ -62,7 +62,7 @@ const Room: React.FC<Props> = ({ className }) => {
     <div
       className={cn(
         'bg-gray-6 flex h-full flex-col',
-        player.team === Team.Black && 'bg-gray-3',
+        user.team === Team.Black && 'bg-gray-3',
         className,
       )}
     >
@@ -83,7 +83,7 @@ const Room: React.FC<Props> = ({ className }) => {
   function handleUserGameInfo(gameInfo: UserGameInfo) {
     setIsPlaying(true);
     setCurrentChatRoom(ChatRoom.General);
-    setPlayer({
+    setUser({
       team: gameInfo.teamColor,
       number: gameInfo.number,
       eliminated: gameInfo.eliminated,
@@ -103,7 +103,7 @@ const Room: React.FC<Props> = ({ className }) => {
   }
 
   function handleGameUsersNotice(gameUsersNotice: GameUsersNotice) {
-    // TODO: update players list
+    // TODO: update user list
   }
 };
 

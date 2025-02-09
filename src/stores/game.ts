@@ -1,22 +1,16 @@
 import { createStore } from 'zustand/vanilla';
-import {
-  GameTime,
-  Player,
-  PlayerNumber,
-  PlayerNumberKey,
-  Team,
-} from '~/types/game';
+import { GameTime, Team, User, UserNumber } from '~/types/game';
 
 export type GameState = {
-  player: Player;
-  otherPlayers: Record<PlayerNumberKey, Player>;
+  user: User;
+  otherUsers: Record<UserNumber, User>;
   time: GameTime;
   nthDay: number;
 };
 
 export type GameActions = {
-  setPlayer: (player: Player) => void;
-  setPlayerByNumber: (playerNumber: PlayerNumber, player: Player) => void;
+  setUser: (user: User) => void;
+  setUserByNumber: (userNumber: UserNumber, user: User) => void;
   setTime: (time: GameTime) => void;
   setNthDay: (nthDay: number) => void;
 };
@@ -24,13 +18,13 @@ export type GameActions = {
 export type GameStore = GameState & GameActions;
 
 export const defaultInitState: GameState = {
-  player: {
+  user: {
     team: Team.Invalid,
     number: 0,
     eliminated: true,
   },
-  otherPlayers: Object.values(PlayerNumber)
-    .filter((key) => typeof PlayerNumber[key as PlayerNumber] === 'number')
+  otherUsers: Object.values(UserNumber)
+    .filter((key) => typeof UserNumber[key as UserNumber] === 'number')
     .reduce(
       (acc, key) => ({
         ...acc,
@@ -38,9 +32,9 @@ export const defaultInitState: GameState = {
           team: Team.Invalid,
           number: 0,
           eliminated: true,
-        } as Player,
+        } as User,
       }),
-      {} as Record<PlayerNumberKey, Player>,
+      {} as Record<UserNumber, User>,
     ),
   time: GameTime.Invalid,
   nthDay: 0,
@@ -49,12 +43,12 @@ export const defaultInitState: GameState = {
 export const createGameStore = (initState: GameState = defaultInitState) => {
   return createStore<GameStore>()((set) => ({
     ...initState,
-    setPlayer: (player) => set({ player }),
-    setPlayerByNumber: (playerNumber, player) =>
+    setUser: (user) => set({ user }),
+    setUserByNumber: (userNumber, user) =>
       set((state) => ({
-        otherPlayers: {
-          ...state.otherPlayers,
-          [playerNumber]: player,
+        otherUsers: {
+          ...state.otherUsers,
+          [userNumber]: user,
         },
       })),
     setTime: (time) => set({ time }),

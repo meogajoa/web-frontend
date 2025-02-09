@@ -12,9 +12,9 @@ export enum Team {
 export const teamColor = z.nativeEnum(Team);
 
 /**
- * Player
+ * User (in-game data)
  */
-export type Player = {
+export type User = {
   team: Team;
   number: number;
   eliminated: boolean;
@@ -23,7 +23,7 @@ export type Player = {
   profimeImageSrc?: string;
 };
 
-export enum PlayerNumber {
+export enum UserNumber {
   Invalid,
   One,
   Two,
@@ -35,7 +35,7 @@ export enum PlayerNumber {
   Eight,
 }
 
-export type PlayerNumberKey = keyof typeof PlayerNumber;
+export type UserNumberKey = keyof typeof UserNumber;
 
 /**
  * Game Time
