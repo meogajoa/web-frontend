@@ -5,7 +5,7 @@ import { useGame } from '~/providers/GameProvider';
 import { useRoom } from '~/providers/RoomProvider';
 import CartFillIcon from '~/svgs/CartFillIcon';
 import ChatIcon from '~/svgs/ChatIcon';
-import { GameTime } from '~/types/game';
+import { GameTime, Team } from '~/types/game';
 import { cn } from '~/utils/classname';
 
 type Props = {
@@ -14,7 +14,7 @@ type Props = {
 
 const RoomHeaderGame = React.memo<Props>(({ className }) => {
   const t = useTranslations('roomRoute');
-  const { nthDay, time } = useGame();
+  const { nthDay, time, player } = useGame();
   const { currentChatRoom } = useRoom();
 
   const timeLabel =
@@ -27,7 +27,8 @@ const RoomHeaderGame = React.memo<Props>(({ className }) => {
   return (
     <header
       className={cn(
-        'relative flex h-[5.5rem] items-center justify-between px-4',
+        'border-b-gray-5/60 relative flex h-[5.5rem] items-center justify-between border-b-2 px-4',
+        player.team === Team.Black && 'border-b-gray-2/20',
         className,
       )}
     >
@@ -51,11 +52,17 @@ const RoomHeaderGame = React.memo<Props>(({ className }) => {
         </button>
       </div>
 
-      <BottomShadow />
-
-      <div className="absolute bottom-0 left-1/2 z-50 flex -translate-x-1/2 translate-y-1/2 gap-x-1 rounded-full p-1">
+      <div
+        className={cn(
+          'bg-gray-6 absolute bottom-0 left-1/2 z-50 flex -translate-x-1/2 translate-y-1/2 gap-x-1 rounded-full p-1',
+          player.team === Team.Black && 'bg-gray-3',
+        )}
+      >
         <button
-          className="b rounded-full drop-shadow-lg"
+          className={cn(
+            'bg-gray-6 ring-gray-5/60 rounded-full ring drop-shadow-sm',
+            player.team === Team.Black && 'bg-gray-3 ring-gray-2/30',
+          )}
           onClick={handleMinusClick}
         >
           <MinusIcon className="fill-gray-1 size-6" />
@@ -66,7 +73,10 @@ const RoomHeaderGame = React.memo<Props>(({ className }) => {
         </span>
 
         <button
-          className={`b rounded-full drop-shadow-lg`}
+          className={cn(
+            'bg-gray-6 ring-gray-5/60 rounded-full ring drop-shadow-sm',
+            player.team === Team.Black && 'bg-gray-3 ring-gray-2/30',
+          )}
           onClick={handlePlusClick}
         >
           <PlusIcon className="fill-gray-1 size-6" />
@@ -84,12 +94,5 @@ const RoomHeaderGame = React.memo<Props>(({ className }) => {
   }
 });
 RoomHeaderGame.displayName = 'RoomHeaderGame';
-
-const BottomShadow: React.FC = () => (
-  <div
-    className="pointer-events-none absolute inset-0 size-full bg-inherit drop-shadow-lg"
-    aria-hidden
-  />
-);
 
 export default RoomHeaderGame;
