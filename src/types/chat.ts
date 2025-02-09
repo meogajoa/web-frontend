@@ -26,7 +26,7 @@ export enum ChatRoom {
  */
 export enum XChatRoom {
   Personal = 'PERSONAL',
-  General = 'GENERAL',
+  General = 'PUBLIC', // FIXME: expected to receive this as 'GENERAL'
   Black = 'BLACK',
   White = 'WHITE',
   Eliminated = 'ELIMINATED',

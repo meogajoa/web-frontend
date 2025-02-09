@@ -58,7 +58,7 @@ const ChatRoomListSidebar: React.FC<Props> = ({
             // Team Chat Room (White or Black)
             {
               type: 'group',
-              title: t(`chatRoomType.general`),
+              title: t(`chatRoomType.${user.team.toLowerCase()}`),
               groupImages: range(
                 user.team === Team.White
                   ? whiteTeamUsers.length

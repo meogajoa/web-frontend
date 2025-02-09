@@ -73,6 +73,8 @@ export type UserGameInfo = z.infer<typeof userGameInfo>;
 export enum GameSystemNoticeType {
   GameDayOrNight = 'GAME_DAY_OR_NIGHT',
   GameEnd = 'GAME_END',
+  ButtonGameStatus = 'BUTTON_GAME_STATUS',
+  MiniGameWillEndNotice = 'MINI_GAME_WILL_END_NOTICE',
 }
 export const gameSystemNoticeType = z.nativeEnum(GameSystemNoticeType);
 
