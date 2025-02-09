@@ -2,8 +2,13 @@
 
 import React, { PropsWithChildren } from 'react';
 import { useStore } from 'zustand';
-import { createRoomStore, defaultInitState, RoomStore } from '~/stores/room';
-import { ChatMessage, ChatRoom } from '~/types/chat';
+import {
+  createRoomStore,
+  defaultInitState,
+  RoomState,
+  RoomStore,
+} from '~/stores/room';
+import { ChatMessage } from '~/types/chat';
 import { Nullable } from '~/types/misc';
 import { assert } from '~/utils/assert';
 
@@ -12,20 +17,17 @@ export type RoomStoreApi = ReturnType<typeof createRoomStore>;
 export const RoomStoreContext =
   React.createContext<Nullable<RoomStoreApi>>(null);
 
-type Props = {
-  id: string;
-  title: string;
-  hostNickname: string;
-  chatLogs: ChatMessage[];
-  isPlaying: boolean;
+type Props = Omit<RoomState, 'messagesByRoom'> & {
+  lobbyChatLogs: ChatMessage[];
 };
 
 export const RoomProvider: React.FC<PropsWithChildren<Props>> = ({
   id,
   title,
   hostNickname,
-  chatLogs,
   isPlaying,
+  currentChatRoom,
+  lobbyChatLogs,
   children,
 }) => {
   const storeRef = React.useRef<RoomStoreApi>();
@@ -35,8 +37,9 @@ export const RoomProvider: React.FC<PropsWithChildren<Props>> = ({
     initialState.id = id;
     initialState.title = title;
     initialState.hostNickname = hostNickname;
-    initialState.messagesByRoom[ChatRoom.Lobby] = chatLogs;
     initialState.isPlaying = isPlaying;
+    initialState.currentChatRoom = currentChatRoom;
+    initialState.messagesByRoom[currentChatRoom] = lobbyChatLogs;
 
     storeRef.current = createRoomStore(initialState);
   }

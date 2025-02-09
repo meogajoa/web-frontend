@@ -12,6 +12,7 @@ import { useRoomSystemNotice } from '~/hooks/room';
 import { useAccount } from '~/providers/AccountProvider';
 import { useGame } from '~/providers/GameProvider';
 import { useRoom } from '~/providers/RoomProvider';
+import { useBodyBgColor } from '~/providers/ThemeProvider';
 import { ChatRoom } from '~/types/chat';
 import {
   GameDayOrNightSystemNotice,
@@ -40,6 +41,10 @@ const Room: React.FC<Props> = ({ className }) => {
     setBlackTeamUsers,
     setEliminatedUsers,
   } = useGame();
+
+  useBodyBgColor(
+    user.team === Team.Black ? 'var(--color-gray-3)' : 'var(--color-white)',
+  );
 
   useRoomSystemNotice({
     variables: { id },
