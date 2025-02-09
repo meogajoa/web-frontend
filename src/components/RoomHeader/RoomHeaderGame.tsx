@@ -52,37 +52,51 @@ const RoomHeaderGame = React.memo<Props>(({ className }) => {
         </button>
       </div>
 
-      <div
-        className={cn(
-          'bg-gray-6 absolute bottom-0 left-1/2 z-50 flex -translate-x-1/2 translate-y-1/2 gap-x-1 rounded-full p-1',
-          user.team === Team.Black && 'bg-gray-3',
-        )}
-      >
-        <button
-          className={cn(
-            'bg-gray-6 ring-gray-5/60 rounded-full ring drop-shadow-sm',
-            user.team === Team.Black && 'bg-gray-3 ring-gray-2/30',
-          )}
-          onClick={handleMinusClick}
-        >
-          <MinusIcon className="fill-gray-1 size-6" />
-        </button>
-
-        <span className="bg-gray-1 flex h-5.5 w-16 items-center justify-center rounded-full text-sm text-white">
-          00:20
-        </span>
-
-        <button
-          className={cn(
-            'bg-gray-6 ring-gray-5/60 rounded-full ring drop-shadow-sm',
-            user.team === Team.Black && 'bg-gray-3 ring-gray-2/30',
-          )}
-          onClick={handlePlusClick}
-        >
-          <PlusIcon className="fill-gray-1 size-6" />
-        </button>
-      </div>
+      <Timer className="absolute bottom-0 left-1/2 z-50 -translate-x-1/2 translate-y-1/2" />
     </header>
+  );
+});
+RoomHeaderGame.displayName = 'RoomHeaderGame';
+
+type TimerProps = {
+  className?: string;
+};
+
+const Timer: React.FC<TimerProps> = ({ className }) => {
+  const { user } = useGame();
+
+  return (
+    <div
+      className={cn(
+        'bg-gray-6 flex gap-x-1 rounded-full p-1',
+        user.team === Team.Black && 'bg-gray-3',
+        className,
+      )}
+    >
+      <button
+        className={cn(
+          'bg-gray-6 ring-gray-5/60 rounded-full ring drop-shadow-sm',
+          user.team === Team.Black && 'bg-gray-3 ring-gray-2/30',
+        )}
+        onClick={handleMinusClick}
+      >
+        <MinusIcon className="fill-gray-1 size-6" />
+      </button>
+
+      <span className="bg-gray-1 flex h-5.5 w-16 items-center justify-center rounded-full text-sm text-white">
+        00:20
+      </span>
+
+      <button
+        className={cn(
+          'bg-gray-6 ring-gray-5/60 rounded-full ring drop-shadow-sm',
+          user.team === Team.Black && 'bg-gray-3 ring-gray-2/30',
+        )}
+        onClick={handlePlusClick}
+      >
+        <PlusIcon className="fill-gray-1 size-6" />
+      </button>
+    </div>
   );
 
   function handleMinusClick() {
@@ -92,7 +106,6 @@ const RoomHeaderGame = React.memo<Props>(({ className }) => {
   function handlePlusClick() {
     console.log('plus');
   }
-});
-RoomHeaderGame.displayName = 'RoomHeaderGame';
+};
 
 export default RoomHeaderGame;
