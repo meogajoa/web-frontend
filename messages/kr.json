@@ -25,17 +25,19 @@
       "night": "밤"
     },
     "chatRoomType": {
-      "all": "전체 채팅방",
-      "white": "백팀 채팅방",
-      "black": "흑팀 채팅방",
-      "user01": "{username} 01",
-      "user02": "{username} 02",
-      "user03": "{username} 03",
-      "user04": "{username} 04",
-      "user05": "{username} 05",
-      "user06": "{username} 06",
-      "user07": "{username} 07",
-      "user08": "{username} 08"
+      "Lobby": "",
+      "Personal": "",
+      "General": "전체 채팅방",
+      "Black": "팀 채팅방",
+      "White": "팀 채팅방",
+      "User01": "1번 유저 채팅방",
+      "User02": "2번 유저 채팅방",
+      "User03": "3번 유저 채팅방",
+      "User04": "4번 유저 채팅방",
+      "User05": "5번 유저 채팅방",
+      "User06": "6번 유저 채팅방",
+      "User07": "7번 유저 채팅방",
+      "User08": "8번 유저 채팅방"
     }
   },
   "bottomNavigation": {

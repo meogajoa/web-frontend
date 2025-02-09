@@ -8,6 +8,7 @@ import { useRoomSystemNotice } from '~/hooks/room';
 import { useAccount } from '~/providers/AccountProvider';
 import { useGame } from '~/providers/GameProvider';
 import { useRoom } from '~/providers/RoomProvider';
+import { ChatRoom } from '~/types/chat';
 import { Team, UserGameInfo } from '~/types/game';
 import { cn } from '~/utils/classname';
 
@@ -18,7 +19,7 @@ type Props = {
 const Room: React.FC<Props> = ({ className }) => {
   const [canStartGame, setCanStartGame] = React.useState(false);
 
-  const { id, isPlaying, setIsPlaying } = useRoom();
+  const { id, isPlaying, setIsPlaying, setCurrentChatRoom } = useRoom();
   const { account } = useAccount();
   const { player, setPlayer } = useGame();
 
@@ -59,6 +60,7 @@ const Room: React.FC<Props> = ({ className }) => {
 
   function handleUserGameInfo(gameInfo: UserGameInfo) {
     setIsPlaying(true);
+    setCurrentChatRoom(ChatRoom.General);
     setPlayer({
       team: gameInfo.teamColor,
       number: gameInfo.number,

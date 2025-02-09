@@ -14,7 +14,7 @@ type Props = {
 
 const RoomHeaderGame = React.memo<Props>(({ className }) => {
   const t = useTranslations('roomRoute');
-  const { player, nthDay, time } = useGame();
+  const { nthDay, time } = useGame();
   const { currentChatRoom } = useRoom();
 
   const timeLabel =
@@ -36,9 +36,7 @@ const RoomHeaderGame = React.memo<Props>(({ className }) => {
           {`${nthDay}${t('header.nth')} ${timeLabel}`}
         </p>
 
-        <p className="text-sm">
-          {t(`chatRoomType.${currentChatRoom}`, { username: 'jeheecheon' })}
-        </p>
+        <p className="text-sm">{t(`chatRoomType.${currentChatRoom}`)}</p>
       </div>
 
       <div className="z-10 flex items-center gap-x-6">

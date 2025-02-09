@@ -2,20 +2,20 @@ import { z } from 'zod';
 import { username } from '~/types/account';
 
 export enum ChatRoom {
-  Lobby,
-  User01,
-  User02,
-  User03,
-  User04,
-  User05,
-  User06,
-  User07,
-  User08,
-  Personal,
-  General,
-  Black,
-  White,
-  Eliminated,
+  Lobby = 'Lobby',
+  User01 = 'User01',
+  User02 = 'User02',
+  User03 = 'User03',
+  User04 = 'User04',
+  User05 = 'User05',
+  User06 = 'User06',
+  User07 = 'User07',
+  User08 = 'User08',
+  Personal = 'Personal',
+  General = 'General',
+  Black = 'Black',
+  White = 'White',
+  Eliminated = 'Eliminated',
 }
 
 export enum XChatRoom {
