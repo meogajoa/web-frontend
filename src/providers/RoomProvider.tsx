@@ -17,6 +17,7 @@ type Props = {
   title: string;
   hostNickname: string;
   chatLogs: ChatMessage[];
+  isPlaying: boolean;
 };
 
 export const RoomProvider: React.FC<PropsWithChildren<Props>> = ({
@@ -24,6 +25,7 @@ export const RoomProvider: React.FC<PropsWithChildren<Props>> = ({
   title,
   hostNickname,
   chatLogs,
+  isPlaying,
   children,
 }) => {
   const storeRef = React.useRef<RoomStoreApi>();
@@ -34,6 +36,7 @@ export const RoomProvider: React.FC<PropsWithChildren<Props>> = ({
     initialState.title = title;
     initialState.hostNickname = hostNickname;
     initialState.messagesByRoom[ChatRoom.Lobby] = chatLogs;
+    initialState.isPlaying = isPlaying;
 
     storeRef.current = createRoomStore(initialState);
   }

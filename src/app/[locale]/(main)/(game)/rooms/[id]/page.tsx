@@ -30,6 +30,7 @@ const RoomPage: React.FC<Props> = ({ params }) => {
           title={data.name}
           hostNickname={data.owner}
           chatLogs={data.chatLogs}
+          isPlaying={data.playing}
         >
           <GameProvider>
             <Room />
