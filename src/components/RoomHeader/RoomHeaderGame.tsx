@@ -41,7 +41,7 @@ const RoomHeaderGame = React.memo<Props>(({ className }) => {
       </div>
 
       <div className="z-10 flex items-center gap-x-6">
-        <span className="text-lg font-bold">₩10</span>
+        <span className="text-lg font-bold">₩{user.money}</span>
 
         <button>
           <CartFillIcon className="fill-gray-1 size-6" />
