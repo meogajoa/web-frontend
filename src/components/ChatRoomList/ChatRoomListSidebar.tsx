@@ -80,7 +80,8 @@ const ChatRoomListSidebar: React.FC<Props> = ({
                   typeof number === 'number' &&
                   number >= 1 &&
                   number <= 8 &&
-                  user.number !== number,
+                  user.number !== number &&
+                  user.team === otherUsers[number].team,
               )
               .map<ChatRoomProps>((number) => {
                 const messages = messagesByRoom[number as ChatRoom];

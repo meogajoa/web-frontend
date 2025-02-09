@@ -6,6 +6,7 @@ import { useAccount } from '~/providers/AccountProvider';
 import { useGame } from '~/providers/GameProvider';
 import { useRoom } from '~/providers/RoomProvider';
 import { ChatMessage as ChatMessageType } from '~/types/chat';
+import { Team, UserNumber } from '~/types/game';
 import { cn } from '~/utils/classname';
 
 type Props = {
@@ -19,7 +20,7 @@ const RoomMessages = React.memo<Props>(({ className }) => {
   const t = useTranslations('roomRoute.chatMessage');
   const { currentChatRoom } = useRoom();
   const { account } = useAccount();
-  const { user } = useGame();
+  const { user, otherUsers } = useGame();
 
   const messages = useChatMessages({
     variables: { chatRoom: currentChatRoom },
@@ -41,6 +42,8 @@ const RoomMessages = React.memo<Props>(({ className }) => {
         const sender = isSelf
           ? _sender
           : t('inGameUsername', { username: _sender });
+        const isBlack =
+          otherUsers[_sender as unknown as UserNumber]?.team === Team.Black;
 
         return (
           <ChatMessage
@@ -48,6 +51,7 @@ const RoomMessages = React.memo<Props>(({ className }) => {
             position={isSelf ? 'right' : 'left'}
             username={sender}
             message={content}
+            color={isBlack ? 'gray' : 'light-gray'}
           />
         );
       })}
