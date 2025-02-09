@@ -13,12 +13,7 @@ const RoomUserList = React.memo<Props>(({ className }) => {
   const { users } = useRoomUsersNotice({ variables: { id } });
 
   return (
-    <ul
-      className={cn(
-        'bg-gray-6 grid grid-cols-4 gap-x-2 gap-y-1 p-4',
-        className,
-      )}
-    >
+    <ul className={cn('grid grid-cols-4 gap-x-2 gap-y-1 p-4', className)}>
       {users.map((username) => (
         <li
           className="bg-gray-5 text-gray-1 relative flex h-6 items-center justify-center rounded-md text-[0.625rem]"

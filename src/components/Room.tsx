@@ -8,7 +8,7 @@ import { useRoomSystemNotice } from '~/hooks/room';
 import { useAccount } from '~/providers/AccountProvider';
 import { useGame } from '~/providers/GameProvider';
 import { useRoom } from '~/providers/RoomProvider';
-import { UserGameInfo } from '~/types/game';
+import { Team, UserGameInfo } from '~/types/game';
 import { cn } from '~/utils/classname';
 
 type Props = {
@@ -20,7 +20,7 @@ const Room: React.FC<Props> = ({ className }) => {
 
   const { id, isPlaying, setIsPlaying } = useRoom();
   const { account } = useAccount();
-  const { setPlayer } = useGame();
+  const { player, setPlayer } = useGame();
 
   useRoomSystemNotice({
     variables: { id },
@@ -36,7 +36,13 @@ const Room: React.FC<Props> = ({ className }) => {
   });
 
   return (
-    <div className={cn('flex h-full flex-col', className)}>
+    <div
+      className={cn(
+        'bg-gray-6 flex h-full flex-col',
+        player.team === Team.Black && 'bg-gray-3',
+        className,
+      )}
+    >
       <RoomHeader className="shrink-0" />
       {!isPlaying && <RoomUserList />}
       <RoomMessages className="flex-1" />
@@ -56,9 +62,9 @@ const Room: React.FC<Props> = ({ className }) => {
     setPlayer({
       team: gameInfo.teamColor,
       number: gameInfo.number,
-      alive: true,
+      eliminated: gameInfo.eliminated,
       money: gameInfo.money,
-      isSpy: gameInfo.isSpy,
+      isSpy: gameInfo.spy,
     });
   }
 };

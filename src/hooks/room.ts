@@ -153,6 +153,8 @@ export const useRoomSystemNotice = ({
     const jsonBody = JSON.parse(body);
     const notice = roomSystemNotice.parse(jsonBody);
 
+    console.debug(`/topic/room/${id}/notice/system: `, notice);
+
     switch (notice.type) {
       case RoomSystemNoticeType.GameStart:
         onGameStart?.();

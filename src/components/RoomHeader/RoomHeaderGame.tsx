@@ -14,7 +14,7 @@ type Props = {
 
 const RoomHeaderGame = React.memo<Props>(({ className }) => {
   const t = useTranslations('roomRoute');
-  const { nthDay, time } = useGame();
+  const { player, nthDay, time } = useGame();
   const { currentChatRoom } = useRoom();
 
   const timeLabel =
@@ -27,7 +27,7 @@ const RoomHeaderGame = React.memo<Props>(({ className }) => {
   return (
     <header
       className={cn(
-        'bg-gray-3 relative flex h-[5.5rem] items-center justify-between px-4',
+        'relative flex h-[5.5rem] items-center justify-between px-4',
         className,
       )}
     >
@@ -55,9 +55,9 @@ const RoomHeaderGame = React.memo<Props>(({ className }) => {
 
       <BottomShadow />
 
-      <div className="bg-gray-3 absolute bottom-0 left-1/2 z-50 flex -translate-x-1/2 translate-y-1/2 gap-x-1 rounded-full p-1">
+      <div className="absolute bottom-0 left-1/2 z-50 flex -translate-x-1/2 translate-y-1/2 gap-x-1 rounded-full p-1">
         <button
-          className="bg-gray-3 rounded-full drop-shadow-lg"
+          className="b rounded-full drop-shadow-lg"
           onClick={handleMinusClick}
         >
           <MinusIcon className="fill-gray-1 size-6" />
@@ -68,7 +68,7 @@ const RoomHeaderGame = React.memo<Props>(({ className }) => {
         </span>
 
         <button
-          className={`bg-gray-3 rounded-full drop-shadow-lg`}
+          className={`b rounded-full drop-shadow-lg`}
           onClick={handlePlusClick}
         >
           <PlusIcon className="fill-gray-1 size-6" />

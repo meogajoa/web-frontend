@@ -27,10 +27,7 @@ const RoomMessages = React.memo<Props>(({ className }) => {
 
   return (
     <ul
-      className={cn(
-        'bg-gray-6 space-y-3 overflow-y-auto p-4 font-bold',
-        className,
-      )}
+      className={cn('space-y-3 overflow-y-auto p-4 font-bold', className)}
       ref={containerRef}
     >
       {messages.map(({ id, content, sender }) => (

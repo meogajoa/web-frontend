@@ -42,31 +42,45 @@ export const useChatMessages = ({
   useSubscription(
     compact([
       // in-game general
-      isPlaying && player.alive && `/topic/game/${id}/chat`,
+      isPlaying && !player.eliminated && `/topic/game/${id}/chat`,
 
       // in-game black
       isPlaying &&
-        player.alive &&
+        !player.eliminated &&
         (player.team === Team.Black || player.isSpy) &&
         `/topic/game/${id}/chat/black`,
 
       // in-game white
       isPlaying &&
-        player.alive &&
+        !player.eliminated &&
         (player.team === Team.White || player.isSpy) &&
         `/topic/game/${id}/chat/white`,
 
       // in-game eliminated
-      isPlaying && !player.alive && `/topic/game/${id}/chat/eliminated`,
+      isPlaying && player.eliminated && `/topic/game/${id}/chat/eliminated`,
 
       // in-game personal
-      isPlaying && player.alive && `/topic/user/${account.nickname}/gameChat`,
+      isPlaying &&
+        !player.eliminated &&
+        `/topic/user/${account.nickname}/gameChat`,
     ]),
     ({ headers, body }) => {
       const xChatRoomHeader = xChatRoom.parse(headers['x-chat-room']);
 
       const jsonBody = JSON.parse(body);
       const message = chatMessage.parse(jsonBody);
+
+      // sender id is the user's own id
+      const senderId = Number(message.sender);
+      assert(
+        !Number.isNaN(senderId) &&
+          Number.isInteger(senderId) &&
+          senderId >= 1 &&
+          senderId <= 8,
+        `Invalid sender id: ${senderId}`,
+      );
+
+      message.sender = `${message.sender}번 유저`;
 
       switch (xChatRoomHeader) {
         case XChatRoom.General:
@@ -82,16 +96,6 @@ export const useChatMessages = ({
           addMessage(ChatRoom.Eliminated, message);
           break;
         case XChatRoom.Personal:
-          // sender id is the user's own id when x-chat-room is PERSONAL
-          const senderId = Number(message.sender);
-          assert(
-            !Number.isNaN(senderId) &&
-              Number.isInteger(senderId) &&
-              senderId >= 1 &&
-              senderId <= 8,
-            `Invalid sender id: ${senderId}`,
-          );
-
           if (senderId === 1) {
             addMessage(ChatRoom.User01, message);
           } else if (senderId === 2) {

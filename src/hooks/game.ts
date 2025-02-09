@@ -57,6 +57,8 @@ export const useUserGameInfo = ({
       const jsonBody = JSON.parse(body);
       const gameInfo = userGameInfo.parse(jsonBody);
       onMessage(gameInfo);
+
+      console.debug(`/topic/user/${username}/gameInfo: `, gameInfo);
     },
   );
 };
