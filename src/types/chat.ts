@@ -2,9 +2,7 @@ import { z } from 'zod';
 import { username } from '~/types/account';
 
 export enum ChatRoom {
-  All,
-  White,
-  Black,
+  Lobby,
   User01,
   User02,
   User03,
@@ -13,8 +11,21 @@ export enum ChatRoom {
   User06,
   User07,
   User08,
+  Personal,
+  General,
+  Black,
+  White,
   Eliminated,
 }
+
+export enum XChatRoom {
+  Personal = 'PERSONAL',
+  General = 'GENERAL',
+  Black = 'BLACK',
+  White = 'WHITE',
+  Eliminated = 'ELIMINATED',
+}
+export const xChatRoom = z.nativeEnum(XChatRoom);
 
 export const chatMessage = z.object({
   id: z.string(),

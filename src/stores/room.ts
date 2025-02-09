@@ -27,7 +27,7 @@ export const defaultInitState: RoomState = {
   title: '',
   hostNickname: '',
   isPlaying: false,
-  currentChatRoom: ChatRoom.All,
+  currentChatRoom: ChatRoom.Lobby,
   messagesByRoom: Object.values(ChatRoom)
     .filter((key) => typeof ChatRoom[key as ChatRoom] === 'number')
     .reduce(

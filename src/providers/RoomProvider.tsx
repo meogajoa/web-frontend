@@ -33,7 +33,7 @@ export const RoomProvider: React.FC<PropsWithChildren<Props>> = ({
     initialState.id = id;
     initialState.title = title;
     initialState.hostNickname = hostNickname;
-    initialState.messagesByRoom[ChatRoom.All] = chatLogs;
+    initialState.messagesByRoom[ChatRoom.Lobby] = chatLogs;
 
     storeRef.current = createRoomStore(initialState);
   }

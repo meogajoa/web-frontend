@@ -2,7 +2,8 @@ import React from 'react';
 import { ChatMessage } from '~/components/ChatMessage';
 import { useChatMessages } from '~/hooks/chat';
 import { useAccount } from '~/providers/AccountProvider';
-import { ChatMessage as ChatMessageType, ChatRoom } from '~/types/chat';
+import { useRoom } from '~/providers/RoomProvider';
+import { ChatMessage as ChatMessageType } from '~/types/chat';
 import { cn } from '~/utils/classname';
 
 type Props = {
@@ -12,17 +13,17 @@ type Props = {
 const RoomMessages = React.memo<Props>(({ className }) => {
   const containerRef = React.useRef<HTMLUListElement>(null);
   const bottomRef = React.useRef<HTMLLIElement>(null);
+  const { currentChatRoom } = useRoom();
+  const { account } = useAccount();
 
   const messages = useChatMessages({
-    chatRoom: ChatRoom.All,
+    variables: { chatRoom: currentChatRoom },
     onNewMessage: scrollToBottom,
   });
 
-  const { account } = useAccount();
-
   React.useEffect(() => {
     bottomRef.current?.scrollIntoView({ behavior: 'smooth' });
-  }, []);
+  }, [currentChatRoom]);
 
   return (
     <ul

@@ -1,5 +1,6 @@
 import { useMutation } from '@tanstack/react-query';
 import { AxiosError } from 'axios';
+import { compact } from 'lodash-es';
 import React from 'react';
 import { useSubscription } from 'react-stomp-hooks';
 import {
@@ -51,7 +52,7 @@ export const useUserGameInfo = ({
   onMessage: (gameInfo: UserGameInfo) => void;
 }) => {
   useSubscription(
-    enabled ? `/topic/user/${username}/gameInfo` : [],
+    compact([enabled && `/topic/user/${username}/gameInfo`]),
     ({ body }) => {
       const json = JSON.parse(body);
       const gameInfo = userGameInfo.parse(json);
