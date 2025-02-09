@@ -84,8 +84,6 @@ export const useChatMessages = ({
         `Invalid sender id: ${senderId}`,
       );
 
-      message.sender = `${message.sender}번 유저`;
-
       switch (xChatRoomHeader) {
         case XChatRoom.General:
           addMessage(ChatRoom.General, message);

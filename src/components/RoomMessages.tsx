@@ -1,7 +1,9 @@
+import { useTranslations } from 'next-intl';
 import React from 'react';
 import { ChatMessage } from '~/components/ChatMessage';
 import { useChatMessages } from '~/hooks/chat';
 import { useAccount } from '~/providers/AccountProvider';
+import { useGame } from '~/providers/GameProvider';
 import { useRoom } from '~/providers/RoomProvider';
 import { ChatMessage as ChatMessageType } from '~/types/chat';
 import { cn } from '~/utils/classname';
@@ -13,8 +15,11 @@ type Props = {
 const RoomMessages = React.memo<Props>(({ className }) => {
   const containerRef = React.useRef<HTMLUListElement>(null);
   const bottomRef = React.useRef<HTMLLIElement>(null);
+
+  const t = useTranslations('roomRoute.chatMessage');
   const { currentChatRoom } = useRoom();
   const { account } = useAccount();
+  const { user } = useGame();
 
   const messages = useChatMessages({
     variables: { chatRoom: currentChatRoom },
@@ -30,14 +35,22 @@ const RoomMessages = React.memo<Props>(({ className }) => {
       className={cn('space-y-3 overflow-y-auto p-4 font-bold', className)}
       ref={containerRef}
     >
-      {messages.map(({ id, content, sender }) => (
-        <ChatMessage
-          key={id}
-          position={sender === account.nickname ? 'right' : 'left'}
-          username={sender}
-          message={content}
-        />
-      ))}
+      {messages.map(({ id, content, sender: _sender }) => {
+        const isSelf =
+          _sender === account.nickname || _sender === user.number.toString();
+        const sender = isSelf
+          ? _sender
+          : t('inGameUsername', { username: _sender });
+
+        return (
+          <ChatMessage
+            key={id}
+            position={isSelf ? 'right' : 'left'}
+            username={sender}
+            message={content}
+          />
+        );
+      })}
 
       <li ref={bottomRef} aria-hidden />
     </ul>
