@@ -32,8 +32,8 @@ export const useChatMessages = ({
       !isPlaying && `/topic/room/${id}/chat`,
     ]),
     ({ body }) => {
-      const jsonData = JSON.parse(body);
-      const message = chatMessage.parse(jsonData);
+      const jsonBody = JSON.parse(body);
+      const message = chatMessage.parse(jsonBody);
       addMessage(ChatRoom.Lobby, message);
       setTimeout(() => onNewMessage?.(message), 0);
     },
@@ -63,13 +63,12 @@ export const useChatMessages = ({
       isPlaying && player.alive && `/topic/user/${account.nickname}/gameChat`,
     ]),
     ({ headers, body }) => {
-      const { 'x-chat-room': _inComingChatRoom } = headers;
-      const inComingChatRoom = xChatRoom.parse(_inComingChatRoom);
+      const xChatRoomHeader = xChatRoom.parse(headers['x-chat-room']);
 
-      const jsonData = JSON.parse(body);
-      const message = chatMessage.parse(jsonData);
+      const jsonBody = JSON.parse(body);
+      const message = chatMessage.parse(jsonBody);
 
-      switch (inComingChatRoom) {
+      switch (xChatRoomHeader) {
         case XChatRoom.General:
           addMessage(ChatRoom.General, message);
           break;
@@ -113,7 +112,7 @@ export const useChatMessages = ({
 
           break;
         default:
-          throw new Error(`Unknown chat room: ${inComingChatRoom}`);
+          throw new Error(`Unknown chat room: ${xChatRoomHeader}`);
       }
 
       setTimeout(() => onNewMessage?.(message), 0);

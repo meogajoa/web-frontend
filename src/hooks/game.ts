@@ -54,8 +54,8 @@ export const useUserGameInfo = ({
   useSubscription(
     compact([enabled && `/topic/user/${username}/gameInfo`]),
     ({ body }) => {
-      const json = JSON.parse(body);
-      const gameInfo = userGameInfo.parse(json);
+      const jsonBody = JSON.parse(body);
+      const gameInfo = userGameInfo.parse(jsonBody);
       onMessage(gameInfo);
     },
   );

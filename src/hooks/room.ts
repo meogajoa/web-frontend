@@ -134,8 +134,8 @@ export const useRoomUsersNotice = ({
   const [users, setUsers] = React.useState<string[]>([]);
 
   useSubscription(`/topic/room/${id}/notice/users`, ({ body }) => {
-    const data = JSON.parse(body);
-    const users = z.array(username).parse(data);
+    const jsonBody = JSON.parse(body);
+    const users = z.array(username).parse(jsonBody);
     setUsers(users);
   });
 
@@ -150,8 +150,8 @@ export const useRoomSystemNotice = ({
   onGameStart?: () => void;
 }) => {
   useSubscription(`/topic/room/${id}/notice/system`, ({ body }) => {
-    const json = JSON.parse(body);
-    const notice = roomSystemNotice.parse(json);
+    const jsonBody = JSON.parse(body);
+    const notice = roomSystemNotice.parse(jsonBody);
 
     switch (notice.type) {
       case RoomSystemNoticeType.GameStart:
