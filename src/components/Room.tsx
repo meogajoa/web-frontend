@@ -3,13 +3,23 @@ import { RoomChatBar } from '~/components/ChatBar';
 import RoomHeader from '~/components/RoomHeader/RoomHeader';
 import RoomMessages from '~/components/RoomMessages';
 import RoomUserList from '~/components/RoomUserList';
-import { useUserGameInfo } from '~/hooks/game';
+import {
+  useGameSystemNotice,
+  useGameUsersNotice,
+  useUserGameInfo,
+} from '~/hooks/game';
 import { useRoomSystemNotice } from '~/hooks/room';
 import { useAccount } from '~/providers/AccountProvider';
 import { useGame } from '~/providers/GameProvider';
 import { useRoom } from '~/providers/RoomProvider';
 import { ChatRoom } from '~/types/chat';
-import { Team, UserGameInfo } from '~/types/game';
+import {
+  GameDayOrNightSystemNotice,
+  GameEndSystemNotice,
+  GameUsersNotice,
+  Team,
+  UserGameInfo,
+} from '~/types/game';
 import { cn } from '~/utils/classname';
 
 type Props = {
@@ -20,7 +30,7 @@ const Room: React.FC<Props> = ({ className }) => {
   const { id, isPlaying, setIsPlaying, setCurrentChatRoom } = useRoom();
   const [canStartGame, setCanStartGame] = React.useState(isPlaying);
   const { account } = useAccount();
-  const { player, setPlayer } = useGame();
+  const { player, setPlayer, setTime } = useGame();
 
   useRoomSystemNotice({
     variables: { id },
@@ -33,6 +43,19 @@ const Room: React.FC<Props> = ({ className }) => {
     },
     enabled: canStartGame,
     onMessage: handleUserGameInfo,
+  });
+
+  useGameSystemNotice({
+    variables: { id },
+    enabled: canStartGame,
+    onGameDayOrNight: handleGameDayOrNight,
+    onGameEnd: handleGameEnd,
+  });
+
+  useGameUsersNotice({
+    variables: { id },
+    enabled: canStartGame,
+    onMessage: handleGameUsersNotice,
   });
 
   return (
@@ -67,6 +90,20 @@ const Room: React.FC<Props> = ({ className }) => {
       money: gameInfo.money,
       isSpy: gameInfo.spy,
     });
+  }
+
+  function handleGameDayOrNight(
+    gameDayOrNightNotice: GameDayOrNightSystemNotice,
+  ) {
+    setTime(gameDayOrNightNotice.dayOrNight);
+  }
+
+  function handleGameEnd(gameEndNotice: GameEndSystemNotice) {
+    // TODO: add mini game end logic
+  }
+
+  function handleGameUsersNotice(gameUsersNotice: GameUsersNotice) {
+    // TODO: update players list
   }
 };
 

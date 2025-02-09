@@ -18,8 +18,8 @@ const RoomHeaderGame = React.memo<Props>(({ className }) => {
   const { currentChatRoom } = useRoom();
 
   const timeLabel =
-    time === GameTime.Morning
-      ? t('header.morning')
+    time === GameTime.Day
+      ? t('header.day')
       : time === GameTime.Night
         ? t('header.night')
         : 'Invalid Time';

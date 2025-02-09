@@ -36,6 +36,8 @@ export const useChatMessages = ({
       const message = chatMessage.parse(jsonBody);
       addMessage(ChatRoom.Lobby, message);
       setTimeout(() => onNewMessage?.(message), 0);
+
+      console.debug(`/topic/room/${id}/chat: `, message);
     },
   );
 
@@ -69,6 +71,8 @@ export const useChatMessages = ({
 
       const jsonBody = JSON.parse(body);
       const message = chatMessage.parse(jsonBody);
+
+      console.debug(`/topic/game/${id}/chat: `, message);
 
       // sender id is the user's own id
       const senderId = Number(message.sender);

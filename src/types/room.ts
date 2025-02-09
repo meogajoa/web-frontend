@@ -2,6 +2,10 @@ import { z } from 'zod';
 import { username } from '~/types/account';
 import { chatMessage } from '~/types/chat';
 
+/**
+ * Create Room
+ * for REST API: /room/create
+ */
 export type CreateRoomForm = {
   name: string;
   password: string;
@@ -12,6 +16,9 @@ export const createRoomResponse = z.object({
 });
 export type CreateRoomResponse = z.infer<typeof createRoomResponse>;
 
+/**
+ * Room
+ */
 export const room = z.object({
   id: z.string(),
   name: z.string(),
@@ -22,12 +29,20 @@ export const room = z.object({
 });
 export type Room = z.infer<typeof room>;
 
+/**
+ * Paginated Rooms
+ * for REST API: /room/pages/${pageParam}
+ */
 export const paginatedRoomsResponse = z.object({
   rooms: z.array(room),
   last: z.boolean(),
 });
 export type PaginatedRoomsResponse = z.infer<typeof paginatedRoomsResponse>;
 
+/**
+ * Join Room
+ * for REST API: /room/join
+ */
 export type JoinRoomRequest = {
   id: string;
 };
@@ -40,6 +55,10 @@ export const joinRoomResponse = z.object({
 });
 export type JoinRoomResponse = z.infer<typeof joinRoomResponse>;
 
+/**
+ * Room System Notice
+ * for STOMP topic: /topic/room/${id}/notice/system
+ */
 export enum RoomSystemNoticeType {
   GameStart = 'GAME_START',
 }

@@ -21,7 +21,7 @@
     "enteringRoom": "방 입장 중",
     "header": {
       "nth": "번째",
-      "morning": "낮",
+      "day": "낮",
       "night": "밤"
     },
     "chatRoomType": {
