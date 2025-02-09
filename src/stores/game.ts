@@ -27,18 +27,18 @@ export const defaultInitState: GameState = {
   player: {
     team: Team.Invalid,
     number: 0,
-    alive: false,
+    eliminated: true,
   },
-  otherPlayers: Object.keys(PlayerNumber)
-    .filter((key) => Number.isNaN(Number(key)))
+  otherPlayers: Object.values(PlayerNumber)
+    .filter((key) => typeof PlayerNumber[key as PlayerNumber] === 'number')
     .reduce(
       (acc, key) => ({
         ...acc,
         [key]: {
           team: Team.Invalid,
           number: 0,
-          alive: false,
-        },
+          eliminated: true,
+        } as Player,
       }),
       {} as Record<PlayerNumberKey, Player>,
     ),

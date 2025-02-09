@@ -15,7 +15,7 @@ export const teamColor = z.nativeEnum(Team);
 export type Player = {
   team: Team;
   number: number;
-  alive: boolean;
+  eliminated: boolean;
   money?: number;
   isSpy?: boolean;
   profimeImageSrc?: string;
@@ -46,6 +46,7 @@ export const userGameInfo = z.object({
   nickname: username,
   teamColor: teamColor,
   money: z.number(),
-  isSpy: z.boolean(),
+  spy: z.boolean(),
+  eliminated: z.boolean(),
 });
 export type UserGameInfo = z.infer<typeof userGameInfo>;
