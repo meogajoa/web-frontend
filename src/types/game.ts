@@ -108,7 +108,7 @@ export type GameEndSystemNotice = z.infer<typeof gameEndSystemNotice>;
  * for STOMP topic: /topic/game/${id}/notice/users
  */
 export const gameUsersNotice = z.object({
-  type: z.literal('GAME_USERS_LIST'),
+  type: z.literal('GAME_USER_LIST'),
   id: z.string(),
   blackTeam: z.array(z.number()),
   whiteTeam: z.array(z.number()),
