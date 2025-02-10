@@ -23,7 +23,9 @@ const SignInPage = () => {
       onSubmit={handleSubmit(onSubmit)}
     >
       <div>
-        <label htmlFor="email">Email</label>
+        <label htmlFor="email" data-testid="email-label">
+          Email
+        </label>
         <input
           className="border"
           id="email"
@@ -34,7 +36,9 @@ const SignInPage = () => {
       </div>
 
       <div>
-        <label htmlFor="password">Password</label>
+        <label htmlFor="password" data-testid="password-label">
+          Password
+        </label>
         <input
           className="border"
           id="password"
@@ -43,7 +47,7 @@ const SignInPage = () => {
         />
       </div>
 
-      <button className="border p-3" type="submit">
+      <button className="border p-3" type="submit" data-testid="sign-in-button">
         Sign In
       </button>
 
@@ -53,6 +57,7 @@ const SignInPage = () => {
           e.preventDefault();
           router.push('/account/sign-up');
         }}
+        data-testid="go-to-sign-up-button"
       >
         Go to Sign Up page
       </button>
