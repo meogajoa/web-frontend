@@ -21,7 +21,9 @@ const SignUpPage = () => {
       onSubmit={handleSubmit(onSubmit)}
     >
       <div>
-        <label htmlFor="email">Email</label>
+        <label htmlFor="email" data-testid="email-label">
+          Email
+        </label>
         <input
           className="border"
           id="email"
@@ -32,7 +34,9 @@ const SignUpPage = () => {
       </div>
 
       <div>
-        <label htmlFor="password">Password</label>
+        <label htmlFor="password" data-testid="password-label">
+          Password
+        </label>
         <input
           className="border"
           id="password"
@@ -42,7 +46,12 @@ const SignUpPage = () => {
       </div>
 
       <div>
-        <label htmlFor="passwordConfirmation">Password Confirmation</label>
+        <label
+          htmlFor="passwordConfirmation"
+          data-testid="password-confirmation-label"
+        >
+          Password Confirmation
+        </label>
         <input
           className="border"
           id="passwordConfirmation"
@@ -52,7 +61,9 @@ const SignUpPage = () => {
       </div>
 
       <div>
-        <label htmlFor="nickname">Nickname</label>
+        <label htmlFor="nickname" data-testid="nickname-label">
+          Nickname
+        </label>
         <input
           className="border"
           id="nickname"
@@ -61,13 +72,14 @@ const SignUpPage = () => {
         />
       </div>
 
-      <button className="border p-3" type="submit">
+      <button className="border p-3" type="submit" data-testid="sign-up-button">
         Sign Up
       </button>
 
       <button
         className="border p-3"
         onClick={() => router.push('/account/sign-in')}
+        data-testid="go-to-sign-in-button"
       >
         Go to Sign In oage
       </button>
