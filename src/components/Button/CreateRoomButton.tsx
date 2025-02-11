@@ -24,6 +24,7 @@ const CreateRoomButton: React.FC<Props> = ({ className }) => {
         size="lg"
         icon="plus"
         onClick={handleCreateRoomClick(true)}
+        data-testid="create-room-button"
       >
         {t('createRoomButton')}
       </Button>

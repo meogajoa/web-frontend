@@ -115,6 +115,7 @@ type ModalButtonProps = {
   kind: 'yes' | 'no';
   type?: React.ComponentProps<'button'>['type'];
   onClick?: () => void;
+  'data-testid'?: string;
 };
 
 const ModalButton: React.FC<React.PropsWithChildren<ModalButtonProps>> = ({
@@ -122,6 +123,7 @@ const ModalButton: React.FC<React.PropsWithChildren<ModalButtonProps>> = ({
   kind,
   type,
   onClick: handleClick,
+  'data-testid': dataTestId,
   children,
 }) => {
   return (
@@ -132,6 +134,7 @@ const ModalButton: React.FC<React.PropsWithChildren<ModalButtonProps>> = ({
       variant={kind === 'yes' ? 'primary' : 'secondary'}
       type={type}
       onClick={handleClick}
+      data-testid={dataTestId}
     >
       {children}
     </Button>
