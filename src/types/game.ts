@@ -112,6 +112,7 @@ export const gameUsersNotice = z.object({
   id: z.string(),
   blackTeam: z.array(z.number()),
   whiteTeam: z.array(z.number()),
+  redTeam: z.array(z.number()),
   eliminated: z.array(z.number()),
 });
 export type GameUsersNotice = z.infer<typeof gameUsersNotice>;

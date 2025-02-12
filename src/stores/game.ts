@@ -8,6 +8,7 @@ export type GameState = {
   nthDay: number;
   whiteTeamUsers: UserNumber[];
   blackTeamUsers: UserNumber[];
+  redTeamUsers: UserNumber[];
   eliminatedUsers: UserNumber[];
 };
 
@@ -18,6 +19,7 @@ export type GameActions = {
   setNthDay: (nthDay: number) => void;
   setWhiteTeamUsers: (whiteTeamUsers: UserNumber[]) => void;
   setBlackTeamUsers: (blackTeamUsers: UserNumber[]) => void;
+  setRedTeamUsers: (redTeamUsers: UserNumber[]) => void;
   setEliminatedUsers: (eliminatedUsers: UserNumber[]) => void;
 };
 
@@ -46,6 +48,7 @@ export const defaultInitState: GameState = {
   nthDay: 0,
   whiteTeamUsers: [],
   blackTeamUsers: [],
+  redTeamUsers: [],
   eliminatedUsers: [],
 };
 
@@ -64,6 +67,7 @@ export const createGameStore = (initState: GameState = defaultInitState) => {
     setNthDay: (nthDay) => set({ nthDay }),
     setWhiteTeamUsers: (whiteTeamUsers) => set({ whiteTeamUsers }),
     setBlackTeamUsers: (blackTeamUsers) => set({ blackTeamUsers }),
+    setRedTeamUsers: (redTeamUsers) => set({ redTeamUsers }),
     setEliminatedUsers: (eliminatedUsers) => set({ eliminatedUsers }),
   }));
 };

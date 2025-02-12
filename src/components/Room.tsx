@@ -40,6 +40,7 @@ const Room: React.FC<Props> = ({ className }) => {
     setWhiteTeamUsers,
     setBlackTeamUsers,
     setEliminatedUsers,
+    setRedTeamUsers,
   } = useGame();
 
   useBodyBgColor(
@@ -136,6 +137,7 @@ const Room: React.FC<Props> = ({ className }) => {
 
     setWhiteTeamUsers(gameUsersNotice.whiteTeam);
     setBlackTeamUsers(gameUsersNotice.blackTeam);
+    setRedTeamUsers(gameUsersNotice.redTeam);
     setEliminatedUsers(gameUsersNotice.eliminated);
   }
 };
