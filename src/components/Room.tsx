@@ -79,6 +79,7 @@ const Room: React.FC<Props> = ({ className }) => {
         user.team === Team.Black && 'bg-gray-3',
         className,
       )}
+      data-testid="room"
     >
       <RoomHeader className="shrink-0" />
       {!isPlaying && <RoomUserList />}
