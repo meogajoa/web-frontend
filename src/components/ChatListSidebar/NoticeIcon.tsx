@@ -2,11 +2,11 @@ import React from 'react';
 import { cn } from '~/utils/classname';
 
 export type NoticeIconProps = {
-  notice: number;
   className?: string;
+  notice: number;
 };
 
-const NoticeIcon: React.FC<NoticeIconProps> = ({ notice, className }) => {
+const NoticeIcon: React.FC<NoticeIconProps> = ({ className, notice }) => {
   return (
     <div
       className={cn(
