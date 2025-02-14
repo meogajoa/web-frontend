@@ -54,9 +54,8 @@ export const joinRoomAsync = async (
   await page.goto(homeUrl);
 
   // WHEN
-  const roomItem = await page.getByRole('link', { name: room.name });
-  await roomItem.scrollIntoViewIfNeeded();
-  await roomItem.click();
+  const roomItem = await page.getByTestId(`room-name-${room.name}`);
+  await roomItem.first().click();
 
   // THEN
   if (shouldSuccess) {

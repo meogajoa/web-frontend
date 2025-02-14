@@ -56,8 +56,7 @@ test.describe
       shouldSuccess: true,
     });
 
-    const roomItem = page.getByRole('link', { name: TEST_ROOM_NAME });
-
+    const roomItem = await page.getByTestId(`room-name-${TEST_ROOM_NAME}`);
     if ((await roomItem.count()) > 0) {
       return;
     }

@@ -30,7 +30,9 @@ const RoomItem: React.FC<Props> = ({
       )}
     >
       <Link className="flex items-center p-4" href={`/rooms/${id}`}>
-        <p className="text-2xl">{title}</p>
+        <p className="text-2xl" data-testid={`room-name-${title}`}>
+          {title}
+        </p>
         <p className="ml-2 text-sm">{description}</p>
         <LockIcon
           className={cn(
