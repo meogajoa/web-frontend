@@ -14,7 +14,7 @@ import { range } from 'lodash-es';
 const TEST_ROOM_NAME = 'example-name';
 
 test.describe('Create room', () => {
-  test('should create room successfully', async ({ page }) => {
+  test('should create room', async ({ page }) => {
     // GIVEN
     const account = generateRandomAccount();
 
@@ -42,7 +42,7 @@ test.describe('Create room', () => {
 
 test.describe
   .serial(`Create room with name "${TEST_ROOM_NAME}" and join room with 8 users`, () => {
-  test('should create room successfully', async ({ page }) => {
+  test('should create room', async ({ page }) => {
     // GIVEN
     const account = generateRandomAccount();
 
