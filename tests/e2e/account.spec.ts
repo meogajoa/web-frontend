@@ -7,7 +7,7 @@ import {
 } from '@tests/e2e/utils/auth';
 
 test.describe('Sign up', () => {
-  test('should sign up successfully', async ({ page }) => {
+  test('should sign up', async ({ page }) => {
     // GIVEN
     const account = generateRandomAccount();
 
@@ -43,7 +43,7 @@ test.describe('Sign up', () => {
 });
 
 test.describe('Sign in', () => {
-  test('should sign in successfully', async ({ page }) => {
+  test('should sign in', async ({ page }) => {
     // GIVEN
     const account = generateRandomAccount();
     await signUpAsync(page, {
