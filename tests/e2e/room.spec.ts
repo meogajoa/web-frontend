@@ -41,7 +41,7 @@ test.describe('Create room', () => {
 });
 
 test.describe
-  .serial(`Create room "${TEST_ROOM_NAME}" and join room with 8 users`, () => {
+  .serial(`Create room with name "${TEST_ROOM_NAME}" and join room with 8 users`, () => {
   test('should create room successfully', async ({ page }) => {
     // GIVEN
     const account = generateRandomAccount();
