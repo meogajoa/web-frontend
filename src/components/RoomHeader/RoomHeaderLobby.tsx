@@ -3,6 +3,7 @@ import { AxiosError } from 'axios';
 import { debounce } from 'lodash-es';
 import React from 'react';
 import { Button } from '~/components/Button';
+import { MAX_USERS } from '~/constants/game';
 import { useStartGame } from '~/hooks/game';
 import { useRoomUsersNotice } from '~/hooks/room';
 import { useRouter } from '~/i18n/routing';
@@ -49,7 +50,7 @@ const RoomHeaderLobby = React.memo<Props>(({ className }) => {
           variant="primary"
           rounded="full"
           size="sm"
-          disabled={isSuccess || users.length <= 7}
+          disabled={isSuccess || users.length < MAX_USERS}
           loading={isPending}
           onClick={handleStartGameClick}
         >
@@ -64,7 +65,7 @@ const RoomHeaderLobby = React.memo<Props>(({ className }) => {
   }
 
   function _handleStartGameClick() {
-    if (users.length <= 7) {
+    if (users.length < MAX_USERS) {
       return;
     }
 

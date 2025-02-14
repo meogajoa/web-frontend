@@ -1,11 +1,13 @@
-import { test } from '@playwright/test';
+import { expect, test } from '@playwright/test';
 import {
   generateRandomAccount,
   signInAsync,
   signUpAsync,
 } from '@tests/e2e/utils/auth';
+import { createRoomAsync, generateRandomRoom } from '@tests/e2e/utils/room';
 import { range } from 'lodash-es';
-import { createRoomAsync, generateRandomRoom } from './utils/room';
+
+const TEST_ROOM_NAME = 'test-01';
 
 test.describe('Create room', () => {
   test('should create room successfully', async ({ page }) => {
@@ -33,7 +35,7 @@ test.describe('Create room', () => {
 });
 
 test.describe('Join room', () => {
-  test('should join room with 7 accounts', async ({ page }) => {
+  test('should join room with 8 accounts', async ({ page }) => {
     const accounts = range(7).map(() => generateRandomAccount());
 
     for (const account of accounts) {
@@ -47,7 +49,9 @@ test.describe('Join room', () => {
         shouldSuccess: true,
       });
 
-      await page.getByRole('link', { name: 'test1' }).click();
+      await page.getByRole('link', { name: TEST_ROOM_NAME }).click();
+      await expect(page).toHaveURL(/.*rooms/);
+      await expect(page.getByTestId('room')).toBeVisible();
     }
   });
 });

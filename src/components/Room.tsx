@@ -40,6 +40,7 @@ const Room: React.FC<Props> = ({ className }) => {
     setWhiteTeamUsers,
     setBlackTeamUsers,
     setEliminatedUsers,
+    setRedTeamUsers,
   } = useGame();
 
   useBodyBgColor(
@@ -79,6 +80,7 @@ const Room: React.FC<Props> = ({ className }) => {
         user.team === Team.Black && 'bg-gray-3',
         className,
       )}
+      data-testid="room"
     >
       <RoomHeader className="shrink-0" />
       {!isPlaying && <RoomUserList />}
@@ -135,6 +137,7 @@ const Room: React.FC<Props> = ({ className }) => {
 
     setWhiteTeamUsers(gameUsersNotice.whiteTeam);
     setBlackTeamUsers(gameUsersNotice.blackTeam);
+    setRedTeamUsers(gameUsersNotice.redTeam);
     setEliminatedUsers(gameUsersNotice.eliminated);
   }
 };
