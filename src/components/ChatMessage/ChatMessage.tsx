@@ -1,9 +1,9 @@
-import React from 'react';
 import {
   type Props as ProfileImageProps,
   ProfileImage,
-} from '~/components/ProfileImage';
-import { cn } from '~/utils/classname';
+} from '@/components/ProfileImage';
+import { cn } from '@/utils/classname';
+import React from 'react';
 
 type Props = {
   className?: string;

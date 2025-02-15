@@ -1,7 +1,7 @@
+import { Team, UserNumber } from '@/types/game';
+import { cn } from '@/utils/classname';
 import { cva, type VariantProps } from 'class-variance-authority';
 import React from 'react';
-import { Team, UserNumber } from '~/types/game';
-import { cn } from '~/utils/classname';
 
 const variants = cva('relative rounded-[0.625rem]', {
   variants: {

@@ -1,11 +1,11 @@
+import { Button } from '@/components/Button';
+import { cn } from '@/utils/classname';
 import {
   Button as HeadlessButton,
   type ButtonProps as HeadlessButtonProps,
 } from '@headlessui/react';
 import { XMarkIcon } from '@heroicons/react/24/outline';
 import React from 'react';
-import { Button } from '~/components/Button';
-import { cn } from '~/utils/classname';
 import Modal, { type ModalProps } from '../Modal';
 
 export type BrandModalProps = ModalProps & {

@@ -1,11 +1,11 @@
+import useSessionId from '@/hooks/account/useSessionId';
+import { server } from '@/utils/axios';
+import { A_SECOND } from '@/utils/constants';
+import { sleep } from '@/utils/misc';
 import { useMutation } from '@tanstack/react-query';
 import { type AxiosError } from 'axios';
 import React from 'react';
 import { z } from 'zod';
-import useSessionId from '~/hooks/account/useSessionId';
-import { server } from '~/utils/axios';
-import { A_SECOND } from '~/utils/constants';
-import { sleep } from '~/utils/misc';
 
 const authenticateResponse = z.object({
   nickname: z.string(),

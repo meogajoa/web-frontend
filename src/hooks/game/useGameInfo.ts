@@ -1,8 +1,8 @@
+import { username } from '@/types/account';
+import { teamColor } from '@/types/game';
 import { compact } from 'lodash-es';
 import { useSubscription } from 'react-stomp-hooks';
 import { z } from 'zod';
-import { username } from '~/types/account';
-import { teamColor } from '~/types/game';
 
 const userGameInfo = z.object({
   number: z.number(),

@@ -1,13 +1,13 @@
 'use client';
 
-import { type AxiosError } from 'axios';
-import { useForm } from 'react-hook-form';
 import useSignIn, {
   type SignInForm,
   type SignInResponse,
-} from '~/hooks/account/useSignIn';
-import { useRouter } from '~/i18n/routing';
-import { useAccount } from '~/providers/AccountProvider';
+} from '@/hooks/account/useSignIn';
+import { useRouter } from '@/i18n/routing';
+import { useAccount } from '@/providers/AccountProvider';
+import { type AxiosError } from 'axios';
+import { useForm } from 'react-hook-form';
 
 const SignInPage = () => {
   const { register, handleSubmit } = useForm<SignInForm>();

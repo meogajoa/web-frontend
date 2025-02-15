@@ -1,5 +1,5 @@
+import { type ChatMessage, ChatRoom } from '@/types/chat';
 import { createStore } from 'zustand/vanilla';
-import { type ChatMessage, ChatRoom } from '~/types/chat';
 
 export type RoomState = {
   id: string;

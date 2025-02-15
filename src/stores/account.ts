@@ -1,5 +1,5 @@
+import type { Account } from '@/types/account';
 import { createStore } from 'zustand/vanilla';
-import type { Account } from '~/types/account';
 
 type AccountState = {
   account: Account;

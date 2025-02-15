@@ -1,11 +1,11 @@
 'use client';
 
+import { DropdownExample } from '@/components/Dropdown';
+import { cn } from '@/utils/classname';
 import { ArrowPathIcon } from '@heroicons/react/24/outline';
 import { useQueryClient } from '@tanstack/react-query';
 import { useTranslations } from 'next-intl';
 import React from 'react';
-import { DropdownExample } from '~/components/Dropdown';
-import { cn } from '~/utils/classname';
 
 type Props = {
   className?: string;

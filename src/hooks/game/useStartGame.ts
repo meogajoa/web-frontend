@@ -1,7 +1,7 @@
+import { server } from '@/utils/axios';
 import { useMutation } from '@tanstack/react-query';
 import type { AxiosError } from 'axios';
 import React from 'react';
-import { server } from '~/utils/axios';
 
 type GameStartRequest = {
   id: string;

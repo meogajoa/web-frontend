@@ -1,12 +1,12 @@
+import { useAccount } from '@/providers/AccountProvider';
+import { useGame } from '@/providers/GameProvider';
+import { useRoom } from '@/providers/RoomProvider';
+import { chatMessage, type ChatMessage, ChatRoom } from '@/types/chat';
+import { Team } from '@/types/game';
+import { assert } from '@/utils/assert';
 import { compact } from 'lodash-es';
 import { useSubscription } from 'react-stomp-hooks';
 import { z } from 'zod';
-import { useAccount } from '~/providers/AccountProvider';
-import { useGame } from '~/providers/GameProvider';
-import { useRoom } from '~/providers/RoomProvider';
-import { chatMessage, type ChatMessage, ChatRoom } from '~/types/chat';
-import { Team } from '~/types/game';
-import { assert } from '~/utils/assert';
 
 enum XChatRoom {
   Lobby = 'LOBBY',

@@ -1,16 +1,16 @@
 'use client';
 
-import React, { type PropsWithChildren } from 'react';
-import { useStore } from 'zustand';
 import {
   createRoomStore,
   defaultInitState,
   type RoomState,
   type RoomStore,
-} from '~/stores/room';
-import { type ChatMessage } from '~/types/chat';
-import { type Nullable } from '~/types/misc';
-import { assert } from '~/utils/assert';
+} from '@/stores/room';
+import { type ChatMessage } from '@/types/chat';
+import { type Nullable } from '@/types/misc';
+import { assert } from '@/utils/assert';
+import React, { type PropsWithChildren } from 'react';
+import { useStore } from 'zustand';
 
 export type RoomStoreApi = ReturnType<typeof createRoomStore>;
 

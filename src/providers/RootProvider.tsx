@@ -1,10 +1,10 @@
 'use client';
 
+import { AccountStoreProvider } from '@/providers/AccountProvider';
+import TanstackQueryProvider from '@/providers/TanstackQueryProvider';
+import { ThemeProvider } from '@/providers/ThemeProvider';
 import React from 'react';
 import { Toaster } from 'react-hot-toast';
-import { AccountStoreProvider } from '~/providers/AccountProvider';
-import TanstackQueryProvider from '~/providers/TanstackQueryProvider';
-import { ThemeProvider } from '~/providers/ThemeProvider';
 
 type Props = {};
 

@@ -1,13 +1,13 @@
 'use client';
 
+import LoadingIndicator from '@/components/LoadingIndicator';
+import Room from '@/components/Room';
+import useJoinRoom from '@/hooks/room/useJoinRoom';
+import { GameProvider } from '@/providers/GameProvider';
+import { RoomProvider } from '@/providers/RoomProvider';
+import { ChatRoom } from '@/types/chat';
 import { useTranslations } from 'next-intl';
 import React from 'react';
-import LoadingIndicator from '~/components/LoadingIndicator';
-import Room from '~/components/Room';
-import useJoinRoom from '~/hooks/room/useJoinRoom';
-import { GameProvider } from '~/providers/GameProvider';
-import { RoomProvider } from '~/providers/RoomProvider';
-import { ChatRoom } from '~/types/chat';
 type Props = {
   params: Promise<{ id: string }>;
 };

@@ -1,7 +1,7 @@
+import img from '@/assets/images/cat.png';
+import ChatRoomList from '@/components/ChatRoomList/ChatRoomList';
+import { Team } from '@/types/game';
 import type { Meta, StoryObj } from '@storybook/react';
-import img from '~/assets/images/cat.png';
-import ChatRoomList from '~/components/ChatRoomList/ChatRoomList';
-import { Team } from '~/types/game';
 
 const meta: Meta<typeof ChatRoomList> = {
   title: 'Organisms/ChatListSidebar',

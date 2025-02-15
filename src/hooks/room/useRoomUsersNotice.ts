@@ -1,7 +1,7 @@
+import { username } from '@/types/account';
 import React from 'react';
 import { useSubscription } from 'react-stomp-hooks';
 import { z } from 'zod';
-import { username } from '~/types/account';
 
 const useRoomUsersNotice = ({
   variables: { id },

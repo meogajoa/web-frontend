@@ -1,8 +1,8 @@
+import { server } from '@/utils/axios';
 import { useMutation } from '@tanstack/react-query';
 import { type AxiosError } from 'axios';
 import { omit } from 'lodash-es';
 import React from 'react';
-import { server } from '~/utils/axios';
 
 export type SignUpForm = {
   email: string;

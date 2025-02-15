@@ -1,7 +1,7 @@
+import { BrandModal, type BrandModalProps } from '@/components/BrandModal';
+import { Input } from '@/components/Input';
 import React from 'react';
 import { Controller, useForm } from 'react-hook-form';
-import { BrandModal, type BrandModalProps } from '~/components/BrandModal';
-import { Input } from '~/components/Input';
 
 type Props = BrandModalProps;
 

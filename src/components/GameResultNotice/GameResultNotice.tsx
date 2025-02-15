@@ -1,11 +1,11 @@
-import React from 'react';
 import TeamNoticeItem, {
   type Props as TeamNoticeItemProps,
-} from '~/components/GameResultNotice/TeamNoticeItem';
+} from '@/components/GameResultNotice/TeamNoticeItem';
 import VoteNoticeItem, {
   type Props as VoteNoticeItemProps,
-} from '~/components/GameResultNotice/VoteNoticeItem';
-import { cn } from '~/utils/classname';
+} from '@/components/GameResultNotice/VoteNoticeItem';
+import { cn } from '@/utils/classname';
+import React from 'react';
 import NoticeItem, { type Props as NoticeItemProps } from './NoticeItem';
 
 export type GameResultNoticeProps = {

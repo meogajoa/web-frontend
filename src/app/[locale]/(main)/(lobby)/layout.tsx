@@ -1,7 +1,7 @@
 'use client';
 
+import { BottomNavigationContent } from '@/components/BottomNavigation';
 import React, { type PropsWithChildren } from 'react';
-import { BottomNavigationContent } from '~/components/BottomNavigation';
 
 const LobbyLayout: React.FC<PropsWithChildren> = ({ children }) => {
   // Subscribe to the alert topic to receive notifications for like invites, etc.

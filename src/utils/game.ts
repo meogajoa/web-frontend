@@ -1,5 +1,5 @@
-import { UserNumber } from '~/types/game';
-import type { Maybe } from '~/types/misc';
+import { UserNumber } from '@/types/game';
+import type { Maybe } from '@/types/misc';
 
 export const convertUserNumber = (
   input: Maybe<UserNumber | string | number>,

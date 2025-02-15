@@ -1,24 +1,24 @@
-import React from 'react';
-import { RoomChatBar } from '~/components/ChatBar';
-import RoomHeader from '~/components/RoomHeader/RoomHeader';
-import RoomMessages from '~/components/RoomMessages';
-import RoomUserList from '~/components/RoomUserList';
-import useUserGameInfo, { type UserGameInfo } from '~/hooks/game/useGameInfo';
+import { RoomChatBar } from '@/components/ChatBar';
+import RoomHeader from '@/components/RoomHeader/RoomHeader';
+import RoomMessages from '@/components/RoomMessages';
+import RoomUserList from '@/components/RoomUserList';
+import useUserGameInfo, { type UserGameInfo } from '@/hooks/game/useGameInfo';
 import useGameSystemNotice, {
   type GameDayOrNightSystemNotice,
   type GameEndSystemNotice,
-} from '~/hooks/game/useGameSystemNotice';
+} from '@/hooks/game/useGameSystemNotice';
 import useGameUsersNotice, {
   type GameUsersNotice,
-} from '~/hooks/game/useGameUsersNotice';
-import useRoomSystemNotice from '~/hooks/room/useRoomSystemNotice';
-import { useAccount } from '~/providers/AccountProvider';
-import { useGame } from '~/providers/GameProvider';
-import { useRoom } from '~/providers/RoomProvider';
-import { useBodyBgColor } from '~/providers/ThemeProvider';
-import { ChatRoom } from '~/types/chat';
-import { Team, UserNumber } from '~/types/game';
-import { cn } from '~/utils/classname';
+} from '@/hooks/game/useGameUsersNotice';
+import useRoomSystemNotice from '@/hooks/room/useRoomSystemNotice';
+import { useAccount } from '@/providers/AccountProvider';
+import { useGame } from '@/providers/GameProvider';
+import { useRoom } from '@/providers/RoomProvider';
+import { useBodyBgColor } from '@/providers/ThemeProvider';
+import { ChatRoom } from '@/types/chat';
+import { Team, UserNumber } from '@/types/game';
+import { cn } from '@/utils/classname';
+import React from 'react';
 
 type Props = {
   className?: string;

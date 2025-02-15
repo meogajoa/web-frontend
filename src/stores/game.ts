@@ -1,5 +1,5 @@
+import { GameTime, Team, type User, UserNumber } from '@/types/game';
 import { createStore } from 'zustand/vanilla';
-import { GameTime, Team, type User, UserNumber } from '~/types/game';
 
 export type GameState = {
   user: User;

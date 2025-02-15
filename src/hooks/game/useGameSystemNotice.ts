@@ -1,7 +1,7 @@
+import { GameTime } from '@/types/game';
 import { compact } from 'lodash-es';
 import { useSubscription } from 'react-stomp-hooks';
 import { z } from 'zod';
-import { GameTime } from '~/types/game';
 
 enum GameSystemNoticeType {
   GameDayOrNight = 'GAME_DAY_OR_NIGHT',

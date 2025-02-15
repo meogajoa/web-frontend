@@ -1,7 +1,7 @@
+import { ProfileImage } from '@/components/ProfileImage';
+import { cn } from '@/utils/classname';
 import Image from 'next/image';
 import React from 'react';
-import { ProfileImage } from '~/components/ProfileImage';
-import { cn } from '~/utils/classname';
 import BaseNoticeItem from './BaseNoticeItem';
 
 export type Props = {

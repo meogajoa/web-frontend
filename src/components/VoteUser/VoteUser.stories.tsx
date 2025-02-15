@@ -1,6 +1,6 @@
+import VoteUser from '@/components/VoteUser/VoteUser';
 import type { Meta, StoryObj } from '@storybook/react';
 import React from 'react';
-import VoteUser from '~/components/VoteUser/VoteUser';
 
 const meta: Meta<typeof VoteUser> = {
   title: 'Molecules/VoteUser',

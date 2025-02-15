@@ -1,10 +1,10 @@
-import { PlusCircleIcon } from '@heroicons/react/24/outline';
-import React from 'react';
 import CustomTextarea, {
   type TextareaHandle,
-} from '~/components/CustomTextarea';
-import MessageSendIcon from '~/svgs/MessageSendIcon';
-import { cn } from '~/utils/classname';
+} from '@/components/CustomTextarea';
+import MessageSendIcon from '@/svgs/MessageSendIcon';
+import { cn } from '@/utils/classname';
+import { PlusCircleIcon } from '@heroicons/react/24/outline';
+import React from 'react';
 
 type Props = {
   className?: string;

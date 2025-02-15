@@ -1,6 +1,6 @@
+import { Team } from '@/types/game';
 import type { Meta, StoryObj } from '@storybook/react';
 import stamp from 'public/images/game/icons/stamp.png';
-import { Team } from '~/types/game';
 import GameResultNotice from './GameResultNotice';
 import { type Props as NoticeItemProps } from './NoticeItem';
 import { type Props as TeamNoticeItemProps } from './TeamNoticeItem';

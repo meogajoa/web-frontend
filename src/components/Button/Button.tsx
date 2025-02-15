@@ -1,3 +1,4 @@
+import { cn } from '@/utils/classname';
 import {
   Button as HeadlessButton,
   type ButtonProps as HeadlessButtonProps,
@@ -6,7 +7,6 @@ import { ChevronDownIcon, PlusIcon } from '@heroicons/react/24/outline';
 import { cva, type VariantProps } from 'class-variance-authority';
 import React from 'react';
 import { PulseLoader } from 'react-spinners';
-import { cn } from '~/utils/classname';
 
 const BUTTON_ICONS = {
   'chevron-down': ChevronDownIcon,

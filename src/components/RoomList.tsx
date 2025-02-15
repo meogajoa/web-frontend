@@ -1,10 +1,10 @@
 'use client';
 
+import { RoomItem } from '@/components/RoomItem';
+import useInfiniteRooms from '@/hooks/room/useInfinateRooms';
+import { cn } from '@/utils/classname';
 import { useTranslations } from 'next-intl';
 import React from 'react';
-import { RoomItem } from '~/components/RoomItem';
-import useInfiniteRooms from '~/hooks/room/useInfinateRooms';
-import { cn } from '~/utils/classname';
 
 type Props = {
   className?: string;

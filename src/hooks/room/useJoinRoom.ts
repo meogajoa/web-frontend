@@ -1,12 +1,12 @@
+import { username } from '@/types/account';
+import { chatMessage } from '@/types/chat';
+import { server } from '@/utils/axios';
+import { A_SECOND } from '@/utils/constants';
+import { sleep } from '@/utils/misc';
 import { useMutation } from '@tanstack/react-query';
 import { type AxiosError } from 'axios';
 import React from 'react';
 import { z } from 'zod';
-import { username } from '~/types/account';
-import { chatMessage } from '~/types/chat';
-import { server } from '~/utils/axios';
-import { A_SECOND } from '~/utils/constants';
-import { sleep } from '~/utils/misc';
 
 export type JoinRoomRequest = {
   id: string;

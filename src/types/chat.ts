@@ -1,6 +1,6 @@
+import { username } from '@/types/account';
+import { userNumber, UserNumber } from '@/types/game';
 import { z } from 'zod';
-import { username } from '~/types/account';
-import { userNumber, UserNumber } from '~/types/game';
 
 /**
  * Chat Room Kind

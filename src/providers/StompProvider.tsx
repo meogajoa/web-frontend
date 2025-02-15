@@ -1,7 +1,7 @@
+import useSessionId from '@/hooks/account/useSessionId';
+import { CONFIGS } from '@/utils/config';
 import React, { type PropsWithChildren } from 'react';
 import { StompSessionProvider } from 'react-stomp-hooks';
-import useSessionId from '~/hooks/account/useSessionId';
-import { CONFIGS } from '~/utils/config';
 
 type Props = {
   onConnect?: () => void;

@@ -1,13 +1,13 @@
+import { ChatMessage } from '@/components/ChatMessage';
+import useChatMessages from '@/hooks/chat/useMessages';
+import { useAccount } from '@/providers/AccountProvider';
+import { useGame } from '@/providers/GameProvider';
+import { useRoom } from '@/providers/RoomProvider';
+import { type ChatMessage as ChatMessageType } from '@/types/chat';
+import { cn } from '@/utils/classname';
+import { convertUserNumber } from '@/utils/game';
 import { useTranslations } from 'next-intl';
 import React from 'react';
-import { ChatMessage } from '~/components/ChatMessage';
-import useChatMessages from '~/hooks/chat/useMessages';
-import { useAccount } from '~/providers/AccountProvider';
-import { useGame } from '~/providers/GameProvider';
-import { useRoom } from '~/providers/RoomProvider';
-import { type ChatMessage as ChatMessageType } from '~/types/chat';
-import { cn } from '~/utils/classname';
-import { convertUserNumber } from '~/utils/game';
 
 type Props = {
   className?: string;

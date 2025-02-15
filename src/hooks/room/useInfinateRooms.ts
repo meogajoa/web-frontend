@@ -1,3 +1,6 @@
+import { server } from '@/utils/axios';
+import { A_MINUTE, A_SECOND } from '@/utils/constants';
+import { sleep } from '@/utils/misc';
 import {
   type InfiniteData,
   type QueryFunctionContext,
@@ -6,9 +9,6 @@ import {
 import { type AxiosError } from 'axios';
 import React from 'react';
 import { z } from 'zod';
-import { server } from '~/utils/axios';
-import { A_MINUTE, A_SECOND } from '~/utils/constants';
-import { sleep } from '~/utils/misc';
 
 const room = z.object({
   id: z.string(),

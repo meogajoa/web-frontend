@@ -1,8 +1,8 @@
+import BellIcon from '@/svgs/BellIcon';
+import LeftArrowIcon from '@/svgs/LeftArrowIcon';
+import OutIcon from '@/svgs/OutIcon';
+import { cn } from '@/utils/classname';
 import React from 'react';
-import BellIcon from '~/svgs/BellIcon';
-import LeftArrowIcon from '~/svgs/LeftArrowIcon';
-import OutIcon from '~/svgs/OutIcon';
-import { cn } from '~/utils/classname';
 import ChatRoom, { type ChatRoomProps } from './ChatRoom';
 
 export type Props = {

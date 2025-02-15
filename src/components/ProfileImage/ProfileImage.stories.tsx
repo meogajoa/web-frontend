@@ -1,6 +1,6 @@
+import ExampleImage from '@/assets/images/cat.png';
+import ProfileImage from '@/components/ProfileImage/ProfileImage';
 import type { Meta, StoryObj } from '@storybook/react';
-import ExampleImage from '~/assets/images/cat.png';
-import ProfileImage from '~/components/ProfileImage/ProfileImage';
 
 const meta: Meta<typeof ProfileImage> = {
   title: 'Atoms/ProfileImage',
