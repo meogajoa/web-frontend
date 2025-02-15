@@ -4,10 +4,10 @@ import { z } from 'zod';
 enum RoomSystemNoticeType {
   GameStart = 'GAME_START',
 }
-const roomSystemNoticeType = z.nativeEnum(RoomSystemNoticeType);
+const roomSystemNoticeTypeSchema = z.nativeEnum(RoomSystemNoticeType);
 
-const roomSystemNotice = z.object({
-  type: roomSystemNoticeType,
+const roomSystemNoticeSchema = z.object({
+  type: roomSystemNoticeTypeSchema,
   content: z.string(),
 });
 
@@ -20,7 +20,7 @@ const useRoomSystemNotice = ({
 }) => {
   useSubscription(`/topic/room/${id}/notice/system`, ({ body }) => {
     const jsonBody = JSON.parse(body);
-    const notice = roomSystemNotice.parse(jsonBody);
+    const notice = roomSystemNoticeSchema.parse(jsonBody);
 
     console.debug(`/topic/room/${id}/notice/system: `, notice);
 

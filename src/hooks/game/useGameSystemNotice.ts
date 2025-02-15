@@ -9,10 +9,10 @@ enum GameSystemNoticeType {
   ButtonGameStatus = 'BUTTON_GAME_STATUS',
   MiniGameWillEndNotice = 'MINI_GAME_WILL_END_NOTICE',
 }
-const gameSystemNoticeType = z.nativeEnum(GameSystemNoticeType);
+const gameSystemNoticeTypeSchema = z.nativeEnum(GameSystemNoticeType);
 
-const baseGameSystemNotice = z.object({
-  type: gameSystemNoticeType,
+const baseGameSystemNoticeSchema = z.object({
+  type: gameSystemNoticeTypeSchema,
   id: z.string(),
   sender: z.literal('SYSTEM'),
   sendTime: z.optional(
@@ -20,20 +20,20 @@ const baseGameSystemNotice = z.object({
   ),
 });
 
-const gameDayOrNightSystemNotice = baseGameSystemNotice.extend({
+const gameDayOrNightSystemNoticeSchema = baseGameSystemNoticeSchema.extend({
   type: z.literal(GameSystemNoticeType.GameDayOrNight),
   day: z.number(),
   dayOrNight: z.nativeEnum(GameTime),
 });
 export type GameDayOrNightSystemNotice = z.infer<
-  typeof gameDayOrNightSystemNotice
+  typeof gameDayOrNightSystemNoticeSchema
 >;
 
-const gameEndSystemNotice = baseGameSystemNotice.extend({
+const gameEndSystemNoticeSchema = baseGameSystemNoticeSchema.extend({
   type: z.literal(GameSystemNoticeType.GameEnd),
   content: z.string(),
 });
-export type GameEndSystemNotice = z.infer<typeof gameEndSystemNotice>;
+export type GameEndSystemNotice = z.infer<typeof gameEndSystemNoticeSchema>;
 
 const useGameSystemNotice = ({
   variables,
@@ -50,12 +50,12 @@ const useGameSystemNotice = ({
     compact([enabled && `/topic/game/${variables.id}/notice/system`]),
     ({ body }) => {
       const jsonBody = JSON.parse(body);
-      const baseNotice = baseGameSystemNotice.parse(jsonBody);
+      const baseNotice = baseGameSystemNoticeSchema.parse(jsonBody);
 
       switch (baseNotice.type) {
         case GameSystemNoticeType.GameDayOrNight:
           const gameDayOrNightNotice =
-            gameDayOrNightSystemNotice.parse(jsonBody);
+            gameDayOrNightSystemNoticeSchema.parse(jsonBody);
           onGameDayOrNight(gameDayOrNightNotice);
 
           console.debug(
@@ -64,7 +64,7 @@ const useGameSystemNotice = ({
           );
           break;
         case GameSystemNoticeType.GameEnd:
-          const gameEndNotice = gameEndSystemNotice.parse(jsonBody);
+          const gameEndNotice = gameEndSystemNoticeSchema.parse(jsonBody);
           onGameEnd(gameEndNotice);
 
           console.debug(

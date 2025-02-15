@@ -10,7 +10,7 @@ import { type AxiosError } from 'axios';
 import React from 'react';
 import { z } from 'zod';
 
-const room = z.object({
+const roomSchema = z.object({
   id: z.string(),
   name: z.string(),
   owner: z.string(),
@@ -18,20 +18,22 @@ const room = z.object({
   currentUser: z.number(),
   playing: z.boolean(),
 });
-export type Room = z.infer<typeof room>;
+export type Room = z.infer<typeof roomSchema>;
 
-const paginatedRoomsResponse = z.object({
-  rooms: z.array(room),
+const paginatedRoomsResponseSchema = z.object({
+  rooms: z.array(roomSchema),
   last: z.boolean(),
 });
-export type PaginatedRoomsResponse = z.infer<typeof paginatedRoomsResponse>;
+export type PaginatedRoomsResponse = z.infer<
+  typeof paginatedRoomsResponseSchema
+>;
 
 const useInfiniteRooms = () => {
   const _queryRoomsAsync = React.useCallback(
     async ({ pageParam }: QueryFunctionContext) => {
       const data = server
         .get<PaginatedRoomsResponse>(`/room/pages/${pageParam}`)
-        .then((response) => paginatedRoomsResponse.parse(response.data));
+        .then((response) => paginatedRoomsResponseSchema.parse(response.data));
 
       await sleep(A_SECOND);
       return data;

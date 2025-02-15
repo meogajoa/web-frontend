@@ -5,7 +5,7 @@ import { useGame } from '@/providers/GameProvider';
 import { useRoom } from '@/providers/RoomProvider';
 import { type ChatMessage as ChatMessageType } from '@/types/chat';
 import { cn } from '@/utils/classname';
-import { convertUserNumber } from '@/utils/game';
+import { convertToUserNumber } from '@/utils/game';
 import { useTranslations } from 'next-intl';
 import React from 'react';
 
@@ -43,7 +43,7 @@ const RoomMessages = React.memo<Props>(({ className }) => {
           ? sender
           : t('inGameUsername', { username: sender });
 
-        const userNumber = convertUserNumber(sender);
+        const userNumber = convertToUserNumber(sender);
 
         return (
           <ChatMessage

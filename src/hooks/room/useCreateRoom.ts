@@ -9,10 +9,10 @@ export type CreateRoomForm = {
   password: string;
 };
 
-const createRoomResponse = z.object({
+const createRoomResponseSchema = z.object({
   id: z.string(),
 });
-export type CreateRoomResponse = z.infer<typeof createRoomResponse>;
+export type CreateRoomResponse = z.infer<typeof createRoomResponseSchema>;
 
 const useCreateRoom = ({
   onSuccess,
@@ -22,7 +22,7 @@ const useCreateRoom = ({
   const _createRoomAsync = React.useCallback(async (data: CreateRoomForm) => {
     return await server
       .post<CreateRoomResponse>('/room/create', data)
-      .then((response) => createRoomResponse.parse(response.data));
+      .then((response) => createRoomResponseSchema.parse(response.data));
   }, []);
 
   const mutation = useMutation<

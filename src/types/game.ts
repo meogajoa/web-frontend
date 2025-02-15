@@ -9,7 +9,7 @@ export enum Team {
   White = 'WHITE',
   Red = 'RED',
 }
-export const teamColor = z.nativeEnum(Team);
+export const teamColorSchema = z.nativeEnum(Team);
 
 /**
  * User (in-game player info)
@@ -24,8 +24,9 @@ export enum UserNumber {
   Six,
   Seven,
   Eight,
+  Nine,
 }
-export const userNumber = z.nativeEnum(UserNumber);
+export const userNumberSchema = z.nativeEnum(UserNumber);
 
 export type User = {
   team: Team;

@@ -1,9 +1,10 @@
 import { useAccount } from '@/providers/AccountProvider';
 import { useGame } from '@/providers/GameProvider';
 import { useRoom } from '@/providers/RoomProvider';
-import { chatMessage, type ChatMessage, ChatRoom } from '@/types/chat';
+import { chatMessageSchema, ChatRoom, type ChatMessage } from '@/types/chat';
 import { Team } from '@/types/game';
-import { assert } from '@/utils/assert';
+import { convertToPersonalChatRoom } from '@/utils/chat';
+import { convertToUserNumber } from '@/utils/game';
 import { compact } from 'lodash-es';
 import { useSubscription } from 'react-stomp-hooks';
 import { z } from 'zod';
@@ -14,9 +15,18 @@ enum XChatRoom {
   General = 'GENERAL',
   Black = 'BLACK',
   White = 'WHITE',
+  Red = 'RED',
   Eliminated = 'ELIMINATED',
 }
-const xChatRoom = z.nativeEnum(XChatRoom);
+const xChatRoomSchema = z.nativeEnum(XChatRoom);
+
+enum XLogType {
+  PersonalSingle = 'PERSONAL_SINGLE',
+  PersonalHistory = 'PERSONAL_HISTORY',
+  Single = 'SINGLE',
+  History = 'HISTORY',
+}
+const xLogTypeSchema = z.nativeEnum(XLogType);
 
 const useChatMessages = ({
   variables,
@@ -35,19 +45,7 @@ const useChatMessages = ({
     compact([
       // Room lobby
       !isPlaying && `/topic/room/${id}/chat`,
-    ]),
-    ({ body }) => {
-      const jsonBody = JSON.parse(body);
-      const message = chatMessage.parse(jsonBody);
-      addMessage(ChatRoom.Lobby, message);
-      setTimeout(() => onNewMessage?.(message), 0);
 
-      console.debug(`/topic/room/${id}/chat: `, message);
-    },
-  );
-
-  useSubscription(
-    compact([
       // In-game general
       isPlaying && !user.eliminated && `/topic/game/${id}/chat`,
 
@@ -78,58 +76,26 @@ const useChatMessages = ({
         `/topic/user/${account.nickname}/gameChat`,
     ]),
     ({ headers, body }) => {
-      const xChatRoomHeader = xChatRoom.parse(headers['x-chat-room']);
-
       const jsonBody = JSON.parse(body);
-      const message = chatMessage.parse(jsonBody);
+      const xChatRoomHeader = xChatRoomSchema.parse(headers['x-chat-room']);
+      const xLogTypeHeader = xLogTypeSchema.parse(headers['x-log-type']);
 
-      console.debug(`/topic/game/${id}/chat: `, message);
-
-      // Sender id is the user's own id
-      const senderId = Number(message.sender);
-      assert(
-        !Number.isNaN(senderId) &&
-          Number.isInteger(senderId) &&
-          senderId >= 1 &&
-          senderId <= 8,
-        `Invalid sender id: ${senderId}`,
+      console.debug(
+        `x-chat-room: ${xChatRoomHeader}`,
+        `x-log-type: ${xLogTypeHeader}`,
+        jsonBody,
       );
 
-      switch (xChatRoomHeader) {
-        case XChatRoom.General:
-          addMessage(ChatRoom.General, message);
-          break;
-        case XChatRoom.Black:
-          addMessage(ChatRoom.Black, message);
-          break;
-        case XChatRoom.White:
-          addMessage(ChatRoom.White, message);
-          break;
-        case XChatRoom.Eliminated:
-          addMessage(ChatRoom.Eliminated, message);
-          break;
-        case XChatRoom.Personal:
-          if (senderId === 1) {
-            addMessage(ChatRoom.User01, message);
-          } else if (senderId === 2) {
-            addMessage(ChatRoom.User02, message);
-          } else if (senderId === 3) {
-            addMessage(ChatRoom.User03, message);
-          } else if (senderId === 4) {
-            addMessage(ChatRoom.User04, message);
-          } else if (senderId === 5) {
-            addMessage(ChatRoom.User05, message);
-          } else if (senderId === 6) {
-            addMessage(ChatRoom.User06, message);
-          } else if (senderId === 7) {
-            addMessage(ChatRoom.User07, message);
-          } else if (senderId === 8) {
-            addMessage(ChatRoom.User08, message);
-          }
+      const message = chatMessageSchema.parse(jsonBody);
+      const chatRoom = convertToChatRoom(xChatRoomHeader);
 
-          break;
-        default:
-          throw new Error(`Unknown chat room: ${xChatRoomHeader}`);
+      if (chatRoom === ChatRoom.Personal) {
+        // Sender id is the in-game user number
+        const usernumber = convertToUserNumber(message.sender);
+        const personalChatRoom = convertToPersonalChatRoom(usernumber);
+        addMessage(personalChatRoom, message);
+      } else {
+        addMessage(chatRoom, message);
       }
 
       setTimeout(() => onNewMessage?.(message), 0);
@@ -137,6 +103,26 @@ const useChatMessages = ({
   );
 
   return messagesByRoom[variables.chatRoom];
+};
+
+const convertToChatRoom = (xChatRoom: XChatRoom): ChatRoom => {
+  switch (xChatRoom) {
+    case XChatRoom.Lobby:
+      return ChatRoom.Lobby;
+    case XChatRoom.General:
+      return ChatRoom.General;
+    case XChatRoom.Black:
+      return ChatRoom.Black;
+    case XChatRoom.White:
+      return ChatRoom.White;
+    case XChatRoom.Red:
+      return ChatRoom.Red;
+    case XChatRoom.Eliminated:
+      return ChatRoom.Eliminated;
+    case XChatRoom.Personal:
+    default:
+      return ChatRoom.Personal;
+  }
 };
 
 export default useChatMessages;

@@ -1,5 +1,5 @@
-import { username } from '@/types/account';
-import { chatMessage } from '@/types/chat';
+import { usernameSchema } from '@/types/account';
+import { chatMessageSchema } from '@/types/chat';
 import { server } from '@/utils/axios';
 import { A_SECOND } from '@/utils/constants';
 import { sleep } from '@/utils/misc';
@@ -12,13 +12,13 @@ export type JoinRoomRequest = {
   id: string;
 };
 
-const joinRoomResponse = z.object({
-  chatLogs: z.array(chatMessage),
+const joinRoomResponseSchema = z.object({
+  chatLogs: z.array(chatMessageSchema),
   name: z.string(),
-  owner: username,
+  owner: usernameSchema,
   playing: z.boolean(),
 });
-export type JoinRoomResponse = z.infer<typeof joinRoomResponse>;
+export type JoinRoomResponse = z.infer<typeof joinRoomResponseSchema>;
 
 const useJoinRoom = ({
   variables: { id },
@@ -31,7 +31,7 @@ const useJoinRoom = ({
     async ({ id: _id }: JoinRoomRequest) => {
       const data = server
         .post<JoinRoomResponse>('/room/join', { id: _id })
-        .then((response) => joinRoomResponse.parse(response.data));
+        .then((response) => joinRoomResponseSchema.parse(response.data));
       await sleep(A_SECOND);
       return data;
     },

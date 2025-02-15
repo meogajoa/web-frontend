@@ -9,14 +9,14 @@ export type SignInForm = {
   password: string;
 };
 
-const signInResponse = z.object({
+const signInResponseSchema = z.object({
   sessionId: z.string(),
   user: z.object({
     email: z.string(),
     nickname: z.string(),
   }),
 });
-export type SignInResponse = z.infer<typeof signInResponse>;
+export type SignInResponse = z.infer<typeof signInResponseSchema>;
 
 const useSignIn = ({
   onSuccess,
@@ -36,7 +36,7 @@ const useSignIn = ({
           },
         },
       )
-      .then((response) => signInResponse.parse(response.data));
+      .then((response) => signInResponseSchema.parse(response.data));
   }, []);
 
   const mutation = useMutation<

@@ -7,10 +7,10 @@ import { type AxiosError } from 'axios';
 import React from 'react';
 import { z } from 'zod';
 
-const authenticateResponse = z.object({
+const authenticateResponseSchema = z.object({
   nickname: z.string(),
 });
-export type AuthenticateResponse = z.infer<typeof authenticateResponse>;
+export type AuthenticateResponse = z.infer<typeof authenticateResponseSchema>;
 
 const useAuthenticate = ({
   sleepSeconds = 1,
@@ -26,7 +26,7 @@ const useAuthenticate = ({
   const _authenticateAsync = React.useCallback(async () => {
     const data = server
       .post<AuthenticateResponse>('/auth/test')
-      .then((response) => authenticateResponse.parse(response.data));
+      .then((response) => authenticateResponseSchema.parse(response.data));
     await sleep(sleepSeconds * A_SECOND);
     return data;
   }, []);

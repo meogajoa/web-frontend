@@ -3,7 +3,7 @@ import LeftArrowIcon from '@/svgs/LeftArrowIcon';
 import OutIcon from '@/svgs/OutIcon';
 import { cn } from '@/utils/classname';
 import React from 'react';
-import ChatRoom, { type ChatRoomProps } from './ChatRoom';
+import ChatRoom, { type Props as ChatRoomProps } from './ChatRoom';
 
 export type Props = {
   className?: string;

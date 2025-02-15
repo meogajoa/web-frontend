@@ -1,4 +1,5 @@
 import VoteUser from '@/components/VoteUser/VoteUser';
+import { Team } from '@/types/game';
 import type { Meta, StoryObj } from '@storybook/react';
 import React from 'react';
 
@@ -10,7 +11,7 @@ const meta: Meta<typeof VoteUser> = {
     color: {
       description: '버튼 색상',
       control: 'select',
-      options: ['gray', 'light-gray'],
+      options: [Team.Black, Team.White, Team.Red],
     },
     voteCount: {
       description: '투표 수',
@@ -38,7 +39,7 @@ type Story = StoryObj<typeof VoteUser>;
 
 export const VotingWithCounts: Story = {
   args: {
-    color: 'gray',
+    color: Team.Black,
     userNumber: 1,
     hasVoted: false,
     voteCount: 0,

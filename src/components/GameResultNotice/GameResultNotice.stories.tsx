@@ -49,13 +49,13 @@ export const Default: Story = {
       {
         nickname: '닉네임 01',
         voteIcon: stamp.src,
-        profileColor: 'light-gray',
+        color: Team.White,
         votes: 2,
       },
       {
         nickname: '닉네임 02',
         voteIcon: stamp.src,
-        profileColor: 'gray',
+        color: Team.White,
         votes: 4,
       },
     ];

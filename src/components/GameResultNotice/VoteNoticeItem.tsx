@@ -1,4 +1,5 @@
 import { ProfileImage } from '@/components/ProfileImage';
+import { Team } from '@/types/game';
 import { cn } from '@/utils/classname';
 import Image from 'next/image';
 import React from 'react';
@@ -9,14 +10,14 @@ export type Props = {
   voteIcon: string;
   votes: number;
   variant?: 'default' | 'dark';
-  profileColor?: 'gray' | 'light-gray';
+  color?: Team;
   className?: string;
 };
 
 const VoteNoticeItem: React.FC<Props> = ({
   nickname,
   voteIcon,
-  profileColor = 'gray',
+  color = Team.Invalid,
   votes,
   className,
 }) => {
@@ -26,7 +27,7 @@ const VoteNoticeItem: React.FC<Props> = ({
       className={cn('flex h-7 items-center', className)}
     >
       <div className="flex items-center">
-        <ProfileImage size="sm" color={profileColor} />
+        <ProfileImage size="sm" color={color} />
         <div className="mr-2 ml-1.5 flex items-center px-2">{nickname}</div>
         <div className="flex gap-1">
           {Array.from({ length: votes }).map((_, iconIndex) => (

@@ -1,5 +1,5 @@
 import ProfileImage, {
-  type ProfileImageProps,
+  type Props as ProfileImageProps,
 } from '@/components/ProfileImage/ProfileImage';
 import { type Point } from '@/types/misc';
 import { cn } from '@/utils/classname';
