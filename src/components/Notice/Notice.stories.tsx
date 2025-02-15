@@ -1,5 +1,5 @@
+import { Notice } from '@/components/Notice';
 import type { Meta, StoryObj } from '@storybook/react';
-import Notice from './Notice';
 
 const meta: Meta<typeof Notice> = {
   title: 'Atoms/Notice',

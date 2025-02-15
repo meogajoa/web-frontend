@@ -31,7 +31,7 @@ const meta: Meta<typeof Button> = {
   },
   decorators: [
     (Story) => (
-      <div className="w-full max-w-[15rem]">
+      <div className="w-full max-w-2xs">
         <Story />
       </div>
     ),

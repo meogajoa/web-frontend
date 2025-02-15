@@ -1,5 +1,5 @@
 import { ChatRoomList } from '@/components/ChatRoomList';
-import { type Props as ChatRoomProps } from '@/components/ChatRoomList/ChatRoom';
+import { type ChatRoomProps } from '@/components/ChatRoomList/ChatRoom';
 import { useGame } from '@/providers/GameProvider';
 import { useRoom } from '@/providers/RoomProvider';
 import { ChatRoom } from '@/types/chat';

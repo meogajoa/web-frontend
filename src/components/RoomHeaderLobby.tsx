@@ -33,10 +33,7 @@ const RoomHeaderLobby = React.memo<Props>(({ className }) => {
 
   return (
     <header
-      className={cn(
-        'relative flex h-[5.5rem] items-center bg-white px-4',
-        className,
-      )}
+      className={cn('relative flex h-22 items-center bg-white px-4', className)}
     >
       <button onClick={handleBackClick}>
         <ArrowLeftIcon className="fill-gray-1 size-6" />

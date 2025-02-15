@@ -19,10 +19,10 @@ const HomeHeader: React.FC<Props> = ({ className, renderPlaceholder }) => {
 
   return (
     <>
-      {renderPlaceholder && <div className="h-[9.75rem]" aria-hidden />}
+      {renderPlaceholder && <div className="h-39" aria-hidden />}
 
       <header className={cn('h-fit bg-white', className)}>
-        <div className="flex h-[5.5rem] items-center justify-between px-4">
+        <div className="flex h-22 items-center justify-between px-4">
           <h1 className="text-3xl font-semibold">{t('header.title')}</h1>
           <button
             className={cn(

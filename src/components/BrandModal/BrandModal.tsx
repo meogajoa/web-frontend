@@ -1,8 +1,8 @@
 import { Button } from '@/components/Button';
 import { cn } from '@/utils/classname';
 import {
-  Button as HeadlessButton,
-  type ButtonProps as HeadlessButtonProps,
+  Button as _Button,
+  type ButtonProps as _ButtonProps,
 } from '@headlessui/react';
 import { XMarkIcon } from '@heroicons/react/24/outline';
 import React from 'react';
@@ -56,7 +56,7 @@ const Title: React.FC<TitleProps> = ({ className, label }) => {
   return <h1 className={cn('text-2xl font-bold', className)}>{label}</h1>;
 };
 
-type CloseButtonProps = HeadlessButtonProps & {
+type CloseButtonProps = _ButtonProps & {
   className?: string;
   position?: 'right' | 'left';
   onClose: () => void;
@@ -69,7 +69,7 @@ const CloseButton: React.FC<CloseButtonProps> = ({
   ...props
 }) => {
   return (
-    <HeadlessButton
+    <_Button
       className={cn(
         'fill-gray-1 absolute size-6 cursor-pointer stroke-2',
         position === 'right' ? 'right-4' : 'left-4',

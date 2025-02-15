@@ -1,10 +1,10 @@
+import { ProfileImage } from '@/components/ProfileImage';
 import { Team } from '@/types/game';
 import { isTeam } from '@/utils/chat';
 import { cn } from '@/utils/classname';
 import React from 'react';
-import { ProfileImage } from '../ProfileImage';
 
-export type Props = {
+export type ChatRoomProps = {
   className?: string;
   title: string;
   content: string;
@@ -23,7 +23,7 @@ export type Props = {
     }
 );
 
-const ChatRoom: React.FC<Props> = ({
+const ChatRoom: React.FC<ChatRoomProps> = ({
   className,
   title,
   content,

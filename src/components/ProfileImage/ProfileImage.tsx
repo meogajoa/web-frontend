@@ -8,8 +8,8 @@ const variants = cva('relative rounded-[0.625rem]', {
     size: {
       sm: 'size-5.5 rounded-[0.3rem]',
       md: 'size-9',
-      lg: 'size-[2.875rem]',
-      xl: 'size-[3.625rem]',
+      lg: 'size-12',
+      xl: 'size-15',
     },
     color: {
       [Team.Black]: 'bg-gray-2',
@@ -24,7 +24,7 @@ const variants = cva('relative rounded-[0.625rem]', {
   },
 });
 
-export type Props = VariantProps<typeof variants> & {
+export type ProfileImageProps = VariantProps<typeof variants> & {
   className?: string;
   as?: React.ElementType;
   src?: string;
@@ -32,7 +32,7 @@ export type Props = VariantProps<typeof variants> & {
   onProfileClick?: () => void;
 };
 
-const ProfileImage: React.FC<React.PropsWithChildren<Props>> = ({
+const ProfileImage: React.FC<React.PropsWithChildren<ProfileImageProps>> = ({
   className,
   size,
   color,

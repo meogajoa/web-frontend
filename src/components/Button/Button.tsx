@@ -1,7 +1,7 @@
 import { cn } from '@/utils/classname';
 import {
-  Button as HeadlessButton,
-  type ButtonProps as HeadlessButtonProps,
+  Button as _Button,
+  type ButtonProps as _ButtonProps,
 } from '@headlessui/react';
 import { ChevronDownIcon, PlusIcon } from '@heroicons/react/24/outline';
 import { cva, type VariantProps } from 'class-variance-authority';
@@ -43,7 +43,7 @@ const buttonVariant = cva(
   },
 );
 
-export type ButtonProps = HeadlessButtonProps &
+export type ButtonProps = _ButtonProps &
   VariantProps<typeof buttonVariant> & {
     loading?: boolean;
   };
@@ -58,7 +58,7 @@ const Button: React.FC<React.PropsWithChildren<ButtonProps>> = ({
   const Icon = BUTTON_ICONS[icon!];
 
   return (
-    <HeadlessButton
+    <_Button
       className={cn(buttonVariant({ icon, ...props }), className)}
       {...props}
     >
@@ -66,7 +66,7 @@ const Button: React.FC<React.PropsWithChildren<ButtonProps>> = ({
       {Icon && (
         <Icon className="size-4.5 stroke-white stroke-2 transition-transform duration-300 group-data-[open]:-rotate-180" />
       )}
-    </HeadlessButton>
+    </_Button>
   );
 };
 

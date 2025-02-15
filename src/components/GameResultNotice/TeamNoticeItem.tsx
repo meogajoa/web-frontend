@@ -1,10 +1,10 @@
+import { BaseNoticeItem } from '@/components/GameResultNotice';
+import NumberIconBall from '@/components/NumberIconBall';
 import { type Team } from '@/types/game';
 import { cn } from '@/utils/classname';
 import React from 'react';
-import NumberIconBall from '../NumberIconBall';
-import BaseNoticeItem from './BaseNoticeItem';
 
-export type Props = {
+export type TeamNoticeItemProps = {
   rank: number;
   teamName: string;
   numberIcons: { number: number; team: Team }[];
@@ -13,7 +13,7 @@ export type Props = {
   className?: string;
 };
 
-const TeamNoticeItem: React.FC<Props> = ({
+const TeamNoticeItem: React.FC<TeamNoticeItemProps> = ({
   rank,
   teamName,
   numberIcons,

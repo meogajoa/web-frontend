@@ -1,11 +1,11 @@
+import { BaseNoticeItem } from '@/components/GameResultNotice';
 import { ProfileImage } from '@/components/ProfileImage';
 import { Team } from '@/types/game';
 import { cn } from '@/utils/classname';
 import Image from 'next/image';
 import React from 'react';
-import BaseNoticeItem from './BaseNoticeItem';
 
-export type Props = {
+export type VoteNoticeItemProps = {
   nickname: string;
   voteIcon: string;
   votes: number;
@@ -14,7 +14,7 @@ export type Props = {
   className?: string;
 };
 
-const VoteNoticeItem: React.FC<Props> = ({
+const VoteNoticeItem: React.FC<VoteNoticeItemProps> = ({
   nickname,
   voteIcon,
   color = Team.Invalid,

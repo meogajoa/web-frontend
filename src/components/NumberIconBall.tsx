@@ -3,15 +3,15 @@ import { cn } from '@/utils/classname';
 import React from 'react';
 
 export type NumberIconBallProps = {
+  className?: string;
   number: number;
   color: Team;
-  className?: string;
 };
 
 const NumberIconBall: React.FC<NumberIconBallProps> = ({
+  className,
   number,
   color,
-  className,
 }) => {
   return (
     <div

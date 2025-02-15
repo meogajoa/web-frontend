@@ -1,5 +1,5 @@
 import ProfileImage, {
-  type Props,
+  type ProfileImageProps,
 } from '@/components/ProfileImage/ProfileImage';
 
-export { ProfileImage, type Props };
+export { ProfileImage, type ProfileImageProps };

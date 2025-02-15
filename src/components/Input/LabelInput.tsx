@@ -1,6 +1,6 @@
+import Input, { type InputProps } from '@/components/Input/Input';
 import { cn } from '@/utils/classname';
 import { cva, type VariantProps } from 'class-variance-authority';
-import Input, { type InputProps } from './Input';
 
 const LabelInputVariant = cva('w-full text-left', {
   variants: {

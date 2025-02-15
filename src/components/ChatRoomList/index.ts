@@ -1,6 +1,6 @@
 import ChatRoom from '@/components/ChatRoomList/ChatRoom';
 import ChatRoomList, {
-  type Props as ChatRoomListProps,
+  type ChatRoomListProps,
 } from '@/components/ChatRoomList/ChatRoomList';
 import ChatRoomListSidebar from '@/components/ChatRoomList/ChatRoomListSidebar';
 
