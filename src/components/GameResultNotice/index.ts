@@ -1,4 +1,3 @@
-import BaseNoticeItem from '@/components/GameResultNotice/BaseNoticeItem';
 import GameResultNotice, {
   type GameResultNoticeProps,
 } from '@/components/GameResultNotice/GameResultNotice';
@@ -13,7 +12,6 @@ import VoteNoticeItem, {
 } from '@/components/GameResultNotice/VoteNoticeItem';
 
 export {
-  BaseNoticeItem,
   GameResultNotice,
   NoticeItem,
   TeamNoticeItem,

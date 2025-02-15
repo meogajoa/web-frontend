@@ -1,5 +1,5 @@
-import { BaseNoticeItem } from '@/components/GameResultNotice';
-import NumberIconBall from '@/components/NumberIconBall';
+import BaseNoticeItem from '@/components/GameResultNotice/BaseNoticeItem';
+import NumberIconBall from '@/components/GameResultNotice/NumberIconBall';
 import { type Team } from '@/types/game';
 import { cn } from '@/utils/classname';
 import React from 'react';

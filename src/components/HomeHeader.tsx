@@ -3,19 +3,22 @@
 import { DropdownExample } from '@/components/Dropdown';
 import { cn } from '@/utils/classname';
 import { ArrowPathIcon } from '@heroicons/react/24/outline';
-import { useQueryClient } from '@tanstack/react-query';
 import { useTranslations } from 'next-intl';
 import React from 'react';
 
 type Props = {
   className?: string;
   renderPlaceholder?: boolean;
+  onRefresh?: () => void;
 };
 
-const HomeHeader: React.FC<Props> = ({ className, renderPlaceholder }) => {
+const HomeHeader: React.FC<Props> = ({
+  className,
+  renderPlaceholder,
+  onRefresh,
+}) => {
   const t = useTranslations('homeRoute');
   const [isRotating, setIsRotating] = React.useState(false);
-  const queryClient = useQueryClient();
 
   return (
     <>
@@ -48,7 +51,7 @@ const HomeHeader: React.FC<Props> = ({ className, renderPlaceholder }) => {
   function handleRefreshClick(isRefreshing: boolean) {
     return () => {
       if (isRefreshing) {
-        queryClient.resetQueries({ queryKey: ['rooms'] });
+        onRefresh?.();
       }
 
       setIsRotating(isRefreshing);

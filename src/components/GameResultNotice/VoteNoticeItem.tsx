@@ -1,4 +1,4 @@
-import { BaseNoticeItem } from '@/components/GameResultNotice';
+import BaseNoticeItem from '@/components/GameResultNotice/BaseNoticeItem';
 import { ProfileImage } from '@/components/ProfileImage';
 import { Team } from '@/types/game';
 import { cn } from '@/utils/classname';

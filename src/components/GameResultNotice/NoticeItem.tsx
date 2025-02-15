@@ -1,4 +1,4 @@
-import { BaseNoticeItem } from '@/components/GameResultNotice';
+import BaseNoticeItem from '@/components/GameResultNotice/BaseNoticeItem';
 import { cn } from '@/utils/classname';
 import React from 'react';
 
