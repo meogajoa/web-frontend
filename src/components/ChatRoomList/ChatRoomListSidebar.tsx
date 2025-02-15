@@ -3,12 +3,12 @@ import { compact, noop, range } from 'lodash-es';
 import { useTranslations } from 'next-intl';
 import React from 'react';
 import { ChatRoomList } from '~/components/ChatRoomList';
+import { type Props as ChatRoomProps } from '~/components/ChatRoomList/ChatRoom';
 import { useGame } from '~/providers/GameProvider';
 import { useRoom } from '~/providers/RoomProvider';
 import { ChatRoom } from '~/types/chat';
 import { Team, UserNumber } from '~/types/game';
 import { cn } from '~/utils/classname';
-import { type ChatRoomProps } from './ChatRoom';
 
 type Props = {
   className?: string;

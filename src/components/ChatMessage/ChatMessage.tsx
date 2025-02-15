@@ -1,6 +1,6 @@
 import React from 'react';
 import {
-  type ProfileImageProps,
+  type Props as ProfileImageProps,
   ProfileImage,
 } from '~/components/ProfileImage';
 import { cn } from '~/utils/classname';

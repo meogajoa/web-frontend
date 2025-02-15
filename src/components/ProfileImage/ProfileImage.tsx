@@ -1,5 +1,6 @@
 import { cva, type VariantProps } from 'class-variance-authority';
 import React from 'react';
+import { Team, UserNumber } from '~/types/game';
 import { cn } from '~/utils/classname';
 
 const variants = cva('relative rounded-[0.625rem]', {
@@ -11,31 +12,33 @@ const variants = cva('relative rounded-[0.625rem]', {
       xl: 'size-[3.625rem]',
     },
     color: {
-      gray: 'bg-gray-2',
-      'light-gray': 'bg-gray-5',
+      [Team.Black]: 'bg-gray-2',
+      [Team.White]: 'bg-gray-5',
+      [Team.Red]: 'bg-red',
+      [Team.Invalid]: 'bg-gray-2',
     },
   },
   defaultVariants: {
     size: 'md',
-    color: 'gray',
+    color: Team.Black,
   },
 });
 
-export type ProfileImageProps = VariantProps<typeof variants> & {
+export type Props = VariantProps<typeof variants> & {
   className?: string;
   as?: React.ElementType;
   src?: string;
-  userNumber?: number;
+  userNumber?: UserNumber;
   onProfileClick?: () => void;
 };
 
-const ProfileImage: React.FC<React.PropsWithChildren<ProfileImageProps>> = ({
+const ProfileImage: React.FC<React.PropsWithChildren<Props>> = ({
   className,
   size,
   color,
   as: Component = 'button',
   src,
-  userNumber = 0,
+  userNumber = UserNumber.Invalid,
   onProfileClick: handleProfileClick,
   children,
   ...props
