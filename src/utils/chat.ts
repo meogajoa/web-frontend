@@ -28,8 +28,9 @@ export const convertToPersonalChatRoom = (userNumber: number): ChatRoom => {
     case UserNumber.Eight:
       return ChatRoom.User08;
     case UserNumber.Nine:
-    default:
       return ChatRoom.User09;
+    default:
+      return ChatRoom.Personal;
   }
 };
 
@@ -42,5 +43,20 @@ export const getPersonalChatRoomFromMessage = (
 
   return convertToPersonalChatRoom(
     receiverNumber === myNumber ? senderNumber : receiverNumber,
+  );
+};
+
+export const isPersonalChatRoom = (chatRoom: ChatRoom) => {
+  return (
+    chatRoom === ChatRoom.User01 ||
+    chatRoom === ChatRoom.User02 ||
+    chatRoom === ChatRoom.User03 ||
+    chatRoom === ChatRoom.User04 ||
+    chatRoom === ChatRoom.User05 ||
+    chatRoom === ChatRoom.User06 ||
+    chatRoom === ChatRoom.User07 ||
+    chatRoom === ChatRoom.User08 ||
+    chatRoom === ChatRoom.User09 ||
+    chatRoom === ChatRoom.Personal
   );
 };

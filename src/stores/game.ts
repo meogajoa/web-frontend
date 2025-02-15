@@ -1,4 +1,5 @@
 import { GameTime, Team, type User, UserNumber } from '@/types/game';
+import { isValidUserNumber } from '@/utils/game';
 import { createStore } from 'zustand/vanilla';
 
 export type GameState = {
@@ -32,7 +33,7 @@ export const defaultInitState: GameState = {
     eliminated: true,
   },
   otherUsers: Object.values(UserNumber)
-    .filter((key) => typeof key === 'number' && key >= 1 && key <= 8)
+    .filter((key) => isValidUserNumber(Number(key)))
     .reduce(
       (acc, key) => ({
         ...acc,

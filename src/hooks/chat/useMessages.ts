@@ -11,7 +11,12 @@ import {
   type ChatMessage,
 } from '@/types/chat';
 import { Team } from '@/types/game';
-import { getPersonalChatRoomFromMessage } from '@/utils/chat';
+import {
+  convertToPersonalChatRoom,
+  getPersonalChatRoomFromMessage,
+  isPersonalChatRoom,
+} from '@/utils/chat';
+import { isValidUserNumber } from '@/utils/game';
 import { compact } from 'lodash-es';
 import { useSubscription } from 'react-stomp-hooks';
 import { z } from 'zod';
@@ -96,16 +101,24 @@ const useChatMessages = ({
       switch (xLogTypeHeader) {
         case XLogType.History: {
           const history = chatLogsSchema.parse(jsonBody);
+          history.chatLogs.forEach((message) => {
+            message.id = message.sendTime.getTime().toString(); // FIXME: Replace this with actual id later
+          });
           const chatRoom = convertToChatRoom(xChatRoomHeader);
           setMessages(chatRoom, history.chatLogs ?? []);
           break;
         }
         case XLogType.PersonalHistory: {
           const history = personalChatLogsSchema.parse(jsonBody);
+          history.personalChatLogs?.sort(
+            (a, b) => a.sendTime.getTime() - b.sendTime.getTime(),
+          );
 
           const newMessagesMap = { ...defaultInitState.messagesByRoom };
 
-          history.personalChatLogs?.forEach((message) => {
+          history.personalChatLogs?.forEach((_message) => {
+            const message = { ..._message };
+            message.id = message.sendTime.getTime().toString(); // FIXME: Replace this with actual id later
             const chatRoom = getPersonalChatRoomFromMessage(
               message,
               user.number,
@@ -113,12 +126,24 @@ const useChatMessages = ({
             newMessagesMap[chatRoom].push(message);
           });
 
-          // FIXME: 채팅방 별로 메시지 저장
+          Object.entries(newMessagesMap).forEach(([_chatRoom, messages]) => {
+            if (!isValidUserNumber(Number(_chatRoom))) {
+              return;
+            }
+
+            const chatRoom = convertToPersonalChatRoom(Number(_chatRoom));
+            if (!isPersonalChatRoom(chatRoom)) {
+              return;
+            }
+
+            setMessages(chatRoom, messages);
+          });
 
           break;
         }
         case XLogType.Single: {
           const message = chatMessageSchema.parse(jsonBody);
+          message.id = message.sendTime.getTime().toString(); // FIXME: Replace this with actual id later
           const chatRoom = convertToChatRoom(xChatRoomHeader);
           addMessage(chatRoom, message);
           setTimeout(() => onNewMessage?.(message), 0);
@@ -126,6 +151,7 @@ const useChatMessages = ({
         }
         case XLogType.PersonalSingle: {
           const personalMessage = personalChatMessageSchema.parse(jsonBody);
+          personalMessage.id = personalMessage.sendTime.getTime().toString(); // FIXME: Replace this with actual id later
           const chatRoom = getPersonalChatRoomFromMessage(
             personalMessage,
             user.number,

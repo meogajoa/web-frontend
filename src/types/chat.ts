@@ -40,7 +40,7 @@ export type ChatMessage = z.infer<typeof chatMessageSchema>;
 export const chatLogsSchema = z.object({
   type: z.literal('CHAT_LOGS'),
   id: z.string(),
-  chatLogs: z.array(chatMessageSchema).optional().nullable(),
+  chatLogs: z.array(chatMessageSchema),
 });
 
 export const personalChatMessageSchema = chatMessageSchema.extend({
@@ -52,5 +52,5 @@ export const personalChatLogsSchema = z.object({
   type: z.literal('PERSONAL_CHAT_LOGS'),
   id: z.string(),
   receiver: usernameSchema,
-  personalChatLogs: z.array(personalChatMessageSchema).optional().nullable(),
+  personalChatLogs: z.array(personalChatMessageSchema),
 });
