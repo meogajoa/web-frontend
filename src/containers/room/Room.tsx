@@ -1,5 +1,6 @@
 import { RoomChatBar } from '@/components/ChatBar';
-import RoomHeader from '@/containers/room/RoomHeader';
+import RoomHeaderGame from '@/containers/room/RoomHeaderGame';
+import RoomHeaderLobby from '@/containers/room/RoomHeaderLobby';
 import RoomMessages from '@/containers/room/RoomMessages';
 import RoomUserList from '@/containers/room/RoomUserList';
 import useUserGameInfo, { type UserGameInfo } from '@/hooks/game/useGameInfo';
@@ -83,7 +84,11 @@ const Room: React.FC<Props> = ({ className }) => {
       )}
       data-testid="room"
     >
-      <RoomHeader className="shrink-0" />
+      {!isPlaying ? (
+        <RoomHeaderLobby className="shrink-0" />
+      ) : (
+        <RoomHeaderGame className="shrink-0" />
+      )}
       {!isPlaying && <RoomUserList />}
       <RoomMessages className="flex-1" />
       <RoomChatBar
