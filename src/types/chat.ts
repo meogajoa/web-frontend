@@ -35,9 +35,22 @@ export const chatMessageSchema = z.object({
   ),
   sendTime: z.union([z.string(), z.date()]).transform((date) => new Date(date)),
 });
+export type ChatMessage = z.infer<typeof chatMessageSchema>;
 
-export const personalChatLogSchema = chatMessageSchema.extend({
-  receiver: usernameSchema,
+export const chatLogsSchema = z.object({
+  type: z.literal('CHAT_LOGS'),
+  id: z.string(),
+  chatLogs: z.array(chatMessageSchema).optional().nullable(),
 });
 
-export type ChatMessage = z.infer<typeof chatMessageSchema>;
+export const personalChatMessageSchema = chatMessageSchema.extend({
+  receiver: usernameSchema,
+});
+export type PersonalChatMessage = z.infer<typeof personalChatMessageSchema>;
+
+export const personalChatLogsSchema = z.object({
+  type: z.literal('PERSONAL_CHAT_LOGS'),
+  id: z.string(),
+  receiver: usernameSchema,
+  personalChatLogs: z.array(personalChatMessageSchema).optional().nullable(),
+});

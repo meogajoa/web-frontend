@@ -1,10 +1,17 @@
 import { useAccount } from '@/providers/AccountProvider';
 import { useGame } from '@/providers/GameProvider';
 import { useRoom } from '@/providers/RoomProvider';
-import { chatMessageSchema, ChatRoom, type ChatMessage } from '@/types/chat';
+import { defaultInitState } from '@/stores/room';
+import {
+  chatLogsSchema,
+  chatMessageSchema,
+  ChatRoom,
+  personalChatLogsSchema,
+  personalChatMessageSchema,
+  type ChatMessage,
+} from '@/types/chat';
 import { Team } from '@/types/game';
-import { convertToPersonalChatRoom } from '@/utils/chat';
-import { convertToUserNumber } from '@/utils/game';
+import { getPersonalChatRoomFromMessage } from '@/utils/chat';
 import { compact } from 'lodash-es';
 import { useSubscription } from 'react-stomp-hooks';
 import { z } from 'zod';
@@ -38,7 +45,7 @@ const useChatMessages = ({
   onNewMessage?: (message: ChatMessage) => void;
 }) => {
   const { account } = useAccount();
-  const { id, messagesByRoom, addMessage, isPlaying } = useRoom();
+  const { id, messagesByRoom, isPlaying, addMessage, setMessages } = useRoom();
   const { user } = useGame();
 
   useSubscription(
@@ -81,24 +88,53 @@ const useChatMessages = ({
       const xLogTypeHeader = xLogTypeSchema.parse(headers['x-log-type']);
 
       console.debug(
-        `x-chat-room: ${xChatRoomHeader}`,
-        `x-log-type: ${xLogTypeHeader}`,
+        `x-chat-room: ${xChatRoomHeader}\n`,
+        `x-log-type: ${xLogTypeHeader}\n`,
         jsonBody,
       );
 
-      const message = chatMessageSchema.parse(jsonBody);
-      const chatRoom = convertToChatRoom(xChatRoomHeader);
+      switch (xLogTypeHeader) {
+        case XLogType.History: {
+          const history = chatLogsSchema.parse(jsonBody);
+          const chatRoom = convertToChatRoom(xChatRoomHeader);
+          setMessages(chatRoom, history.chatLogs ?? []);
+          break;
+        }
+        case XLogType.PersonalHistory: {
+          const history = personalChatLogsSchema.parse(jsonBody);
 
-      if (chatRoom === ChatRoom.Personal) {
-        // Sender id is the in-game user number
-        const usernumber = convertToUserNumber(message.sender);
-        const personalChatRoom = convertToPersonalChatRoom(usernumber);
-        addMessage(personalChatRoom, message);
-      } else {
-        addMessage(chatRoom, message);
+          const newMessagesMap = { ...defaultInitState.messagesByRoom };
+
+          history.personalChatLogs?.forEach((message) => {
+            const chatRoom = getPersonalChatRoomFromMessage(
+              message,
+              user.number,
+            );
+            newMessagesMap[chatRoom].push(message);
+          });
+
+          // FIXME: 채팅방 별로 메시지 저장
+
+          break;
+        }
+        case XLogType.Single: {
+          const message = chatMessageSchema.parse(jsonBody);
+          const chatRoom = convertToChatRoom(xChatRoomHeader);
+          addMessage(chatRoom, message);
+          setTimeout(() => onNewMessage?.(message), 0);
+          break;
+        }
+        case XLogType.PersonalSingle: {
+          const personalMessage = personalChatMessageSchema.parse(jsonBody);
+          const chatRoom = getPersonalChatRoomFromMessage(
+            personalMessage,
+            user.number,
+          );
+          addMessage(chatRoom, personalMessage);
+          setTimeout(() => onNewMessage?.(personalMessage), 0);
+          break;
+        }
       }
-
-      setTimeout(() => onNewMessage?.(message), 0);
     },
   );
 

@@ -1,7 +1,7 @@
-import { ChatRoom } from '@/types/chat';
+import { ChatRoom, type PersonalChatMessage } from '@/types/chat';
 import { Team, UserNumber } from '@/types/game';
 import { assert } from '@/utils/assert';
-import { isValidUserNumber } from '@/utils/game';
+import { convertToUserNumber, isValidUserNumber } from '@/utils/game';
 
 export const isTeam = (image: string | Team): image is Team => {
   return Object.values(Team).includes(image as Team);
@@ -31,4 +31,16 @@ export const convertToPersonalChatRoom = (userNumber: number): ChatRoom => {
     default:
       return ChatRoom.User09;
   }
+};
+
+export const getPersonalChatRoomFromMessage = (
+  message: PersonalChatMessage,
+  myNumber: UserNumber,
+): ChatRoom => {
+  const receiverNumber = convertToUserNumber(message.receiver);
+  const senderNumber = convertToUserNumber(message.sender);
+
+  return convertToPersonalChatRoom(
+    receiverNumber === myNumber ? senderNumber : receiverNumber,
+  );
 };

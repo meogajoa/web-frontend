@@ -17,6 +17,7 @@ export type RoomActions = {
   setIsPlaying: (isPlaying: boolean) => void;
   setCurrentChatRoom: (chatRoom: ChatRoom) => void;
   addMessage: (chatRoom: ChatRoom, message: ChatMessage) => void;
+  setMessages: (chatRoom: ChatRoom, messages: ChatMessage[]) => void;
   clearMessages: (chatRoom: ChatRoom) => void;
 };
 
@@ -50,6 +51,13 @@ export const createRoomStore = (initState: RoomState = defaultInitState) => {
         messagesByRoom: {
           ...state.messagesByRoom,
           [chatRoom]: [...state.messagesByRoom[chatRoom], message],
+        },
+      })),
+    setMessages: (chatRoom, messages) =>
+      set((state) => ({
+        messagesByRoom: {
+          ...state.messagesByRoom,
+          [chatRoom]: messages,
         },
       })),
     clearMessages: (chatRoom) =>
