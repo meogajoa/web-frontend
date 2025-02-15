@@ -1,11 +1,13 @@
+import ChatRoom, {
+  type ChatRoomProps,
+} from '@/components/ChatRoomList/ChatRoom';
+import BellIcon from '@/svgs/BellIcon';
+import LeftArrowIcon from '@/svgs/LeftArrowIcon';
+import OutIcon from '@/svgs/OutIcon';
+import { cn } from '@/utils/classname';
 import React from 'react';
-import BellIcon from '~/svgs/BellIcon';
-import LeftArrowIcon from '~/svgs/LeftArrowIcon';
-import OutIcon from '~/svgs/OutIcon';
-import { cn } from '~/utils/classname';
-import ChatRoom, { ChatRoomProps } from './ChatRoom';
 
-export type Props = {
+export type ChatRoomListProps = {
   className?: string;
   rooms: ChatRoomProps[];
   onClose: () => void;
@@ -13,7 +15,7 @@ export type Props = {
   onNotificationClick?: () => void;
 };
 
-const ChatRoomList: React.FC<Props> = ({
+const ChatRoomList: React.FC<ChatRoomListProps> = ({
   className,
   rooms,
   onClose,

@@ -1,45 +1,56 @@
+import { usernameSchema } from '@/types/account';
+import { UserNumber, userNumberSchema } from '@/types/game';
 import { z } from 'zod';
-import { username } from '~/types/account';
 
 /**
  * Chat Room Kind
  */
 export enum ChatRoom {
+  User01 = UserNumber.One,
+  User02 = UserNumber.Two,
+  User03 = UserNumber.Three,
+  User04 = UserNumber.Four,
+  User05 = UserNumber.Five,
+  User06 = UserNumber.Six,
+  User07 = UserNumber.Seven,
+  User08 = UserNumber.Eight,
+  User09 = UserNumber.Nine,
   Lobby = 'lobby',
-  User01 = 1,
-  User02 = 2,
-  User03 = 3,
-  User04 = 4,
-  User05 = 5,
-  User06 = 6,
-  User07 = 7,
-  User08 = 8,
   Personal = 'personal',
   General = 'general',
   Black = 'black',
   White = 'white',
+  Red = 'red',
   Eliminated = 'eliminated',
 }
 
 /**
- * x-chat-room header value
- */
-export enum XChatRoom {
-  Personal = 'PERSONAL',
-  General = 'PUBLIC', // FIXME: expected to receive this as 'GENERAL'
-  Black = 'BLACK',
-  White = 'WHITE',
-  Eliminated = 'ELIMINATED',
-}
-export const xChatRoom = z.nativeEnum(XChatRoom);
-
-/**
  * Chat Message
  */
-export const chatMessage = z.object({
+export const chatMessageSchema = z.object({
   id: z.string(),
   content: z.string(),
-  sender: username,
+  sender: usernameSchema.or(
+    userNumberSchema.transform((number) => number.toString()),
+  ),
   sendTime: z.union([z.string(), z.date()]).transform((date) => new Date(date)),
 });
-export type ChatMessage = z.infer<typeof chatMessage>;
+export type ChatMessage = z.infer<typeof chatMessageSchema>;
+
+export const chatLogsSchema = z.object({
+  type: z.literal('CHAT_LOGS'),
+  id: z.string(),
+  chatLogs: z.array(chatMessageSchema),
+});
+
+export const personalChatMessageSchema = chatMessageSchema.extend({
+  receiver: usernameSchema,
+});
+export type PersonalChatMessage = z.infer<typeof personalChatMessageSchema>;
+
+export const personalChatLogsSchema = z.object({
+  type: z.literal('PERSONAL_CHAT_LOGS'),
+  id: z.string(),
+  receiver: usernameSchema,
+  personalChatLogs: z.array(personalChatMessageSchema),
+});

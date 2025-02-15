@@ -1,10 +1,14 @@
 'use client';
 
-import React, { PropsWithChildren } from 'react';
+import {
+  createThemeStore,
+  type ThemeState,
+  type ThemeStore,
+} from '@/stores/theme';
+import { type Nullable } from '@/types/misc';
+import { assert } from '@/utils/assert';
+import React, { type PropsWithChildren } from 'react';
 import { useStore } from 'zustand';
-import { createThemeStore, ThemeState, ThemeStore } from '~/stores/theme';
-import { Nullable } from '~/types/misc';
-import { assert } from '~/utils/assert';
 
 export type ThemeStoreApi = ReturnType<typeof createThemeStore>;
 

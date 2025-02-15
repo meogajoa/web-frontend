@@ -1,8 +1,8 @@
+import { ProfileImage } from '@/components/ProfileImage';
+import { Team } from '@/types/game';
+import { isTeam } from '@/utils/chat';
+import { cn } from '@/utils/classname';
 import React from 'react';
-import { Team } from '~/types/game';
-import { isTeam } from '~/utils/chat';
-import { cn } from '~/utils/classname';
-import { ProfileImage } from '../ProfileImage';
 
 export type ChatRoomProps = {
   className?: string;
@@ -50,8 +50,8 @@ const ChatRoom: React.FC<ChatRoomProps> = ({
             color={
               isTeam(props.image)
                 ? props.image === Team.Black
-                  ? 'gray'
-                  : 'light-gray'
+                  ? Team.Black
+                  : Team.White
                 : undefined
             }
             size="lg"
@@ -64,13 +64,7 @@ const ChatRoom: React.FC<ChatRoomProps> = ({
                 as="div"
                 key={index}
                 src={isTeam(img) ? undefined : img}
-                color={
-                  isTeam(img)
-                    ? img === Team.Black
-                      ? 'gray'
-                      : 'light-gray'
-                    : undefined
-                }
+                color={isTeam(img) ? img : undefined}
                 size="sm"
               />
             ))}

@@ -1,3 +1,3 @@
-import VoteUser from '~/components/VoteUser/VoteUser';
+import VoteUser from '@/components/VoteUser/VoteUser';
 
 export { VoteUser };

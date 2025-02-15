@@ -1,8 +1,8 @@
 'use client';
 
+import { cn } from '@/utils/classname';
 import { Dialog, DialogBackdrop, DialogPanel } from '@headlessui/react';
 import React from 'react';
-import { cn } from '~/utils/classname';
 
 export type ModalProps = React.ComponentProps<'form'> & {
   overlayClassName?: string;

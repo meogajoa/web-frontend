@@ -1,13 +1,13 @@
+import { ChatRoomListSidebar } from '@/components/ChatRoomList';
+import { useGame } from '@/providers/GameProvider';
+import { useRoom } from '@/providers/RoomProvider';
+import CartFillIcon from '@/svgs/CartFillIcon';
+import ChatIcon from '@/svgs/ChatIcon';
+import { GameTime, Team } from '@/types/game';
+import { cn } from '@/utils/classname';
 import { MinusIcon, PlusIcon } from '@heroicons/react/24/outline';
 import { useTranslations } from 'next-intl';
 import React from 'react';
-import { ChatRoomListSidebar } from '~/components/ChatRoomList';
-import { useGame } from '~/providers/GameProvider';
-import { useRoom } from '~/providers/RoomProvider';
-import CartFillIcon from '~/svgs/CartFillIcon';
-import ChatIcon from '~/svgs/ChatIcon';
-import { GameTime, Team } from '~/types/game';
-import { cn } from '~/utils/classname';
 
 type Props = {
   className?: string;
@@ -31,8 +31,9 @@ const RoomHeaderGame = React.memo<Props>(({ className }) => {
     <>
       <header
         className={cn(
-          'border-b-gray-5/60 relative flex h-[5.5rem] items-center justify-between border-b-2 px-4',
+          'border-b-gray-5/60 relative flex h-22 items-center justify-between border-b-2 px-4',
           user.team === Team.Black && 'border-b-gray-2/20',
+          user.team === Team.Red && 'border-b-red/10 bg-white',
           className,
         )}
       >

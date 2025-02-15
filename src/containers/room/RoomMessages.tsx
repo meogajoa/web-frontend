@@ -1,13 +1,13 @@
+import { ChatMessage } from '@/components/ChatMessage';
+import useChatMessages from '@/hooks/chat/useMessages';
+import { useAccount } from '@/providers/AccountProvider';
+import { useGame } from '@/providers/GameProvider';
+import { useRoom } from '@/providers/RoomProvider';
+import { type ChatMessage as ChatMessageType } from '@/types/chat';
+import { cn } from '@/utils/classname';
+import { convertToUserNumber } from '@/utils/game';
 import { useTranslations } from 'next-intl';
 import React from 'react';
-import { ChatMessage } from '~/components/ChatMessage';
-import { useChatMessages } from '~/hooks/chat';
-import { useAccount } from '~/providers/AccountProvider';
-import { useGame } from '~/providers/GameProvider';
-import { useRoom } from '~/providers/RoomProvider';
-import { ChatMessage as ChatMessageType } from '~/types/chat';
-import { Team, UserNumber } from '~/types/game';
-import { cn } from '~/utils/classname';
 
 type Props = {
   className?: string;
@@ -36,22 +36,22 @@ const RoomMessages = React.memo<Props>(({ className }) => {
       className={cn('space-y-3 overflow-y-auto p-4 font-bold', className)}
       ref={containerRef}
     >
-      {messages.map(({ id, content, sender: _sender }) => {
+      {messages.map(({ id, content, sender }) => {
         const isSelf =
-          _sender === account.nickname || _sender === user.number.toString();
-        const sender = isSelf
-          ? _sender
-          : t('inGameUsername', { username: _sender });
-        const isBlack =
-          otherUsers[_sender as unknown as UserNumber]?.team === Team.Black;
+          sender === account.nickname || sender === user.number.toString();
+        const username = isSelf
+          ? sender
+          : t('inGameUsername', { username: sender });
+
+        const userNumber = convertToUserNumber(sender);
 
         return (
           <ChatMessage
             key={id}
             position={isSelf ? 'right' : 'left'}
-            username={sender}
+            username={username}
             message={content}
-            color={isBlack ? 'gray' : 'light-gray'}
+            color={otherUsers[userNumber]?.team}
           />
         );
       })}

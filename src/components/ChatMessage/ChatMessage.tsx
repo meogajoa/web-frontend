@@ -1,6 +1,9 @@
+import {
+  type ProfileImageProps,
+  ProfileImage,
+} from '@/components/ProfileImage';
+import { cn } from '@/utils/classname';
 import React from 'react';
-import { ProfileImage, ProfileImageProps } from '~/components/ProfileImage';
-import { cn } from '~/utils/classname';
 
 type Props = {
   className?: string;
@@ -35,7 +38,7 @@ const ChatMessage = React.memo<Props>(
           {position === 'left' && !isCumulative && <p>{username}</p>}
           <div
             className={cn(
-              'max-w-[60vw] rounded-[0.93rem] bg-white p-2.5 break-all',
+              'max-w-[60vw] rounded-[0.93rem] bg-white p-2.5 break-all whitespace-break-spaces',
               position === 'left' && 'rounded-tl-[0.15rem]',
               position === 'right' && 'rounded-br-[0.15rem]',
             )}

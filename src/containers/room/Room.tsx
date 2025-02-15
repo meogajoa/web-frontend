@@ -1,28 +1,25 @@
+import { RoomChatBar } from '@/components/ChatBar';
+import RoomHeaderGame from '@/containers/room/RoomHeaderGame';
+import RoomHeaderLobby from '@/containers/room/RoomHeaderLobby';
+import RoomMessages from '@/containers/room/RoomMessages';
+import RoomUserList from '@/containers/room/RoomUserList';
+import useUserGameInfo, { type UserGameInfo } from '@/hooks/game/useGameInfo';
+import useGameSystemNotice, {
+  type GameDayOrNightSystemNotice,
+  type GameEndSystemNotice,
+} from '@/hooks/game/useGameSystemNotice';
+import useGameUsersNotice, {
+  type GameUsersNotice,
+} from '@/hooks/game/useGameUsersNotice';
+import useRoomSystemNotice from '@/hooks/room/useRoomSystemNotice';
+import { useAccount } from '@/providers/AccountProvider';
+import { useGame } from '@/providers/GameProvider';
+import { useRoom } from '@/providers/RoomProvider';
+import { useBodyBgColor } from '@/providers/ThemeProvider';
+import { ChatRoom } from '@/types/chat';
+import { Team, UserNumber } from '@/types/game';
+import { cn } from '@/utils/classname';
 import React from 'react';
-import { RoomChatBar } from '~/components/ChatBar';
-import RoomHeader from '~/components/RoomHeader/RoomHeader';
-import RoomMessages from '~/components/RoomMessages';
-import RoomUserList from '~/components/RoomUserList';
-import {
-  useGameSystemNotice,
-  useGameUsersNotice,
-  useUserGameInfo,
-} from '~/hooks/game';
-import { useRoomSystemNotice } from '~/hooks/room';
-import { useAccount } from '~/providers/AccountProvider';
-import { useGame } from '~/providers/GameProvider';
-import { useRoom } from '~/providers/RoomProvider';
-import { useBodyBgColor } from '~/providers/ThemeProvider';
-import { ChatRoom } from '~/types/chat';
-import {
-  GameDayOrNightSystemNotice,
-  GameEndSystemNotice,
-  GameUsersNotice,
-  Team,
-  UserGameInfo,
-  UserNumber,
-} from '~/types/game';
-import { cn } from '~/utils/classname';
 
 type Props = {
   className?: string;
@@ -44,7 +41,11 @@ const Room: React.FC<Props> = ({ className }) => {
   } = useGame();
 
   useBodyBgColor(
-    user.team === Team.Black ? 'var(--color-gray-3)' : 'var(--color-white)',
+    user.team === Team.Black
+      ? 'var(--color-gray-3)'
+      : user.team === Team.Red
+        ? 'var(--color-white)'
+        : 'var(--color-gray-6)',
   );
 
   useRoomSystemNotice({
@@ -78,11 +79,16 @@ const Room: React.FC<Props> = ({ className }) => {
       className={cn(
         'bg-gray-6 flex h-full flex-col',
         user.team === Team.Black && 'bg-gray-3',
+        user.team === Team.Red && 'bg-red/15',
         className,
       )}
       data-testid="room"
     >
-      <RoomHeader className="shrink-0" />
+      {!isPlaying ? (
+        <RoomHeaderLobby className="shrink-0" />
+      ) : (
+        <RoomHeaderGame className="shrink-0" />
+      )}
       {!isPlaying && <RoomUserList />}
       <RoomMessages className="flex-1" />
       <RoomChatBar

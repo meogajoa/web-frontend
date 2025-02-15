@@ -1,10 +1,10 @@
 'use client';
 
+import { type AccountStore, createAccountStore } from '@/stores/account';
+import type { Nullable } from '@/types/misc';
+import { assert } from '@/utils/assert';
 import React, { type PropsWithChildren } from 'react';
 import { useStore } from 'zustand';
-import { AccountStore, createAccountStore } from '~/stores/account';
-import type { Nullable } from '~/types/misc';
-import { assert } from '~/utils/assert';
 
 export type AccountStoreApi = ReturnType<typeof createAccountStore>;
 

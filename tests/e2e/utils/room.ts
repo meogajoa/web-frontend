@@ -1,6 +1,6 @@
 import { expect, Page } from '@playwright/test';
 import { homeUrl } from '@tests/constants/urls';
-import { TestRoom } from '@tests/types/room';
+import { type TestRoom } from '@tests/types/room';
 
 export const generateRandomRoom = ({
   emptyPassword,
@@ -23,20 +23,44 @@ export const createRoomAsync = async (
     shouldSuccess: boolean;
   },
 ) => {
-  // GIVEN: Go to home page
+  // GIVEN
   await page.goto(homeUrl);
 
-  // WHEN: Open create room modal
+  // WHEN
   await page.getByTestId('create-room-button').click();
-
-  // WHEN: Fill room name and password and click create button
   await page.getByTestId('room-name-label').fill(room.name);
   await page.getByTestId('room-password-label').fill(room.password || '');
   await page.getByTestId('create-room-modal-create-button').click();
 
-  // THEN: Check if the room is created successfully
+  // THEN
   if (shouldSuccess) {
     await expect(page).toHaveURL(/.*rooms\/\d+$/);
+  } else {
+    await expect(page).toHaveURL(homeUrl);
+  }
+};
+
+export const joinRoomAsync = async (
+  page: Page,
+  {
+    room,
+    shouldSuccess,
+  }: {
+    room: TestRoom;
+    shouldSuccess: boolean;
+  },
+) => {
+  // GIVEN
+  await page.goto(homeUrl);
+
+  // WHEN
+  const roomItem = await page.getByTestId(`room-name-${room.name}`);
+  await roomItem.first().click();
+
+  // THEN
+  if (shouldSuccess) {
+    await expect(page).toHaveURL(/.*rooms/);
+    await expect(page.getByTestId('room')).toBeVisible();
   } else {
     await expect(page).toHaveURL(homeUrl);
   }

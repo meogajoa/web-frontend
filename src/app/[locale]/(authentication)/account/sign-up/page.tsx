@@ -1,10 +1,9 @@
 'use client';
 
+import useSignUp, { type SignUpForm } from '@/hooks/account/useSignUp';
+import { useRouter } from '@/i18n/routing';
 import { type AxiosError } from 'axios';
 import { useForm } from 'react-hook-form';
-import { useSignUp } from '~/hooks/account';
-import { useRouter } from '~/i18n/routing';
-import { SignUpForm } from '~/types/account';
 
 const SignUpPage = () => {
   const { register, handleSubmit } = useForm<SignUpForm>();

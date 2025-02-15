@@ -1,19 +1,17 @@
-import { cva, VariantProps } from 'class-variance-authority';
+import { cva, type VariantProps } from 'class-variance-authority';
 import cn from 'classnames';
 import React from 'react';
 
-type NoticeProps = Readonly<
-  React.ComponentProps<'div'> &
-    VariantProps<typeof NoticeVariant> & {
-      children: React.ReactNode;
-      type?: 'gameStart' | 'gameInfo' | 'teamInfo'; // 공지 종류 추가
-      time?: number; // gameStart에 필요한 시간
-      team?: '흑' | '백'; // teamInfo에 필요한 팀 정보
-    }
->;
+type NoticeProps = React.ComponentProps<'div'> &
+  VariantProps<typeof NoticeVariant> & {
+    children: React.ReactNode;
+    type?: 'gameStart' | 'gameInfo' | 'teamInfo';
+    time?: number;
+    team?: '흑' | '백';
+  };
 
 const NoticeVariant = cva(
-  'inline-flex items-center justify-center rounded-[50px] px-4 py-2.5 text-center text-white',
+  'inline-flex items-center justify-center rounded-full px-4 py-2.5 text-center text-white',
   {
     variants: {
       variant: {
@@ -22,9 +20,9 @@ const NoticeVariant = cva(
         danger: 'bg-gray-2',
       },
       type: {
-        gameStart: 'w-[13.188rem]',
+        gameStart: 'w-73',
         gameInfo: 'w-72',
-        teamInfo: 'w-[7.625rem]',
+        teamInfo: 'w-73',
       },
     },
     defaultVariants: {
@@ -35,7 +33,6 @@ const NoticeVariant = cva(
 );
 
 const Notice: React.FC<NoticeProps> = ({
-  children,
   className,
   variant,
   type,
