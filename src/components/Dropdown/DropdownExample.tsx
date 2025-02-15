@@ -1,6 +1,6 @@
 import React from 'react';
 import { Dropdown } from '~/components/Dropdown';
-import { Optional } from '~/types/misc';
+import { type Optional } from '~/types/misc';
 import { cn } from '~/utils/classname';
 
 type ExampleOption = Optional<{

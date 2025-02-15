@@ -1,12 +1,12 @@
 import { useTranslations } from 'next-intl';
 import React from 'react';
 import { ChatMessage } from '~/components/ChatMessage';
-import { useChatMessages } from '~/hooks/chat';
+import useChatMessages from '~/hooks/chat/useMessages';
 import { useAccount } from '~/providers/AccountProvider';
 import { useGame } from '~/providers/GameProvider';
 import { useRoom } from '~/providers/RoomProvider';
-import { ChatMessage as ChatMessageType } from '~/types/chat';
-import { Team, UserNumber } from '~/types/game';
+import { type ChatMessage as ChatMessageType } from '~/types/chat';
+import { Team, type UserNumber } from '~/types/game';
 import { cn } from '~/utils/classname';
 
 type Props = {

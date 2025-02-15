@@ -4,7 +4,7 @@ import { ProfileImage } from '~/components/ProfileImage';
 import { cn } from '~/utils/classname';
 import BaseNoticeItem from './BaseNoticeItem';
 
-export type VoteNoticeItemProps = {
+export type Props = {
   nickname: string;
   voteIcon: string;
   votes: number;
@@ -13,7 +13,7 @@ export type VoteNoticeItemProps = {
   className?: string;
 };
 
-const VoteNoticeItem: React.FC<VoteNoticeItemProps> = ({
+const VoteNoticeItem: React.FC<Props> = ({
   nickname,
   voteIcon,
   profileColor = 'gray',

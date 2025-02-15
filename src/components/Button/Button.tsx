@@ -1,9 +1,9 @@
 import {
   Button as HeadlessButton,
-  ButtonProps as HeadlessButtonProps,
+  type ButtonProps as HeadlessButtonProps,
 } from '@headlessui/react';
 import { ChevronDownIcon, PlusIcon } from '@heroicons/react/24/outline';
-import { cva, VariantProps } from 'class-variance-authority';
+import { cva, type VariantProps } from 'class-variance-authority';
 import React from 'react';
 import { PulseLoader } from 'react-spinners';
 import { cn } from '~/utils/classname';

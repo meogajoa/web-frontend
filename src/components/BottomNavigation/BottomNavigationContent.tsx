@@ -1,7 +1,7 @@
 import { useTranslations } from 'next-intl';
 import React from 'react';
 import { BottomNavigation } from '~/components/BottomNavigation';
-import { MENUS, MenuType } from '~/constants/navigation';
+import { MENUS, type MenuType } from '~/constants/navigation';
 import { usePathname, useRouter } from '~/i18n/routing';
 import { cn } from '~/utils/classname';
 

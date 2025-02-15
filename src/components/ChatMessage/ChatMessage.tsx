@@ -1,5 +1,8 @@
 import React from 'react';
-import { ProfileImage, ProfileImageProps } from '~/components/ProfileImage';
+import {
+  type ProfileImageProps,
+  ProfileImage,
+} from '~/components/ProfileImage';
 import { cn } from '~/utils/classname';
 
 type Props = {

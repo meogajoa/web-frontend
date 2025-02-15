@@ -2,7 +2,7 @@ import React from 'react';
 import { cn } from '~/utils/classname';
 import BaseNoticeItem from './BaseNoticeItem';
 
-export type NoticeItemProps = {
+export type Props = {
   rank: number;
   nickname: string;
   score: number;
@@ -11,7 +11,7 @@ export type NoticeItemProps = {
   className?: string;
 };
 
-const NoticeItem: React.FC<NoticeItemProps> = ({
+const NoticeItem: React.FC<Props> = ({
   className,
   rank,
   nickname,

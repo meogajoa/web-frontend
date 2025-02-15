@@ -1,11 +1,11 @@
 import { ArrowLeftIcon } from '@heroicons/react/24/outline';
-import { AxiosError } from 'axios';
+import { type AxiosError } from 'axios';
 import { debounce } from 'lodash-es';
 import React from 'react';
 import { Button } from '~/components/Button';
 import { MAX_USERS } from '~/constants/game';
-import { useStartGame } from '~/hooks/game';
-import { useRoomUsersNotice } from '~/hooks/room';
+import useStartGame from '~/hooks/game/useStartGame';
+import useRoomUsersNotice from '~/hooks/room/useRoomUsersNotice';
 import { useRouter } from '~/i18n/routing';
 import { useAccount } from '~/providers/AccountProvider';
 import { useRoom } from '~/providers/RoomProvider';

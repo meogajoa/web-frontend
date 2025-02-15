@@ -1,6 +1,6 @@
 'use client';
 
-import React, { PropsWithChildren } from 'react';
+import React, { type PropsWithChildren } from 'react';
 import { BottomNavigationContent } from '~/components/BottomNavigation';
 
 const LobbyLayout: React.FC<PropsWithChildren> = ({ children }) => {

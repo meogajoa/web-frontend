@@ -1,6 +1,6 @@
 import { BookmarkIcon } from '@heroicons/react/24/outline';
 import React from 'react';
-import { useRoomUsersNotice } from '~/hooks/room';
+import useRoomUsersNotice from '~/hooks/room/useRoomUsersNotice';
 import { useRoom } from '~/providers/RoomProvider';
 import { cn } from '~/utils/classname';
 

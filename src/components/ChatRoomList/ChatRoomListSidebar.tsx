@@ -8,7 +8,7 @@ import { useRoom } from '~/providers/RoomProvider';
 import { ChatRoom } from '~/types/chat';
 import { Team, UserNumber } from '~/types/game';
 import { cn } from '~/utils/classname';
-import { ChatRoomProps } from './ChatRoom';
+import { type ChatRoomProps } from './ChatRoom';
 
 type Props = {
   className?: string;

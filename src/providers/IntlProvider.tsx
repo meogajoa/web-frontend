@@ -3,7 +3,7 @@ import { getMessages } from 'next-intl/server';
 import { notFound } from 'next/navigation';
 import React from 'react';
 import { routing } from '~/i18n/routing';
-import { Locale } from '~/types/misc';
+import { type Locale } from '~/types/misc';
 
 type Props = {
   locale: string;

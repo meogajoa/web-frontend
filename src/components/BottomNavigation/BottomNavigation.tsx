@@ -1,4 +1,4 @@
-import { Button, ButtonProps } from '@headlessui/react';
+import { Button, type ButtonProps } from '@headlessui/react';
 import React from 'react';
 import { type MenuType } from '~/constants/navigation';
 import { cn } from '~/utils/classname';

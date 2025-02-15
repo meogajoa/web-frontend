@@ -1,10 +1,10 @@
 import React from 'react';
-import { Team } from '~/types/game';
+import { type Team } from '~/types/game';
 import { cn } from '~/utils/classname';
 import NumberIconBall from '../NumberIconBall';
 import BaseNoticeItem from './BaseNoticeItem';
 
-export type TeamNoticeItemProps = {
+export type Props = {
   rank: number;
   teamName: string;
   numberIcons: { number: number; team: Team }[];
@@ -13,7 +13,7 @@ export type TeamNoticeItemProps = {
   className?: string;
 };
 
-const TeamNoticeItem: React.FC<TeamNoticeItemProps> = ({
+const TeamNoticeItem: React.FC<Props> = ({
   rank,
   teamName,
   numberIcons,

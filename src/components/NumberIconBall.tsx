@@ -1,5 +1,5 @@
 import React from 'react';
-import { Team } from '~/types/game';
+import { type Team } from '~/types/game';
 import { cn } from '~/utils/classname';
 
 export type NumberIconBallProps = {

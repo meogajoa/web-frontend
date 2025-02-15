@@ -1,6 +1,8 @@
 import { PlusCircleIcon } from '@heroicons/react/24/outline';
 import React from 'react';
-import CustomTextarea, { TextareaHandle } from '~/components/CustomTextarea';
+import CustomTextarea, {
+  type TextareaHandle,
+} from '~/components/CustomTextarea';
 import MessageSendIcon from '~/svgs/MessageSendIcon';
 import { cn } from '~/utils/classname';
 

@@ -4,11 +4,12 @@ import { useTranslations } from 'next-intl';
 import React from 'react';
 import toast from 'react-hot-toast';
 import LoadingIndicator from '~/components/LoadingIndicator';
-import { useAuthenticate } from '~/hooks/account';
+import useAuthenticate, {
+  type AuthenticateResponse,
+} from '~/hooks/account/useAuthenticate';
 import { useRouter } from '~/i18n/routing';
 import { useAccount } from '~/providers/AccountProvider';
 import StompProvider from '~/providers/StompProvider';
-import { AuthenticateResponse } from '~/types/account';
 import { A_SECOND } from '~/utils/constants';
 
 const MainLayout: React.FC<React.PropsWithChildren> = ({ children }) => {

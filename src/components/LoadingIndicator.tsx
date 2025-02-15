@@ -1,6 +1,6 @@
 import React from 'react';
 import { HashLoader } from 'react-spinners';
-import { useDotsString } from '~/hooks/loading';
+import useDotsString from '~/hooks/misc/useDotsString';
 import { cn } from '~/utils/classname';
 import { getCssVariable } from '~/utils/misc';
 

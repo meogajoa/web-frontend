@@ -2,7 +2,7 @@ import { shuffle } from 'lodash-es';
 import Image from 'next/image';
 import React from 'react';
 import ProfileImage, {
-  ProfileImageProps,
+  type ProfileImageProps,
 } from '~/components/ProfileImage/ProfileImage';
 import { type Point } from '~/types/misc';
 import { cn } from '~/utils/classname';

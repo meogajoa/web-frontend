@@ -1,10 +1,12 @@
 import { useTranslations } from 'next-intl';
 import React from 'react';
 import { useForm } from 'react-hook-form';
-import { BrandModal, BrandModalProps } from '~/components/BrandModal';
-import { useCreateRoom } from '~/hooks/room';
+import { BrandModal, type BrandModalProps } from '~/components/BrandModal';
+import useCreateRoom, {
+  type CreateRoomForm,
+  type CreateRoomResponse,
+} from '~/hooks/room/useCreateRoom';
 import { useRouter } from '~/i18n/routing';
-import type { CreateRoomForm, CreateRoomResponse } from '~/types/room';
 
 type Props = BrandModalProps;
 

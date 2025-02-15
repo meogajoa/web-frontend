@@ -6,7 +6,7 @@ import { XMarkIcon } from '@heroicons/react/24/outline';
 import React from 'react';
 import { Button } from '~/components/Button';
 import { cn } from '~/utils/classname';
-import Modal, { ModalProps } from '../Modal';
+import Modal, { type ModalProps } from '../Modal';
 
 export type BrandModalProps = ModalProps & {
   className?: string;

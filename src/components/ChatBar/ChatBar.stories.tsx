@@ -1,8 +1,8 @@
-import { Meta, StoryObj } from '@storybook/react';
+import type { Meta, StoryObj } from '@storybook/react';
 import { noop } from 'lodash-es';
 import React from 'react';
 import { ChatBar } from '~/components/ChatBar';
-import { TextareaHandle } from '~/components/CustomTextarea';
+import { type TextareaHandle } from '~/components/CustomTextarea';
 import { RemovePadding } from '~/utils/storybook';
 
 const meta: Meta<typeof ChatBar> = {

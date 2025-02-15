@@ -1,19 +1,24 @@
 import { compact } from 'lodash-es';
 import { useSubscription } from 'react-stomp-hooks';
+import { z } from 'zod';
 import { useAccount } from '~/providers/AccountProvider';
 import { useGame } from '~/providers/GameProvider';
 import { useRoom } from '~/providers/RoomProvider';
-import {
-  chatMessage,
-  ChatMessage,
-  ChatRoom,
-  XChatRoom,
-  xChatRoom,
-} from '~/types/chat';
+import { chatMessage, type ChatMessage, ChatRoom } from '~/types/chat';
 import { Team } from '~/types/game';
 import { assert } from '~/utils/assert';
 
-export const useChatMessages = ({
+enum XChatRoom {
+  Lobby = 'LOBBY',
+  Personal = 'PERSONAL',
+  General = 'GENERAL',
+  Black = 'BLACK',
+  White = 'WHITE',
+  Eliminated = 'ELIMINATED',
+}
+const xChatRoom = z.nativeEnum(XChatRoom);
+
+const useChatMessages = ({
   variables,
   onNewMessage,
 }: {
@@ -28,7 +33,7 @@ export const useChatMessages = ({
 
   useSubscription(
     compact([
-      // room lobby
+      // Room lobby
       !isPlaying && `/topic/room/${id}/chat`,
     ]),
     ({ body }) => {
@@ -43,25 +48,31 @@ export const useChatMessages = ({
 
   useSubscription(
     compact([
-      // in-game general
+      // In-game general
       isPlaying && !user.eliminated && `/topic/game/${id}/chat`,
 
-      // in-game black
+      // In-game black
       isPlaying &&
         !user.eliminated &&
-        (user.team === Team.Black || user.isSpy) &&
+        user.team === Team.Black &&
         `/topic/game/${id}/chat/black`,
 
-      // in-game white
+      // In-game white
       isPlaying &&
         !user.eliminated &&
-        (user.team === Team.White || user.isSpy) &&
+        user.team === Team.White &&
         `/topic/game/${id}/chat/white`,
 
-      // in-game eliminated
+      // In-game red
+      isPlaying &&
+        !user.eliminated &&
+        user.team === Team.Red &&
+        `/topic/game/${id}/chat/red`,
+
+      // In-game eliminated
       isPlaying && user.eliminated && `/topic/game/${id}/chat/eliminated`,
 
-      // in-game personal
+      // In-game personal
       isPlaying &&
         !user.eliminated &&
         `/topic/user/${account.nickname}/gameChat`,
@@ -74,7 +85,7 @@ export const useChatMessages = ({
 
       console.debug(`/topic/game/${id}/chat: `, message);
 
-      // sender id is the user's own id
+      // Sender id is the user's own id
       const senderId = Number(message.sender);
       assert(
         !Number.isNaN(senderId) &&
@@ -127,3 +138,5 @@ export const useChatMessages = ({
 
   return messagesByRoom[variables.chatRoom];
 };
+
+export default useChatMessages;

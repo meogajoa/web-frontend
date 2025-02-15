@@ -1,9 +1,9 @@
 'use client';
 
-import React, { PropsWithChildren } from 'react';
+import React, { type PropsWithChildren } from 'react';
 import { useStore } from 'zustand';
-import { createGameStore, GameStore } from '~/stores/game';
-import { Nullable } from '~/types/misc';
+import { createGameStore, type GameStore } from '~/stores/game';
+import { type Nullable } from '~/types/misc';
 import { assert } from '~/utils/assert';
 
 export type GameStoreApi = ReturnType<typeof createGameStore>;

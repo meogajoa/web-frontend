@@ -1,4 +1,4 @@
-import { Meta, StoryObj } from '@storybook/react';
+import type { Meta, StoryObj } from '@storybook/react';
 import ExampleImage from '~/assets/images/cat.png';
 import ProfileImage from '~/components/ProfileImage/ProfileImage';
 

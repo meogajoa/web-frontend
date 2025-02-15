@@ -1,11 +1,11 @@
 import { createStore } from 'zustand/vanilla';
 import type { Account } from '~/types/account';
 
-export type AccountState = {
+type AccountState = {
   account: Account;
 };
 
-export type AccountActions = {
+type AccountActions = {
   setAccount: (newMe: Account) => void;
   clearAccount: () => void;
 };

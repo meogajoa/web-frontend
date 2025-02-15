@@ -1,10 +1,10 @@
-import { Meta, StoryObj } from '@storybook/react';
+import type { Meta, StoryObj } from '@storybook/react';
 import stamp from 'public/images/game/icons/stamp.png';
 import { Team } from '~/types/game';
 import GameResultNotice from './GameResultNotice';
-import { NoticeItemProps } from './NoticeItem';
-import { TeamNoticeItemProps } from './TeamNoticeItem';
-import { VoteNoticeItemProps } from './VoteNoticeItem';
+import { type Props as NoticeItemProps } from './NoticeItem';
+import { type Props as TeamNoticeItemProps } from './TeamNoticeItem';
+import { type Props as VoteNoticeItemProps } from './VoteNoticeItem';
 
 const meta: Meta<typeof GameResultNotice> = {
   title: 'Molecules/GameResultNotice',
