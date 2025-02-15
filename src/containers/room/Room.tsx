@@ -1,7 +1,7 @@
 import { RoomChatBar } from '@/components/ChatBar';
-import RoomHeader from '@/components/RoomHeader';
-import RoomMessages from '@/components/RoomMessages';
-import RoomUserList from '@/components/RoomUserList';
+import RoomHeader from '@/containers/room/RoomHeader';
+import RoomMessages from '@/containers/room/RoomMessages';
+import RoomUserList from '@/containers/room/RoomUserList';
 import useUserGameInfo, { type UserGameInfo } from '@/hooks/game/useGameInfo';
 import useGameSystemNotice, {
   type GameDayOrNightSystemNotice,

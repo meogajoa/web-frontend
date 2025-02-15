@@ -1,7 +1,7 @@
 'use client';
 
 import LoadingIndicator from '@/components/LoadingIndicator';
-import Room from '@/components/Room';
+import Room from '@/containers/room/Room';
 import useJoinRoom from '@/hooks/room/useJoinRoom';
 import { GameProvider } from '@/providers/GameProvider';
 import { RoomProvider } from '@/providers/RoomProvider';

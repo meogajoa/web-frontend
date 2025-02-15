@@ -1,4 +1,4 @@
-import { type Team } from '@/types/game';
+import { Team } from '@/types/game';
 import { cn } from '@/utils/classname';
 import React from 'react';
 
@@ -17,7 +17,7 @@ const NumberIconBall: React.FC<NumberIconBallProps> = ({
     <div
       className={cn(
         'font-brand flex size-4 items-center justify-center rounded-full text-[0.5rem] font-bold text-white',
-        color === 'BLACK' ? 'bg-gray-1' : 'bg-gray-5',
+        color === Team.Black ? 'bg-gray-1' : 'bg-gray-5',
         className,
       )}
     >

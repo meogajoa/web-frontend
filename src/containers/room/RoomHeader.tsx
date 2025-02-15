@@ -1,5 +1,5 @@
-import RoomHeaderGame from '@/components/RoomHeaderGame';
-import RoomHeaderLobby from '@/components/RoomHeaderLobby';
+import RoomHeaderGame from '@/containers/room/RoomHeaderGame';
+import RoomHeaderLobby from '@/containers/room/RoomHeaderLobby';
 import { useRoom } from '@/providers/RoomProvider';
 import { cn } from '@/utils/classname';
 import React from 'react';

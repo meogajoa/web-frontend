@@ -1,6 +1,6 @@
 import { CreateRoomButton } from '@/components/Button';
 import HomeHeader from '@/components/HomeHeader';
-import RoomList from '@/components/RoomList';
+import RoomList from '@/containers/room/RoomList';
 
 const HomePage = () => {
   return (
