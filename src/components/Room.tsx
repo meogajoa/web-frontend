@@ -1,5 +1,5 @@
 import { RoomChatBar } from '@/components/ChatBar';
-import RoomHeader from '@/components/RoomHeader/RoomHeader';
+import RoomHeader from '@/components/RoomHeader';
 import RoomMessages from '@/components/RoomMessages';
 import RoomUserList from '@/components/RoomUserList';
 import useUserGameInfo, { type UserGameInfo } from '@/hooks/game/useGameInfo';
@@ -40,7 +40,11 @@ const Room: React.FC<Props> = ({ className }) => {
   } = useGame();
 
   useBodyBgColor(
-    user.team === Team.Black ? 'var(--color-gray-3)' : 'var(--color-white)',
+    user.team === Team.Black
+      ? 'var(--color-gray-3)'
+      : user.team === Team.Red
+        ? 'var(--color-white)'
+        : 'var(--color-gray-6)',
   );
 
   useRoomSystemNotice({
@@ -74,6 +78,7 @@ const Room: React.FC<Props> = ({ className }) => {
       className={cn(
         'bg-gray-6 flex h-full flex-col',
         user.team === Team.Black && 'bg-gray-3',
+        user.team === Team.Red && 'bg-red/15',
         className,
       )}
       data-testid="room"

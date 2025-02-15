@@ -1,8 +1,8 @@
+import RoomHeaderGame from '@/components/RoomHeaderGame';
+import RoomHeaderLobby from '@/components/RoomHeaderLobby';
 import { useRoom } from '@/providers/RoomProvider';
 import { cn } from '@/utils/classname';
 import React from 'react';
-import RoomHeaderGame from './RoomHeaderGame';
-import RoomHeaderLobby from './RoomHeaderLobby';
 
 type Props = {
   className?: string;

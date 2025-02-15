@@ -59,24 +59,21 @@ const useChatMessages = ({
       !isPlaying && `/topic/room/${id}/chat`,
 
       // In-game general
-      isPlaying && !user.eliminated && `/topic/game/${id}/chat`,
+      isPlaying && `/topic/game/${id}/chat`,
 
       // In-game black
       isPlaying &&
-        !user.eliminated &&
-        user.team === Team.Black &&
+        (user.team === Team.Black || user.eliminated) &&
         `/topic/game/${id}/chat/black`,
 
       // In-game white
       isPlaying &&
-        !user.eliminated &&
-        user.team === Team.White &&
+        (user.team === Team.White || user.eliminated) &&
         `/topic/game/${id}/chat/white`,
 
       // In-game red
       isPlaying &&
-        !user.eliminated &&
-        user.team === Team.Red &&
+        (user.team === Team.Red || user.eliminated) &&
         `/topic/game/${id}/chat/red`,
 
       // In-game eliminated

@@ -33,6 +33,7 @@ const RoomHeaderGame = React.memo<Props>(({ className }) => {
         className={cn(
           'border-b-gray-5/60 relative flex h-[5.5rem] items-center justify-between border-b-2 px-4',
           user.team === Team.Black && 'border-b-gray-2/20',
+          user.team === Team.Red && 'border-b-red/10 bg-white',
           className,
         )}
       >
