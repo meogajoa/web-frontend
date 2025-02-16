@@ -15,7 +15,7 @@ type Props = {
 const RoomPage: React.FC<Props> = ({ params }) => {
   const t = useTranslations('roomRoute');
   const { id } = React.use(params);
-  const { isSuccess, isPending, data } = useJoinRoom({
+  const { isSuccess, isPending, data, joinRoom } = useJoinRoom({
     variables: { id },
   });
 
@@ -34,12 +34,16 @@ const RoomPage: React.FC<Props> = ({ params }) => {
           currentChatRoom={ChatRoom.Lobby}
         >
           <GameProvider>
-            <Room />
+            <Room rejoin={handleRejoin} />
           </GameProvider>
         </RoomProvider>
       )}
     </>
   );
+
+  function handleRejoin() {
+    joinRoom({ id });
+  }
 };
 
 export default RoomPage;

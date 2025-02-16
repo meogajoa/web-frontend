@@ -5,8 +5,7 @@ import RoomMessages from '@/containers/room/RoomMessages';
 import RoomUserList from '@/containers/room/RoomUserList';
 import useUserGameInfo, { type UserGameInfo } from '@/hooks/game/useGameInfo';
 import useGameSystemNotice, {
-  type GameDayOrNightSystemNotice,
-  type GameEndSystemNotice,
+  type DayOrNightNotice,
 } from '@/hooks/game/useGameSystemNotice';
 import useGameUsersNotice, {
   type GameUsersNotice,
@@ -23,16 +22,11 @@ import React from 'react';
 
 type Props = {
   className?: string;
+  rejoin?: () => void;
 };
 
-const Room: React.FC<Props> = ({ className }) => {
-  const {
-    id,
-    isPlaying,
-    setIsPlaying,
-    setCurrentChatRoom,
-    clearInGameMessages,
-  } = useRoom();
+const Room: React.FC<Props> = ({ className, rejoin }) => {
+  const { id, isPlaying, setIsPlaying, setCurrentChatRoom } = useRoom();
   const [canStartGame, setCanStartGame] = React.useState(isPlaying);
   const { account } = useAccount();
   const {
@@ -44,7 +38,6 @@ const Room: React.FC<Props> = ({ className }) => {
     setBlackTeamUsers,
     setEliminatedUsers,
     setRedTeamUsers,
-    clear: clearGame,
   } = useGame();
 
   useBodyBgColor(
@@ -71,7 +64,7 @@ const Room: React.FC<Props> = ({ className }) => {
   useGameSystemNotice({
     variables: { id },
     enabled: canStartGame,
-    onGameDayOrNight: handleGameDayOrNight,
+    onDayOrNight: handleGameDayOrNight,
     onGameEnd: handleGameEnd,
   });
 
@@ -121,17 +114,12 @@ const Room: React.FC<Props> = ({ className }) => {
     });
   }
 
-  function handleGameDayOrNight(
-    gameDayOrNightNotice: GameDayOrNightSystemNotice,
-  ) {
+  function handleGameDayOrNight(gameDayOrNightNotice: DayOrNightNotice) {
     setTime(gameDayOrNightNotice.dayOrNight);
   }
 
-  function handleGameEnd(gameEndNotice: GameEndSystemNotice) {
-    setCurrentChatRoom(ChatRoom.Lobby);
-    setIsPlaying(false);
-    clearGame();
-    clearInGameMessages();
+  function handleGameEnd() {
+    rejoin?.();
   }
 
   function handleGameUsersNotice(gameUsersNotice: GameUsersNotice) {

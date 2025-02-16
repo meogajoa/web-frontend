@@ -1,8 +1,5 @@
 import { z } from 'zod';
 
-/**
- * Team
- */
 export enum Team {
   Invalid = 'INVALID',
   Black = 'BLACK',
@@ -11,9 +8,6 @@ export enum Team {
 }
 export const teamColorSchema = z.nativeEnum(Team);
 
-/**
- * User (in-game player info)
- */
 export enum UserNumber {
   Invalid,
   One,
@@ -43,11 +37,13 @@ export type User = {
   profimeImageSrc?: string;
 };
 
-/**
- * Game Time
- */
 export enum GameTime {
   Invalid = 'INVALID',
   Night = 'NIGHT',
   Day = 'DAY',
+}
+
+export enum MiniGame {
+  ButtonClick = 'BUTTON_CLICK',
+  NightVote = 'VOTE_GAME',
 }
