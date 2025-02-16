@@ -20,7 +20,6 @@ type Props = {
 const Room: React.FC<Props> = ({ className, rejoin }) => {
   const { id, isPlaying } = useRoom();
   const { player } = useGame();
-
   const [canStartGame, setCanStartGame] = React.useState(isPlaying);
 
   useBodyBgColor(
@@ -36,7 +35,10 @@ const Room: React.FC<Props> = ({ className, rejoin }) => {
     onGameStart: handleGameStart,
   });
 
-  useGamePlay({ canStartGame, onGameEnd: handleGameEnd });
+  useGamePlay({
+    enabled: canStartGame,
+    onGameEnd: handleGameEnd,
+  });
 
   return (
     <div
