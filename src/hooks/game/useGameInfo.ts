@@ -1,7 +1,7 @@
+import useSubscription from '@/hooks/stomp/useSubscription';
 import { usernameSchema } from '@/types/account';
 import { teamColorSchema } from '@/types/game';
 import { compact } from 'lodash-es';
-import { useSubscription } from 'react-stomp-hooks';
 import { z } from 'zod';
 
 const userGameInfoSchema = z.object({

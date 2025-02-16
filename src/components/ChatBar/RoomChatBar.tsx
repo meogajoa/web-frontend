@@ -16,7 +16,7 @@ type Props = {
 
 const RoomChatBar = React.memo<Props>(({ className, renderPlaceholder }) => {
   const textareaRef = React.useRef<TextareaHandle>(null);
-  const stompClient = useStompClient();
+  const stompClient = useStompClient('meogajoa');
   const sessionId = useSessionId();
   const { id, currentChatRoom } = useRoom();
 

@@ -1,6 +1,6 @@
+import useSubscription from '@/hooks/stomp/useSubscription';
 import { GameTime } from '@/types/game';
 import { compact } from 'lodash-es';
-import { useSubscription } from 'react-stomp-hooks';
 import { z } from 'zod';
 
 enum GameSystemNoticeType {

@@ -1,7 +1,7 @@
+import { A_SECOND } from '@/constants/misc';
 import { usernameSchema } from '@/types/account';
 import { chatMessageSchema } from '@/types/chat';
 import { server } from '@/utils/axios';
-import { A_SECOND } from '@/utils/constants';
 import { sleep } from '@/utils/misc';
 import { useMutation } from '@tanstack/react-query';
 import { type AxiosError } from 'axios';

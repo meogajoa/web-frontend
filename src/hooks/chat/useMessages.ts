@@ -1,4 +1,4 @@
-import useSessionId from '@/hooks/account/useSessionId';
+import useSubscription from '@/hooks/stomp/useSubscription';
 import { useAccount } from '@/providers/AccountProvider';
 import { useGame } from '@/providers/GameProvider';
 import { useRoom } from '@/providers/RoomProvider';
@@ -19,7 +19,6 @@ import {
 } from '@/utils/chat';
 import { isValidUserNumber } from '@/utils/game';
 import { compact } from 'lodash-es';
-import { useSubscription } from 'react-stomp-hooks';
 import { z } from 'zod';
 
 enum XChatRoom {
@@ -53,7 +52,6 @@ const useChatMessages = ({
   const { account } = useAccount();
   const { id, messagesByRoom, isPlaying, addMessage, setMessages } = useRoom();
   const { user } = useGame();
-  const sessionId = useSessionId();
 
   useSubscription(
     compact([
@@ -102,7 +100,7 @@ const useChatMessages = ({
       switch (xLogTypeHeader) {
         case XLogType.History: {
           const history = chatLogsSchema.parse(jsonBody);
-          const chatRoom = convertToChatRoom(xChatRoomHeader);
+          const chatRoom = convertXChatRoomToChatRoom(xChatRoomHeader);
           setMessages(chatRoom, history.chatLogs ?? []);
           break;
         }
@@ -140,7 +138,7 @@ const useChatMessages = ({
         }
         case XLogType.Single: {
           const message = chatMessageSchema.parse(jsonBody);
-          const chatRoom = convertToChatRoom(xChatRoomHeader);
+          const chatRoom = convertXChatRoomToChatRoom(xChatRoomHeader);
           addMessage(chatRoom, message);
           setTimeout(() => onNewMessage?.(message), 0);
           break;
@@ -157,15 +155,12 @@ const useChatMessages = ({
         }
       }
     },
-    {
-      Authorization: sessionId,
-    },
   );
 
   return messagesByRoom[variables.chatRoom];
 };
 
-const convertToChatRoom = (xChatRoom: XChatRoom): ChatRoom => {
+const convertXChatRoomToChatRoom = (xChatRoom: XChatRoom): ChatRoom => {
   switch (xChatRoom) {
     case XChatRoom.Lobby:
       return ChatRoom.Lobby;
