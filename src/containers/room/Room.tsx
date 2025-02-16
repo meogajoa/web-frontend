@@ -11,11 +11,11 @@ import useGameSystemNotice, {
 import useGameUsersNotice, {
   type GameUsersNotice,
 } from '@/hooks/game/useGameUsersNotice';
+import useBodyBgColor from '@/hooks/misc/useBodyBgColor';
 import useRoomSystemNotice from '@/hooks/room/useRoomSystemNotice';
 import { useAccount } from '@/providers/AccountProvider';
 import { useGame } from '@/providers/GameProvider';
 import { useRoom } from '@/providers/RoomProvider';
-import { useBodyBgColor } from '@/providers/ThemeProvider';
 import { ChatRoom } from '@/types/chat';
 import { Team, UserNumber, UserStatus } from '@/types/game';
 import { cn } from '@/utils/classname';
