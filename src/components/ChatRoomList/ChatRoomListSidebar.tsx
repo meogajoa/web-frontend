@@ -69,9 +69,10 @@ const ChatRoomListSidebar: React.FC<Props> = ({
                   t('chatRoom.emptyContent')
                 );
               },
-              hasAccess: user.status === UserStatus.Alive,
+              hasAccess:
+                user.status !== UserStatus.Invalid && time !== GameTime.Night,
               onClick() {
-                if (user.status !== UserStatus.Alive) {
+                if (user.status === UserStatus.Invalid) {
                   return;
                 }
 
