@@ -17,7 +17,7 @@ import { useGame } from '@/providers/GameProvider';
 import { useRoom } from '@/providers/RoomProvider';
 import { useBodyBgColor } from '@/providers/ThemeProvider';
 import { ChatRoom } from '@/types/chat';
-import { Team, UserNumber } from '@/types/game';
+import { Team, UserNumber, UserStatus } from '@/types/game';
 import { cn } from '@/utils/classname';
 import React from 'react';
 
@@ -108,7 +108,7 @@ const Room: React.FC<Props> = ({ className }) => {
     setUser({
       team: gameInfo.teamColor,
       number: gameInfo.number,
-      eliminated: gameInfo.eliminated,
+      status: gameInfo.eliminated ? UserStatus.Eliminated : UserStatus.Alive,
       money: gameInfo.money,
       isSpy: gameInfo.spy,
     });
@@ -135,7 +135,7 @@ const Room: React.FC<Props> = ({ className }) => {
       const isEliminated = gameUsersNotice.eliminated.includes(number);
 
       setUserByNumber(number, {
-        eliminated: isEliminated,
+        status: isEliminated ? UserStatus.Eliminated : UserStatus.Alive,
         team: isBlack ? Team.Black : Team.White,
         number,
       });

@@ -1,3 +1,4 @@
+import useSessionId from '@/hooks/account/useSessionId';
 import { useAccount } from '@/providers/AccountProvider';
 import { useGame } from '@/providers/GameProvider';
 import { useRoom } from '@/providers/RoomProvider';
@@ -10,7 +11,7 @@ import {
   personalChatMessageSchema,
   type ChatMessage,
 } from '@/types/chat';
-import { Team } from '@/types/game';
+import { Team, UserStatus } from '@/types/game';
 import {
   convertToPersonalChatRoom,
   getPersonalChatRoomFromMessage,
@@ -52,6 +53,7 @@ const useChatMessages = ({
   const { account } = useAccount();
   const { id, messagesByRoom, isPlaying, addMessage, setMessages } = useRoom();
   const { user } = useGame();
+  const sessionId = useSessionId();
 
   useSubscription(
     compact([
@@ -63,25 +65,27 @@ const useChatMessages = ({
 
       // In-game black
       isPlaying &&
-        (user.team === Team.Black || user.eliminated) &&
+        (user.team === Team.Black || user.status === UserStatus.Eliminated) &&
         `/topic/game/${id}/chat/black`,
 
       // In-game white
       isPlaying &&
-        (user.team === Team.White || user.eliminated) &&
+        (user.team === Team.White || user.status === UserStatus.Eliminated) &&
         `/topic/game/${id}/chat/white`,
 
       // In-game red
       isPlaying &&
-        (user.team === Team.Red || user.eliminated) &&
+        (user.team === Team.Red || user.status === UserStatus.Eliminated) &&
         `/topic/game/${id}/chat/red`,
 
       // In-game eliminated
-      isPlaying && user.eliminated && `/topic/game/${id}/chat/eliminated`,
+      isPlaying &&
+        user.status === UserStatus.Eliminated &&
+        `/topic/game/${id}/chat/eliminated`,
 
       // In-game personal
       isPlaying &&
-        !user.eliminated &&
+        user.status === UserStatus.Alive &&
         `/topic/user/${account.nickname}/gameChat`,
     ]),
     ({ headers, body }) => {
@@ -152,6 +156,9 @@ const useChatMessages = ({
           break;
         }
       }
+    },
+    {
+      Authorization: sessionId,
     },
   );
 

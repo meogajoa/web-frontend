@@ -3,12 +3,12 @@ import { type ChatRoomProps } from '@/components/ChatRoomList/ChatRoom';
 import { useGame } from '@/providers/GameProvider';
 import { useRoom } from '@/providers/RoomProvider';
 import { ChatRoom } from '@/types/chat';
-import { Team, UserNumber } from '@/types/game';
+import { Team, UserNumber, UserStatus } from '@/types/game';
 import { convertToPersonalChatRoom } from '@/utils/chat';
 import { cn } from '@/utils/classname';
 import { convertToUserNumber, isValidUserNumber } from '@/utils/game';
 import { Transition } from '@headlessui/react';
-import { compact, noop, shuffle } from 'lodash-es';
+import { compact, last, noop, shuffle } from 'lodash-es';
 import { useTranslations } from 'next-intl';
 import React from 'react';
 
@@ -59,11 +59,14 @@ const ChatRoomListSidebar: React.FC<Props> = ({
               title: t(`chatRoomType.general`),
               groupImages: shuffle(otherUsers).map((user) => user.team),
               content:
-                messagesByRoom[ChatRoom.General][
-                  messagesByRoom[ChatRoom.General].length - 1
-                ]?.content || t('chatRoom.emptyContent'),
-              hasAccess: true,
+                last(messagesByRoom[ChatRoom.General])?.content.trim() ||
+                t('chatRoom.emptyContent'),
+              hasAccess: user.status === UserStatus.Alive,
               onClick: () => {
+                if (user.status !== UserStatus.Alive) {
+                  return;
+                }
+
                 onClose();
                 setCurrentChatRoom(ChatRoom.General);
               },
@@ -75,13 +78,17 @@ const ChatRoomListSidebar: React.FC<Props> = ({
               groupImages: whiteTeamUsers.map(() => Team.White),
               content:
                 user.team === Team.White
-                  ? messagesByRoom[ChatRoom.White][
-                      messagesByRoom[ChatRoom.White].length - 1
-                    ]?.content || t('chatRoom.emptyContent')
+                  ? last(messagesByRoom[ChatRoom.White])?.content.trim() ||
+                    t('chatRoom.emptyContent')
                   : t('chatRoom.noAccessToOpponentChatRoom'),
-              hasAccess: user.team === Team.White || user.eliminated,
+              hasAccess:
+                user.team === Team.White ||
+                user.status === UserStatus.Eliminated,
               onClick: () => {
-                if (!user.eliminated && user.team !== Team.White) {
+                if (
+                  user.status === UserStatus.Invalid ||
+                  (user.status === UserStatus.Alive && user.team !== Team.White)
+                ) {
                   return;
                 }
 
@@ -96,13 +103,17 @@ const ChatRoomListSidebar: React.FC<Props> = ({
               groupImages: blackTeamUsers.map(() => Team.Black),
               content:
                 user.team === Team.Black
-                  ? messagesByRoom[ChatRoom.Black][
-                      messagesByRoom[ChatRoom.Black].length - 1
-                    ]?.content || t('chatRoom.emptyContent')
+                  ? last(messagesByRoom[ChatRoom.Black])?.content.trim() ||
+                    t('chatRoom.emptyContent')
                   : t('chatRoom.noAccessToOpponentChatRoom'),
-              hasAccess: user.team === Team.Black || user.eliminated,
+              hasAccess:
+                user.team === Team.Black ||
+                user.status === UserStatus.Eliminated,
               onClick: () => {
-                if (!user.eliminated && user.team !== Team.Black) {
+                if (
+                  user.status === UserStatus.Invalid ||
+                  (user.status === UserStatus.Alive && user.team !== Team.Black)
+                ) {
                   return;
                 }
 
@@ -117,13 +128,16 @@ const ChatRoomListSidebar: React.FC<Props> = ({
               groupImages: redTeamUsers.map(() => Team.Red),
               content:
                 user.team === Team.Red
-                  ? messagesByRoom[ChatRoom.Red][
-                      messagesByRoom[ChatRoom.Red].length - 1
-                    ]?.content || t('chatRoom.emptyContent')
+                  ? last(messagesByRoom[ChatRoom.Red])?.content.trim() ||
+                    t('chatRoom.emptyContent')
                   : t('chatRoom.noAccessToOpponentChatRoom'),
-              hasAccess: user.team === Team.Red || user.eliminated,
+              hasAccess:
+                user.team === Team.Red || user.status === UserStatus.Eliminated,
               onClick: () => {
-                if (!user.eliminated && user.team !== Team.Red) {
+                if (
+                  user.status === UserStatus.Invalid ||
+                  (user.status === UserStatus.Alive && user.team !== Team.Red)
+                ) {
                   return;
                 }
 
@@ -141,13 +155,13 @@ const ChatRoomListSidebar: React.FC<Props> = ({
                 const userNumber = convertToUserNumber(_userNumber);
                 const messages =
                   messagesByRoom[convertToPersonalChatRoom(userNumber)];
-                const hasAccess = !user.eliminated;
+                const hasAccess = user.status === UserStatus.Alive;
 
                 return {
                   type: 'personal',
                   title: t(`chatRoomType.${userNumber}`),
                   content:
-                    messages[messages.length - 1]?.content ||
+                    last(messages)?.content.trim() ||
                     t('chatRoom.emptyContent'),
                   isSpy: otherUsers[userNumber].isSpy,
                   image: otherUsers[userNumber].team,
@@ -170,14 +184,14 @@ const ChatRoomListSidebar: React.FC<Props> = ({
                 (userNumber) =>
                   otherUsers[convertToUserNumber(userNumber)].team,
               ),
-              content: user.eliminated
-                ? messagesByRoom[ChatRoom.Eliminated][
-                    messagesByRoom[ChatRoom.Eliminated].length - 1
-                  ]?.content || t('chatRoom.emptyContent')
-                : t('chatRoom.noAccessToEliminatedChatRoom'),
-              hasAccess: user.eliminated,
+              content:
+                user.status === UserStatus.Eliminated
+                  ? last(messagesByRoom[ChatRoom.Eliminated])?.content.trim() ||
+                    t('chatRoom.emptyContent')
+                  : t('chatRoom.noAccessToEliminatedChatRoom'),
+              hasAccess: user.status === UserStatus.Eliminated,
               onClick: () => {
-                if (!user.eliminated) {
+                if (user.status !== UserStatus.Eliminated) {
                   return;
                 }
 

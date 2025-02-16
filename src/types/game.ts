@@ -28,10 +28,16 @@ export enum UserNumber {
 }
 export const userNumberSchema = z.nativeEnum(UserNumber);
 
+export enum UserStatus {
+  Invalid,
+  Alive,
+  Eliminated,
+}
+
 export type User = {
   team: Team;
   number: UserNumber;
-  eliminated: boolean;
+  status: UserStatus;
   money?: number;
   isSpy?: boolean;
   profimeImageSrc?: string;

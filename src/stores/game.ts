@@ -1,4 +1,10 @@
-import { GameTime, Team, type User, UserNumber } from '@/types/game';
+import {
+  GameTime,
+  Team,
+  type User,
+  UserNumber,
+  UserStatus,
+} from '@/types/game';
 import { isValidUserNumber } from '@/utils/game';
 import { createStore } from 'zustand/vanilla';
 
@@ -29,8 +35,8 @@ export type GameStore = GameState & GameActions;
 export const defaultInitState: GameState = {
   user: {
     team: Team.Invalid,
-    number: 0,
-    eliminated: true,
+    number: UserNumber.Invalid,
+    status: UserStatus.Invalid,
   },
   otherUsers: Object.values(UserNumber)
     .filter((key) => isValidUserNumber(Number(key)))
@@ -39,8 +45,8 @@ export const defaultInitState: GameState = {
         ...acc,
         [key]: {
           team: Team.Invalid,
-          number: 0,
-          eliminated: true,
+          number: UserNumber.Invalid,
+          status: UserStatus.Invalid,
         } as User,
       }),
       {} as Record<UserNumber, User>,
