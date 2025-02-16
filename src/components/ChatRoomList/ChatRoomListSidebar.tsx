@@ -3,7 +3,7 @@ import { type ChatRoomProps } from '@/components/ChatRoomList/ChatRoom';
 import { useGame } from '@/providers/GameProvider';
 import { useRoom } from '@/providers/RoomProvider';
 import { ChatRoom } from '@/types/chat';
-import { Team, UserNumber, UserStatus } from '@/types/game';
+import { GameTime, Team, UserNumber, UserStatus } from '@/types/game';
 import { convertToPersonalChatRoom } from '@/utils/chat';
 import { cn } from '@/utils/classname';
 import { convertToUserNumber, isValidUserNumber } from '@/utils/game';
@@ -33,6 +33,7 @@ const ChatRoomListSidebar: React.FC<Props> = ({
     blackTeamUsers,
     redTeamUsers,
     eliminatedUsers,
+    time,
   } = useGame();
   const { messagesByRoom, setCurrentChatRoom } = useRoom();
 
@@ -58,11 +59,18 @@ const ChatRoomListSidebar: React.FC<Props> = ({
               type: 'group',
               title: t(`chatRoomType.general`),
               groupImages: shuffle(otherUsers).map((user) => user.team),
-              content:
-                last(messagesByRoom[ChatRoom.General])?.content.trim() ||
-                t('chatRoom.emptyContent'),
+              content() {
+                if (time === GameTime.Night) {
+                  return t('chatRoom.noAccessWhenNight');
+                }
+
+                return (
+                  last(messagesByRoom[ChatRoom.General])?.content.trim() ||
+                  t('chatRoom.emptyContent')
+                );
+              },
               hasAccess: user.status === UserStatus.Alive,
-              onClick: () => {
+              onClick() {
                 if (user.status !== UserStatus.Alive) {
                   return;
                 }
@@ -76,15 +84,20 @@ const ChatRoomListSidebar: React.FC<Props> = ({
               type: 'group',
               title: t(`chatRoomType.white`),
               groupImages: whiteTeamUsers.map(() => Team.White),
-              content:
-                user.team === Team.White
-                  ? last(messagesByRoom[ChatRoom.White])?.content.trim() ||
-                    t('chatRoom.emptyContent')
-                  : t('chatRoom.noAccessToOpponentChatRoom'),
+              content() {
+                if (user.team !== Team.White) {
+                  return t('chatRoom.noAccessToOpponentChatRoom');
+                }
+
+                return (
+                  last(messagesByRoom[ChatRoom.White])?.content.trim() ||
+                  t('chatRoom.emptyContent')
+                );
+              },
               hasAccess:
                 user.team === Team.White ||
                 user.status === UserStatus.Eliminated,
-              onClick: () => {
+              onClick() {
                 if (
                   user.status === UserStatus.Invalid ||
                   (user.status === UserStatus.Alive && user.team !== Team.White)
@@ -101,15 +114,20 @@ const ChatRoomListSidebar: React.FC<Props> = ({
               type: 'group',
               title: t(`chatRoomType.black`),
               groupImages: blackTeamUsers.map(() => Team.Black),
-              content:
-                user.team === Team.Black
-                  ? last(messagesByRoom[ChatRoom.Black])?.content.trim() ||
-                    t('chatRoom.emptyContent')
-                  : t('chatRoom.noAccessToOpponentChatRoom'),
+              content() {
+                if (user.team !== Team.Black) {
+                  return t('chatRoom.noAccessToOpponentChatRoom');
+                }
+
+                return (
+                  last(messagesByRoom[ChatRoom.Black])?.content.trim() ||
+                  t('chatRoom.emptyContent')
+                );
+              },
               hasAccess:
                 user.team === Team.Black ||
                 user.status === UserStatus.Eliminated,
-              onClick: () => {
+              onClick() {
                 if (
                   user.status === UserStatus.Invalid ||
                   (user.status === UserStatus.Alive && user.team !== Team.Black)
@@ -126,14 +144,19 @@ const ChatRoomListSidebar: React.FC<Props> = ({
               type: 'group',
               title: t(`chatRoomType.red`),
               groupImages: redTeamUsers.map(() => Team.Red),
-              content:
-                user.team === Team.Red
-                  ? last(messagesByRoom[ChatRoom.Red])?.content.trim() ||
-                    t('chatRoom.emptyContent')
-                  : t('chatRoom.noAccessToOpponentChatRoom'),
+              content() {
+                if (user.team !== Team.Red) {
+                  return t('chatRoom.noAccessToOpponentChatRoom');
+                }
+
+                return (
+                  last(messagesByRoom[ChatRoom.Red])?.content.trim() ||
+                  t('chatRoom.emptyContent')
+                );
+              },
               hasAccess:
                 user.team === Team.Red || user.status === UserStatus.Eliminated,
-              onClick: () => {
+              onClick() {
                 if (
                   user.status === UserStatus.Invalid ||
                   (user.status === UserStatus.Alive && user.team !== Team.Red)
@@ -166,7 +189,7 @@ const ChatRoomListSidebar: React.FC<Props> = ({
                   isSpy: otherUsers[userNumber].isSpy,
                   image: otherUsers[userNumber].team,
                   hasAccess,
-                  onClick: () => {
+                  onClick() {
                     if (!hasAccess) {
                       return;
                     }
@@ -184,13 +207,18 @@ const ChatRoomListSidebar: React.FC<Props> = ({
                 (userNumber) =>
                   otherUsers[convertToUserNumber(userNumber)].team,
               ),
-              content:
-                user.status === UserStatus.Eliminated
-                  ? last(messagesByRoom[ChatRoom.Eliminated])?.content.trim() ||
-                    t('chatRoom.emptyContent')
-                  : t('chatRoom.noAccessToEliminatedChatRoom'),
+              content() {
+                if (user.status !== UserStatus.Eliminated) {
+                  return t('chatRoom.noAccessToEliminatedChatRoom');
+                }
+
+                return (
+                  last(messagesByRoom[ChatRoom.Eliminated])?.content.trim() ||
+                  t('chatRoom.emptyContent')
+                );
+              },
               hasAccess: user.status === UserStatus.Eliminated,
-              onClick: () => {
+              onClick() {
                 if (user.status !== UserStatus.Eliminated) {
                   return;
                 }

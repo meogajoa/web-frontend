@@ -46,7 +46,8 @@
     "chatRoom": {
       "emptyContent": "대화를 시작해 보세요.",
       "noAccessToOpponentChatRoom": "(상대팀 채팅방은 볼 수 없습니다.)",
-      "noAccessToEliminatedChatRoom": "(탈락자 채팅방은 볼 수 없습니다.)"
+      "noAccessToEliminatedChatRoom": "(탈락자 채팅방은 볼 수 없습니다.)",
+      "noAccessWhenNight": "(밤에는 대화할 수 없습니다.)"
     },
     "chatMessage": {
       "inGameUsername": "{username}번 유저"
