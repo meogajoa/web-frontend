@@ -44,6 +44,7 @@ export enum GameTime {
 }
 
 export enum MiniGame {
+  Invalid = 'INVALID',
   ButtonClick = 'BUTTON_CLICK',
   Vote = 'VOTE_GAME',
 }
