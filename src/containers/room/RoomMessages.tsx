@@ -6,7 +6,7 @@ import { useRoom } from '@/providers/RoomProvider';
 import { useUser } from '@/providers/UserProvider';
 import { type ChatMessage, ChatMessageType } from '@/types/chat';
 import { cn } from '@/utils/classname';
-import { convertToPlayerNumber } from '@/utils/game';
+import { convertToPlayerNumber, isValidPlayerNumber } from '@/utils/game';
 import { useTranslations } from 'next-intl';
 import React from 'react';
 
@@ -40,11 +40,11 @@ const RoomMessages = React.memo<Props>(({ className }) => {
       {messages.map(({ id, content, sender, type }) => {
         const isSelf =
           sender === user.name || sender === player.number.toString();
-        const username = isSelf
-          ? sender
-          : t('inGameUsername', { username: sender });
 
         const playerNumber = convertToPlayerNumber(sender);
+        const username = isValidPlayerNumber(playerNumber)
+          ? t('inGameUsername', { playerNumber: sender })
+          : sender;
 
         switch (type) {
           case ChatMessageType.Chat: {

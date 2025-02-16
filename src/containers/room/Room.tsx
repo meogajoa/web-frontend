@@ -31,8 +31,14 @@ type Props = {
 };
 
 const Room: React.FC<Props> = ({ className, rejoin }) => {
-  const { id, isPlaying, setIsPlaying, setCurrentChatRoom, broadcastMessage } =
-    useRoom();
+  const {
+    id,
+    isPlaying,
+    setIsPlaying,
+    setCurrentChatRoom,
+    broadcastMessage,
+    addMessage,
+  } = useRoom();
   const [canStartGame, setCanStartGame] = React.useState(isPlaying);
   const t = useTranslations('roomRoute.chatMessage');
   const { user } = useUser();
@@ -120,7 +126,10 @@ const Room: React.FC<Props> = ({ className, rejoin }) => {
       money: player.money,
       isSpy: player.spy,
     });
-    const systemMessage = {
+
+    const myTeamRoom = getMyTeamChatRoom(player.teamColor);
+
+    broadcastMessage([ChatRoom.General, ChatRoom.Personal, myTeamRoom], {
       id,
       sendTime: sendTime,
       type: ChatMessageType.System,
@@ -128,16 +137,7 @@ const Room: React.FC<Props> = ({ className, rejoin }) => {
       content: t('teamColorSystemMessage', {
         teamColor: player.teamColor,
       }),
-    };
-
-    broadcastMessage(
-      [
-        ChatRoom.General,
-        ChatRoom.Personal,
-        getMyTeamChatRoom(player.teamColor),
-      ],
-      systemMessage,
-    );
+    });
   }
 
   function handleGameDayOrNight(gameDayOrNightNotice: DayOrNightNotice) {
@@ -169,6 +169,25 @@ const Room: React.FC<Props> = ({ className, rejoin }) => {
     setBlackPlayerNumbers(gameUsersNotice.blackTeam);
     setRedPlayerNumbers(gameUsersNotice.redTeam);
     setEliminatedPlayerNumbers(gameUsersNotice.eliminated);
+
+    const myTeamPlayerNumbers =
+      player.team === Team.White
+        ? gameUsersNotice.whiteTeam
+        : player.team === Team.Black
+          ? gameUsersNotice.blackTeam
+          : gameUsersNotice.redTeam;
+
+    addMessage(getMyTeamChatRoom(player.team), {
+      id: gameUsersNotice.id,
+      sendTime: new Date(),
+      type: ChatMessageType.System,
+      sender: ChatMessageType.System,
+      content: t('teamChatStartSystemMessage', {
+        userNames: myTeamPlayerNumbers
+          .map((playerNumber) => t('inGameUsername', { playerNumber }))
+          .join(', '),
+      }),
+    });
   }
 };
 

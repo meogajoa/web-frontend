@@ -4,13 +4,15 @@ import { useGame } from '@/providers/GameProvider';
 import { useRoom } from '@/providers/RoomProvider';
 import { ChatRoom } from '@/types/chat';
 import { GameTime, PlayerNumber, PlayerStatus, Team } from '@/types/game';
-import { convertToPersonalChatRoom } from '@/utils/chat';
+import { convertToPersonalChatRoom, filterUserMessages } from '@/utils/chat';
 import { cn } from '@/utils/classname';
 import { convertToPlayerNumber, isValidPlayerNumber } from '@/utils/game';
 import { Transition } from '@headlessui/react';
 import { compact, last, noop, shuffle } from 'lodash-es';
 import { useTranslations } from 'next-intl';
 import React from 'react';
+
+const RECENT_MESSAGES_COUNT = -10;
 
 type Props = {
   className?: string;
@@ -64,8 +66,12 @@ const ChatRoomListSidebar: React.FC<Props> = ({
                   return t('chatRoom.noAccessWhenNight');
                 }
 
+                const userMessages = filterUserMessages(
+                  messagesByRoom[ChatRoom.General].slice(RECENT_MESSAGES_COUNT),
+                );
+
                 return (
-                  last(messagesByRoom[ChatRoom.General])?.content?.trim() ||
+                  last(userMessages)?.content?.trim() ||
                   t('chatRoom.emptyContent')
                 );
               },
@@ -91,8 +97,12 @@ const ChatRoomListSidebar: React.FC<Props> = ({
                   return t('chatRoom.noAccessToOpponentChatRoom');
                 }
 
+                const userMessages = filterUserMessages(
+                  messagesByRoom[ChatRoom.White].slice(RECENT_MESSAGES_COUNT),
+                );
+
                 return (
-                  last(messagesByRoom[ChatRoom.White])?.content?.trim() ||
+                  last(userMessages)?.content?.trim() ||
                   t('chatRoom.emptyContent')
                 );
               },
@@ -122,8 +132,12 @@ const ChatRoomListSidebar: React.FC<Props> = ({
                   return t('chatRoom.noAccessToOpponentChatRoom');
                 }
 
+                const userMessages = filterUserMessages(
+                  messagesByRoom[ChatRoom.Black].slice(RECENT_MESSAGES_COUNT),
+                );
+
                 return (
-                  last(messagesByRoom[ChatRoom.Black])?.content?.trim() ||
+                  last(userMessages)?.content?.trim() ||
                   t('chatRoom.emptyContent')
                 );
               },
@@ -153,8 +167,12 @@ const ChatRoomListSidebar: React.FC<Props> = ({
                   return t('chatRoom.noAccessToOpponentChatRoom');
                 }
 
+                const userMessages = filterUserMessages(
+                  messagesByRoom[ChatRoom.Red].slice(RECENT_MESSAGES_COUNT),
+                );
+
                 return (
-                  last(messagesByRoom[ChatRoom.Red])?.content?.trim() ||
+                  last(userMessages)?.content?.trim() ||
                   t('chatRoom.emptyContent')
                 );
               },
@@ -183,15 +201,19 @@ const ChatRoomListSidebar: React.FC<Props> = ({
               )
               .map<ChatRoomProps>((_playerNumber) => {
                 const playerNumber = convertToPlayerNumber(_playerNumber);
-                const messages =
-                  messagesByRoom[convertToPersonalChatRoom(playerNumber)];
                 const hasAccess = player.status === PlayerStatus.Alive;
+
+                const userMessages = filterUserMessages(
+                  messagesByRoom[convertToPersonalChatRoom(playerNumber)].slice(
+                    -10,
+                  ),
+                );
 
                 return {
                   type: 'personal',
                   title: t(`chatRoomType.${playerNumber}`),
                   content:
-                    last(messages)?.content?.trim() ||
+                    last(userMessages)?.content?.trim() ||
                     t('chatRoom.emptyContent'),
                   isSpy: otherPlayers[playerNumber].isSpy,
                   image: otherPlayers[playerNumber].team,
@@ -219,8 +241,14 @@ const ChatRoomListSidebar: React.FC<Props> = ({
                   return t('chatRoom.noAccessToEliminatedChatRoom');
                 }
 
+                const userMessages = filterUserMessages(
+                  messagesByRoom[ChatRoom.Eliminated].slice(
+                    RECENT_MESSAGES_COUNT,
+                  ),
+                );
+
                 return (
-                  last(messagesByRoom[ChatRoom.Eliminated])?.content?.trim() ||
+                  last(userMessages)?.content?.trim() ||
                   t('chatRoom.emptyContent')
                 );
               },

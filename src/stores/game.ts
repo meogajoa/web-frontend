@@ -5,6 +5,7 @@ import {
   Team,
   type Player,
 } from '@/types/game';
+import { type Optional } from '@/types/misc';
 import { isValidPlayerNumber } from '@/utils/game';
 import { createStore } from 'zustand/vanilla';
 
@@ -24,6 +25,7 @@ export type GameActions = {
   setPlayerByPlayerNumber: (playerNumber: PlayerNumber, player: Player) => void;
   setTime: (time: GameTime) => void;
   setNthDay: (nthDay: number) => void;
+  getTeamPlayers: (team: Optional<Team>) => Player[];
   setWhitePlayerNumbers: (whitePlayerNumbers: PlayerNumber[]) => void;
   setBlackPlayerNumbers: (blackPlayerNumbers: PlayerNumber[]) => void;
   setRedPlayerNumbers: (redPlayerNumbers: PlayerNumber[]) => void;
@@ -62,7 +64,7 @@ export const defaultInitState: GameState = {
 };
 
 export const createGameStore = (initState: GameState = defaultInitState) => {
-  return createStore<GameStore>()((set) => ({
+  return createStore<GameStore>()((set, get) => ({
     ...initState,
     setPlayer(player) {
       set({ player });
@@ -80,6 +82,11 @@ export const createGameStore = (initState: GameState = defaultInitState) => {
     },
     setNthDay(nthDay) {
       set({ nthDay });
+    },
+    getTeamPlayers(team) {
+      return Object.values(get().otherPlayers).filter(
+        (player) => player.team === (team ?? get().player.team),
+      );
     },
     setWhitePlayerNumbers(whitePlayerNumbers) {
       set({ whitePlayerNumbers });

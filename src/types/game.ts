@@ -23,9 +23,9 @@ export enum PlayerNumber {
 export const playerNumberSchema = z.nativeEnum(PlayerNumber);
 
 export enum PlayerStatus {
-  Invalid,
-  Alive,
-  Eliminated,
+  Invalid = 'INVALID',
+  Alive = 'ALIVE',
+  Eliminated = 'ELIMINATED',
 }
 
 export type Player = {

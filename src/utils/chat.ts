@@ -1,4 +1,9 @@
-import { ChatRoom, type PersonalChatMessage } from '@/types/chat';
+import {
+  type ChatMessage,
+  ChatMessageType,
+  ChatRoom,
+  type PersonalChatMessage,
+} from '@/types/chat';
 import { PlayerNumber, Team } from '@/types/game';
 import { assert } from '@/utils/assert';
 import { convertToPlayerNumber, isValidPlayerNumber } from '@/utils/game';
@@ -74,4 +79,8 @@ export const getMyTeamChatRoom = (team: Team) => {
     default:
       return ChatRoom.Red;
   }
+};
+
+export const filterUserMessages = (messages: ChatMessage[]) => {
+  return messages.filter((message) => message.type === ChatMessageType.Chat);
 };
