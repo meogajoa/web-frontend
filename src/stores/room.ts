@@ -1,6 +1,6 @@
 import { type ChatMessage, ChatRoom } from '@/types/chat';
-import { UserNumber } from '@/types/game';
-import { isValidUserNumber } from '@/utils/game';
+import { PlayerNumber } from '@/types/game';
+import { isValidPlayerNumber } from '@/utils/game';
 import { createStore } from 'zustand/vanilla';
 
 export type RoomState = {
@@ -97,11 +97,11 @@ export const createRoomStore = (initState: RoomState = defaultInitState) => {
 
       chatRooms.forEach((chatRoom) => {
         if (chatRoom === ChatRoom.Personal) {
-          Object.values(UserNumber)
+          Object.values(PlayerNumber)
             .map(Number)
-            .filter(isValidUserNumber)
-            .forEach((userNumber) => {
-              addMessage(userNumber, message);
+            .filter(isValidPlayerNumber)
+            .forEach((playerNumber) => {
+              addMessage(playerNumber, message);
             });
         } else {
           addMessage(chatRoom, message);

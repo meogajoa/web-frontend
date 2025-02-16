@@ -1,5 +1,5 @@
 import useSubscription from '@/hooks/stomp/useSubscription';
-import { GameTime, MiniGame, userNumberSchema } from '@/types/game';
+import { GameTime, MiniGame, playerNumberSchema } from '@/types/game';
 import { compact } from 'lodash-es';
 import { z } from 'zod';
 
@@ -62,9 +62,9 @@ export type MiniGameWillEndNotice = z.infer<typeof miniGameWillEndNoticeSchema>;
  * BUTTON_GAME_STATUS
  */
 const buttonGameStatusNoticeSchema = BaseNoticeSchema.extend({
-  twentyButtons: z.array(userNumberSchema),
-  fiftyButtons: z.array(userNumberSchema),
-  hundredButtons: z.array(userNumberSchema),
+  twentyButtons: z.array(playerNumberSchema),
+  fiftyButtons: z.array(playerNumberSchema),
+  hundredButtons: z.array(playerNumberSchema),
 });
 export type ButtonGameStatusNotice = z.infer<
   typeof buttonGameStatusNoticeSchema

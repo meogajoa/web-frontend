@@ -3,24 +3,25 @@ import RoomHeaderGame from '@/containers/room/RoomHeaderGame';
 import RoomHeaderLobby from '@/containers/room/RoomHeaderLobby';
 import RoomMessages from '@/containers/room/RoomMessages';
 import RoomUserList from '@/containers/room/RoomUserList';
-import useUserGameInfo, { type UserGameInfo } from '@/hooks/game/useGameInfo';
+import useGamePlayersNotice, {
+  type GameUsersNotice,
+} from '@/hooks/game/useGamePlayersNotice';
 import useGameSystemNotice, {
   type DayOrNightNotice,
 } from '@/hooks/game/useGameSystemNotice';
-import useGameUsersNotice, {
-  type GameUsersNotice,
-} from '@/hooks/game/useGameUsersNotice';
+import usePlayerGameInfo, {
+  type PlayerGameInfo,
+} from '@/hooks/game/usePlayerGameInfo';
 import useBodyBgColor from '@/hooks/misc/useBodyBgColor';
 import useRoomSystemNotice from '@/hooks/room/useRoomSystemNotice';
 import { useAccount } from '@/providers/AccountProvider';
 import { useGame } from '@/providers/GameProvider';
 import { useRoom } from '@/providers/RoomProvider';
 import { ChatMessageType, ChatRoom } from '@/types/chat';
-import { Team, UserNumber, UserStatus } from '@/types/game';
+import { PlayerNumber, PlayerStatus, Team } from '@/types/game';
 import { getMyTeamChatRoom } from '@/utils/chat';
 import { cn } from '@/utils/classname';
-import { isValidUserNumber } from '@/utils/game';
-import { uniqueId } from 'lodash-es';
+import { isValidPlayerNumber } from '@/utils/game';
 import { useTranslations } from 'next-intl';
 import React from 'react';
 
@@ -37,20 +38,20 @@ const Room: React.FC<Props> = ({ className, rejoin }) => {
   const { account } = useAccount();
 
   const {
-    user,
-    setUser,
-    setUserByNumber,
+    player,
+    setPlayer,
+    setPlayerByPlayerNumber,
     setTime,
-    setWhiteTeamUsers,
-    setBlackTeamUsers,
-    setEliminatedUsers,
-    setRedTeamUsers,
+    setWhitePlayerNumbers,
+    setBlackPlayerNumbers,
+    setEliminatedPlayerNumbers,
+    setRedPlayerNumbers,
   } = useGame();
 
   useBodyBgColor(
-    user.team === Team.Black
+    player.team === Team.Black
       ? 'var(--color-gray-3)'
-      : user.team === Team.Red
+      : player.team === Team.Red
         ? 'var(--color-white)'
         : 'var(--color-gray-6)',
   );
@@ -60,12 +61,12 @@ const Room: React.FC<Props> = ({ className, rejoin }) => {
     onGameStart: handleGameStart,
   });
 
-  useUserGameInfo({
+  usePlayerGameInfo({
     variables: {
       username: account.nickname,
     },
     enabled: canStartGame,
-    onUserInfo: handleUserGameInfo,
+    onPlayerInfo: handlePlayerGameInfo,
   });
 
   useGameSystemNotice({
@@ -75,18 +76,18 @@ const Room: React.FC<Props> = ({ className, rejoin }) => {
     onGameEnd: handleGameEnd,
   });
 
-  useGameUsersNotice({
+  useGamePlayersNotice({
     variables: { id },
     enabled: canStartGame,
-    onMessage: handleGameUsersNotice,
+    onMessage: handleGamePlayersNotice,
   });
 
   return (
     <div
       className={cn(
         'bg-gray-6 flex h-full flex-col',
-        user.team === Team.Black && 'bg-gray-3',
-        user.team === Team.Red && 'bg-red/15',
+        player.team === Team.Black && 'bg-gray-3',
+        player.team === Team.Red && 'bg-red/15',
         className,
       )}
       data-testid="room"
@@ -109,28 +110,32 @@ const Room: React.FC<Props> = ({ className, rejoin }) => {
     setCanStartGame(true);
   }
 
-  function handleUserGameInfo({ player }: UserGameInfo) {
+  function handlePlayerGameInfo({ id, player, sendTime }: PlayerGameInfo) {
     setIsPlaying(true);
     setCurrentChatRoom(ChatRoom.General);
-    setUser({
+    setPlayer({
       team: player.teamColor,
       number: player.number,
-      status: player.eliminated ? UserStatus.Eliminated : UserStatus.Alive,
+      status: player.eliminated ? PlayerStatus.Eliminated : PlayerStatus.Alive,
       money: player.money,
       isSpy: player.spy,
     });
     const systemMessage = {
+      id,
+      sendTime: sendTime,
       type: ChatMessageType.System,
       sender: ChatMessageType.System,
       content: t('teamColorSystemMessage', {
         teamColor: player.teamColor,
       }),
-      id: uniqueId(),
-      sendTime: new Date(), // FIXME: replace with server time
     };
 
     broadcastMessage(
-      [ChatRoom.General, ChatRoom.Personal, getMyTeamChatRoom(user.team)],
+      [
+        ChatRoom.General,
+        ChatRoom.Personal,
+        getMyTeamChatRoom(player.teamColor),
+      ],
       systemMessage,
     );
   }
@@ -143,27 +148,27 @@ const Room: React.FC<Props> = ({ className, rejoin }) => {
     rejoin?.();
   }
 
-  function handleGameUsersNotice(gameUsersNotice: GameUsersNotice) {
-    Object.values(UserNumber).forEach((_number) => {
+  function handleGamePlayersNotice(gameUsersNotice: GameUsersNotice) {
+    Object.values(PlayerNumber).forEach((_number) => {
       const number = Number(_number);
-      if (!isValidUserNumber(number)) {
+      if (!isValidPlayerNumber(number)) {
         return;
       }
 
       const isBlack = gameUsersNotice.blackTeam.includes(number);
       const isEliminated = gameUsersNotice.eliminated.includes(number);
 
-      setUserByNumber(number, {
-        status: isEliminated ? UserStatus.Eliminated : UserStatus.Alive,
+      setPlayerByPlayerNumber(number, {
+        status: isEliminated ? PlayerStatus.Eliminated : PlayerStatus.Alive,
         team: isBlack ? Team.Black : Team.White,
         number,
       });
     });
 
-    setWhiteTeamUsers(gameUsersNotice.whiteTeam);
-    setBlackTeamUsers(gameUsersNotice.blackTeam);
-    setRedTeamUsers(gameUsersNotice.redTeam);
-    setEliminatedUsers(gameUsersNotice.eliminated);
+    setWhitePlayerNumbers(gameUsersNotice.whiteTeam);
+    setBlackPlayerNumbers(gameUsersNotice.blackTeam);
+    setRedPlayerNumbers(gameUsersNotice.redTeam);
+    setEliminatedPlayerNumbers(gameUsersNotice.eliminated);
   }
 };
 

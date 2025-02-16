@@ -6,9 +6,9 @@ export enum Team {
   White = 'WHITE',
   Red = 'RED',
 }
-export const teamColorSchema = z.nativeEnum(Team);
+export const teamSchema = z.nativeEnum(Team);
 
-export enum UserNumber {
+export enum PlayerNumber {
   Invalid,
   One,
   Two,
@@ -20,18 +20,18 @@ export enum UserNumber {
   Eight,
   Nine,
 }
-export const userNumberSchema = z.nativeEnum(UserNumber);
+export const playerNumberSchema = z.nativeEnum(PlayerNumber);
 
-export enum UserStatus {
+export enum PlayerStatus {
   Invalid,
   Alive,
   Eliminated,
 }
 
-export type User = {
+export type Player = {
   team: Team;
-  number: UserNumber;
-  status: UserStatus;
+  number: PlayerNumber;
+  status: PlayerStatus;
   money?: number;
   isSpy?: boolean;
   profimeImageSrc?: string;

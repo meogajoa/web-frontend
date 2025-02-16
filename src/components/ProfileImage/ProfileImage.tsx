@@ -1,4 +1,4 @@
-import { Team, UserNumber } from '@/types/game';
+import { PlayerNumber, Team } from '@/types/game';
 import { cn } from '@/utils/classname';
 import { cva, type VariantProps } from 'class-variance-authority';
 import React from 'react';
@@ -28,7 +28,7 @@ export type ProfileImageProps = VariantProps<typeof variants> & {
   className?: string;
   as?: React.ElementType;
   src?: string;
-  userNumber?: UserNumber;
+  playerNumber?: PlayerNumber;
   onProfileClick?: () => void;
 };
 
@@ -38,10 +38,9 @@ const ProfileImage: React.FC<React.PropsWithChildren<ProfileImageProps>> = ({
   color,
   as: Component = 'button',
   src,
-  userNumber = UserNumber.Invalid,
+  playerNumber = PlayerNumber.Invalid,
   onProfileClick: handleProfileClick,
   children,
-  ...props
 }) => {
   return (
     <Component
@@ -50,11 +49,10 @@ const ProfileImage: React.FC<React.PropsWithChildren<ProfileImageProps>> = ({
         backgroundImage: `url(${src})`,
       }}
       onClick={handleProfileClick}
-      {...props}
     >
-      {userNumber > 0 && (
+      {playerNumber > 0 && (
         <mark className="bg-gray-4 absolute top-0.5 right-0.5 flex size-6 items-center justify-center rounded-lg text-[0.625rem] font-bold text-black">
-          {userNumber}
+          {playerNumber}
         </mark>
       )}
 

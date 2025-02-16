@@ -1,77 +1,77 @@
 import {
   GameTime,
+  PlayerNumber,
+  PlayerStatus,
   Team,
-  type User,
-  UserNumber,
-  UserStatus,
+  type Player,
 } from '@/types/game';
-import { isValidUserNumber } from '@/utils/game';
+import { isValidPlayerNumber } from '@/utils/game';
 import { createStore } from 'zustand/vanilla';
 
 export type GameState = {
-  user: User;
-  otherUsers: Record<UserNumber, User>;
+  player: Player;
+  otherPlayers: Record<PlayerNumber, Player>;
   time: GameTime;
   nthDay: number;
-  whiteTeamUsers: UserNumber[];
-  blackTeamUsers: UserNumber[];
-  redTeamUsers: UserNumber[];
-  eliminatedUsers: UserNumber[];
+  whitePlayerNumbers: PlayerNumber[];
+  blackPlayerNumbers: PlayerNumber[];
+  redPlayerNumbers: PlayerNumber[];
+  eliminatedPlayerNumbers: PlayerNumber[];
 };
 
 export type GameActions = {
-  setUser: (user: User) => void;
-  setUserByNumber: (userNumber: UserNumber, user: User) => void;
+  setPlayer: (player: Player) => void;
+  setPlayerByPlayerNumber: (playerNumber: PlayerNumber, player: Player) => void;
   setTime: (time: GameTime) => void;
   setNthDay: (nthDay: number) => void;
-  setWhiteTeamUsers: (whiteTeamUsers: UserNumber[]) => void;
-  setBlackTeamUsers: (blackTeamUsers: UserNumber[]) => void;
-  setRedTeamUsers: (redTeamUsers: UserNumber[]) => void;
-  setEliminatedUsers: (eliminatedUsers: UserNumber[]) => void;
+  setWhitePlayerNumbers: (whitePlayerNumbers: PlayerNumber[]) => void;
+  setBlackPlayerNumbers: (blackPlayerNumbers: PlayerNumber[]) => void;
+  setRedPlayerNumbers: (redPlayerNumbers: PlayerNumber[]) => void;
+  setEliminatedPlayerNumbers: (eliminatedPlayerNumbers: PlayerNumber[]) => void;
   clear: () => void;
 };
 
 export type GameStore = GameState & GameActions;
 
 export const defaultInitState: GameState = {
-  user: {
+  player: {
     team: Team.Invalid,
-    number: UserNumber.Invalid,
-    status: UserStatus.Invalid,
+    number: PlayerNumber.Invalid,
+    status: PlayerStatus.Invalid,
   },
-  otherUsers: Object.values(UserNumber)
+  otherPlayers: Object.values(PlayerNumber)
     .map(Number)
-    .filter(isValidUserNumber)
+    .filter(isValidPlayerNumber)
     .reduce(
       (acc, key) => ({
         ...acc,
         [key]: {
           team: Team.Invalid,
-          number: UserNumber.Invalid,
-          status: UserStatus.Invalid,
-        } as User,
+          number: PlayerNumber.Invalid,
+          status: PlayerStatus.Invalid,
+        } as Player,
       }),
-      {} as Record<UserNumber, User>,
+      {} as Record<PlayerNumber, Player>,
     ),
   time: GameTime.Invalid,
   nthDay: 0,
-  whiteTeamUsers: [],
-  blackTeamUsers: [],
-  redTeamUsers: [],
-  eliminatedUsers: [],
+  whitePlayerNumbers: [],
+  blackPlayerNumbers: [],
+  redPlayerNumbers: [],
+  eliminatedPlayerNumbers: [],
 };
 
 export const createGameStore = (initState: GameState = defaultInitState) => {
   return createStore<GameStore>()((set) => ({
     ...initState,
-    setUser(user) {
-      set({ user });
+    setPlayer(player) {
+      set({ player });
     },
-    setUserByNumber(userNumber, user) {
+    setPlayerByPlayerNumber(playerNumber, player) {
       set((state) => ({
-        otherUsers: {
-          ...state.otherUsers,
-          [userNumber]: user,
+        otherPlayers: {
+          ...state.otherPlayers,
+          [playerNumber]: player,
         },
       }));
     },
@@ -81,17 +81,17 @@ export const createGameStore = (initState: GameState = defaultInitState) => {
     setNthDay(nthDay) {
       set({ nthDay });
     },
-    setWhiteTeamUsers(whiteTeamUsers) {
-      set({ whiteTeamUsers });
+    setWhitePlayerNumbers(whitePlayerNumbers) {
+      set({ whitePlayerNumbers });
     },
-    setBlackTeamUsers(blackTeamUsers) {
-      set({ blackTeamUsers });
+    setBlackPlayerNumbers(blackPlayerNumbers) {
+      set({ blackPlayerNumbers });
     },
-    setRedTeamUsers(redTeamUsers) {
-      set({ redTeamUsers });
+    setRedPlayerNumbers(redPlayerNumbers) {
+      set({ redPlayerNumbers });
     },
-    setEliminatedUsers(eliminatedUsers) {
-      set({ eliminatedUsers });
+    setEliminatedPlayerNumbers(eliminatedPlayerNumbers) {
+      set({ eliminatedPlayerNumbers });
     },
     clear() {
       set(defaultInitState);

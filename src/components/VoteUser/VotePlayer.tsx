@@ -1,13 +1,14 @@
 import ProfileImage, {
   type ProfileImageProps,
 } from '@/components/ProfileImage/ProfileImage';
+import { type Username } from '@/types/account';
 import { type Point } from '@/types/misc';
 import { cn } from '@/utils/classname';
 import { shuffle } from 'lodash-es';
 import Image from 'next/image';
 import React from 'react';
 
-const stompPositions: Readonly<Point[]> = [
+const stampPositions: Readonly<Point[]> = [
   { x: '20%', y: '25%' },
   { x: '15%', y: '75%' },
   { x: '75%', y: '75%' },
@@ -17,28 +18,28 @@ const stompPositions: Readonly<Point[]> = [
   { x: '43%', y: '75%' },
 ];
 
-type VoteUserProps = Pick<
+type Props = Pick<
   ProfileImageProps,
-  'color' | 'onProfileClick' | 'userNumber' | 'src'
+  'color' | 'onProfileClick' | 'playerNumber' | 'src'
 > & {
   className?: string;
-  username: string;
+  username: Username;
   voteCount: number;
   hasVoted: boolean;
   onVote: () => void;
 };
 
-const VoteUser: React.FC<VoteUserProps> = ({
+const VotePlayer: React.FC<Props> = ({
   className,
   color,
-  userNumber,
+  playerNumber,
   src,
   username,
   voteCount,
   hasVoted,
   onVote: handleVote,
 }) => {
-  const randomStampPosition = React.useMemo(() => shuffle(stompPositions), []);
+  const randomStampPosition = React.useMemo(() => shuffle(stampPositions), []);
 
   return (
     <div
@@ -50,7 +51,7 @@ const VoteUser: React.FC<VoteUserProps> = ({
         as="div"
         size="xl"
         color={color}
-        userNumber={userNumber}
+        playerNumber={playerNumber}
         src={src}
       >
         {hasVoted && (
@@ -80,4 +81,4 @@ const VoteUser: React.FC<VoteUserProps> = ({
   );
 };
 
-export default VoteUser;
+export default VotePlayer;

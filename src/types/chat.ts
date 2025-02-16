@@ -1,20 +1,20 @@
 import { usernameSchema } from '@/types/account';
-import { UserNumber, userNumberSchema } from '@/types/game';
+import { PlayerNumber, playerNumberSchema } from '@/types/game';
 import { z } from 'zod';
 
 /**
  * Chat Room Kind
  */
 export enum ChatRoom {
-  User01 = UserNumber.One,
-  User02 = UserNumber.Two,
-  User03 = UserNumber.Three,
-  User04 = UserNumber.Four,
-  User05 = UserNumber.Five,
-  User06 = UserNumber.Six,
-  User07 = UserNumber.Seven,
-  User08 = UserNumber.Eight,
-  User09 = UserNumber.Nine,
+  Player01 = PlayerNumber.One,
+  Player02 = PlayerNumber.Two,
+  Player03 = PlayerNumber.Three,
+  Player04 = PlayerNumber.Four,
+  Player05 = PlayerNumber.Five,
+  Player06 = PlayerNumber.Six,
+  Player07 = PlayerNumber.Seven,
+  Player08 = PlayerNumber.Eight,
+  Player09 = PlayerNumber.Nine,
   Lobby = 'lobby',
   Personal = 'personal',
   General = 'general',
@@ -31,7 +31,7 @@ export const baseChatMessageSchema = z.object({
   id: z.string(),
   content: z.string().optional(),
   sender: usernameSchema.or(
-    userNumberSchema.transform((number) => number.toString()),
+    playerNumberSchema.transform((number) => number.toString()),
   ),
   sendTime: z.union([z.string(), z.date()]).transform((date) => new Date(date)),
 });

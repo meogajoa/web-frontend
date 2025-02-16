@@ -5,7 +5,7 @@ import Room from '@/containers/room/Room';
 import useJoinRoom from '@/hooks/room/useJoinRoom';
 import { GameProvider } from '@/providers/GameProvider';
 import { RoomProvider } from '@/providers/RoomProvider';
-import { ChatRoom } from '@/types/chat';
+import { ChatMessageType, ChatRoom } from '@/types/chat';
 import { useTranslations } from 'next-intl';
 import React from 'react';
 type Props = {
@@ -30,7 +30,10 @@ const RoomPage: React.FC<Props> = ({ params }) => {
           title={data.name}
           hostNickname={data.owner}
           isPlaying={data.playing}
-          lobbyChatLogs={data.chatLogs}
+          lobbyChatLogs={data.chatLogs.map((chatLog) => ({
+            ...chatLog,
+            type: ChatMessageType.Chat,
+          }))}
           currentChatRoom={ChatRoom.Lobby}
         >
           <GameProvider>

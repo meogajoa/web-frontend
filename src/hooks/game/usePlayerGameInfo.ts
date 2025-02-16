@@ -1,7 +1,7 @@
 import useSubscription from '@/hooks/stomp/useSubscription';
 import { usernameSchema } from '@/types/account';
 import { baseChatMessageSchema } from '@/types/chat';
-import { teamColorSchema, userNumberSchema } from '@/types/game';
+import { playerNumberSchema, teamSchema } from '@/types/game';
 import { compact } from 'lodash-es';
 import { z } from 'zod';
 
@@ -9,7 +9,7 @@ import { z } from 'zod';
  * Game info type
  */
 enum GameInfoType {
-  UserInfo = 'USER_INFO',
+  PlayerInfo = 'USER_INFO',
   Eliminated = 'ELIMINATED_USER',
 }
 const gameInfoTypeSchema = z.nativeEnum(GameInfoType);
@@ -24,17 +24,17 @@ const baseGameInfoSchema = baseChatMessageSchema.extend({
 /**
  * USER_INFO
  */
-const userGameInfoSchema = baseGameInfoSchema.extend({
+const playerGameInfoSchema = baseGameInfoSchema.extend({
   player: z.object({
-    number: userNumberSchema,
+    number: playerNumberSchema,
     nickname: usernameSchema,
-    teamColor: teamColorSchema,
+    teamColor: teamSchema,
     money: z.number(),
     spy: z.boolean(),
     eliminated: z.boolean(),
   }),
 });
-export type UserGameInfo = z.infer<typeof userGameInfoSchema>;
+export type PlayerGameInfo = z.infer<typeof playerGameInfoSchema>;
 
 /**
  * ELIMINATED_USER
@@ -44,15 +44,15 @@ const eliminatedGameInfoSchema = baseChatMessageSchema.extend({
 });
 export type EliminatedGameInfo = z.infer<typeof eliminatedGameInfoSchema>;
 
-const useUserGameInfo = ({
+const usePlayerGameInfo = ({
   variables: { username },
   enabled,
-  onUserInfo,
+  onPlayerInfo: onPlayerInfo,
   onEliminated,
 }: {
   variables: { username: string };
   enabled: boolean;
-  onUserInfo?: (gameInfo: UserGameInfo) => void;
+  onPlayerInfo?: (gameInfo: PlayerGameInfo) => void;
   onEliminated?: (gameInfo: EliminatedGameInfo) => void;
 }) => {
   useSubscription(
@@ -64,9 +64,9 @@ const useUserGameInfo = ({
       const type = gameInfoTypeSchema.parse(jsonBody.type);
 
       switch (type) {
-        case GameInfoType.UserInfo: {
-          const gameInfo = userGameInfoSchema.parse(jsonBody);
-          onUserInfo?.(gameInfo);
+        case GameInfoType.PlayerInfo: {
+          const gameInfo = playerGameInfoSchema.parse(jsonBody);
+          onPlayerInfo?.(gameInfo);
           break;
         }
         case GameInfoType.Eliminated: {
@@ -79,4 +79,4 @@ const useUserGameInfo = ({
   );
 };
 
-export default useUserGameInfo;
+export default usePlayerGameInfo;

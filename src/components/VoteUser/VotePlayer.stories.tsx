@@ -1,11 +1,11 @@
-import VoteUser from '@/components/VoteUser/VoteUser';
+import VotePlayer from '@/components/VoteUser/VotePlayer';
 import { Team } from '@/types/game';
 import type { Meta, StoryObj } from '@storybook/react';
 import React from 'react';
 
-const meta: Meta<typeof VoteUser> = {
-  title: 'Molecules/VoteUser',
-  component: VoteUser,
+const meta: Meta<typeof VotePlayer> = {
+  title: 'Molecules/VotePlayer',
+  component: VotePlayer,
   tags: ['autodocs'],
   argTypes: {
     color: {
@@ -35,12 +35,12 @@ const meta: Meta<typeof VoteUser> = {
 
 export default meta;
 
-type Story = StoryObj<typeof VoteUser>;
+type Story = StoryObj<typeof VotePlayer>;
 
 export const VotingWithCounts: Story = {
   args: {
     color: Team.Black,
-    userNumber: 1,
+    playerNumber: 1,
     hasVoted: false,
     voteCount: 0,
     username: 'username',
@@ -56,7 +56,7 @@ export const VotingWithCounts: Story = {
     }, [_voteCount, _hasVoted]);
 
     return (
-      <VoteUser
+      <VotePlayer
         {...props}
         hasVoted={hasVoted}
         voteCount={voteCount}

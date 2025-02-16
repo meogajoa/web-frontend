@@ -12,13 +12,13 @@ import {
   personalChatMessageSchema,
   type ChatMessage,
 } from '@/types/chat';
-import { Team, UserStatus } from '@/types/game';
+import { PlayerStatus, Team } from '@/types/game';
 import {
   convertToPersonalChatRoom,
   getPersonalChatRoomFromMessage,
   isPersonalChatRoom,
 } from '@/utils/chat';
-import { isValidUserNumber } from '@/utils/game';
+import { isValidPlayerNumber } from '@/utils/game';
 import { compact } from 'lodash-es';
 import { z } from 'zod';
 
@@ -52,7 +52,7 @@ const useChatMessages = ({
 }) => {
   const { account } = useAccount();
   const { id, messagesByRoom, isPlaying, addMessage, addMessages } = useRoom();
-  const { user } = useGame();
+  const { player } = useGame();
 
   useSubscription(
     compact([
@@ -64,27 +64,30 @@ const useChatMessages = ({
 
       // In-game black
       isPlaying &&
-        (user.team === Team.Black || user.status === UserStatus.Eliminated) &&
+        (player.team === Team.Black ||
+          player.status === PlayerStatus.Eliminated) &&
         `/topic/game/${id}/chat/black`,
 
       // In-game white
       isPlaying &&
-        (user.team === Team.White || user.status === UserStatus.Eliminated) &&
+        (player.team === Team.White ||
+          player.status === PlayerStatus.Eliminated) &&
         `/topic/game/${id}/chat/white`,
 
       // In-game red
       isPlaying &&
-        (user.team === Team.Red || user.status === UserStatus.Eliminated) &&
+        (player.team === Team.Red ||
+          player.status === PlayerStatus.Eliminated) &&
         `/topic/game/${id}/chat/red`,
 
       // In-game eliminated
       isPlaying &&
-        user.status === UserStatus.Eliminated &&
+        player.status === PlayerStatus.Eliminated &&
         `/topic/game/${id}/chat/eliminated`,
 
       // In-game personal
       isPlaying &&
-        user.status === UserStatus.Alive &&
+        player.status === PlayerStatus.Alive &&
         `/topic/user/${account.nickname}/gameChat`,
     ]),
     ({ headers, body }) => {
@@ -122,13 +125,13 @@ const useChatMessages = ({
             const message = { ..._message, type: ChatMessageType.Chat };
             const chatRoom = getPersonalChatRoomFromMessage(
               message,
-              user.number,
+              player.number,
             );
             newMessagesMap[chatRoom].push(message);
           });
 
           Object.entries(newMessagesMap).forEach(([_chatRoom, messages]) => {
-            if (!isValidUserNumber(Number(_chatRoom))) {
+            if (!isValidPlayerNumber(Number(_chatRoom))) {
               return;
             }
 
@@ -161,7 +164,7 @@ const useChatMessages = ({
 
           const chatRoom = getPersonalChatRoomFromMessage(
             personalMessage,
-            user.number,
+            player.number,
           );
           addMessage(chatRoom, personalMessage);
           setTimeout(() => onNewMessage?.(personalMessage), 0);

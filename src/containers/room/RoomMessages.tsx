@@ -6,7 +6,7 @@ import { useGame } from '@/providers/GameProvider';
 import { useRoom } from '@/providers/RoomProvider';
 import { type ChatMessage, ChatMessageType } from '@/types/chat';
 import { cn } from '@/utils/classname';
-import { convertToUserNumber } from '@/utils/game';
+import { convertToPlayerNumber } from '@/utils/game';
 import { useTranslations } from 'next-intl';
 import React from 'react';
 
@@ -21,7 +21,7 @@ const RoomMessages = React.memo<Props>(({ className }) => {
   const t = useTranslations('roomRoute.chatMessage');
   const { currentChatRoom } = useRoom();
   const { account } = useAccount();
-  const { user, otherUsers } = useGame();
+  const { player, otherPlayers } = useGame();
 
   const messages = useChatMessages({
     variables: { chatRoom: currentChatRoom },
@@ -39,12 +39,12 @@ const RoomMessages = React.memo<Props>(({ className }) => {
     >
       {messages.map(({ id, content, sender, type }) => {
         const isSelf =
-          sender === account.nickname || sender === user.number.toString();
+          sender === account.nickname || sender === player.number.toString();
         const username = isSelf
           ? sender
           : t('inGameUsername', { username: sender });
 
-        const userNumber = convertToUserNumber(sender);
+        const playerNumber = convertToPlayerNumber(sender);
 
         switch (type) {
           case ChatMessageType.Chat: {
@@ -54,7 +54,7 @@ const RoomMessages = React.memo<Props>(({ className }) => {
                 position={isSelf ? 'right' : 'left'}
                 username={username}
                 message={content}
-                color={otherUsers[userNumber]?.team}
+                color={otherPlayers[playerNumber]?.team}
               />
             );
           }
