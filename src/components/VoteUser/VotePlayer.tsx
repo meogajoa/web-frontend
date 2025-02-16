@@ -1,8 +1,8 @@
 import ProfileImage, {
   type ProfileImageProps,
 } from '@/components/ProfileImage/ProfileImage';
-import { type Username } from '@/types/account';
 import { type Point } from '@/types/misc';
+import { type Username } from '@/types/user';
 import { cn } from '@/utils/classname';
 import { shuffle } from 'lodash-es';
 import Image from 'next/image';

@@ -1,5 +1,5 @@
 import useSubscription from '@/hooks/stomp/useSubscription';
-import { usernameSchema } from '@/types/account';
+import { usernameSchema } from '@/types/user';
 import React from 'react';
 import { z } from 'zod';
 

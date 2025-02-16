@@ -1,5 +1,5 @@
-import { usernameSchema } from '@/types/account';
 import { PlayerNumber, playerNumberSchema } from '@/types/game';
+import { usernameSchema } from '@/types/user';
 import { z } from 'zod';
 
 /**

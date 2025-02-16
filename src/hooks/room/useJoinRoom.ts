@@ -1,6 +1,6 @@
 import { A_SECOND } from '@/constants/misc';
-import { usernameSchema } from '@/types/account';
 import { baseChatMessageSchema } from '@/types/chat';
+import { usernameSchema } from '@/types/user';
 import { server } from '@/utils/axios';
 import { sleep } from '@/utils/misc';
 import { useMutation } from '@tanstack/react-query';

@@ -14,9 +14,9 @@ import usePlayerGameInfo, {
 } from '@/hooks/game/usePlayerGameInfo';
 import useBodyBgColor from '@/hooks/misc/useBodyBgColor';
 import useRoomSystemNotice from '@/hooks/room/useRoomSystemNotice';
-import { useAccount } from '@/providers/AccountProvider';
 import { useGame } from '@/providers/GameProvider';
 import { useRoom } from '@/providers/RoomProvider';
+import { useUser } from '@/providers/UserProvider';
 import { ChatMessageType, ChatRoom } from '@/types/chat';
 import { PlayerNumber, PlayerStatus, Team } from '@/types/game';
 import { getMyTeamChatRoom } from '@/utils/chat';
@@ -35,7 +35,7 @@ const Room: React.FC<Props> = ({ className, rejoin }) => {
     useRoom();
   const [canStartGame, setCanStartGame] = React.useState(isPlaying);
   const t = useTranslations('roomRoute.chatMessage');
-  const { account } = useAccount();
+  const { user } = useUser();
 
   const {
     player,
@@ -63,7 +63,7 @@ const Room: React.FC<Props> = ({ className, rejoin }) => {
 
   usePlayerGameInfo({
     variables: {
-      username: account.nickname,
+      username: user.name,
     },
     enabled: canStartGame,
     onPlayerInfo: handlePlayerGameInfo,

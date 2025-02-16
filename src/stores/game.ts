@@ -28,7 +28,7 @@ export type GameActions = {
   setBlackPlayerNumbers: (blackPlayerNumbers: PlayerNumber[]) => void;
   setRedPlayerNumbers: (redPlayerNumbers: PlayerNumber[]) => void;
   setEliminatedPlayerNumbers: (eliminatedPlayerNumbers: PlayerNumber[]) => void;
-  clear: () => void;
+  clearGameStore: () => void;
 };
 
 export type GameStore = GameState & GameActions;
@@ -93,7 +93,7 @@ export const createGameStore = (initState: GameState = defaultInitState) => {
     setEliminatedPlayerNumbers(eliminatedPlayerNumbers) {
       set({ eliminatedPlayerNumbers });
     },
-    clear() {
+    clearGameStore() {
       set(defaultInitState);
     },
   }));

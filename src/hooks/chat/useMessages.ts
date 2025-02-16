@@ -1,7 +1,7 @@
 import useSubscription from '@/hooks/stomp/useSubscription';
-import { useAccount } from '@/providers/AccountProvider';
 import { useGame } from '@/providers/GameProvider';
 import { useRoom } from '@/providers/RoomProvider';
+import { useUser } from '@/providers/UserProvider';
 import { defaultInitState } from '@/stores/room';
 import {
   baseChatMessageSchema,
@@ -50,7 +50,7 @@ const useChatMessages = ({
   };
   onNewMessage?: (message: ChatMessage) => void;
 }) => {
-  const { account } = useAccount();
+  const { user } = useUser();
   const { id, messagesByRoom, isPlaying, addMessage, addMessages } = useRoom();
   const { player } = useGame();
 
@@ -88,7 +88,7 @@ const useChatMessages = ({
       // In-game personal
       isPlaying &&
         player.status === PlayerStatus.Alive &&
-        `/topic/user/${account.nickname}/gameChat`,
+        `/topic/user/${user.name}/gameChat`,
     ]),
     ({ headers, body }) => {
       const jsonBody = JSON.parse(body);

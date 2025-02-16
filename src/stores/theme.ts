@@ -6,6 +6,7 @@ export type ThemeState = {
 
 export type ThemeActions = {
   setBgColor: (newBgColor: string) => void;
+  clearThemeStore: () => void;
 };
 
 export type ThemeStore = ThemeState & ThemeActions;
@@ -19,6 +20,9 @@ export const createThemeStore = (initState: ThemeState = defaultInitState) => {
     bgColor: initState.bgColor,
     setBgColor(newBgColor) {
       set({ bgColor: newBgColor });
+    },
+    clearThemeStore() {
+      set(defaultInitState);
     },
   }));
 };

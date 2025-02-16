@@ -1,9 +1,9 @@
 import { ChatMessage as ChatMessageComponent } from '@/components/ChatMessage';
 import { SystemNotice } from '@/components/Notice';
 import useChatMessages from '@/hooks/chat/useMessages';
-import { useAccount } from '@/providers/AccountProvider';
 import { useGame } from '@/providers/GameProvider';
 import { useRoom } from '@/providers/RoomProvider';
+import { useUser } from '@/providers/UserProvider';
 import { type ChatMessage, ChatMessageType } from '@/types/chat';
 import { cn } from '@/utils/classname';
 import { convertToPlayerNumber } from '@/utils/game';
@@ -20,7 +20,7 @@ const RoomMessages = React.memo<Props>(({ className }) => {
 
   const t = useTranslations('roomRoute.chatMessage');
   const { currentChatRoom } = useRoom();
-  const { account } = useAccount();
+  const { user } = useUser();
   const { player, otherPlayers } = useGame();
 
   const messages = useChatMessages({
@@ -39,7 +39,7 @@ const RoomMessages = React.memo<Props>(({ className }) => {
     >
       {messages.map(({ id, content, sender, type }) => {
         const isSelf =
-          sender === account.nickname || sender === player.number.toString();
+          sender === user.name || sender === player.number.toString();
         const username = isSelf
           ? sender
           : t('inGameUsername', { username: sender });
@@ -82,7 +82,7 @@ const RoomMessages = React.memo<Props>(({ className }) => {
     const isScrolledToBottom =
       scrollTop + clientHeight >= scrollHeight - EPSILON;
 
-    if (!isScrolledToBottom && message.sender !== account.nickname) {
+    if (!isScrolledToBottom && message.sender !== user.name) {
       return;
     }
 

@@ -1,7 +1,7 @@
 import useSubscription from '@/hooks/stomp/useSubscription';
-import { usernameSchema } from '@/types/account';
 import { baseChatMessageSchema } from '@/types/chat';
 import { playerNumberSchema, teamSchema } from '@/types/game';
+import { usernameSchema } from '@/types/user';
 import { compact } from 'lodash-es';
 import { z } from 'zod';
 
