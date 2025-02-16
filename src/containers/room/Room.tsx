@@ -26,7 +26,13 @@ type Props = {
 };
 
 const Room: React.FC<Props> = ({ className }) => {
-  const { id, isPlaying, setIsPlaying, setCurrentChatRoom } = useRoom();
+  const {
+    id,
+    isPlaying,
+    setIsPlaying,
+    setCurrentChatRoom,
+    clearInGameMessages,
+  } = useRoom();
   const [canStartGame, setCanStartGame] = React.useState(isPlaying);
   const { account } = useAccount();
   const {
@@ -38,6 +44,7 @@ const Room: React.FC<Props> = ({ className }) => {
     setBlackTeamUsers,
     setEliminatedUsers,
     setRedTeamUsers,
+    clear: clearGame,
   } = useGame();
 
   useBodyBgColor(
@@ -121,7 +128,10 @@ const Room: React.FC<Props> = ({ className }) => {
   }
 
   function handleGameEnd(gameEndNotice: GameEndSystemNotice) {
-    // TODO: add mini game end logic
+    setCurrentChatRoom(ChatRoom.Lobby);
+    setIsPlaying(false);
+    clearGame();
+    clearInGameMessages();
   }
 
   function handleGameUsersNotice(gameUsersNotice: GameUsersNotice) {

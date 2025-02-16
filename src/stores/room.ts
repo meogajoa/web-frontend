@@ -19,6 +19,7 @@ export type RoomActions = {
   addMessage: (chatRoom: ChatRoom, message: ChatMessage) => void;
   setMessages: (chatRoom: ChatRoom, messages: ChatMessage[]) => void;
   clearMessages: (chatRoom: ChatRoom) => void;
+  clearInGameMessages: () => void;
 };
 
 export type RoomStore = RoomState & RoomActions;
@@ -63,6 +64,13 @@ export const createRoomStore = (initState: RoomState = defaultInitState) => {
     clearMessages: (chatRoom) =>
       set((state) => ({
         messagesByRoom: { ...state.messagesByRoom, [chatRoom]: [] },
+      })),
+    clearInGameMessages: () =>
+      set((state) => ({
+        messagesByRoom: {
+          ...defaultInitState.messagesByRoom,
+          ...state.messagesByRoom.lobby,
+        },
       })),
   }));
 };

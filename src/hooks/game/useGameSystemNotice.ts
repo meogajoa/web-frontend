@@ -50,6 +50,8 @@ const useGameSystemNotice = ({
     compact([enabled && `/topic/game/${variables.id}/notice/system`]),
     ({ body }) => {
       const jsonBody = JSON.parse(body);
+      console.debug(`/topic/game/${variables.id}/notice/system: `, jsonBody);
+
       const baseNotice = baseGameSystemNoticeSchema.parse(jsonBody);
 
       switch (baseNotice.type) {
@@ -58,19 +60,11 @@ const useGameSystemNotice = ({
             gameDayOrNightSystemNoticeSchema.parse(jsonBody);
           onGameDayOrNight(gameDayOrNightNotice);
 
-          console.debug(
-            `/topic/game/${variables.id}/notice/system: `,
-            gameDayOrNightNotice,
-          );
           break;
         case GameSystemNoticeType.GameEnd:
           const gameEndNotice = gameEndSystemNoticeSchema.parse(jsonBody);
           onGameEnd(gameEndNotice);
 
-          console.debug(
-            `/topic/game/${variables.id}/notice/system: `,
-            gameEndNotice,
-          );
           break;
       }
     },

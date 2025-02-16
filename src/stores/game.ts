@@ -28,6 +28,7 @@ export type GameActions = {
   setBlackTeamUsers: (blackTeamUsers: UserNumber[]) => void;
   setRedTeamUsers: (redTeamUsers: UserNumber[]) => void;
   setEliminatedUsers: (eliminatedUsers: UserNumber[]) => void;
+  clear: () => void;
 };
 
 export type GameStore = GameState & GameActions;
@@ -76,5 +77,6 @@ export const createGameStore = (initState: GameState = defaultInitState) => {
     setBlackTeamUsers: (blackTeamUsers) => set({ blackTeamUsers }),
     setRedTeamUsers: (redTeamUsers) => set({ redTeamUsers }),
     setEliminatedUsers: (eliminatedUsers) => set({ eliminatedUsers }),
+    clear: () => set(defaultInitState),
   }));
 };
