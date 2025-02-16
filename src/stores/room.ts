@@ -17,6 +17,7 @@ export type RoomActions = {
   setIsPlaying: (isPlaying: boolean) => void;
   setCurrentChatRoom: (chatRoom: ChatRoom) => void;
   addMessage: (chatRoom: ChatRoom, message: ChatMessage) => void;
+  addMessages: (chatRoom: ChatRoom, messages: ChatMessage[]) => void;
   setMessages: (chatRoom: ChatRoom, messages: ChatMessage[]) => void;
   clearMessages: (chatRoom: ChatRoom) => void;
   clearInGameMessages: () => void;
@@ -51,7 +52,21 @@ export const createRoomStore = (initState: RoomState = defaultInitState) => {
       set((state) => ({
         messagesByRoom: {
           ...state.messagesByRoom,
-          [chatRoom]: [...state.messagesByRoom[chatRoom], message],
+          [chatRoom]: [...state.messagesByRoom[chatRoom], message].sort(
+            (a, b) => a.sendTime.getTime() - b.sendTime.getTime(),
+          ),
+        },
+      })),
+    addMessages: (chatRoom, messages) =>
+      set((state) => ({
+        messagesByRoom: {
+          ...state.messagesByRoom,
+          [chatRoom]: [
+            ...state.messagesByRoom[chatRoom],
+            ...messages.sort(
+              (a, b) => a.sendTime.getTime() - b.sendTime.getTime(),
+            ),
+          ],
         },
       })),
     setMessages: (chatRoom, messages) =>

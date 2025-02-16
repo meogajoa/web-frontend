@@ -27,7 +27,7 @@ export enum ChatRoom {
 /**
  * Chat Message
  */
-export const chatMessageSchema = z.object({
+export const baseChatMessageSchema = z.object({
   id: z.string(),
   content: z.string(),
   sender: usernameSchema.or(
@@ -35,15 +35,23 @@ export const chatMessageSchema = z.object({
   ),
   sendTime: z.union([z.string(), z.date()]).transform((date) => new Date(date)),
 });
-export type ChatMessage = z.infer<typeof chatMessageSchema>;
+
+export enum ChatMessageType {
+  Chat = 'CHAT',
+  System = 'SYSTEM',
+}
+
+export type ChatMessage = z.infer<typeof baseChatMessageSchema> & {
+  type: ChatMessageType;
+};
 
 export const chatLogsSchema = z.object({
   type: z.literal('CHAT_LOGS'),
   id: z.string(),
-  chatLogs: z.array(chatMessageSchema),
+  chatLogs: z.array(baseChatMessageSchema),
 });
 
-export const personalChatMessageSchema = chatMessageSchema.extend({
+export const personalChatMessageSchema = baseChatMessageSchema.extend({
   receiver: usernameSchema,
 });
 export type PersonalChatMessage = z.infer<typeof personalChatMessageSchema>;

@@ -1,9 +1,10 @@
-import { ChatMessage } from '@/components/ChatMessage';
+import { ChatMessage as ChatMessageComponent } from '@/components/ChatMessage';
+import { SystemNotice } from '@/components/Notice';
 import useChatMessages from '@/hooks/chat/useMessages';
 import { useAccount } from '@/providers/AccountProvider';
 import { useGame } from '@/providers/GameProvider';
 import { useRoom } from '@/providers/RoomProvider';
-import { type ChatMessage as ChatMessageType } from '@/types/chat';
+import { type ChatMessage, ChatMessageType } from '@/types/chat';
 import { cn } from '@/utils/classname';
 import { convertToUserNumber } from '@/utils/game';
 import { useTranslations } from 'next-intl';
@@ -36,7 +37,7 @@ const RoomMessages = React.memo<Props>(({ className }) => {
       className={cn('space-y-3 overflow-y-auto p-4 font-bold', className)}
       ref={containerRef}
     >
-      {messages.map(({ id, content, sender }) => {
+      {messages.map(({ id, content, sender, type }) => {
         const isSelf =
           sender === account.nickname || sender === user.number.toString();
         const username = isSelf
@@ -45,15 +46,24 @@ const RoomMessages = React.memo<Props>(({ className }) => {
 
         const userNumber = convertToUserNumber(sender);
 
-        return (
-          <ChatMessage
-            key={id}
-            position={isSelf ? 'right' : 'left'}
-            username={username}
-            message={content}
-            color={otherUsers[userNumber]?.team}
-          />
-        );
+        switch (type) {
+          case ChatMessageType.Chat: {
+            return (
+              <ChatMessageComponent
+                key={id}
+                position={isSelf ? 'right' : 'left'}
+                username={username}
+                message={content}
+                color={otherUsers[userNumber]?.team}
+              />
+            );
+          }
+          case ChatMessageType.System: {
+            return (
+              <SystemNotice className="mx-auto" key={id} message={content} />
+            );
+          }
+        }
       })}
 
       <li ref={bottomRef} aria-hidden />
@@ -62,7 +72,7 @@ const RoomMessages = React.memo<Props>(({ className }) => {
 
   // scroll to bottom when new message is sent
   // when user has scrolled up to see previous messages, don't scroll to bottom
-  function scrollToBottom(message: ChatMessageType) {
+  function scrollToBottom(message: ChatMessage) {
     if (!containerRef.current) {
       return;
     }

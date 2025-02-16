@@ -4,8 +4,9 @@ import { useGame } from '@/providers/GameProvider';
 import { useRoom } from '@/providers/RoomProvider';
 import { defaultInitState } from '@/stores/room';
 import {
+  baseChatMessageSchema,
   chatLogsSchema,
-  chatMessageSchema,
+  ChatMessageType,
   ChatRoom,
   personalChatLogsSchema,
   personalChatMessageSchema,
@@ -50,7 +51,7 @@ const useChatMessages = ({
   onNewMessage?: (message: ChatMessage) => void;
 }) => {
   const { account } = useAccount();
-  const { id, messagesByRoom, isPlaying, addMessage, setMessages } = useRoom();
+  const { id, messagesByRoom, isPlaying, addMessage, addMessages } = useRoom();
   const { user } = useGame();
 
   useSubscription(
@@ -100,8 +101,13 @@ const useChatMessages = ({
       switch (xLogTypeHeader) {
         case XLogType.History: {
           const history = chatLogsSchema.parse(jsonBody);
+          history.chatLogs = history.chatLogs.map((message) => ({
+            ...message,
+            type: ChatMessageType.Chat,
+          }));
+
           const chatRoom = convertXChatRoomToChatRoom(xChatRoomHeader);
-          setMessages(chatRoom, history.chatLogs ?? []);
+          addMessages(chatRoom, history.chatLogs as ChatMessage[]);
           break;
         }
         case XLogType.PersonalHistory: {
@@ -113,7 +119,7 @@ const useChatMessages = ({
           const newMessagesMap = { ...defaultInitState.messagesByRoom };
 
           history.personalChatLogs?.forEach((_message) => {
-            const message = { ..._message };
+            const message = { ..._message, type: ChatMessageType.Chat };
             const chatRoom = getPersonalChatRoomFromMessage(
               message,
               user.number,
@@ -131,20 +137,28 @@ const useChatMessages = ({
               return;
             }
 
-            setMessages(chatRoom, messages);
+            addMessages(chatRoom, messages);
           });
 
           break;
         }
         case XLogType.Single: {
-          const message = chatMessageSchema.parse(jsonBody);
+          const message = {
+            ...baseChatMessageSchema.parse(jsonBody),
+            type: ChatMessageType.Chat,
+          };
+
           const chatRoom = convertXChatRoomToChatRoom(xChatRoomHeader);
           addMessage(chatRoom, message);
           setTimeout(() => onNewMessage?.(message), 0);
           break;
         }
         case XLogType.PersonalSingle: {
-          const personalMessage = personalChatMessageSchema.parse(jsonBody);
+          const personalMessage = {
+            ...personalChatMessageSchema.parse(jsonBody),
+            type: ChatMessageType.Chat,
+          };
+
           const chatRoom = getPersonalChatRoomFromMessage(
             personalMessage,
             user.number,

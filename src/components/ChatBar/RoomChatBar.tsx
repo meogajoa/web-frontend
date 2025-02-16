@@ -1,13 +1,13 @@
 import { ChatBar } from '@/components/ChatBar';
 import { type TextareaHandle } from '@/components/CustomTextarea';
 import useSessionId from '@/hooks/account/useSessionId';
+import useStompClient from '@/hooks/stomp/useStompClient';
 import { useRoom } from '@/providers/RoomProvider';
-import { ChatRoom } from '@/types/chat';
+import { ChatMessageType, ChatRoom } from '@/types/chat';
 import { assert } from '@/utils/assert';
 import { cn } from '@/utils/classname';
 import { noop } from 'lodash-es';
 import React from 'react';
-import { useStompClient } from 'react-stomp-hooks';
 
 type Props = {
   className?: string;
@@ -16,7 +16,7 @@ type Props = {
 
 const RoomChatBar = React.memo<Props>(({ className, renderPlaceholder }) => {
   const textareaRef = React.useRef<TextareaHandle>(null);
-  const stompClient = useStompClient('meogajoa');
+  const stompClient = useStompClient();
   const sessionId = useSessionId();
   const { id, currentChatRoom } = useRoom();
 
@@ -51,7 +51,7 @@ const RoomChatBar = React.memo<Props>(({ className, renderPlaceholder }) => {
         Authorization: sessionId,
       },
       destination: getMessageDestination(currentChatRoom),
-      body: JSON.stringify({ type: 'CHAT', content: message }),
+      body: JSON.stringify({ type: ChatMessageType.Chat, content: message }),
     });
   }
 

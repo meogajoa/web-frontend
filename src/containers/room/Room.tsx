@@ -15,9 +15,12 @@ import useRoomSystemNotice from '@/hooks/room/useRoomSystemNotice';
 import { useAccount } from '@/providers/AccountProvider';
 import { useGame } from '@/providers/GameProvider';
 import { useRoom } from '@/providers/RoomProvider';
-import { ChatRoom } from '@/types/chat';
+import { ChatMessageType, ChatRoom } from '@/types/chat';
 import { Team, UserNumber, UserStatus } from '@/types/game';
 import { cn } from '@/utils/classname';
+import { isValidUserNumber } from '@/utils/game';
+import { uniqueId } from 'lodash-es';
+import { useTranslations } from 'next-intl';
 import React from 'react';
 
 type Props = {
@@ -26,8 +29,10 @@ type Props = {
 };
 
 const Room: React.FC<Props> = ({ className, rejoin }) => {
-  const { id, isPlaying, setIsPlaying, setCurrentChatRoom } = useRoom();
+  const { id, isPlaying, setIsPlaying, setCurrentChatRoom, addMessage } =
+    useRoom();
   const [canStartGame, setCanStartGame] = React.useState(isPlaying);
+  const t = useTranslations('roomRoute.chatMessage');
   const { account } = useAccount();
   const {
     user,
@@ -112,6 +117,16 @@ const Room: React.FC<Props> = ({ className, rejoin }) => {
       money: gameInfo.money,
       isSpy: gameInfo.spy,
     });
+    const systemMessage = {
+      type: ChatMessageType.System,
+      sender: ChatMessageType.System,
+      content: t('teamColorSystemMessage', {
+        teamColor: gameInfo.teamColor,
+      }),
+      id: uniqueId(),
+      sendTime: new Date(), // FIXME: replace with server time
+    };
+    addMessage(ChatRoom.General, systemMessage);
   }
 
   function handleGameDayOrNight(gameDayOrNightNotice: DayOrNightNotice) {
@@ -125,7 +140,7 @@ const Room: React.FC<Props> = ({ className, rejoin }) => {
   function handleGameUsersNotice(gameUsersNotice: GameUsersNotice) {
     Object.values(UserNumber).forEach((_number) => {
       const number = Number(_number);
-      if (number === UserNumber.Invalid || number <= 0 || number >= 9) {
+      if (!isValidUserNumber(number)) {
         return;
       }
 

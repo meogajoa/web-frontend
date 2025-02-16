@@ -1,6 +1,6 @@
 import { A_SECOND } from '@/constants/misc';
 import { usernameSchema } from '@/types/account';
-import { chatMessageSchema } from '@/types/chat';
+import { baseChatMessageSchema } from '@/types/chat';
 import { server } from '@/utils/axios';
 import { sleep } from '@/utils/misc';
 import { useMutation } from '@tanstack/react-query';
@@ -13,7 +13,7 @@ export type JoinRoomRequest = {
 };
 
 const joinRoomResponseSchema = z.object({
-  chatLogs: z.array(chatMessageSchema),
+  chatLogs: z.array(baseChatMessageSchema),
   name: z.string(),
   owner: usernameSchema,
   playing: z.boolean(),

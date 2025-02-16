@@ -50,7 +50,8 @@
       "noAccessWhenNight": "(밤에는 대화할 수 없습니다.)"
     },
     "chatMessage": {
-      "inGameUsername": "{username}번 유저"
+      "inGameUsername": "{username}번 유저",
+      "teamColorSystemMessage": "당신은 {teamColor, select, black {흑팀} white {백팀} other {빨팀}}입니다."
     }
   },
   "bottomNavigation": {
