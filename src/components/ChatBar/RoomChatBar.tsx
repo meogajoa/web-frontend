@@ -73,6 +73,8 @@ const RoomChatBar = React.memo<Props>(({ className, renderPlaceholder }) => {
         return `/app/game/${id}/chat/black`;
       case ChatRoom.White:
         return `/app/game/${id}/chat/white`;
+      case ChatRoom.Red:
+        return `/app/game/${id}/chat/red`;
       case ChatRoom.Eliminated:
         return `/app/game/${id}/chat/eliminated`;
       case ChatRoom.General:
