@@ -98,9 +98,6 @@ const useChatMessages = ({
       switch (xLogTypeHeader) {
         case XLogType.History: {
           const history = chatLogsSchema.parse(jsonBody);
-          history.chatLogs.forEach((message) => {
-            message.id = message.sendTime.getTime().toString(); // FIXME: Replace this with actual id later
-          });
           const chatRoom = convertToChatRoom(xChatRoomHeader);
           setMessages(chatRoom, history.chatLogs ?? []);
           break;
@@ -115,7 +112,6 @@ const useChatMessages = ({
 
           history.personalChatLogs?.forEach((_message) => {
             const message = { ..._message };
-            message.id = message.sendTime.getTime().toString(); // FIXME: Replace this with actual id later
             const chatRoom = getPersonalChatRoomFromMessage(
               message,
               user.number,
@@ -140,7 +136,6 @@ const useChatMessages = ({
         }
         case XLogType.Single: {
           const message = chatMessageSchema.parse(jsonBody);
-          message.id = message.sendTime.getTime().toString(); // FIXME: Replace this with actual id later
           const chatRoom = convertToChatRoom(xChatRoomHeader);
           addMessage(chatRoom, message);
           setTimeout(() => onNewMessage?.(message), 0);
@@ -148,7 +143,6 @@ const useChatMessages = ({
         }
         case XLogType.PersonalSingle: {
           const personalMessage = personalChatMessageSchema.parse(jsonBody);
-          personalMessage.id = personalMessage.sendTime.getTime().toString(); // FIXME: Replace this with actual id later
           const chatRoom = getPersonalChatRoomFromMessage(
             personalMessage,
             user.number,
