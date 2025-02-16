@@ -12,6 +12,7 @@ enum NoticeType {
   MiniGameWillEndNotice = 'MINI_GAME_WILL_END_NOTICE',
   ButtonGameStatus = 'BUTTON_GAME_STATUS',
   VoteGameStatus = 'VOTE_GAME_STATUS',
+  VoteResult = 'VOTE_RESULT',
   GameEnd = 'GAME_END',
 }
 const NoticeTypeSchema = z.nativeEnum(NoticeType);
@@ -69,6 +70,7 @@ const buttonGameStatusNoticeSchema = BaseNoticeSchema.extend({
 export type ButtonGameStatusNotice = z.infer<
   typeof buttonGameStatusNoticeSchema
 >;
+
 /**
  * VOTE_GAME_STATUS
  */
@@ -79,6 +81,15 @@ const voteGameStatusNoticeSchema = BaseNoticeSchema.extend({
   ),
 });
 export type VoteGameStatusNotice = z.infer<typeof voteGameStatusNoticeSchema>;
+
+/**
+ * VOTE_RESULT
+ */
+const voteResultNoticeSchema = BaseNoticeSchema.extend({
+  eliminatedId: playerNumberSchema.array(),
+  surviveCount: playerNumberSchema,
+});
+export type VoteResultNotice = z.infer<typeof voteResultNoticeSchema>;
 
 /**
  * GAME_END
@@ -97,6 +108,7 @@ const useGameSystemNotice = ({
   onMiniGameWillEnd,
   onButtonGameStatus,
   onVoteGameStatus,
+  onVoteResult,
   onGameEnd,
 }: {
   variables: { id: string };
@@ -108,6 +120,7 @@ const useGameSystemNotice = ({
   onMiniGameWillEnd?: (miniGameWillEndNotice: MiniGameWillEndNotice) => void;
   onButtonGameStatus?: (buttonGameStatusNotice: ButtonGameStatusNotice) => void;
   onVoteGameStatus?: (voteGameStatusNotice: VoteGameStatusNotice) => void;
+  onVoteResult?: (voteResultNotice: VoteResultNotice) => void;
   onGameEnd?: (gameEndNotice: GameEndNotice) => void;
 }) => {
   useSubscription(
@@ -142,6 +155,10 @@ const useGameSystemNotice = ({
           const voteGameStatusNotice =
             voteGameStatusNoticeSchema.parse(jsonBody);
           onVoteGameStatus?.(voteGameStatusNotice);
+          break;
+        case NoticeType.VoteResult:
+          const voteResultNotice = voteResultNoticeSchema.parse(jsonBody);
+          onVoteResult?.(voteResultNotice);
           break;
         case NoticeType.GameEnd:
           const gameEndNotice = gameEndNoticeSchema.parse(jsonBody);

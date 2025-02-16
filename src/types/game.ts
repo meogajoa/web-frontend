@@ -45,5 +45,5 @@ export enum GameTime {
 
 export enum MiniGame {
   ButtonClick = 'BUTTON_CLICK',
-  NightVote = 'VOTE_GAME',
+  Vote = 'VOTE_GAME',
 }
