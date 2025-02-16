@@ -23,7 +23,11 @@ export const createAccountStore = (
 ) => {
   return createStore<AccountStore>()((set) => ({
     account: initState.account,
-    setAccount: (newMe) => set({ account: newMe }),
-    clearAccount: () => set({ account: defaultInitState.account }),
+    setAccount(newMe) {
+      set({ account: newMe });
+    },
+    clearAccount() {
+      set({ account: defaultInitState.account });
+    },
   }));
 };

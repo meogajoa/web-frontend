@@ -60,3 +60,15 @@ export const isPersonalChatRoom = (chatRoom: ChatRoom) => {
     chatRoom === ChatRoom.Personal
   );
 };
+
+export const getMyTeamChatRoom = (team: Team) => {
+  switch (team) {
+    case Team.Black:
+      return ChatRoom.Black;
+    case Team.White:
+      return ChatRoom.White;
+    case Team.Red:
+    default:
+      return ChatRoom.Red;
+  }
+};

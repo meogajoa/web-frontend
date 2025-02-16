@@ -1,4 +1,6 @@
 import { type ChatMessage, ChatRoom } from '@/types/chat';
+import { UserNumber } from '@/types/game';
+import { isValidUserNumber } from '@/utils/game';
 import { createStore } from 'zustand/vanilla';
 
 export type RoomState = {
@@ -19,6 +21,7 @@ export type RoomActions = {
   addMessage: (chatRoom: ChatRoom, message: ChatMessage) => void;
   addMessages: (chatRoom: ChatRoom, messages: ChatMessage[]) => void;
   setMessages: (chatRoom: ChatRoom, messages: ChatMessage[]) => void;
+  broadcastMessage: (chatRooms: ChatRoom[], message: ChatMessage) => void;
   clearMessages: (chatRoom: ChatRoom) => void;
   clearInGameMessages: () => void;
 };
@@ -41,14 +44,24 @@ export const defaultInitState: RoomState = {
 };
 
 export const createRoomStore = (initState: RoomState = defaultInitState) => {
-  return createStore<RoomStore>()((set) => ({
+  return createStore<RoomStore>()((set, get) => ({
     ...initState,
-    setId: (id) => set({ id }),
-    setTitle: (title) => set({ title }),
-    setHostNickname: (hostNickname) => set({ hostNickname }),
-    setIsPlaying: (isPlaying) => set({ isPlaying }),
-    setCurrentChatRoom: (currentChatRoom) => set({ currentChatRoom }),
-    addMessage: (chatRoom, message) =>
+    setId(id) {
+      set({ id });
+    },
+    setTitle(title) {
+      set({ title });
+    },
+    setHostNickname(hostNickname) {
+      set({ hostNickname });
+    },
+    setIsPlaying(isPlaying) {
+      set({ isPlaying });
+    },
+    setCurrentChatRoom(chatRoom) {
+      set({ currentChatRoom: chatRoom });
+    },
+    addMessage(chatRoom, message) {
       set((state) => ({
         messagesByRoom: {
           ...state.messagesByRoom,
@@ -56,8 +69,9 @@ export const createRoomStore = (initState: RoomState = defaultInitState) => {
             (a, b) => a.sendTime.getTime() - b.sendTime.getTime(),
           ),
         },
-      })),
-    addMessages: (chatRoom, messages) =>
+      }));
+    },
+    addMessages(chatRoom, messages) {
       set((state) => ({
         messagesByRoom: {
           ...state.messagesByRoom,
@@ -68,24 +82,44 @@ export const createRoomStore = (initState: RoomState = defaultInitState) => {
             ),
           ],
         },
-      })),
-    setMessages: (chatRoom, messages) =>
+      }));
+    },
+    setMessages(chatRoom, messages) {
       set((state) => ({
         messagesByRoom: {
           ...state.messagesByRoom,
           [chatRoom]: messages,
         },
-      })),
-    clearMessages: (chatRoom) =>
+      }));
+    },
+    broadcastMessage(chatRooms, message) {
+      const { addMessage } = get();
+
+      chatRooms.forEach((chatRoom) => {
+        if (chatRoom === ChatRoom.Personal) {
+          Object.values(UserNumber)
+            .map(Number)
+            .filter(isValidUserNumber)
+            .forEach((userNumber) => {
+              addMessage(userNumber, message);
+            });
+        } else {
+          addMessage(chatRoom, message);
+        }
+      });
+    },
+    clearMessages(chatRoom) {
       set((state) => ({
         messagesByRoom: { ...state.messagesByRoom, [chatRoom]: [] },
-      })),
-    clearInGameMessages: () =>
+      }));
+    },
+    clearInGameMessages() {
       set((state) => ({
         messagesByRoom: {
           ...defaultInitState.messagesByRoom,
           ...state.messagesByRoom.lobby,
         },
-      })),
+      }));
+    },
   }));
 };

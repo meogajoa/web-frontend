@@ -17,6 +17,8 @@ export const defaultInitState: ThemeState = {
 export const createThemeStore = (initState: ThemeState = defaultInitState) => {
   return createStore<ThemeStore>()((set) => ({
     bgColor: initState.bgColor,
-    setBgColor: (newBgColor) => set({ bgColor: newBgColor }),
+    setBgColor(newBgColor) {
+      set({ bgColor: newBgColor });
+    },
   }));
 };

@@ -17,6 +17,7 @@ import { useGame } from '@/providers/GameProvider';
 import { useRoom } from '@/providers/RoomProvider';
 import { ChatMessageType, ChatRoom } from '@/types/chat';
 import { Team, UserNumber, UserStatus } from '@/types/game';
+import { getMyTeamChatRoom } from '@/utils/chat';
 import { cn } from '@/utils/classname';
 import { isValidUserNumber } from '@/utils/game';
 import { uniqueId } from 'lodash-es';
@@ -29,11 +30,12 @@ type Props = {
 };
 
 const Room: React.FC<Props> = ({ className, rejoin }) => {
-  const { id, isPlaying, setIsPlaying, setCurrentChatRoom, addMessage } =
+  const { id, isPlaying, setIsPlaying, setCurrentChatRoom, broadcastMessage } =
     useRoom();
   const [canStartGame, setCanStartGame] = React.useState(isPlaying);
   const t = useTranslations('roomRoute.chatMessage');
   const { account } = useAccount();
+
   const {
     user,
     setUser,
@@ -63,7 +65,7 @@ const Room: React.FC<Props> = ({ className, rejoin }) => {
       username: account.nickname,
     },
     enabled: canStartGame,
-    onMessage: handleUserGameInfo,
+    onUserInfo: handleUserGameInfo,
   });
 
   useGameSystemNotice({
@@ -107,26 +109,30 @@ const Room: React.FC<Props> = ({ className, rejoin }) => {
     setCanStartGame(true);
   }
 
-  function handleUserGameInfo(gameInfo: UserGameInfo) {
+  function handleUserGameInfo({ player }: UserGameInfo) {
     setIsPlaying(true);
     setCurrentChatRoom(ChatRoom.General);
     setUser({
-      team: gameInfo.teamColor,
-      number: gameInfo.number,
-      status: gameInfo.eliminated ? UserStatus.Eliminated : UserStatus.Alive,
-      money: gameInfo.money,
-      isSpy: gameInfo.spy,
+      team: player.teamColor,
+      number: player.number,
+      status: player.eliminated ? UserStatus.Eliminated : UserStatus.Alive,
+      money: player.money,
+      isSpy: player.spy,
     });
     const systemMessage = {
       type: ChatMessageType.System,
       sender: ChatMessageType.System,
       content: t('teamColorSystemMessage', {
-        teamColor: gameInfo.teamColor,
+        teamColor: player.teamColor,
       }),
       id: uniqueId(),
       sendTime: new Date(), // FIXME: replace with server time
     };
-    addMessage(ChatRoom.General, systemMessage);
+
+    broadcastMessage(
+      [ChatRoom.General, ChatRoom.Personal, getMyTeamChatRoom(user.team)],
+      systemMessage,
+    );
   }
 
   function handleGameDayOrNight(gameDayOrNightNotice: DayOrNightNotice) {

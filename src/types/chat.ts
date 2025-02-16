@@ -29,7 +29,7 @@ export enum ChatRoom {
  */
 export const baseChatMessageSchema = z.object({
   id: z.string(),
-  content: z.string(),
+  content: z.string().optional(),
   sender: usernameSchema.or(
     userNumberSchema.transform((number) => number.toString()),
   ),

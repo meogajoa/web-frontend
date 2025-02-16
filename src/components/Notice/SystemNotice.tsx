@@ -21,7 +21,7 @@ const noticeVariant = cva(
 
 type Props = VariantProps<typeof noticeVariant> & {
   className?: string;
-  message: string;
+  message?: string;
 };
 
 const SystemNotice: React.FC<PropsWithChildren<Props>> = ({

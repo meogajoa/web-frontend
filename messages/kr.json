@@ -51,7 +51,7 @@
     },
     "chatMessage": {
       "inGameUsername": "{username}번 유저",
-      "teamColorSystemMessage": "당신은 {teamColor, select, black {흑팀} white {백팀} other {빨팀}}입니다."
+      "teamColorSystemMessage": "당신은 {teamColor, select, BLACK {흑팀} WHITE {백팀} other {빨팀}}입니다."
     }
   },
   "bottomNavigation": {

@@ -9,7 +9,7 @@ type Props = {
   className?: string;
   position: 'left' | 'right';
   username: string;
-  message: string;
+  message?: string;
   isCumulative?: boolean;
   color?: ProfileImageProps['color'];
   src?: ProfileImageProps['src'];

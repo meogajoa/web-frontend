@@ -40,7 +40,8 @@ export const defaultInitState: GameState = {
     status: UserStatus.Invalid,
   },
   otherUsers: Object.values(UserNumber)
-    .filter((key) => isValidUserNumber(Number(key)))
+    .map(Number)
+    .filter(isValidUserNumber)
     .reduce(
       (acc, key) => ({
         ...acc,
@@ -63,20 +64,37 @@ export const defaultInitState: GameState = {
 export const createGameStore = (initState: GameState = defaultInitState) => {
   return createStore<GameStore>()((set) => ({
     ...initState,
-    setUser: (user) => set({ user }),
-    setUserByNumber: (userNumber, user) =>
+    setUser(user) {
+      set({ user });
+    },
+    setUserByNumber(userNumber, user) {
       set((state) => ({
         otherUsers: {
           ...state.otherUsers,
           [userNumber]: user,
         },
-      })),
-    setTime: (time) => set({ time }),
-    setNthDay: (nthDay) => set({ nthDay }),
-    setWhiteTeamUsers: (whiteTeamUsers) => set({ whiteTeamUsers }),
-    setBlackTeamUsers: (blackTeamUsers) => set({ blackTeamUsers }),
-    setRedTeamUsers: (redTeamUsers) => set({ redTeamUsers }),
-    setEliminatedUsers: (eliminatedUsers) => set({ eliminatedUsers }),
-    clear: () => set(defaultInitState),
+      }));
+    },
+    setTime(time) {
+      set({ time });
+    },
+    setNthDay(nthDay) {
+      set({ nthDay });
+    },
+    setWhiteTeamUsers(whiteTeamUsers) {
+      set({ whiteTeamUsers });
+    },
+    setBlackTeamUsers(blackTeamUsers) {
+      set({ blackTeamUsers });
+    },
+    setRedTeamUsers(redTeamUsers) {
+      set({ redTeamUsers });
+    },
+    setEliminatedUsers(eliminatedUsers) {
+      set({ eliminatedUsers });
+    },
+    clear() {
+      set(defaultInitState);
+    },
   }));
 };
