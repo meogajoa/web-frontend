@@ -1,4 +1,4 @@
-import { ChatRoomListSidebar } from '@/components/ChatRoomList';
+import ChatRoomListSidebar from '@/containers/room/ChatRoomListSidebar';
 import { useGame } from '@/providers/GameProvider';
 import { useRoom } from '@/providers/RoomProvider';
 import CartFillIcon from '@/svgs/CartFillIcon';
