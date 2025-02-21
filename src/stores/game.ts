@@ -3,9 +3,10 @@ import {
   PlayerNumber,
   PlayerStatus,
   Team,
+  type GameModal,
   type Player,
 } from '@/types/game';
-import { type Optional } from '@/types/misc';
+import { type Nullable, type Optional } from '@/types/misc';
 import { isValidPlayerNumber } from '@/utils/game';
 import { createStore } from 'zustand/vanilla';
 
@@ -18,6 +19,7 @@ export type GameState = {
   blackPlayerNumbers: PlayerNumber[];
   redPlayerNumbers: PlayerNumber[];
   eliminatedPlayerNumbers: PlayerNumber[];
+  modalVisible: Nullable<GameModal>;
 };
 
 export type GameActions = {
@@ -30,6 +32,7 @@ export type GameActions = {
   setBlackPlayerNumbers: (blackPlayerNumbers: PlayerNumber[]) => void;
   setRedPlayerNumbers: (redPlayerNumbers: PlayerNumber[]) => void;
   setEliminatedPlayerNumbers: (eliminatedPlayerNumbers: PlayerNumber[]) => void;
+  setModalVisible: (modalVisible: Nullable<GameModal>) => void;
   clearGameStore: () => void;
 };
 
@@ -61,6 +64,7 @@ export const defaultInitState: GameState = {
   blackPlayerNumbers: [],
   redPlayerNumbers: [],
   eliminatedPlayerNumbers: [],
+  modalVisible: null,
 };
 
 export const createGameStore = (initState: GameState = defaultInitState) => {
@@ -99,6 +103,9 @@ export const createGameStore = (initState: GameState = defaultInitState) => {
     },
     setEliminatedPlayerNumbers(eliminatedPlayerNumbers) {
       set({ eliminatedPlayerNumbers });
+    },
+    setModalVisible(modalVisible) {
+      set({ modalVisible });
     },
     clearGameStore() {
       set(defaultInitState);

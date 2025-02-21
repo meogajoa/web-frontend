@@ -72,5 +72,13 @@
     "roomPasswordLabel": "잠금 처리된 방입니다.\n비밀번호를 입력하세요.",
     "cancelButton": "취소",
     "completeButton": "입력 완료"
+  },
+  "dayOrNightNoticeModal": {
+    "title": "공지",
+    "dayDescription": "낮이 되었습니다.\n전체 채팅방으로 이동해주세요.",
+    "nightDescription": "밤이 되었습니다.\n팀 채팅방으로 이동해주세요.",
+    "dayInfo": "다음 낮에 전체 채팅방이 리셋됩니다.",
+    "nightInfo": "다음 밤에 팀 채팅방이 리셋됩니다.",
+    "moveButton": "이동"
   }
 }

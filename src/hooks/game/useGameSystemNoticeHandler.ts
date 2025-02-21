@@ -4,7 +4,7 @@ import useGameSystemNotice, {
 } from '@/hooks/game/useGameSystemNotice';
 import { useGame } from '@/providers/GameProvider';
 import { useRoom } from '@/providers/RoomProvider';
-import { MiniGame } from '@/types/game';
+import { GameModal, MiniGame } from '@/types/game';
 import { dayjs } from '@/utils/date';
 
 const useGameSystemNoticeHandler = ({
@@ -15,7 +15,7 @@ const useGameSystemNoticeHandler = ({
   onGameEnd?: () => void;
 }) => {
   const { id } = useRoom();
-  const { setTime } = useGame();
+  const { setModalVisible, setTime } = useGame();
 
   useGameSystemNotice({
     variables: { id },
@@ -27,6 +27,7 @@ const useGameSystemNoticeHandler = ({
 
   function handleGameDayOrNight(gameDayOrNightNotice: DayOrNightNotice) {
     setTime(gameDayOrNightNotice.dayOrNight);
+    setModalVisible(GameModal.DayOrNightNotice);
   }
 
   function handleMiniGameWillStart(

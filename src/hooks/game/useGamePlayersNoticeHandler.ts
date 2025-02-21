@@ -7,7 +7,7 @@ import { useGame } from '@/providers/GameProvider';
 import { useRoom } from '@/providers/RoomProvider';
 import { ChatMessageType } from '@/types/chat';
 import { PlayerNumber, PlayerStatus } from '@/types/game';
-import { getMyTeamChatRoom } from '@/utils/chat';
+import { convertToTeamChatRoom } from '@/utils/chat';
 import { isValidPlayerNumber } from '@/utils/game';
 import { useTranslations } from 'next-intl';
 
@@ -60,7 +60,7 @@ const useGamePlayersNoticeHandler = ({ enabled }: { enabled: boolean }) => {
           ? gameUsersNotice.blackTeam
           : gameUsersNotice.redTeam;
 
-    addMessage(getMyTeamChatRoom(player.team), {
+    addMessage(convertToTeamChatRoom(player.team), {
       id: gameUsersNotice.id,
       sendTime: new Date(),
       type: ChatMessageType.System,

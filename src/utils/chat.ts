@@ -69,7 +69,7 @@ export const isPersonalChatRoom = (chatRoom: ChatRoom) => {
   );
 };
 
-export const getMyTeamChatRoom = (team: Team) => {
+export const convertToTeamChatRoom = (team: Team) => {
   switch (team) {
     case Team.Black:
       return ChatRoom.Black;

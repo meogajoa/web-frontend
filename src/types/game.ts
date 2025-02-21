@@ -48,3 +48,7 @@ export enum MiniGame {
   ButtonClick = 'BUTTON_CLICK',
   Vote = 'VOTE_GAME',
 }
+
+export enum GameModal {
+  DayOrNightNotice,
+}

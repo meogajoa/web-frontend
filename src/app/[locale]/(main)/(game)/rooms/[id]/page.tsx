@@ -3,6 +3,7 @@
 import LoadingIndicator from '@/components/LoadingIndicator';
 import Room from '@/containers/room/Room';
 import useJoinRoom from '@/hooks/room/useJoinRoom';
+import GameModalProvider from '@/providers/GameModalProvider';
 import { GameProvider } from '@/providers/GameProvider';
 import { RoomProvider } from '@/providers/RoomProvider';
 import { ChatMessageType, ChatRoom } from '@/types/chat';
@@ -38,6 +39,7 @@ const RoomPage: React.FC<Props> = ({ params }) => {
         >
           <GameProvider>
             <Room rejoin={handleRejoin} />
+            <GameModalProvider />
           </GameProvider>
         </RoomProvider>
       )}

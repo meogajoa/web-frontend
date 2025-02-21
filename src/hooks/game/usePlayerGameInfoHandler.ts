@@ -6,7 +6,7 @@ import { useRoom } from '@/providers/RoomProvider';
 import { useUser } from '@/providers/UserProvider';
 import { ChatMessageType, ChatRoom } from '@/types/chat';
 import { PlayerStatus } from '@/types/game';
-import { getMyTeamChatRoom } from '@/utils/chat';
+import { convertToTeamChatRoom } from '@/utils/chat';
 import { useTranslations } from 'next-intl';
 
 const usePlayerGameInfoHandler = ({ enabled }: { enabled: boolean }) => {
@@ -35,7 +35,7 @@ const usePlayerGameInfoHandler = ({ enabled }: { enabled: boolean }) => {
       isSpy: player.spy,
     });
 
-    const myTeamRoom = getMyTeamChatRoom(player.teamColor);
+    const myTeamRoom = convertToTeamChatRoom(player.teamColor);
 
     broadcastMessage([ChatRoom.General, ChatRoom.Personal, myTeamRoom], {
       id,
